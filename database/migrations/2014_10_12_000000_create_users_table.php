@@ -23,21 +23,19 @@ class CreateUsersTable extends Migration
             $table->string('user_email', 255)->nullable();
             $table->string('user_profile_picture', 255)->nullable();
             $table->string('password', 255);
-            $table->string('user_country', 255);
-            $table->string('user_language', 255);
             $table->string('user_currency', 255);
-            $table->string('user_net_worth', 255);
-            $table->boolval('user_verified_tag');
-            $table->datetime('user_shield_date');
-            $table->string('user_referred_by', 255);
-            $table->string('user_pott_ruler', 255);
-            $table->string('user_fcm_token_android', 255);
-            $table->string('user_fcm_token_web', 255);
-            $table->string('user_fcm_token_ios', 255);
-            $table->string('user_added_to_sitemap', 255);
-            $table->string('user_reviewed_by_admin', 255);
-            $table->text('user_scope');
-            $table->boolval('user_flagged');
+            $table->string('user_net_worth', 255)->default(0);
+            $table->integer('user_verified_tag')->default(0);
+            $table->datetime('user_shield_date', $precision = 0);
+            $table->string('user_referred_by', 255)->default("");
+            $table->string('user_pott_ruler', 255)->default("");
+            $table->string('user_fcm_token_android', 255)->default("");
+            $table->string('user_fcm_token_web', 255)->default("");
+            $table->string('user_fcm_token_ios', 255)->default("");
+            $table->string('user_added_to_sitemap', 255)->default("");
+            $table->string('user_reviewed_by_admin', 255)->default("");
+            $table->text('user_scope')->default("");
+            $table->boolean('user_flagged')->default(false);
             $table->rememberToken();
             $table->timestamps();
         });
@@ -49,6 +47,12 @@ class CreateUsersTable extends Migration
         
             $table->unsignedBigInteger('user_language_id');
             $table->foreign('user_language_id')->references('language_id')->on('languages');
+        
+            $table->unsignedBigInteger('user_country_id');
+            $table->foreign('user_country_id')->references('country_id')->on('countries');
+        
+            $table->unsignedBigInteger('user_currency_id');
+            $table->foreign('user_currency_id')->references('currency_id')->on('currencies');
         });
     }
 
@@ -59,6 +63,8 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         Schema::dropIfExists('users');
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 }

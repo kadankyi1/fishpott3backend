@@ -15,7 +15,7 @@ class CreateGendersTable extends Migration
     {
         Schema::create('genders', function (Blueprint $table) {
             $table->bigIncrements('gender_id');
-            $table->string('gender_name', 255);
+            $table->string('gender_name', 255)->unique();
             $table->timestamps();
         });
     }
@@ -27,6 +27,8 @@ class CreateGendersTable extends Migration
      */
     public function down()
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         Schema::dropIfExists('genders');
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 }
