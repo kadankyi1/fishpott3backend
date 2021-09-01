@@ -30,4 +30,6 @@ class UserController extends Controller
 
         $validatedData["user_scope"] = "";
 
+    }
+
 }
