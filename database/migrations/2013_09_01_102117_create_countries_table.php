@@ -15,9 +15,14 @@ class CreateCountriesTable extends Migration
     {
         Schema::create('countries', function (Blueprint $table) {
             $table->bigIncrements('country_id');
-            $table->string('country_name', 255)->unique();
-            $table->boolean('country_can_get_offers');
-            $table->boolean('country_can_trade');
+            $table->string('country_iso_2char_name', 255)->unique();
+            $table->string('country_real_name', 255)->unique();
+            $table->string('country_nice_name', 255)->unique();
+            $table->string('country_iso_3char_name', 255)->unique();
+            $table->string('country_name_num_code', 255)->unique();
+            $table->string('country_phone_num_code', 255)->unique();
+            $table->boolean('country_can_get_offers')->default(false);;
+            $table->boolean('country_can_trade')->default(false);;
             $table->timestamps();
         });
     }

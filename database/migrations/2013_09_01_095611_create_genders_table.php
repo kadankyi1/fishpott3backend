@@ -18,6 +18,11 @@ class CreateGendersTable extends Migration
             $table->string('gender_name', 255)->unique();
             $table->timestamps();
         });
+
+        DB::table('genders')->insert([
+            ['gender_id' => 1, 'gender_name' => 'Male'],
+            ['gender_id' => 2, 'gender_name' => 'Female']
+        ]);
     }
 
     /**
