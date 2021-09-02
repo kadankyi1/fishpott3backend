@@ -23,7 +23,6 @@ class CreateUsersTable extends Migration
             $table->string('user_email', 255)->nullable();
             $table->string('user_profile_picture', 255)->nullable();
             $table->string('password', 255);
-            $table->string('user_currency', 255);
             $table->string('user_net_worth', 255)->default(0);
             $table->integer('user_verified_tag')->default(0);
             $table->datetime('user_shield_date', $precision = 0);
@@ -32,9 +31,10 @@ class CreateUsersTable extends Migration
             $table->string('user_fcm_token_android', 255)->default("");
             $table->string('user_fcm_token_web', 255)->default("");
             $table->string('user_fcm_token_ios', 255)->default("");
-            $table->string('user_added_to_sitemap', 255)->default("");
+            $table->boolean('user_added_to_sitemap')->default(false);
             $table->string('user_reviewed_by_admin', 255)->default("");
             $table->text('user_scope')->default("");
+            $table->integer('user_app_version_code')->default(0);
             $table->boolean('user_flagged')->default(false);
             $table->rememberToken();
             $table->timestamps();
