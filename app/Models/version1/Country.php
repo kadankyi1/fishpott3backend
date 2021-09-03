@@ -23,7 +23,12 @@ class Country extends Model
      */
     protected $fillable = [
         'country_id', 
-        'country_name',
+        'country_iso_2char_name',
+        'country_real_name',
+        'country_nice_name',
+        'country_iso_3char_name',
+        'country_name_num_code',
+        'country_phone_num_code',
         'country_can_get_offers',
         'country_can_trade',
         'created_at',

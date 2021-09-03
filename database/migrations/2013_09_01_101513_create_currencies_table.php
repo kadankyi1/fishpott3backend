@@ -20,6 +20,15 @@ class CreateCurrenciesTable extends Migration
             $table->string('currency_symbol', 255)->unique();
             $table->timestamps();
         });
+
+        DB::table('genders')->insert([
+            [
+                'currency_id' => 1, 
+                'currency_full_name' => 'United States Dollars', 
+                'currency_short_name' => 'USD', 
+                'currency_symbol' => '$'
+            ]
+        ]);
     }
 
     /**

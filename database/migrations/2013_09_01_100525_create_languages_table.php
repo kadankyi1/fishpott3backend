@@ -19,6 +19,11 @@ class CreateLanguagesTable extends Migration
             $table->string('language_short_name', 255)->unique();
             $table->timestamps();
         });
+
+
+        DB::table('languages')->insert([
+            ['language_id' => 1, 'language_full_name' => 'English', 'language_short_name' => 'en']
+        ]);
     }
 
     /**
