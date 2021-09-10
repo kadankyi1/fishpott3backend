@@ -30,9 +30,11 @@ class AuthServiceProvider extends ServiceProvider
         Passport::tokensCan([
 
             //ADMIN SCOPE
-            'add-currency' => 'Add currency',
-            'view-currencies' => 'View currencies',
-            'get-one-currency' => 'View one currency',
+            'view-info' => 'View Information',
+            'get-stock-suggestions' => 'Get Stock Suggestions',
+            'answer-questions' => 'Answer Questions',
+            'buy-stock-suggested' => 'Buy Stocks Suggested',
+            'trade-stocks' => 'Trade Stocks',
 
         ]);
         /*

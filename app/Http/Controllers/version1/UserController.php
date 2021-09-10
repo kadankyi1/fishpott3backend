@@ -178,7 +178,7 @@ class UserController extends Controller
             "user_dob" => "bail|required|date|before:-13 years",
             "user_phone_number" => "bail|required|regex:/^\+\d{10,15}$/|min:10|max:15",
             "password" => "bail|required|max:20",
-            "user_referred_by" => "bail|required|string|regex:/^[A-Za-z0-9_.]+$/|max:15",
+            "user_referred_by" => "bail|string|regex:/^[A-Za-z0-9_.]+$/|max:15",
             "app_type" => "bail|required|max:8",
             "app_version_code" => "bail|required|integer|max:15"
         ]);
@@ -192,15 +192,21 @@ class UserController extends Controller
         }
 
         // CHECKING POTTNAME AVAILABILITY
-        if(!$this->pottnameIsAvailable($request->user_pottname)){
+        if(!$this->pottnameIsAvailable($validatedData["user_pottname"])){
             return response([
                 "status" => "error", 
                 "message" => "Registration failed. The pott name is already taken"
             ]);
         } 
 
+        // CHECKING IF REFERRER USERNAME IS REAL
+        if(!empty($validatedData["user_referred_by"]) && $this->pottnameIsAvailable($validatedData["user_referred_by"])){
+            $validatedData["user_referred_by"] = "";
+        } 
+
+
         //GETTING COUNTRY ID
-        $gender = Gender::where('gender_name', '=', $request->user_gender)->first();
+        $gender = Gender::where('gender_name', '=', $validatedData["user_gender"])->first();
         if($gender === null){
             return response([
                 "status" => "error", 
@@ -209,16 +215,7 @@ class UserController extends Controller
         }
 
         //GETTING COUNTRY ID
-        $country = Country::where('country_real_name', '=', $request->user_country)->first();
-        if($country === null){
-            return response([
-                "status" => "error", 
-                "message" => "Registration failed. Country validation error."
-            ]);
-        }
-
-        //GETTING COUNTRY ID
-        $country = Country::where('country_real_name', '=', $request->user_country)->first();
+        $country = Country::where('country_real_name', '=', $validatedData["user_country"])->first();
         if($country === null){
             return response([
                 "status" => "error", 
@@ -227,39 +224,58 @@ class UserController extends Controller
         }
 
         //GETTING LANGUAGE ID
-        $language = Language::where('language_short_name', '=', $request->user_language)->first();
+        $language = Language::where('language_short_name', '=', $validatedData["user_language"])->first();
         if($language === null){
             return response([
                 "status" => "error", 
                 "message" => "Registration failed. Language validation error."
             ]);
         }
+        $validatedData = $request->validate([
+            "user_firstname" => "bail|required|string|regex:/^[A-Za-z0-9_.]+$/|max:15",
+            "user_surname" => "bail|required|string|regex:/^[A-Za-z0-9_.]+$/|max:15",
+            "user_pottname" => "bail|required|string|regex:/^[A-Za-z0-9_.]+$/|max:15",
+            "user_gender" => "bail|required|max:6",
+            "user_language" => "bail|required|max:3",
+            "user_country" => "bail|required|max:55",
+            "user_dob" => "bail|required|date|before:-13 years",
+            "user_phone_number" => "bail|required|regex:/^\+\d{10,15}$/|min:10|max:15",
+            "password" => "bail|required|max:20",
+            "user_referred_by" => "bail|required|string|regex:/^[A-Za-z0-9_.]+$/|max:15",
+            "app_type" => "bail|required|max:8",
+            "app_version_code" => "bail|required|integer|max:15"
+        ]);
 
-        
-        $validatedData["user_gender_id"] = $gender->gender_id;
-        $validatedData["user_country_id"] = $country->country_id;
-        $validatedData["user_currency_id"] = 1; //USD
-        $validatedData["user_language_id"] = $language->language_id;
-        $validatedData["user_email"] = "";
-        $validatedData["password"] = bcrypt($request->password);
-        $validatedData["user_profile_picture"] = "";
-        $validatedData["investor_id"] = $request->user_pottname . substr($request->user_phone_number,1,strlen($request->user_phone_number)) . $this->getRandomString(40);
+        //CREATING THE USER DATA TO ADD TO DB
+        $userData["investor_id"] = $validatedData["user_pottname"] . substr($validatedData["user_phone_number"] ,1,strlen($validatedData["user_phone_number"])) . $this->getRandomString(40);
+        $userData["user_surname"] = $validatedData["user_surname"];
+        $userData["user_firstname"] = $validatedData["user_firstname"];
+        $userData["user_pottname"] = $validatedData["user_pottname"];
+        $userData["user_dob"] = $validatedData["user_dob"];
+        $userData["user_phone_number"] = $validatedData["user_phone_number"];
+        $userData["user_email"] = "";
+        $userData["user_profile_picture"] = "";
+        $userData["password"] = bcrypt($request->password);
+        $userData["user_gender_id"] = $gender->gender_id;
+        $userData["user_country_id"] = $country->country_id;
+        $userData["user_language_id"] = $language->language_id;
+        $userData["user_currency_id"] = 1; //USD
+        $userData["user_net_worth"] = 0;
+        $userData["user_verified_tag"] = 0;
+        $userData["user_shield_date"] = date("Y-m-d H:i:s");
+        $userData["user_referred_by"] = $validatedData["user_referred_by"];
+        $userData["user_pott_ruler"] = $validatedData["user_referred_by"];
+        $userData["user_fcm_token_android"] = "";
+        $userData["user_fcm_token_web"] = "";
+        $userData["user_fcm_token_ios"] = "";
+        $userData["user_added_to_sitemap"] = false;
+        $userData["user_reviewed_by_admin"] = false;
+        $userData["user_flagged"] = false;
+        $userData["user_scope"] = "view-info get-stock-suggestions answer-questions buy-stock-suggested trade-stocks";
 
-        // PRE-POPULATING FIELDS
-        $validatedData["user_currency_id"] = 1;
-        $validatedData["user_net_worth"] = 0;
-        $validatedData["user_verified_tag"] = 0;
-        $validatedData["user_shield_date"] = date("Y-m-d H:i:s");
-        $validatedData["user_pott_ruler"] = "";
-        $validatedData["user_fcm_token_android"] = "";
-        $validatedData["user_fcm_token_web"] = "";
-        $validatedData["user_fcm_token_ios"] = "";
-        $validatedData["user_added_to_sitemap"] = false;
-        $validatedData["user_flagged"] = false;
-        $validatedData["user_scope"] = "";
+        //$userData["ssssssss"] = $validatedData["user_surname"];
 
-
-        $user1 = User::create($validatedData);
+        $user1 = User::create($userData);
         
         // GENERATING THE ACCESS TOKEN FOR THE REGISTERED USER
         $accessToken = $user1->createToken("authToken")->accessToken;
