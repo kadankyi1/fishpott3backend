@@ -2,6 +2,20 @@
 
 return [
 
+    // ANDROID APP MINIMUM VERSION ALLOWED
+    'androidminvc' => env('ANDROID_MIN_ALLOWED_VERSION_CODE', '7'),
+
+    // MTN GHANA MOBILE MONEY ACCOUNT
+    'mtnghanamomonum' => env('MTN_GHANA_MOMO_NUM', '0553663643'),
+    'mtnghanamomoaccname' => env('MTN_GHANA_MOMO_NUM', '0553663643'),
+    
+    // VODAFONE GHANA MOBILE MONEY ACCOUNT
+    'vodafoneghanamomonum' => env('VODAFONE_GHANA_MOMO_NUM', ''),
+    'vodafoneghanamomoaccname' => env('VODAFONE_GHANA_MOMO_NUM', ''),
+    
+    // AIRTELTIGO GHANA MOBILE MONEY ACCOUNT
+    'airteltigoghanamomonum' => env('AIRTELTIGO_GHANA_MOMO_NUM', ''),
+    'airteltigoghanamomoaccname' => env('AIRTELTIGO_GHANA_MOMO_NUM', ''),
     /*
     |--------------------------------------------------------------------------
     | Application Name
@@ -13,7 +27,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'FishPott'),
 
     /*
     |--------------------------------------------------------------------------
@@ -26,7 +40,7 @@ return [
     |
     */
 
-    'env' => env('APP_ENV', 'production'),
+    'env' => env('APP_ENV', 'debug'),
 
     /*
     |--------------------------------------------------------------------------
@@ -39,7 +53,7 @@ return [
     |
     */
 
-    'debug' => (bool) env('APP_DEBUG', false),
+    'debug' => (bool) env('APP_DEBUG', true),
 
     /*
     |--------------------------------------------------------------------------
@@ -52,7 +66,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://localhost'),
+    'url' => env('APP_URL', 'http://fishpott.local'),
 
     'asset_url' => env('ASSET_URL', null),
 

@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\version1;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
+use Laravel\Passport\HasApiTokens;
 
 class User extends Authenticatable
 {
@@ -26,17 +26,22 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'user_id', 
+        'investor_id', 
         'user_surname', 
         'user_firstname', 
         'user_pottname', 
         'user_dob', 
         'user_phone_number',
         'user_email',
-        'user_profile_picture', 
-        'password',
+        'user_profile_picture',
+        'password', 
+        'user_gender_id',
         'user_gender', 
+        'user_country_id',
         'user_country', 
+        'user_language_id',
         'user_language', 
+        'user_currency_id',
         'user_currency', 
         'user_net_worth', 
         'user_verified_tag', 
@@ -49,6 +54,7 @@ class User extends Authenticatable
         'user_added_to_sitemap',  
         'user_reviewed_by_admin',  
         'user_scope',
+        'user_app_version_code',
         'user_flagged',
         'created_at',
         'updated_at',

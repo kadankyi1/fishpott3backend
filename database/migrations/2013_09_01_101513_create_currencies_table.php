@@ -21,7 +21,7 @@ class CreateCurrenciesTable extends Migration
             $table->timestamps();
         });
 
-        DB::table('genders')->insert([
+        DB::table('currencies')->insert([
             [
                 'currency_id' => 1, 
                 'currency_full_name' => 'United States Dollars', 

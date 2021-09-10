@@ -4,6 +4,11 @@ namespace App\Http\Controllers\version1;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\version1\User;
+use App\Models\version1\Gender;
+use App\Models\version1\Country;
+use App\Models\version1\Language;
+
 
 class UserController extends Controller
 {
@@ -16,8 +21,9 @@ class UserController extends Controller
     |--------------------------------------------------------------------------
     |--------------------------------------------------------------------------
     */
-    public function pottnameIsAvailable($keyword){
-        $user = User::where('pottname', '=', $keyword)->first();
+    public function pottnameIsAvailable($keyword)
+    {
+        $user = User::where('user_pottname', '=', $keyword)->first();
         if ($user !== null || $keyword == "mylinkups") {
             return false;
         } else {
@@ -29,11 +35,31 @@ class UserController extends Controller
     /*
     |--------------------------------------------------------------------------
     |--------------------------------------------------------------------------
+    | THIS FUNCTION GENERATES A RANDOM STRING
+    |--------------------------------------------------------------------------
+    |--------------------------------------------------------------------------
+    */
+	function getRandomString($length) 
+    {
+		$str = "";
+		$characters = array_merge(range('A','Z'), range('a','z'), range('0','9'));
+		$max = count($characters) - 1;
+		for ($i = 0; $i < $length; $i++) {
+			$rand = mt_rand(0, $max);
+			$str .= $characters[$rand];
+		}
+		return $str;
+	}// END OF randomString
+
+    /*
+    |--------------------------------------------------------------------------
+    |--------------------------------------------------------------------------
     | THIS FUNCTION CHECKS IF A STRING HAS NO XML TAGS
     |--------------------------------------------------------------------------
     |--------------------------------------------------------------------------
     */
-    public function stringContainsNoTags($input) {
+    public function stringContainsNoTags($input) 
+    {
         if($input != ""){
             if($input != strip_tags($input)) {
                 $validation = false;
@@ -53,7 +79,8 @@ class UserController extends Controller
     |--------------------------------------------------------------------------
     |--------------------------------------------------------------------------
     */
-    public function stringIsNotMoreThanMaxLength($input, $max_allowed_input_length){
+    public function stringIsNotMoreThanMaxLength($input, $max_allowed_input_length)
+    {
         if($input != "" && $max_allowed_input_length > 0){
             if(strlen($input) > $max_allowed_input_length){
                 $validation = false;
@@ -75,7 +102,8 @@ class UserController extends Controller
     |--------------------------------------------------------------------------
     |--------------------------------------------------------------------------
     */
-    public function inputContainsOnlyNumbers($input){
+    public function inputContainsOnlyNumbers($input)
+    {
         if(trim($input) == ""){
             return false;
         }
@@ -94,7 +122,8 @@ class UserController extends Controller
     |--------------------------------------------------------------------------
     */
 
-    public function inputContainsOnlyAlphabetsWithListedSpecialCharacters($input, $include_some_special_characters, $special_characters_array){
+    public function inputContainsOnlyAlphabetsWithListedSpecialCharacters($input, $include_some_special_characters, $special_characters_array)
+    {
         if(trim($input) == ""){
             return false;
         }
@@ -110,6 +139,23 @@ class UserController extends Controller
         }
     }
 
+    /*
+    |--------------------------------------------------------------------------
+    |--------------------------------------------------------------------------
+    | THIS FUNCTION REMOVES ALL ALPHABETS AND SYMBOLS AND LEAVES NUMBERS
+    |--------------------------------------------------------------------------
+    |--------------------------------------------------------------------------
+    */
+
+    public function removeAllCharactersAndLeaveNumbers($input)
+    {
+        if($input != ""){
+            return preg_replace('/[^0-9]/', '', $input);
+        } else {
+            return false;				
+        }
+
+    }
 
     /*
     |--------------------------------------------------------------------------
@@ -123,21 +169,30 @@ class UserController extends Controller
 
         // MAKING SURE THE INPUT HAS THE EXPECTED VALUES
         $validatedData = $request->validate([
-            "user_firstname" => "bail|required|alpha_dash|max:15",
-            "user_surname" => "bail|required|alpha_dash|max:15",
-            "user_pottname" => "bail|required|alpha_dash|max:15",
+            "user_firstname" => "bail|required|string|regex:/^[A-Za-z0-9_.]+$/|max:15",
+            "user_surname" => "bail|required|string|regex:/^[A-Za-z0-9_.]+$/|max:15",
+            "user_pottname" => "bail|required|string|regex:/^[A-Za-z0-9_.]+$/|max:15",
             "user_gender" => "bail|required|max:6",
             "user_language" => "bail|required|max:3",
             "user_country" => "bail|required|max:55",
-            "user_dob" => "bail|required|max:10",
-            "user_phone_number" => "bail|required|regex:/(+)[0-9]/|min:10|max:15",
+            "user_dob" => "bail|required|date|before:-13 years",
+            "user_phone_number" => "bail|required|regex:/^\+\d{10,15}$/|min:10|max:15",
             "password" => "bail|required|max:20",
-            "user_referred_by" => "bail|required|alpha_dash|max:15",
+            "user_referred_by" => "bail|required|string|regex:/^[A-Za-z0-9_.]+$/|max:15",
+            "app_type" => "bail|required|max:8",
             "app_version_code" => "bail|required|integer|max:15"
         ]);
 
+        // MAKING SURE VERSION CODE IS ALLOWED
+        if($request->app_type == "ANDROID" && $request->app_version_code < intval(config('app.androidminvc'))){
+            return response([
+                "status" => "error", 
+                "message" => "Please update your app."
+            ]);
+        }
+
         // CHECKING POTTNAME AVAILABILITY
-        if(!pottnameIsAvailable($request->user_pottname)){
+        if(!$this->pottnameIsAvailable($request->user_pottname)){
             return response([
                 "status" => "error", 
                 "message" => "Registration failed. The pott name is already taken"
@@ -162,6 +217,15 @@ class UserController extends Controller
             ]);
         }
 
+        //GETTING COUNTRY ID
+        $country = Country::where('country_real_name', '=', $request->user_country)->first();
+        if($country === null){
+            return response([
+                "status" => "error", 
+                "message" => "Registration failed. Country validation error."
+            ]);
+        }
+
         //GETTING LANGUAGE ID
         $language = Language::where('language_short_name', '=', $request->user_language)->first();
         if($language === null){
@@ -174,10 +238,12 @@ class UserController extends Controller
         
         $validatedData["user_gender_id"] = $gender->gender_id;
         $validatedData["user_country_id"] = $country->country_id;
+        $validatedData["user_currency_id"] = 1; //USD
         $validatedData["user_language_id"] = $language->language_id;
         $validatedData["user_email"] = "";
         $validatedData["password"] = bcrypt($request->password);
         $validatedData["user_profile_picture"] = "";
+        $validatedData["investor_id"] = $request->user_pottname . substr($request->user_phone_number,1,strlen($request->user_phone_number)) . $this->getRandomString(40);
 
         // PRE-POPULATING FIELDS
         $validatedData["user_currency_id"] = 1;
@@ -196,13 +262,35 @@ class UserController extends Controller
         $user1 = User::create($validatedData);
         
         // GENERATING THE ACCESS TOKEN FOR THE REGISTERED USER
-        $accessToken = $administrator->createToken("authToken", [$validatedData["admin_scope"]])->accessToken;
+        $accessToken = $user1->createToken("authToken")->accessToken;
+
 
         return response([
-            "administrator" => $administrator, 
-            "access_token" => $accessToken
+            "status" => "yes", 
+            "message" => "",
+            "user_phone" => $user1->user_id,
+            "user_id" => $user1->user_id,
+            "access_token" => $accessToken,
+            "user_pott_name" => $user1->user_pottname,
+            "user_full_name" => $user1->user_firstname . " " . $user1->user_surname,
+            "user_profile_picture" => "",
+            "user_country" => $user1->user_pottname,
+            "user_verified_status" => $user1->user_pottname,
+            "user_type" => $user1->user_pottname,
+            "user_gender" => $user1->user_pottname,
+            "user_date_of_birth" => $user1->user_pottname,
+            "user_currency" => $user1->user_pottname,
+            "highest_version_code" => $user1->user_pottname,
+            "force_update_status" => $user1->user_pottname,
+            "update_date" => $user1->user_pottname,
+            "media_allowed" => $user1->user_pottname,
+            "mtn_momo_number" => config('app.mtnghanamomonum'), // MTN-GHANA MOBILE MONEY NUMBER
+            "mtn_momo_acc_name" => config('app.mtnghanamomoaccname'), // MTN-GHANA ACCOUNT NAME  ON MOBILE MONEY
+            "vodafone_momo_number" => config('app.vodafoneghanamomonum'), // VODAFONE-GHANA MOBILE MONEY NUMBER
+            "vodafone_momo_acc_name" => config('app.vodafoneghanamomoaccname'), // VODAFONE-GHANA ACCOUNT NAME ON MOBILE MONEY
+            "airteltigo_momo_number" => config('app.airteltigoghanamomonum'), // AIRTELTIGO-GHANA MOBILE MONEY NUMBER
+            "airteltigo_momo_acc_name" => config('app.airteltigoghanamomoaccname') // AIRTELTIGO-GHANA ACCOUNT NAME ON MOBILE MONEY
         ]);
-    
     }
 
 }
