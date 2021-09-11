@@ -5,6 +5,11 @@ return [
     // ANDROID APP MINIMUM VERSION ALLOWED
     'androidminvc' => env('ANDROID_MIN_ALLOWED_VERSION_CODE', '7'),
 
+    'androidmaxvc' => env('ANDROID_MAX_VERSION_CODE', '10'),
+
+
+    'androidforceupdatetomaxvc' => env('FORCE_UPDATE_TO_MAX_VERSION_CODE', '10'),
+
     // MTN GHANA MOBILE MONEY ACCOUNT
     'mtnghanamomonum' => env('MTN_GHANA_MOMO_NUM', '0553663643'),
     'mtnghanamomoaccname' => env('MTN_GHANA_MOMO_NUM', '0553663643'),
