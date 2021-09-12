@@ -16,4 +16,9 @@ use App\Http\Controllers\version1\UserController;
 */
 
 
-Route::post('/v1/user/register',[App\Http\Controllers\version1\UserController::class, 'register']);
+// PERSONAL ACCOUNT REGISTRATION ROUTE
+Route::post('/v1/user/register-personal',[App\Http\Controllers\version1\UserController::class, 'registerPersonalAccount']);
+
+
+// BUSINESS ACCOUNT REGISTRATION ROUTE
+Route::post('/v1/user/register-business',[App\Http\Controllers\version1\UserController::class, 'registerBusinessAccount']);
