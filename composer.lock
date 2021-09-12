@@ -4,8 +4,62 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a67316d6c83932a3ec2ec81a6b8809ce",
+    "content-hash": "d4f7978e94fe94fdb8118d1801e157d7",
     "packages": [
+        {
+            "name": "aranyasen/laravel-adminer",
+            "version": "2.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/senaranya/laravel-adminer.git",
+                "reference": "9a24532b57399861278dcff3dadb6c383bcb66b5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/senaranya/laravel-adminer/zipball/9a24532b57399861278dcff3dadb6c383bcb66b5",
+                "reference": "9a24532b57399861278dcff3dadb6c383bcb66b5",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/routing": ">=5.1",
+                "illuminate/support": ">=5.1",
+                "php": ">=7.3"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^9.4",
+                "roave/security-advisories": "dev-master"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Aranyasen\\LaravelAdminer\\": "src/",
+                    "Tests\\": "tests/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Aranya Sen",
+                    "email": "sen.aranya@gmail.com"
+                }
+            ],
+            "description": "Adminer (by Jakub Vrana) wrapper for Laravel 5.5+",
+            "keywords": [
+                "adminer",
+                "database",
+                "explorer",
+                "laravel5",
+                "management"
+            ],
+            "support": {
+                "issues": "https://github.com/senaranya/laravel-adminer/issues",
+                "source": "https://github.com/senaranya/laravel-adminer/tree/2.0.3"
+            },
+            "time": "2021-06-30T06:23:08+00:00"
+        },
         {
             "name": "asm89/stack-cors",
             "version": "v2.0.3",
@@ -6293,16 +6347,16 @@
         },
         {
             "name": "facade/ignition",
-            "version": "2.12.0",
+            "version": "2.12.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/facade/ignition.git",
-                "reference": "74dcc32a2895a126d1e5f2cd3bbab499cac66db1"
+                "reference": "567b0a4ab04367603e61729b0ca133fb7b4819db"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/facade/ignition/zipball/74dcc32a2895a126d1e5f2cd3bbab499cac66db1",
-                "reference": "74dcc32a2895a126d1e5f2cd3bbab499cac66db1",
+                "url": "https://api.github.com/repos/facade/ignition/zipball/567b0a4ab04367603e61729b0ca133fb7b4819db",
+                "reference": "567b0a4ab04367603e61729b0ca133fb7b4819db",
                 "shasum": ""
             },
             "require": {
@@ -6365,7 +6419,7 @@
                 "issues": "https://github.com/facade/ignition/issues",
                 "source": "https://github.com/facade/ignition"
             },
-            "time": "2021-08-24T09:53:54+00:00"
+            "time": "2021-09-10T07:19:07+00:00"
         },
         {
             "name": "facade/ignition-contracts",
@@ -7156,33 +7210,33 @@
         },
         {
             "name": "phpspec/prophecy",
-            "version": "1.13.0",
+            "version": "1.14.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpspec/prophecy.git",
-                "reference": "be1996ed8adc35c3fd795488a653f4b518be70ea"
+                "reference": "d86dfc2e2a3cd366cee475e52c6bb3bbc371aa0e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/be1996ed8adc35c3fd795488a653f4b518be70ea",
-                "reference": "be1996ed8adc35c3fd795488a653f4b518be70ea",
+                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/d86dfc2e2a3cd366cee475e52c6bb3bbc371aa0e",
+                "reference": "d86dfc2e2a3cd366cee475e52c6bb3bbc371aa0e",
                 "shasum": ""
             },
             "require": {
                 "doctrine/instantiator": "^1.2",
-                "php": "^7.2 || ~8.0, <8.1",
+                "php": "^7.2 || ~8.0, <8.2",
                 "phpdocumentor/reflection-docblock": "^5.2",
                 "sebastian/comparator": "^3.0 || ^4.0",
                 "sebastian/recursion-context": "^3.0 || ^4.0"
             },
             "require-dev": {
-                "phpspec/phpspec": "^6.0",
+                "phpspec/phpspec": "^6.0 || ^7.0",
                 "phpunit/phpunit": "^8.0 || ^9.0"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.11.x-dev"
+                    "dev-master": "1.x-dev"
                 }
             },
             "autoload": {
@@ -7217,9 +7271,9 @@
             ],
             "support": {
                 "issues": "https://github.com/phpspec/prophecy/issues",
-                "source": "https://github.com/phpspec/prophecy/tree/1.13.0"
+                "source": "https://github.com/phpspec/prophecy/tree/1.14.0"
             },
-            "time": "2021-03-17T13:42:18+00:00"
+            "time": "2021-09-10T09:02:12+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",

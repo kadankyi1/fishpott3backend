@@ -20,3 +20,5 @@ Route::get('/', function () {
 Route::get('/', function () {
     return view('login');
 });
+
+Route::any('adminer', '\Aranyasen\LaravelAdminer\AdminerController@index');
