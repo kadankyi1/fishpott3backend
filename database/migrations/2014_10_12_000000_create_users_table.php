@@ -35,7 +35,7 @@ class CreateUsersTable extends Migration
             $table->string('user_fcm_token_ios', 255)->default("");
             $table->boolean('user_added_to_sitemap')->default(false);
             $table->string('user_reviewed_by_admin', 255)->default("");
-            $table->text('user_scope')->default("");
+            $table->text('user_scope');
             $table->integer('user_app_version_code')->default(0);
             $table->boolean('user_flagged')->default(false);
             $table->rememberToken();
