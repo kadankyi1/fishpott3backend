@@ -231,20 +231,6 @@ class UserController extends Controller
                 "message" => "Registration failed. Language validation error."
             ]);
         }
-        $validatedData = $request->validate([
-            "user_firstname" => "bail|required|string|regex:/^[A-Za-z0-9_.]+$/|max:15",
-            "user_surname" => "bail|required|string|regex:/^[A-Za-z0-9_.]+$/|max:15",
-            "user_pottname" => "bail|required|string|regex:/^[A-Za-z0-9_.]+$/|max:15",
-            "user_gender" => "bail|required|max:6",
-            "user_language" => "bail|required|max:3",
-            "user_country" => "bail|required|max:55",
-            "user_dob" => "bail|required|date|before:-13 years",
-            "user_phone_number" => "bail|required|regex:/^\+\d{10,15}$/|min:10|max:15",
-            "password" => "bail|required|max:20",
-            "user_referred_by" => "bail|required|string|regex:/^[A-Za-z0-9_.]+$/|max:15",
-            "app_type" => "bail|required|max:8",
-            "app_version_code" => "bail|required|integer|max:15"
-        ]);
 
         //CREATING THE USER DATA TO ADD TO DB
         $userData["investor_id"] = $validatedData["user_pottname"] . substr($validatedData["user_phone_number"] ,1,strlen($validatedData["user_phone_number"])) . $this->getRandomString(40);
@@ -285,20 +271,20 @@ class UserController extends Controller
             "status" => "yes", 
             "message" => "",
             "user_phone" => $user1->user_phone_number,
-            "user_id" => $user1->user_id,
+            "user_id" => $user1->investor_id,
             "access_token" => $accessToken,
             "user_pott_name" => $user1->user_pottname,
             "user_full_name" => $user1->user_firstname . " " . $user1->user_surname,
             "user_profile_picture" => "",
-            "user_country" => $userData["user_pottname"],
-            "user_verified_status" => $user1->user_verified_tag,
+            "user_country" => $validatedData["user_country"],
+            "user_verified_status" => 0,
             "user_type" => "investor",
-            "user_gender" => $user1->user_gender_id,
+            "user_gender" => $validatedData["user_gender"],
             "user_date_of_birth" => $user1->user_dob,
             "user_currency" => "USD",
             "highest_version_code" => config('app.androidmaxvc'),
             "force_update_status" => config('app.androidforceupdatetomaxvc'),
-            "media_allowed" => "1",
+            "media_allowed" => "0",
             "mtn_momo_number" => config('app.mtnghanamomonum'), // MTN-GHANA MOBILE MONEY NUMBER
             "mtn_momo_acc_name" => config('app.mtnghanamomoaccname'), // MTN-GHANA ACCOUNT NAME  ON MOBILE MONEY
             "vodafone_momo_number" => config('app.vodafoneghanamomonum'), // VODAFONE-GHANA MOBILE MONEY NUMBER
