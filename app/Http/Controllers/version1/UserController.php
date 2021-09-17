@@ -198,7 +198,7 @@ class UserController extends Controller
             "password" => "bail|required|max:20",
             "user_referred_by" => "bail|string|regex:/^[A-Za-z0-9_.]+$/|max:15",
             "app_type" => "bail|required|max:8",
-            "app_version_code" => "bail|required|integer|max:15"
+            "app_version_code" => "bail|required|integer"
         ]);
 
         // MAKING SURE VERSION CODE IS ALLOWED
