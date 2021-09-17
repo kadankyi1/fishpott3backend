@@ -37,7 +37,17 @@ class CreateUsersTable extends Migration
             $table->string('user_reviewed_by_admin', 255)->default("");
             $table->text('user_scope');
             $table->integer('user_app_version_code')->default(0);
+            $table->boolean('user_phone_verification_status')->default(false);
+            $table->datetime('user_phone_verifcation_date');
+            $table->boolean('user_phone_verification_requested')->default(false);
+            $table->boolean('user_id_verified_status')->default(false);
+            $table->datetime('user_id_verifcation_date');
+            $table->boolean('user_id_verification_requested')->default(false);
+            $table->string('user_password_reset_code', 255);
+            $table->string('user_last_sms_sent_datetime', 255);
+            $table->boolean('user_can_post_media')->default(false);
             $table->boolean('user_flagged')->default(false);
+            $table->text('user_flagged_reason');
             $table->rememberToken();
             $table->timestamps();
         });
