@@ -15,7 +15,7 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->bigIncrements('user_id');
-            $table->text('user_type');
+            $table->string('user_type', 255);
             $table->string('investor_id', 255)->unique();
             $table->string('user_surname', 255)->default("");
             $table->string('user_firstname', 255);
@@ -47,7 +47,7 @@ class CreateUsersTable extends Migration
             $table->datetime('user_last_sms_sent_datetime')->nullable();
             $table->boolean('user_can_post_media')->default(false);
             $table->boolean('user_flagged')->default(false);
-            $table->text('user_flagged_reason');
+            $table->text('user_flagged_reason')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
