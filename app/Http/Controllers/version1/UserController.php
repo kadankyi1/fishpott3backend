@@ -261,7 +261,7 @@ class UserController extends Controller
         }
 
         //CREATING THE USER DATA TO ADD TO DB
-        $userData["user_type"] = "Investor";
+        $userData["user_type"] = 1;
         $userData["investor_id"] = $validatedData["user_pottname"] . substr($validatedData["user_phone_number"] ,1,strlen($validatedData["user_phone_number"])) . $this->getRandomString(91);
         $userData["user_surname"] = $validatedData["user_surname"];
         $userData["user_firstname"] = $validatedData["user_firstname"];
@@ -414,7 +414,7 @@ class UserController extends Controller
         }
 
         //CREATING THE USER DATA TO ADD TO DB
-        $userData["user_type"] = "Business";
+        $userData["user_type"] = 2;
         $userData["investor_id"] = $validatedData["user_pottname"] . substr($validatedData["user_phone_number"] ,1,strlen($validatedData["user_phone_number"])) . $this->getRandomString(91);
         $userData["user_surname"] = "";
         $userData["user_firstname"] = $validatedData["user_firstname"];
@@ -462,7 +462,7 @@ class UserController extends Controller
             "user_profile_picture" => "",
             "user_country" => $validatedData["user_country"],
             "user_verified_status" => 0,
-            "user_type" => "Investor",
+            "user_type" => "Business",
             "user_gender" => $validatedData["user_gender"],
             "user_date_of_birth" => $user1->user_dob,
             "user_currency" => "USD",

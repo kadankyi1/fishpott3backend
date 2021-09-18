@@ -15,7 +15,6 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->bigIncrements('user_id');
-            $table->string('user_type', 255);
             $table->string('investor_id', 255)->unique();
             $table->string('user_surname', 255)->default("");
             $table->string('user_firstname', 255);
@@ -54,6 +53,9 @@ class CreateUsersTable extends Migration
 
 
         Schema::table('users', function (Blueprint $table) {
+            $table->unsignedBigInteger('user_user_type_id');
+            $table->foreign('user_user_type_id')->references('user_type_id')->on('user_types');
+        
             $table->unsignedBigInteger('user_gender_id');
             $table->foreign('user_gender_id')->references('gender_id')->on('genders');
         
