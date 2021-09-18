@@ -44,7 +44,7 @@ class CreateUsersTable extends Migration
             $table->datetime('user_id_verifcation_date');
             $table->boolean('user_id_verification_requested')->default(false);
             $table->string('user_password_reset_code', 255);
-            $table->string('user_last_sms_sent_datetime', 255);
+            $table->datetime('user_last_sms_sent_datetime');
             $table->boolean('user_can_post_media')->default(false);
             $table->boolean('user_flagged')->default(false);
             $table->text('user_flagged_reason');

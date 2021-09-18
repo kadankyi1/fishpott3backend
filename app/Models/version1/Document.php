@@ -29,6 +29,7 @@ class Document extends Model
         'document_origin_country_id',
         'document_origin_country_name',
         'document_number',
+        'document_added_notes',
         'document_url',
         'created_at',
         'updated_at',
