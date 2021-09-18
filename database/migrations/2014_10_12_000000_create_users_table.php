@@ -47,7 +47,7 @@ class CreateUsersTable extends Migration
             $table->datetime('user_last_sms_sent_datetime')->nullable();
             $table->boolean('user_can_post_media')->default(false);
             $table->boolean('user_flagged')->default(false);
-            $table->text('user_flagged_reason')->default("");
+            $table->text('user_flagged_reason');
             $table->rememberToken();
             $table->timestamps();
         });

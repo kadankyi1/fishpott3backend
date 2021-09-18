@@ -14,6 +14,12 @@ return [
     // PHONE VERIFICATION REQUIRED STATUS
     'phoneverificationrequiredstatus' => env('PHONE_VERIFICATION_REQUIRED_STATUS', false),
 
+    // ID VERIFICATION REQUIRED STATUS
+    'idverificationrequiredstatus' => env('ID_VERIFICATION_REQUIRED_STATUS', false),
+
+    // USER CAN POST PICTURES AND VIDEOS
+    'canpostpicsandvids' => env('CAN_POST_PICS_AND_VIDS', false),
+
     // MTN GHANA MOBILE MONEY ACCOUNT
     'mtnghanamomonum' => env('MTN_GHANA_MOMO_NUM', '0553663643'),
     'mtnghanamomoaccname' => env('MTN_GHANA_MOMO_NUM', '0553663643'),

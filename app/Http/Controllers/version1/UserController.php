@@ -288,8 +288,7 @@ class UserController extends Controller
         $userData["user_flagged"] = false;
         $userData["user_scope"] = "view-info get-stock-suggestions answer-questions buy-stock-suggested trade-stocks";
         $userData["user_phone_verification_requested"] = boolval(config('app.phoneverificationrequiredstatus'));
-        $userData["user_android_app_max_vc"] = intval(config('app.androidmaxvc'));
-        $userData["user_android_app_force_update"] = intval(config('app.androidforceupdatetomaxvc'));
+        $userData["user_id_verification_requested"] = boolval(config('app.idverificationrequiredstatus'));
 
         //$userData["ssssssss"] = $validatedData["user_surname"];
 
@@ -316,8 +315,11 @@ class UserController extends Controller
             "user_currency" => "USD",
             "highest_version_code" => config('app.androidmaxvc'),
             "force_update_status" => config('app.androidforceupdatetomaxvc'),
-            "media_allowed" => "0",
-            "phone_verification_is_on" => $phone_verify_status,
+            "media_allowed" => boolval(config('app.falses')),
+            "user_android_app_max_vc" => boolval(config('app.androidmaxvc')),
+            "user_phone_verification_requested" => boolval(config('app.androidmaxvc')),
+            "user_android_app_force_update" => boolval(config('app.androidforceupdatetomaxvc')),
+            "phone_verification_is_on" => boolval(config('app.phoneverificationrequiredstatus')),
             "mtn_momo_number" => config('app.mtnghanamomonum'), // MTN-GHANA MOBILE MONEY NUMBER
             "mtn_momo_acc_name" => config('app.mtnghanamomoaccname'), // MTN-GHANA ACCOUNT NAME  ON MOBILE MONEY
             "vodafone_momo_number" => config('app.vodafoneghanamomonum'), // VODAFONE-GHANA MOBILE MONEY NUMBER
