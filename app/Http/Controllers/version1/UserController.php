@@ -262,7 +262,7 @@ class UserController extends Controller
 
         //CREATING THE USER DATA TO ADD TO DB
         $userData["user_type"] = "Investor";
-        $userData["investor_id"] = $validatedData["user_pottname"] . substr($validatedData["user_phone_number"] ,1,strlen($validatedData["user_phone_number"])) . $this->getRandomString(40);
+        $userData["investor_id"] = $validatedData["user_pottname"] . substr($validatedData["user_phone_number"] ,1,strlen($validatedData["user_phone_number"])) . $this->getRandomString(91);
         $userData["user_surname"] = $validatedData["user_surname"];
         $userData["user_firstname"] = $validatedData["user_firstname"];
         $userData["user_pottname"] = $validatedData["user_pottname"];
@@ -329,12 +329,19 @@ class UserController extends Controller
         ]);
     }
 
+        /*
+    |--------------------------------------------------------------------------
+    |--------------------------------------------------------------------------
+    | THIS FUNCTION REGISTES A USER AND PROVIDES THEM WITH AN ACCESS TOKEN
+    |--------------------------------------------------------------------------
+    |--------------------------------------------------------------------------
+    */
     public function registerBusinessAccount(Request $request)
     {
-
         // MAKING SURE THE INPUT HAS THE EXPECTED VALUES
         $validatedData = $request->validate([
             "user_firstname" => "bail|required|string|max:100",
+            "user_surname" => "bail|string|min:0|max:0",
             "user_pottname" => "bail|required|string|regex:/^[A-Za-z0-9_.]+$/|max:15",
             "user_gender" => "bail|required|min:8|max:8",
             "user_language" => "bail|required|max:3",
@@ -344,14 +351,16 @@ class UserController extends Controller
             "password" => "bail|required|max:20",
             "user_referred_by" => "bail|string|regex:/^[A-Za-z0-9_.]+$/|max:15",
             "app_type" => "bail|required|max:8",
-            "app_version_code" => "bail|required|integer|max:15"
+            "app_version_code" => "bail|required|integer"
         ]);
 
         // MAKING SURE VERSION CODE IS ALLOWED
-        if($request->app_type == "ANDROID" && $request->app_version_code < intval(config('app.androidminvc'))){
+        if($request->app_type == "ANDROID" && 
+            ($request->app_version_code < intval(config('app.androidminvc')) || $request->app_version_code > intval(config('app.androidmaxvc')))
+        ){
             return response([
                 "status" => "error", 
-                "message" => "Please update your app."
+                "message" => "Please update your app from the Google Play Store."
             ]);
         }
 
@@ -406,7 +415,7 @@ class UserController extends Controller
 
         //CREATING THE USER DATA TO ADD TO DB
         $userData["user_type"] = "Business";
-        $userData["investor_id"] = $validatedData["user_pottname"] . substr($validatedData["user_phone_number"] ,1,strlen($validatedData["user_phone_number"])) . $this->getRandomString(40);
+        $userData["investor_id"] = $validatedData["user_pottname"] . substr($validatedData["user_phone_number"] ,1,strlen($validatedData["user_phone_number"])) . $this->getRandomString(91);
         $userData["user_surname"] = "";
         $userData["user_firstname"] = $validatedData["user_firstname"];
         $userData["user_pottname"] = $validatedData["user_pottname"];
@@ -431,6 +440,8 @@ class UserController extends Controller
         $userData["user_reviewed_by_admin"] = false;
         $userData["user_flagged"] = false;
         $userData["user_scope"] = "view-info get-stock-suggestions answer-questions buy-stock-suggested trade-stocks";
+        $userData["user_phone_verification_requested"] = boolval(config('app.phoneverificationrequiredstatus'));
+        $userData["user_id_verification_requested"] = boolval(config('app.idverificationrequiredstatus'));
 
         //$userData["ssssssss"] = $validatedData["user_surname"];
 
@@ -451,13 +462,17 @@ class UserController extends Controller
             "user_profile_picture" => "",
             "user_country" => $validatedData["user_country"],
             "user_verified_status" => 0,
-            "user_type" => "Business",
+            "user_type" => "Investor",
             "user_gender" => $validatedData["user_gender"],
             "user_date_of_birth" => $user1->user_dob,
             "user_currency" => "USD",
             "highest_version_code" => config('app.androidmaxvc'),
             "force_update_status" => config('app.androidforceupdatetomaxvc'),
-            "media_allowed" => "0",
+            "media_allowed" => boolval(config('app.falses')),
+            "user_android_app_max_vc" => boolval(config('app.androidmaxvc')),
+            "user_phone_verification_requested" => boolval(config('app.androidmaxvc')),
+            "user_android_app_force_update" => boolval(config('app.androidforceupdatetomaxvc')),
+            "phone_verification_is_on" => boolval(config('app.phoneverificationrequiredstatus')),
             "mtn_momo_number" => config('app.mtnghanamomonum'), // MTN-GHANA MOBILE MONEY NUMBER
             "mtn_momo_acc_name" => config('app.mtnghanamomoaccname'), // MTN-GHANA ACCOUNT NAME  ON MOBILE MONEY
             "vodafone_momo_number" => config('app.vodafoneghanamomonum'), // VODAFONE-GHANA MOBILE MONEY NUMBER
@@ -466,5 +481,4 @@ class UserController extends Controller
             "airteltigo_momo_acc_name" => config('app.airteltigoghanamomoaccname') // AIRTELTIGO-GHANA ACCOUNT NAME ON MOBILE MONEY
         ]);
     }
-
 }
