@@ -202,10 +202,12 @@ class UserController extends Controller
         ]);
 
         // MAKING SURE VERSION CODE IS ALLOWED
-        if($request->app_type == "ANDROID" && $request->app_version_code < intval(config('app.androidminvc'))){
+        if($request->app_type == "ANDROID" && 
+            ($request->app_version_code < intval(config('app.androidminvc')) || $request->app_version_code > intval(config('app.androidmaxvc')))
+        ){
             return response([
                 "status" => "error", 
-                "message" => "Please update your app."
+                "message" => "Please update your app from the Google Play Store."
             ]);
         }
 
@@ -285,6 +287,9 @@ class UserController extends Controller
         $userData["user_reviewed_by_admin"] = false;
         $userData["user_flagged"] = false;
         $userData["user_scope"] = "view-info get-stock-suggestions answer-questions buy-stock-suggested trade-stocks";
+        $userData["user_phone_verification_requested"] = boolval(config('app.phoneverificationrequiredstatus'));
+        $userData["user_android_app_max_vc"] = intval(config('app.androidmaxvc'));
+        $userData["user_android_app_force_update"] = intval(config('app.androidforceupdatetomaxvc'));
 
         //$userData["ssssssss"] = $validatedData["user_surname"];
 
@@ -312,6 +317,7 @@ class UserController extends Controller
             "highest_version_code" => config('app.androidmaxvc'),
             "force_update_status" => config('app.androidforceupdatetomaxvc'),
             "media_allowed" => "0",
+            "phone_verification_is_on" => $phone_verify_status,
             "mtn_momo_number" => config('app.mtnghanamomonum'), // MTN-GHANA MOBILE MONEY NUMBER
             "mtn_momo_acc_name" => config('app.mtnghanamomoaccname'), // MTN-GHANA ACCOUNT NAME  ON MOBILE MONEY
             "vodafone_momo_number" => config('app.vodafoneghanamomonum'), // VODAFONE-GHANA MOBILE MONEY NUMBER

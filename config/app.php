@@ -5,10 +5,14 @@ return [
     // ANDROID APP MINIMUM VERSION ALLOWED
     'androidminvc' => env('ANDROID_MIN_ALLOWED_VERSION_CODE', '7'),
 
-    'androidmaxvc' => env('ANDROID_MAX_VERSION_CODE', '10'),
+    // ANDROID APP MAXIMUM VERSION ALLOWED
+    'androidmaxvc' => env('ANDROID_MAX_VERSION_CODE', '20'),
 
+    // ANDROID APP FORCE UPDATE REQUIRED
+    'androidforceupdatetomaxvc' => env('ANDROID_FORCE_UPDATE_REQUIRED', true),
 
-    'androidforceupdatetomaxvc' => env('FORCE_UPDATE_TO_MAX_VERSION_CODE', '10'),
+    // PHONE VERIFICATION REQUIRED STATUS
+    'phoneverificationrequiredstatus' => env('PHONE_VERIFICATION_REQUIRED_STATUS', false),
 
     // MTN GHANA MOBILE MONEY ACCOUNT
     'mtnghanamomonum' => env('MTN_GHANA_MOMO_NUM', '0553663643'),
@@ -21,6 +25,8 @@ return [
     // AIRTELTIGO GHANA MOBILE MONEY ACCOUNT
     'airteltigoghanamomonum' => env('AIRTELTIGO_GHANA_MOMO_NUM', ''),
     'airteltigoghanamomoaccname' => env('AIRTELTIGO_GHANA_MOMO_NUM', ''),
+
+
     /*
     |--------------------------------------------------------------------------
     | Application Name
