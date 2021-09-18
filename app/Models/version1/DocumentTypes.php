@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class DocumentTypes extends Model
 {
     use HasFactory;
-        /**
+    /**
      * The primary key associated with the table.
      *
      * @var string
