@@ -41,15 +41,15 @@ class UserController extends Controller
     */
     public function pottnameIsAvailable($keyword)
     {
-        if(empty($keyword)){
-            return true;
+        if(empty($keyword) || strlen($keyword) < 5 || $keyword == "mylinkups"){
+            return false;
         }
         $user = User::where('user_pottname', '=', $keyword)->first();
-        if ($user !== null || $keyword == "mylinkups") {
-            return false;
+        if ($user === null) {
+            return true;
         } else {
             // user doesn't exist
-            return true;
+            return false;
         }
     }
 
@@ -230,7 +230,7 @@ class UserController extends Controller
         } 
 
         // CHECKING IF REFERRER USERNAME IS REAL
-        if(!empty($validatedData["user_referred_by"]) && $this->pottnameIsAvailable($validatedData["user_referred_by"])){
+        if(empty($validatedData["user_referred_by"]) || $this->pottnameIsAvailable($validatedData["user_referred_by"])){
             $validatedData["user_referred_by"] = "";
         } 
 
@@ -389,7 +389,7 @@ class UserController extends Controller
         } 
 
         // CHECKING IF REFERRER USERNAME IS REAL
-        if(!empty($validatedData["user_referred_by"]) && $this->pottnameIsAvailable($validatedData["user_referred_by"])){
+        if(empty($validatedData["user_referred_by"]) || $this->pottnameIsAvailable($validatedData["user_referred_by"])){
             $validatedData["user_referred_by"] = "";
         } 
 
