@@ -35,7 +35,8 @@ class CreateUsersTable extends Migration
             $table->boolean('user_added_to_sitemap')->default(false);
             $table->boolean('user_reviewed_by_admin')->default(false);
             $table->text('user_scope');
-            $table->string('user_app_version_code', 255)->default("");
+            $table->string('user_android_app_version_code', 255)->default("");
+            $table->string('user_ios_app_version_code', 255)->default("");
             $table->boolean('user_phone_verification_status')->default(false);
             $table->datetime('user_phone_verifcation_date')->nullable();
             $table->boolean('user_phone_verification_requested')->default(false);

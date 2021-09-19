@@ -287,7 +287,12 @@ class UserController extends Controller
         $userData["user_reviewed_by_admin"] = false;
         $userData["user_initial_signup_approved"] = true;
         $userData["user_flagged"] = false;
-        $userData["user_app_version_code"] = $validatedData["app_version_code"];
+        // SAVING APP TYPE VERSION CODE
+        if($request->app_type == "ANDROID"){
+            $userData["user_android_app_version_code"] = $validatedData["app_version_code"];
+        } else if($request->app_type == "IOS"){
+            $userData["user_ios_app_version_code"] = $validatedData["app_version_code"];
+        } 
         $userData["user_scope"] = "view-info get-stock-suggestions answer-questions buy-stock-suggested trade-stocks";
         $userData["user_phone_verification_requested"] = boolval(config('app.phoneverificationrequiredstatus'));
         $userData["user_id_verification_requested"] = boolval(config('app.idverificationrequiredstatus'));
@@ -416,7 +421,7 @@ class UserController extends Controller
         //CREATING THE USER DATA TO ADD TO DB
         $userData["user_user_type_id"] = 2;
         $userData["investor_id"] = $validatedData["user_pottname"] . substr($validatedData["user_phone_number"] ,1,strlen($validatedData["user_phone_number"])) . $this->getRandomString(91);
-        $userData["user_surname"] = "";
+        $userData["user_surname"] = $validatedData["user_surname"];
         $userData["user_firstname"] = $validatedData["user_firstname"];
         $userData["user_pottname"] = $validatedData["user_pottname"];
         $userData["user_dob"] = $validatedData["user_dob"];
