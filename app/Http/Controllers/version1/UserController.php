@@ -347,6 +347,7 @@ class UserController extends Controller
         $validatedData = $request->validate([
             "user_firstname" => "bail|required|string|max:50",
             "user_surname" => "bail|string|min:0|max:50",
+            "user_email" => "bail|required|email|min:4|max:50",
             "user_pottname" => "bail|required|string|regex:/^[A-Za-z0-9_.]+$/|max:15",
             "user_gender" => "bail|required|min:8|max:8",
             "user_language" => "bail|required|max:3",
@@ -426,7 +427,7 @@ class UserController extends Controller
         $userData["user_pottname"] = $validatedData["user_pottname"];
         $userData["user_dob"] = $validatedData["user_dob"];
         $userData["user_phone_number"] = $validatedData["user_phone_number"];
-        $userData["user_email"] = "";
+        $userData["user_email"] = $validatedData["user_dob"];
         $userData["user_profile_picture"] = "";
         $userData["password"] = bcrypt($request->password);
         $userData["user_gender_id"] = $gender->gender_id;
