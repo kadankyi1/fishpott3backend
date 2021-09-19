@@ -345,8 +345,8 @@ class UserController extends Controller
     {
         // MAKING SURE THE INPUT HAS THE EXPECTED VALUES
         $validatedData = $request->validate([
-            "user_firstname" => "bail|required|string|max:100",
-            "user_surname" => "bail|string|min:0|max:0",
+            "user_firstname" => "bail|required|string|max:50",
+            "user_surname" => "bail|string|min:0|max:50",
             "user_pottname" => "bail|required|string|regex:/^[A-Za-z0-9_.]+$/|max:15",
             "user_gender" => "bail|required|min:8|max:8",
             "user_language" => "bail|required|max:3",
