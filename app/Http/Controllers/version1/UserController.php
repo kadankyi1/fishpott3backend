@@ -446,6 +446,12 @@ class UserController extends Controller
         $userData["user_reviewed_by_admin"] = false;
         $userData["user_initial_signup_approved"] = false;
         $userData["user_flagged"] = false;
+        // SAVING APP TYPE VERSION CODE
+        if($request->app_type == "ANDROID"){
+            $userData["user_android_app_version_code"] = $validatedData["app_version_code"];
+        } else if($request->app_type == "IOS"){
+            $userData["user_ios_app_version_code"] = $validatedData["app_version_code"];
+        } 
         $userData["user_app_version_code"] = $validatedData["app_version_code"];
         $userData["user_scope"] = "view-info get-stock-suggestions answer-questions buy-stock-suggested trade-stocks";
         $userData["user_phone_verification_requested"] = boolval(config('app.phoneverificationrequiredstatus'));
