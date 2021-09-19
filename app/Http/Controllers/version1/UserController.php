@@ -427,7 +427,7 @@ class UserController extends Controller
         $userData["user_pottname"] = $validatedData["user_pottname"];
         $userData["user_dob"] = $validatedData["user_dob"];
         $userData["user_phone_number"] = $validatedData["user_phone_number"];
-        $userData["user_email"] = $validatedData["user_dob"];
+        $userData["user_email"] = $validatedData["user_email"];
         $userData["user_profile_picture"] = "";
         $userData["password"] = bcrypt($request->password);
         $userData["user_gender_id"] = $gender->gender_id;
