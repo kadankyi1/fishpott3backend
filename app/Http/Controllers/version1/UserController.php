@@ -35,6 +35,27 @@ class UserController extends Controller
     /*
     |--------------------------------------------------------------------------
     |--------------------------------------------------------------------------
+    | THIS FUNCTION CHECKS IF A PHONE NUMBER IS NOT USED
+    |--------------------------------------------------------------------------
+    |--------------------------------------------------------------------------
+    */
+    public function emailIsAvailable($keyword)
+    {
+        if(empty($keyword)){
+            return false;
+        }
+        $user = User::where('user_email', '=', $keyword)->first();
+        if ($user === null) {
+            return true;
+        } else {
+            // user doesn't exist
+            return false;
+        }
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    |--------------------------------------------------------------------------
     | THIS FUNCTION CHECKS IF A POTTNAME IS AVAILABLE
     |--------------------------------------------------------------------------
     |--------------------------------------------------------------------------
@@ -192,6 +213,7 @@ class UserController extends Controller
         $validatedData = $request->validate([
             "user_firstname" => "bail|required|string|regex:/^[A-Za-z0-9_.]+$/|max:15",
             "user_surname" => "bail|required|string|regex:/^[A-Za-z0-9_.]+$/|max:15",
+            "user_email" => "bail|required|email|min:4|max:50",
             "user_pottname" => "bail|required|string|regex:/^[A-Za-z0-9_.]+$/|max:15",
             "user_gender" => "bail|required|max:6",
             "user_language" => "bail|required|max:3",
@@ -226,6 +248,14 @@ class UserController extends Controller
             return response([
                 "status" => "error", 
                 "message" => "Registration failed. The phone number is already taken"
+            ]);
+        } 
+
+        // EMAIL IS TAKEN
+        if(!$this->emailIsAvailable($validatedData["user_email"])){
+            return response([
+                "status" => "error", 
+                "message" => "Registration failed. The email address is already taken"
             ]);
         } 
 
@@ -270,7 +300,7 @@ class UserController extends Controller
         $userData["user_pottname"] = $validatedData["user_pottname"];
         $userData["user_dob"] = $validatedData["user_dob"];
         $userData["user_phone_number"] = $validatedData["user_phone_number"];
-        $userData["user_email"] = "";
+        $userData["user_email"] = $validatedData["user_email"];
         $userData["user_profile_picture"] = "";
         $userData["password"] = bcrypt($request->password);
         $userData["user_gender_id"] = $gender->gender_id;
@@ -385,6 +415,14 @@ class UserController extends Controller
             return response([
                 "status" => "error", 
                 "message" => "Registration failed. The phone number is already taken"
+            ]);
+        } 
+
+        // EMAIL IS TAKEN
+        if(!$this->emailIsAvailable($validatedData["user_email"])){
+            return response([
+                "status" => "error", 
+                "message" => "Registration failed. The email address is already taken"
             ]);
         } 
 
