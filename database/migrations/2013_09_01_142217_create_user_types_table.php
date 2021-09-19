@@ -22,7 +22,7 @@ class CreateUserTypesTable extends Migration
 
         DB::table('user_types')->insert([
             ['user_type_id' => 1, 'user_type_fullname' => 'Invester', 'user_type_shortname' => 'I'],
-            ['user_type_id' => 2, 'user_type_fullname' => 'Business', 'user_type_shortname' => 'B'],
+            ['user_type_id' => 2, 'user_type_fullname' => 'Business', 'user_type_shortname' => 'B']
         ]);
 
     }
