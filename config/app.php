@@ -9,7 +9,7 @@ return [
     'androidmaxvc' => env('ANDROID_MAX_VERSION_CODE', '20'),
 
     // ANDROID APP FORCE UPDATE REQUIRED
-    'androidforceupdatetomaxvc' => env('ANDROID_FORCE_UPDATE_REQUIRED', true),
+    'androidforceupdatetomaxvc' => env('ANDROID_FORCE_UPDATE_REQUIRED', false),
 
     // PHONE VERIFICATION REQUIRED STATUS
     'phoneverificationrequiredstatus' => env('PHONE_VERIFICATION_REQUIRED_STATUS', false),

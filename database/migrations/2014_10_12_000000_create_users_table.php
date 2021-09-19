@@ -53,7 +53,7 @@ class CreateUsersTable extends Migration
 
 
         Schema::table('users', function (Blueprint $table) {
-            $table->unsignedBigInteger('user_user_type_id'); //->default(1);
+            $table->unsignedBigInteger('user_user_type_id');
             $table->foreign('user_user_type_id')->references('user_type_id')->on('user_types');
         
             $table->unsignedBigInteger('user_gender_id')->default(1);
