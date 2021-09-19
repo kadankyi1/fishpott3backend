@@ -41,6 +41,9 @@ class UserController extends Controller
     */
     public function pottnameIsAvailable($keyword)
     {
+        if(empty($keyword)){
+            return true;
+        }
         $user = User::where('user_pottname', '=', $keyword)->first();
         if ($user !== null || $keyword == "mylinkups") {
             return false;
@@ -196,7 +199,6 @@ class UserController extends Controller
             "user_dob" => "bail|required|date|before:-13 years",
             "user_phone_number" => "bail|required|regex:/^\+\d{10,15}$/|min:10|max:15",
             "password" => "bail|required|max:20",
-            "user_referred_by" => "bail|max:15",
             "app_type" => "bail|required|max:8",
             "app_version_code" => "bail|required|integer"
         ]);
