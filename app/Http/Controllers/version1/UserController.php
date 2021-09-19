@@ -285,7 +285,9 @@ class UserController extends Controller
         $userData["user_fcm_token_ios"] = "";
         $userData["user_added_to_sitemap"] = false;
         $userData["user_reviewed_by_admin"] = false;
+        $userData["user_initial_signup_approved"] = true;
         $userData["user_flagged"] = false;
+        $userData["user_app_version_code"] = $validatedData["app_version_code"];
         $userData["user_scope"] = "view-info get-stock-suggestions answer-questions buy-stock-suggested trade-stocks";
         $userData["user_phone_verification_requested"] = boolval(config('app.phoneverificationrequiredstatus'));
         $userData["user_id_verification_requested"] = boolval(config('app.idverificationrequiredstatus'));
@@ -436,12 +438,12 @@ class UserController extends Controller
         $userData["user_fcm_token_ios"] = "";
         $userData["user_added_to_sitemap"] = false;
         $userData["user_reviewed_by_admin"] = false;
+        $userData["user_initial_signup_approved"] = false;
         $userData["user_flagged"] = false;
+        $userData["user_app_version_code"] = $validatedData["app_version_code"];
         $userData["user_scope"] = "view-info get-stock-suggestions answer-questions buy-stock-suggested trade-stocks";
         $userData["user_phone_verification_requested"] = boolval(config('app.phoneverificationrequiredstatus'));
         $userData["user_id_verification_requested"] = boolval(config('app.idverificationrequiredstatus'));
-
-        //$userData["ssssssss"] = $validatedData["user_surname"];
 
         $user1 = User::create($userData);
         

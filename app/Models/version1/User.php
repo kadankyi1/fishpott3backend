@@ -66,6 +66,7 @@ class User extends Authenticatable
         'user_password_reset_code',
         'user_last_sms_sent_datetime',
         'user_can_post_media',
+        'user_initial_signup_approved',
         'user_flagged',
         'user_flagged_reason',
         'created_at',

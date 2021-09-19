@@ -33,9 +33,9 @@ class CreateUsersTable extends Migration
             $table->string('user_fcm_token_web', 255)->default("");
             $table->string('user_fcm_token_ios', 255)->default("");
             $table->boolean('user_added_to_sitemap')->default(false);
-            $table->string('user_reviewed_by_admin', 255)->default("");
+            $table->boolean('user_reviewed_by_admin')->default(false);
             $table->text('user_scope');
-            $table->integer('user_app_version_code')->default(0);
+            $table->string('user_app_version_code', 255)->default("");
             $table->boolean('user_phone_verification_status')->default(false);
             $table->datetime('user_phone_verifcation_date')->nullable();
             $table->boolean('user_phone_verification_requested')->default(false);
@@ -45,6 +45,7 @@ class CreateUsersTable extends Migration
             $table->string('user_password_reset_code', 255)->default("");
             $table->datetime('user_last_sms_sent_datetime')->nullable();
             $table->boolean('user_can_post_media')->default(false);
+            $table->boolean('user_initial_signup_approved')->default(false);
             $table->boolean('user_flagged')->default(false);
             $table->text('user_flagged_reason')->nullable();
             $table->rememberToken();
