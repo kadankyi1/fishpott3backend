@@ -70,6 +70,7 @@ class User extends Authenticatable
         'user_initial_signup_approved',
         'user_flagged',
         'user_flagged_reason',
+        'login_at',
         'created_at',
         'updated_at',
     ];

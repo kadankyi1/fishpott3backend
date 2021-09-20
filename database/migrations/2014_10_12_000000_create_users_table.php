@@ -49,6 +49,7 @@ class CreateUsersTable extends Migration
             $table->boolean('user_initial_signup_approved')->default(false);
             $table->boolean('user_flagged')->default(false);
             $table->text('user_flagged_reason')->nullable();
+            $table->datetime('login_at')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

@@ -8,12 +8,26 @@ use App\Models\version1\User;
 use App\Models\version1\Gender;
 use App\Models\version1\Country;
 use App\Models\version1\Language;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 
 class UserController extends Controller
 {
 
       
+    /*
+    |--------------------------------------------------------------------------
+    |--------------------------------------------------------------------------
+    | THIS FUNCTION GETS A USER
+    |--------------------------------------------------------------------------
+    |--------------------------------------------------------------------------
+    */
+    public function getUserWithOneColumn($column, $keyword)
+    {
+        return User::where($column, '=', $keyword)->first();
+    }
+
     /*
     |--------------------------------------------------------------------------
     |--------------------------------------------------------------------------
@@ -366,7 +380,7 @@ class UserController extends Controller
         ]);
     }
 
-        /*
+    /*
     |--------------------------------------------------------------------------
     |--------------------------------------------------------------------------
     | THIS FUNCTION REGISTES A USER AND PROVIDES THEM WITH AN ACCESS TOKEN
@@ -532,4 +546,132 @@ class UserController extends Controller
             "airteltigo_momo_acc_name" => config('app.airteltigoghanamomoaccname') // AIRTELTIGO-GHANA ACCOUNT NAME ON MOBILE MONEY
         ]);
     }
+
+        /*
+    |--------------------------------------------------------------------------
+    |--------------------------------------------------------------------------
+    | THIS FUNCTION REGISTES A USER AND PROVIDES THEM WITH AN ACCESS TOKEN
+    |--------------------------------------------------------------------------
+    |--------------------------------------------------------------------------
+    */
+    public function login(Request $request)
+    {
+
+        // MAKING SURE THE INPUT HAS THE EXPECTED VALUES
+        $validatedData = $request->validate([
+            "user_phone_number" => "bail|required|regex:/^\+\d{10,15}$/|min:10|max:15",
+            "password" => "bail|required",
+            "user_language" => "bail|required|max:3",
+            "app_type" => "bail|required|max:8",
+            "app_version_code" => "bail|required|integer"
+        ]);
+
+        $loginData["user_phone_number"] = $validatedData["user_phone_number"];
+        $loginData["password"] = $validatedData["password"];
+
+        // MAKING SURE VERSION CODE IS ALLOWED
+        if(
+            $request->app_type == "ANDROID" && 
+            ($request->app_version_code < intval(config('app.androidminvc')) || $request->app_version_code > intval(config('app.androidmaxvc')))
+        ){
+            return response([
+                "status" => "error", 
+                "message" => "Please update your app from the Google Play Store."
+            ]);
+        }
+
+        // VALIDATING USER CREDENTIALS
+        if (!auth()->attempt($loginData)) {
+            return response([
+                "status" => "error", 
+                "message" => "Invalid Credentials"
+            ]);
+        }
+
+        // CHECKING IF USER FLAGGED
+        if (auth()->user()->user_flagged) {
+            return response([
+                "status" => "error", 
+                "message" => "Account access restricted"
+            ]);
+        }
+        
+        // CHECKING POTTNAME AVAILABILITY
+        $user = $this->getUserWithOneColumn("user_phone_number", auth()->user()->user_phone_number);
+        if($user === null){
+            return response([
+                "status" => "error", 
+                "message" => "Login failed"
+            ]);
+        } 
+
+        //GETTING GENDER 
+        $gender = Gender::where('gender_id', '=', $user->user_gender_id)->first();
+        if($gender === null){
+            return response([
+                "status" => "error", 
+                "message" => "Gender validation error."
+            ]);
+        }
+
+        //GETTING COUNTRY 
+        $country = Country::where('country_id', '=', $user->user_country_id)->first();
+        if($country === null){
+            return response([
+                "status" => "error", 
+                "message" => "Country validation error."
+            ]);
+        }
+
+        //GETTING LANGUAGE 
+        $language = Language::where('language_id', '=', $user->user_language_id)->first();
+        if($language === null){
+            return response([
+                "status" => "error", 
+                "message" => "Language validation error."
+            ]);
+        }
+
+        // SAVING APP TYPE VERSION CODE
+        if($request->app_type == "ANDROID"){
+            $user->user_android_app_version_code = $validatedData["app_version_code"];
+        } else if($request->app_type == "IOS"){
+            $user->user_ios_app_version_code = $validatedData["app_version_code"];
+        }
+        $user->save();    
+
+        // GENERATING USER ACCESS TOKEN
+        $accessToken = auth()->user()->createToken("authToken", [auth()->user()->user_scope])->accessToken;
+
+
+        return response([
+            "status" => "yes", 
+            "message" => "",
+            "user_phone" => $user->user_phone_number,
+            "user_id" => $user->investor_id,
+            "access_token" => $accessToken,
+            "user_pott_name" => $user->user_pottname,
+            "user_full_name" => $user->user_firstname . " " . $user->user_surname,
+            "user_profile_picture" => "",
+            "user_country" => $country->country_real_name,
+            "user_verified_status" => 0,
+            "user_type" => "Investor",
+            "user_gender" => $gender->gender_name,
+            "user_date_of_birth" => $user->user_dob,
+            "user_currency" => "USD",
+            "force_update_status" => config('app.androidforceupdatetomaxvc'),
+            "media_allowed" => boolval(config('app.canpostpicsandvids')),
+            "user_android_app_max_vc" => intval(config('app.androidmaxvc')),
+            "user_android_app_force_update" => boolval(config('app.androidforceupdatetomaxvc')),
+            "phone_verification_is_on" => boolval(config('app.phoneverificationrequiredstatus')),
+            "mtn_momo_number" => config('app.mtnghanamomonum'), // MTN-GHANA MOBILE MONEY NUMBER
+            "mtn_momo_acc_name" => config('app.mtnghanamomoaccname'), // MTN-GHANA ACCOUNT NAME  ON MOBILE MONEY
+            "vodafone_momo_number" => config('app.vodafoneghanamomonum'), // VODAFONE-GHANA MOBILE MONEY NUMBER
+            "vodafone_momo_acc_name" => config('app.vodafoneghanamomoaccname'), // VODAFONE-GHANA ACCOUNT NAME ON MOBILE MONEY
+            "airteltigo_momo_number" => config('app.airteltigoghanamomonum'), // AIRTELTIGO-GHANA MOBILE MONEY NUMBER
+            "airteltigo_momo_acc_name" => config('app.airteltigoghanamomoaccname') // AIRTELTIGO-GHANA ACCOUNT NAME ON MOBILE MONEY
+        ]);
+    }
+
+
 }

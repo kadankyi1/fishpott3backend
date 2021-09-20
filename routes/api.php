@@ -22,3 +22,6 @@ Route::post('/v1/user/register-personal',[App\Http\Controllers\version1\UserCont
 
 // BUSINESS ACCOUNT REGISTRATION ROUTE
 Route::post('/v1/user/register-business',[App\Http\Controllers\version1\UserController::class, 'registerBusinessAccount']);
+
+// LOGIN
+Route::post('/v1/user/login',[App\Http\Controllers\version1\UserController::class, 'login']);
