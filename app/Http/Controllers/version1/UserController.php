@@ -738,19 +738,8 @@ class UserController extends Controller
         }
         
         // GETTING USER
-        /*
         $user = User::where('user_pottname', auth()->user()->user_pottname)->where('user_phone_number', $request->user_phone_number)->where('investor_id', $request->investor_id)->first();
         if($user == null){
-            return response([
-                "status" => "error", 
-                "message" => "Session closed. You have to login again."
-            ]);
-        }
-        */
-
-        $user = User::where('user_pottname', auth()->user()->user_pottname)->first();
-
-        if($user == null || $user->user_phone_number != $request->user_phone_number || $user->investor_id != $request->investor_id){
             return response([
                 "status" => "error", 
                 "message" => "Session closed. You have to login again."
