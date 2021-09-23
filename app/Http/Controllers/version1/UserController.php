@@ -282,9 +282,11 @@ class UserController extends Controller
         } 
 
         // CHECKING IF REFERRER USERNAME IS REAL
-        if(empty($validatedData["user_referred_by"]) || $this->pottnameIsAvailable($validatedData["user_referred_by"])){
+        if(empty($request->user_referred_by) || $this->pottnameIsAvailable($request->user_referred_by)){
             $validatedData["user_referred_by"] = "";
-        } 
+        } else {
+            $validatedData["user_referred_by"] = $request->user_referred_by;
+        }
 
 
         //GETTING COUNTRY ID
@@ -448,9 +450,11 @@ class UserController extends Controller
         } 
 
         // CHECKING IF REFERRER USERNAME IS REAL
-        if(empty($validatedData["user_referred_by"]) || $this->pottnameIsAvailable($validatedData["user_referred_by"])){
+        if(empty($request->user_referred_by) || $this->pottnameIsAvailable($request->user_referred_by)){
             $validatedData["user_referred_by"] = "";
-        } 
+        } else {
+            $validatedData["user_referred_by"] = $request->user_referred_by;
+        }
 
 
         //GETTING COUNTRY ID
