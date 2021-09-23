@@ -661,7 +661,7 @@ class UserController extends Controller
             "access_token" => $accessToken,
             "user_pott_name" => $user->user_pottname,
             "user_full_name" => $user->user_firstname . " " . $user->user_surname,
-            "user_profile_picture" => "",
+            "user_profile_picture" => config('app.url') . '/uploads/images/' . $user->user_profile_picture,
             "user_country" => $country->country_real_name,
             "user_verified_status" => 0,
             "user_type" => "Investor",
@@ -752,7 +752,6 @@ class UserController extends Controller
         } else if($request->app_type == "IOS"){
             $user->user_ios_app_version_code = $validatedData["app_version_code"];
         }
-        $user->save();    
 
 
         // CHECKING IF REQUEST HAS THE IMAGE FILE
@@ -764,7 +763,7 @@ class UserController extends Controller
         }
     
         // CHECKING IF POTT PICTURE IS UPLOADED CORRECTLY AND IS THE RIGHT FORMAT
-        if(!$request->file('pott_picture')->isValid() || (strtolower($request->file->getMimeType())  !=  "png" && strtolower($request->file->getMimeType())  !=  "jpg" && strtolower($request->file->getMimeType())  !=  "jpeg")) {
+        if(!$request->file('pott_picture')->isValid() || (strtolower($request->file('pott_picture')->getMimeType())  !=  "image/png" && strtolower($request->file('pott_picture')->getMimeType())  !=  "image/jpg" && strtolower($request->file('pott_picture')->getMimeType())  !=  "image/jpeg")) {
             return response([
                 "status" => "error", 
                 "message" => "Image has to be JPG or PNG"
@@ -772,7 +771,7 @@ class UserController extends Controller
         }
 
         // CHECKING THAT IMAGE IS NOT MORE THAN 5MB
-        if($request->file('file')->getSize() > (5 * intval(config('app.mb')))){
+        if($request->file('pott_picture')->getSize() > (5 * intval(config('app.mb')))){
             return response([
                 "status" => "error", 
                 "message" => "Image cannot be more than 5 MB"
@@ -785,8 +784,8 @@ class UserController extends Controller
         }
 
         $img_path = public_path() . '/uploads/images/';
-        $img_ext = auth()->user()->user_id . uniqid() . date("Y-m-d-H-i-s") . "." . strtolower($request->file->getMimeType());
-        $img_url = config('app.url') . '/uploads/images/' . img_ext;
+        $img_ext = auth()->user()->user_id . uniqid() . date("Y-m-d-H-i-s") . "." . strtolower($request->file('pott_picture')->extension());
+        $img_url = config('app.url') . '/uploads/images/' . $img_ext;
     
         if(!$request->file('pott_picture')->move($img_path, $img_ext)){
             return response([
@@ -795,6 +794,11 @@ class UserController extends Controller
             ]);
         }
     
+        // SAVING CHANGES MADE TO THE USER
+        $user->user_profile_picture = $img_ext;    
+
+        $user->save();    
+
         return response([
             "status" => "yes", 
             "message" => "Upload complete",
