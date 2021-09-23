@@ -375,7 +375,7 @@ class UserController extends Controller
             "user_date_of_birth" => $user1->user_dob,
             "user_currency" => "USD",
             "force_update_status" => config('app.androidforceupdatetomaxvc'),
-            "media_allowed" => boolval(config('app.canpostpicsandvids')),
+            "media_allowed" => intval(config('app.canpostpicsandvids')),
             "user_android_app_max_vc" => intval(config('app.androidmaxvc')),
             "user_android_app_force_update" => boolval(config('app.androidforceupdatetomaxvc')),
             "phone_verification_is_on" => boolval(config('app.phoneverificationrequiredstatus')),
@@ -543,7 +543,7 @@ class UserController extends Controller
             "user_currency" => "USD",
             "highest_version_code" => config('app.androidmaxvc'),
             "force_update_status" => config('app.androidforceupdatetomaxvc'),
-            "media_allowed" => boolval(config('app.canpostpicsandvids')),
+            "media_allowed" => intval(config('app.canpostpicsandvids')),
             "user_android_app_max_vc" => intval(config('app.androidmaxvc')),
             "user_android_app_force_update" => boolval(config('app.androidforceupdatetomaxvc')),
             "phone_verification_is_on" => boolval(config('app.phoneverificationrequiredstatus')),
@@ -600,7 +600,7 @@ class UserController extends Controller
         // CHECKING IF USER FLAGGED
         if (auth()->user()->user_flagged) {
             return response([
-                "status" => "error", 
+                "status" => "0", 
                 "message" => "Account access restricted"
             ]);
         }
@@ -674,7 +674,8 @@ class UserController extends Controller
             "user_date_of_birth" => $user->user_dob,
             "user_currency" => "USD",
             "force_update_status" => config('app.androidforceupdatetomaxvc'),
-            "media_allowed" => boolval(config('app.canpostpicsandvids')),
+            "id_verification_is_on" => boolval(config('app.idverificationrequiredstatus')),
+            "media_allowed" => intval(config('app.canpostpicsandvids')),
             "user_android_app_max_vc" => intval(config('app.androidmaxvc')),
             "user_android_app_force_update" => boolval(config('app.androidforceupdatetomaxvc')),
             "phone_verification_is_on" => boolval(config('app.phoneverificationrequiredstatus')),
@@ -808,7 +809,7 @@ class UserController extends Controller
             "pott_pic_path" => $img_url, 
             "government_verification_is_on" => false,
             "force_update_status" => config('app.androidforceupdatetomaxvc'),
-            "media_allowed" => boolval(config('app.canpostpicsandvids')),
+            "media_allowed" => intval(config('app.canpostpicsandvids')),
             "user_android_app_max_vc" => intval(config('app.androidmaxvc')),
             "user_android_app_force_update" => boolval(config('app.androidforceupdatetomaxvc')),
             "phone_verification_is_on" => boolval(config('app.phoneverificationrequiredstatus'))

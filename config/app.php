@@ -18,7 +18,7 @@ return [
     'idverificationrequiredstatus' => env('ID_VERIFICATION_REQUIRED_STATUS', false),
 
     // USER CAN POST PICTURES AND VIDEOS
-    'canpostpicsandvids' => env('CAN_POST_PICS_AND_VIDS', false),
+    'canpostpicsandvids' => env('CAN_POST_PICS_AND_VIDS', 0),
 
     // MTN GHANA MOBILE MONEY ACCOUNT
     'mtnghanamomonum' => env('MTN_GHANA_MOMO_NUM', '0553663643'),
