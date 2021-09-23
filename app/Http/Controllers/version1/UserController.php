@@ -758,7 +758,6 @@ class UserController extends Controller
             $user->user_ios_app_version_code = $validatedData["app_version_code"];
         }
 
-
         // CHECKING IF REQUEST HAS THE IMAGE FILE
         if(!$request->hasFile('pott_picture')) {
             return response([
@@ -801,7 +800,6 @@ class UserController extends Controller
     
         // SAVING CHANGES MADE TO THE USER
         $user->user_profile_picture = $img_ext;    
-
         $user->save();    
 
         return response([
