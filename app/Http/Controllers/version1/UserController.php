@@ -651,7 +651,7 @@ class UserController extends Controller
 
         // CHECKING IF PROFILE PICTURE EXISTS
         $img_url = config('app.url') . '/uploads/images/' . $user->user_profile_picture;
-        if(!empty($user->user_profile_picture) && !file_exists(public_path() . '/uploads/images/' . $user->user_profile_picture)){
+        if(empty($user->user_profile_picture) || !file_exists(public_path() . '/uploads/images/' . $user->user_profile_picture)){
             $img_url = "";
         }
 
