@@ -649,7 +649,7 @@ class UserController extends Controller
         $user->save();    
 
         // GENERATING USER ACCESS TOKEN
-        $accessToken = auth()->user()->createToken("authToken", [auth()->user()->user_scope])->accessToken;
+        $accessToken = auth()->user()->createToken("authToken", ["view-info get-stock-suggestions answer-questions buy-stock-suggested trade-stocks"])->accessToken;
 
 
         return response([
@@ -699,7 +699,7 @@ class UserController extends Controller
         }
     
         // CHECKING THAT USER TOKEN HAS THE RIGHT PERMISSION
-        if (!$request->user()->tokenCan('view-info')) {
+        if (!auth()->user()->tokenCan('view-info')) {
             return response([
                 "status" => "error", 
                 "message" => "You do not have permission"
