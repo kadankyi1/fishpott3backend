@@ -356,7 +356,7 @@ class UserController extends Controller
         $user1 = User::create($userData);
         
         // GENERATING THE ACCESS TOKEN FOR THE REGISTERED USER
-        $accessToken = $user1->createToken("authToken")->accessToken;
+        $accessToken = $user1->createToken("authToken", ["view-info get-stock-suggestions answer-questions buy-stock-suggested trade-stocks"])->accessToken;
 
 
         return response([
@@ -522,7 +522,8 @@ class UserController extends Controller
         $user1 = User::create($userData);
         
         // GENERATING THE ACCESS TOKEN FOR THE REGISTERED USER
-        $accessToken = $user1->createToken("authToken")->accessToken;
+        //$accessToken = $user1->createToken("authToken")->accessToken;
+        $accessToken = $user1->createToken("authToken", ["view-info get-stock-suggestions answer-questions buy-stock-suggested trade-stocks"])->accessToken;
 
 
         return response([
@@ -699,7 +700,7 @@ class UserController extends Controller
         }
     
         // CHECKING THAT USER TOKEN HAS THE RIGHT PERMISSION
-        if (!auth()->user()->tokenCan('view-info')) {
+        if (!$request->user()->tokenCan('view-info')) {
             return response([
                 "status" => "error", 
                 "message" => "You do not have permission"
