@@ -25,3 +25,6 @@ Route::post('/v1/user/register-business',[App\Http\Controllers\version1\UserCont
 
 // LOGIN
 Route::post('/v1/user/login',[App\Http\Controllers\version1\UserController::class, 'login']);
+
+// UPLOAD PROFILE PICTURE
+Route::post('/v1/user/upload-pott-pic',[App\Http\Controllers\version1\UserController::class, 'uploadProfilePicture']);
