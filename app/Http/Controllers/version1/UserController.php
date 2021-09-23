@@ -8,9 +8,17 @@ use App\Models\version1\User;
 use App\Models\version1\Gender;
 use App\Models\version1\Country;
 use App\Models\version1\Language;
+use Illuminate\Support\Facades\File; 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
+
+
+ini_set('memory_limit','1024M');
+ini_set("upload_max_filesize","100M");
+ini_set("max_execution_time",60000); //--- 10 minutes
+ini_set("post_max_size","135M");
+ini_set("file_uploads","On");
 
 class UserController extends Controller
 {
@@ -547,7 +555,7 @@ class UserController extends Controller
         ]);
     }
 
-        /*
+    /*
     |--------------------------------------------------------------------------
     |--------------------------------------------------------------------------
     | THIS FUNCTION REGISTES A USER AND PROVIDES THEM WITH AN ACCESS TOKEN
@@ -670,6 +678,149 @@ class UserController extends Controller
             "vodafone_momo_acc_name" => config('app.vodafoneghanamomoaccname'), // VODAFONE-GHANA ACCOUNT NAME ON MOBILE MONEY
             "airteltigo_momo_number" => config('app.airteltigoghanamomonum'), // AIRTELTIGO-GHANA MOBILE MONEY NUMBER
             "airteltigo_momo_acc_name" => config('app.airteltigoghanamomoaccname') // AIRTELTIGO-GHANA ACCOUNT NAME ON MOBILE MONEY
+        ]);
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    |--------------------------------------------------------------------------
+    | THIS FUNCTION ALLOWS USERS TO UPLOAD A PROFILE PICTURE
+    |--------------------------------------------------------------------------
+    |--------------------------------------------------------------------------
+    */
+    public function uploadProfilePicture(Request $request)
+    {
+        // CHECKING THAT THE REQUEST FROM THE USER HAS A VALID TOKEN
+        if (!Auth::guard('api')->check()) {
+            return response([
+                "status" => "error", 
+                "message" => "Session closed. You have to login again"
+            ]);
+        }
+    
+        // CHECKING THAT USER TOKEN HAS THE RIGHT PERMISSION
+        if (!$request->user()->tokenCan('view-info')) {
+            return response([
+                "status" => "error", 
+                "message" => "You do not have permission"
+            ]);
+        }
+    
+        // CHECKING IF USER FLAGGED
+        if (auth()->user()->user_flagged) {
+            $request->user()->token()->revoke();
+            return response([
+                "status" => "error", 
+                "message" => "Account flagged."
+            ]);
+         }
+    
+        // MAKING SURE THE INPUT HAS THE EXPECTED VALUES
+        $validatedData = $request->validate([
+            "user_phone_number" => "bail|required|regex:/^\+\d{10,15}$/|min:10|max:15",
+            "access_token" => "bail|required",
+            "investor_id" => "bail|required",
+            "pott_picture" => "bail|required",
+            "user_language" => "bail|required|max:3",
+            "app_type" => "bail|required|max:8",
+            "app_version_code" => "bail|required|integer"
+        ]);
+
+        // MAKING SURE VERSION CODE IS ALLOWED
+        if(
+            $request->app_type == "ANDROID" && 
+            ($request->app_version_code < intval(config('app.androidminvc')) || $request->app_version_code > intval(config('app.androidmaxvc')))
+        ){
+            return response([
+                "status" => "error", 
+                "message" => "Please update your app from the Google Play Store."
+            ]);
+        }
+
+        // VALIDATING USER CREDENTIALS
+        if (!auth()->attempt($loginData)) {
+            return response([
+                "status" => "error", 
+                "message" => "Invalid Credentials"
+            ]);
+        }
+
+        // CHECKING IF USER FLAGGED
+        if (auth()->user()->user_flagged) {
+            return response([
+                "status" => "error", 
+                "message" => "Account access restricted"
+            ]);
+        }
+        
+        // GETTING USER
+        $user = User::where('user_pottname', auth()->user()->user_pottname)->where('user_phone_number', $request->user_phone_number)->where('investor_id', $request->investor_id)->get();
+        if($user == null){
+            return response([
+                "status" => "error", 
+                "message" => "Session closed. You have to login again."
+            ]);
+        }
+
+        // SAVING APP TYPE VERSION CODE
+        if($request->app_type == "ANDROID"){
+            $user->user_android_app_version_code = $validatedData["app_version_code"];
+        } else if($request->app_type == "IOS"){
+            $user->user_ios_app_version_code = $validatedData["app_version_code"];
+        }
+        $user->save();    
+
+
+        // CHECKING IF REQUEST HAS THE IMAGE FILE
+        if(!$request->hasFile('pott_picture')) {
+            return response([
+                "status" => "error", 
+                "message" => "Image not found"
+            ]);
+        }
+    
+        // CHECKING IF POTT PICTURE IS UPLOADED CORRECTLY AND IS THE RIGHT FORMAT
+        if(!$request->file('pott_picture')->isValid() || (strtolower($request->file->getMimeType())  !=  "png" && strtolower($request->file->getMimeType())  !=  "jpg" && strtolower($request->file->getMimeType())  !=  "jpeg")) {
+            return response([
+                "status" => "error", 
+                "message" => "Image has to be JPG or PNG"
+            ]);
+        }
+
+        // CHECKING THAT IMAGE IS NOT MORE THAN 5MB
+        if($request->file('file')->getSize() > (5 * intval(config('app.mb')))){
+            return response([
+                "status" => "error", 
+                "message" => "Image cannot be more than 5 MB"
+            ]);
+        }
+
+        //DELETING THE OLD PROFILE PHOTO
+        if(auth()->user()->user_profile_picture != ""){
+            File::delete(public_path() . '/uploads/images/' . auth()->user()->user_profile_picture);
+        }
+
+        $img_path = public_path() . '/uploads/images/';
+        $img_ext = auth()->user()->user_id . uniqid() . date("Y-m-d-H-i-s") . "." . strtolower($request->file->getMimeType());
+        $img_url = config('app.url') . '/uploads/images/' . img_ext;
+    
+        if(!$request->file('pott_picture')->move($img_path, $img_ext)){
+            return response([
+                "status" => "error", 
+                "message" => "Image upload failed"
+            ]);
+        }
+    
+        return response([
+            "status" => "yes", 
+            "message" => "Upload complete",
+            "pott_pic_path" => $img_url, 
+            "government_verification_is_on" => false,
+            "force_update_status" => config('app.androidforceupdatetomaxvc'),
+            "media_allowed" => boolval(config('app.canpostpicsandvids')),
+            "user_android_app_max_vc" => intval(config('app.androidmaxvc')),
+            "user_android_app_force_update" => boolval(config('app.androidforceupdatetomaxvc')),
+            "phone_verification_is_on" => boolval(config('app.phoneverificationrequiredstatus'))
         ]);
     }
 
