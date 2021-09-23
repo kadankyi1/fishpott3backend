@@ -374,7 +374,6 @@ class UserController extends Controller
             "user_gender" => $validatedData["user_gender"],
             "user_date_of_birth" => $user1->user_dob,
             "user_currency" => "USD",
-            "force_update_status" => config('app.androidforceupdatetomaxvc'),
             "media_allowed" => intval(config('app.canpostpicsandvids')),
             "user_android_app_max_vc" => intval(config('app.androidmaxvc')),
             "user_android_app_force_update" => boolval(config('app.androidforceupdatetomaxvc')),
@@ -542,7 +541,6 @@ class UserController extends Controller
             "user_date_of_birth" => $user1->user_dob,
             "user_currency" => "USD",
             "highest_version_code" => config('app.androidmaxvc'),
-            "force_update_status" => config('app.androidforceupdatetomaxvc'),
             "media_allowed" => intval(config('app.canpostpicsandvids')),
             "user_android_app_max_vc" => intval(config('app.androidmaxvc')),
             "user_android_app_force_update" => boolval(config('app.androidforceupdatetomaxvc')),
@@ -653,7 +651,7 @@ class UserController extends Controller
 
         // CHECKING IF PROFILE PICTURE EXISTS
         $img_url = config('app.url') . '/uploads/images/' . $user->user_profile_picture;
-        if(!file_exists(public_path() . '/uploads/images/' . $user->user_profile_picture)){
+        if(!empty($user->user_profile_picture) && !file_exists(public_path() . '/uploads/images/' . $user->user_profile_picture)){
             $img_url = "";
         }
 
@@ -679,7 +677,6 @@ class UserController extends Controller
             "user_gender" => $gender->gender_name,
             "user_date_of_birth" => $user->user_dob,
             "user_currency" => "USD",
-            "force_update_status" => config('app.androidforceupdatetomaxvc'),
             "id_verification_is_on" => boolval($user->user_id_verification_requested),
             "media_allowed" => intval(config('app.canpostpicsandvids')),
             "user_android_app_max_vc" => intval(config('app.androidmaxvc')),
@@ -814,7 +811,6 @@ class UserController extends Controller
             "message" => "Upload complete",
             "pott_pic_path" => $img_url, 
             "government_verification_is_on" => false,
-            "force_update_status" => config('app.androidforceupdatetomaxvc'),
             "media_allowed" => intval(config('app.canpostpicsandvids')),
             "user_android_app_max_vc" => intval(config('app.androidmaxvc')),
             "user_android_app_force_update" => boolval(config('app.androidforceupdatetomaxvc')),
