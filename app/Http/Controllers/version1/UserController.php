@@ -736,32 +736,27 @@ class UserController extends Controller
                 "message" => "Please update your app from the Google Play Store."
             ]);
         }
-
-        // VALIDATING USER CREDENTIALS
-        if (!auth()->attempt($loginData)) {
-            return response([
-                "status" => "error", 
-                "message" => "Invalid Credentials"
-            ]);
-        }
-
-        // CHECKING IF USER FLAGGED
-        if (auth()->user()->user_flagged) {
-            return response([
-                "status" => "error", 
-                "message" => "Account access restricted"
-            ]);
-        }
         
         // GETTING USER
-        $user = User::where('user_pottname', auth()->user()->user_pottname)->where('user_phone_number', $request->user_phone_number)->where('investor_id', $request->investor_id)->get();
+        /*
+        $user = User::where('user_pottname', auth()->user()->user_pottname)->where('user_phone_number', $request->user_phone_number)->where('investor_id', $request->investor_id)->first();
         if($user == null){
             return response([
                 "status" => "error", 
                 "message" => "Session closed. You have to login again."
             ]);
         }
+        */
 
+        $user = User::where('user_pottname', auth()->user()->user_pottname)->first();
+
+        if($user == null || $user->user_phone_number != $request->user_phone_number || $user->investor_id != $request->investor_id){
+            return response([
+                "status" => "error", 
+                "message" => "Session closed. You have to login again."
+            ]);
+        }
+        
         // SAVING APP TYPE VERSION CODE
         if($request->app_type == "ANDROID"){
             $user->user_android_app_version_code = $validatedData["app_version_code"];
