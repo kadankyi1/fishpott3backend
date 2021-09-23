@@ -652,6 +652,11 @@ class UserController extends Controller
         // GENERATING USER ACCESS TOKEN
         $accessToken = auth()->user()->createToken("authToken", ["view-info get-stock-suggestions answer-questions buy-stock-suggested trade-stocks"])->accessToken;
 
+        // CHECKING IF PROFILE PICTURE EXISTS
+        $img_url = config('app.url') . '/uploads/images/' . $user->user_profile_picture;
+        if(!file_exists(public_path() . '/uploads/images/' . $user->user_profile_picture)){
+            $img_url = "";
+        }
 
         return response([
             "status" => "yes", 
@@ -661,7 +666,7 @@ class UserController extends Controller
             "access_token" => $accessToken,
             "user_pott_name" => $user->user_pottname,
             "user_full_name" => $user->user_firstname . " " . $user->user_surname,
-            "user_profile_picture" => config('app.url') . '/uploads/images/' . $user->user_profile_picture,
+            "user_profile_picture" => $img_url,
             "user_country" => $country->country_real_name,
             "user_verified_status" => 0,
             "user_type" => "Investor",
@@ -784,7 +789,7 @@ class UserController extends Controller
         }
 
         $img_path = public_path() . '/uploads/images/';
-        $img_ext = auth()->user()->user_id . uniqid() . date("Y-m-d-H-i-s") . "." . strtolower($request->file('pott_picture')->extension());
+        $img_ext = $user->investor_id . uniqid() . date("Y-m-d-H-i-s") . "." . strtolower($request->file('pott_picture')->extension());
         $img_url = config('app.url') . '/uploads/images/' . $img_ext;
     
         if(!$request->file('pott_picture')->move($img_path, $img_ext)){
