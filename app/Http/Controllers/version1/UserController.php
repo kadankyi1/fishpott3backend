@@ -647,7 +647,6 @@ class UserController extends Controller
         } else if($request->app_type == "IOS"){
             $user->user_ios_app_version_code = $validatedData["app_version_code"];
         }
-        $user->save();    
 
         // GENERATING USER ACCESS TOKEN
         $accessToken = auth()->user()->createToken("authToken", ["view-info get-stock-suggestions answer-questions buy-stock-suggested trade-stocks"])->accessToken;
@@ -657,6 +656,13 @@ class UserController extends Controller
         if(!file_exists(public_path() . '/uploads/images/' . $user->user_profile_picture)){
             $img_url = "";
         }
+
+        // CHECKING ID VERIFICATION
+        if(boolval(config('app.idverificationrequiredstatus'))){
+            $user->user_id_verification_requested = $user->user_id_verification_requested;
+        }
+
+        $user->save();    
 
         return response([
             "status" => "yes", 
@@ -674,7 +680,7 @@ class UserController extends Controller
             "user_date_of_birth" => $user->user_dob,
             "user_currency" => "USD",
             "force_update_status" => config('app.androidforceupdatetomaxvc'),
-            "id_verification_is_on" => boolval(config('app.idverificationrequiredstatus')),
+            "id_verification_is_on" => boolval($user->user_id_verification_requested),
             "media_allowed" => intval(config('app.canpostpicsandvids')),
             "user_android_app_max_vc" => intval(config('app.androidmaxvc')),
             "user_android_app_force_update" => boolval(config('app.androidforceupdatetomaxvc')),
