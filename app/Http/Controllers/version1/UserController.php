@@ -718,7 +718,6 @@ class UserController extends Controller
         // MAKING SURE THE INPUT HAS THE EXPECTED VALUES
         $validatedData = $request->validate([
             "user_phone_number" => "bail|required|regex:/^\+\d{10,15}$/|min:10|max:15",
-            "access_token" => "bail|required",
             "investor_id" => "bail|required",
             "pott_picture" => "bail|required",
             "user_language" => "bail|required|max:3",
