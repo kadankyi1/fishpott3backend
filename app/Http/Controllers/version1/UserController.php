@@ -829,7 +829,7 @@ class UserController extends Controller
     |--------------------------------------------------------------------------
     |--------------------------------------------------------------------------
     */
-    public function s(Request $request)
+    public function getSuggestedPotts(Request $request)
     {
         /*
         |--------------------------------------------------------------------------
