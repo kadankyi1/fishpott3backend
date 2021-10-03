@@ -12,6 +12,8 @@ use App\Mail\version1\ResetCodeMail;
 use Illuminate\Support\Facades\File; 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+
 
 
 
@@ -146,6 +148,7 @@ class UserController extends Controller
     */
     public function stringIsNotMoreThanMaxLength($input, $max_allowed_input_length)
     {
+        $validation = false;
         if($input != "" && $max_allowed_input_length > 0){
             if(strlen($input) > $max_allowed_input_length){
                 $validation = false;

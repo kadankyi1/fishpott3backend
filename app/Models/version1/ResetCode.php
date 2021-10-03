@@ -26,9 +26,9 @@ class ResetCode extends Model
      */
     protected $fillable = [
         'resetcode_id', 
-        'user_investor_id',
         'resetcode',
-        'resetcode_use_status',
+        'resetcode_used_status',
+        'user_investor_id',
         'created_at',
         'updated_at',
     ];

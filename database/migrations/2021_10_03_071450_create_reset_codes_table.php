@@ -21,7 +21,7 @@ class CreateResetCodesTable extends Migration
         });
 
         Schema::table('reset_codes', function (Blueprint $table) {
-            $table->unsignedBigInteger('user_investor_id');
+            $table->string('user_investor_id', 255);
             $table->foreign('user_investor_id')->references('investor_id')->on('users');
         });
 

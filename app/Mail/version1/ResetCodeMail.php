@@ -30,6 +30,6 @@ class ResetCodeMail extends Mailable
      */
     public function build()
     {
-        return $this->markdown('emails.member.resetcode')->with('data', $this->email_data);
+        return $this->markdown('emails.resetcode')->with('data', $this->email_data);
     }
 }
