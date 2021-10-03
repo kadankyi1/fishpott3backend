@@ -3,7 +3,7 @@
 
 
 A password request has been made on your account.
-Use this {{ $data['reset_code'] }} passcode to complete your login.
+Use this {{ $data['reset_code'] }} code to reset your password.
 
 
 
