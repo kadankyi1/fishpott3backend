@@ -752,7 +752,6 @@ class UserController extends Controller
 | THIS FUNCTION VERIFIES THE PASSCODE ENTERED AND UPDATES PASSWORDS
 |--------------------------------------------------------------------------
 |--------------------------------------------------------------------------
-|
 */
 
 public function verify_reset_code(Request $request)

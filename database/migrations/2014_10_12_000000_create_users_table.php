@@ -43,7 +43,6 @@ class CreateUsersTable extends Migration
             $table->boolean('user_id_verified_status')->default(false);
             $table->datetime('user_id_verifcation_date')->nullable();
             $table->boolean('user_id_verification_requested')->default(false);
-            $table->string('user_password_reset_code', 255)->default("");
             $table->datetime('user_last_sms_sent_datetime')->nullable();
             $table->boolean('user_can_post_media')->default(false);
             $table->boolean('user_initial_signup_approved')->default(false);
