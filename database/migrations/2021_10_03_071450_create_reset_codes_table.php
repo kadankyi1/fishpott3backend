@@ -16,7 +16,7 @@ class CreateResetCodesTable extends Migration
         Schema::create('reset_codes', function (Blueprint $table) {
             $table->bigIncrements('resetcode_id');
             $table->string('resetcode', 255);
-            $table->boolean('resetcode_use_status');
+            $table->boolean('resetcode_used_status')->default(false);
             $table->timestamps();
         });
 

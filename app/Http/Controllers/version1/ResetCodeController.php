@@ -25,7 +25,7 @@ class ResetCodeController extends Controller
         $resetcode = new ResetCode();
         $resetcode->user_investor_id = $investor_id;
         $resetcode->resetcode = $thisresetcode;
-        $resetcode->used = false;
+        $resetcode->resetcode_used_status = false;
         $resetcode->save();
 
     }
@@ -37,7 +37,7 @@ class ResetCodeController extends Controller
         $resetcode->user_type = $user_type; 
         $resetcode->user_id = $user_id;
         $resetcode->resetcode = $thisresetcode;
-        $resetcode->used = $used_status;
+        $resetcode->resetcode_used_status = $used_status;
         $resetcode->save();
     }
 }

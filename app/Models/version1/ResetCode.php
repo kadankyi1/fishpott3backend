@@ -2,8 +2,9 @@
 
 namespace App\Models\version1;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class ResetCode extends Model
 {    

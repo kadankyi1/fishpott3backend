@@ -705,7 +705,7 @@ class UserController extends Controller
     |
     */
         
-    public function send_password_reset_code(Request $request)
+    public function sendPasswordResetCode(Request $request)
     {
         $resetcode_controller = new ResetCodeController();
 
@@ -717,10 +717,10 @@ class UserController extends Controller
         ]);
 
         // CHECKING USER
-        $user = User::where('user_pottname', $request->user_pottname)->where('user_phone_number', $request->user_phone_number)->where('user_pottname', $request->investor_id)->first();
+        $user = User::where('user_pottname', $request->user_pottname)->where('user_phone_number', $request->user_phone_number)->where('user_email', $request->user_email)->first();
         if($user === null || $user->user_flagged){
             return response([
-                "status" => 1, 
+                "status" => "yes", 
                 "message" => "If you have an account with us, check your inbox/spam for a reset code to reset your password"
             ]);
         } 
@@ -737,8 +737,8 @@ class UserController extends Controller
         Mail::to($user->user_email)->send(new ResetcodeMail($email_data));
 
         return response([
-            "status" => 1, 
-            "message" => "Reset code has been sent to your email"
+            "status" => "yes", 
+            "message" => "If you have an account with us, check your inbox/spam for a reset code to reset your password"
         ]);
     }
 
