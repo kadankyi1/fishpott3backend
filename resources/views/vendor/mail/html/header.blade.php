@@ -1,8 +1,8 @@
 <tr>
 <td class="header">
 <a href="{{ $url }}" style="display: inline-block;">
-<img src="../../../img/fishpott_icon_circle.png" class="logo" alt="FishPott Logo">
-{{ $slot }}
+<img style="height: 75px; width: 75px; margin-top: -20px;margin-left: -5px;" src="http://fishpott.local/images/fishpott_icon_circle.png" class="logo" alt="FishPott Logo">
+<p style="font-size: 35px; margin-top: 2px; margin-bottom: 0px">{{ $slot }}</p>
 </a>
 </td>
 </tr>

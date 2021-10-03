@@ -2,11 +2,14 @@
 # Password Reset Code
 
 
-A password request has been made on your account.
-Use this {{ $data['reset_code'] }} code to reset your password.
+A password reset request has been made on your account.
+Use 
+<br><h2 style="color: black;">{{ $data['reset_code'] }}</h2>
+
+to reset your password.
 
 
 
-Thanks,<br>
+Thank you,<br>
 {{ config('app.name') }}
 @endcomponent
