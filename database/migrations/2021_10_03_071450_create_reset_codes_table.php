@@ -13,10 +13,6 @@ class CreateResetCodesTable extends Migration
      */
     public function up()
     {
-        Schema::create('reset_codes', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
-        });
     }
 
     /**
@@ -26,6 +22,8 @@ class CreateResetCodesTable extends Migration
      */
     public function down()
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         Schema::dropIfExists('reset_codes');
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 }

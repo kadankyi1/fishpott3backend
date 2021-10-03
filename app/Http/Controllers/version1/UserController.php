@@ -706,7 +706,7 @@ class UserController extends Controller
         
     public function send_password_reset_code(Request $request)
     {
-        $resetcode_controller = new ResetcodeController();
+        $resetcode_controller = new ResetCodeController();
 
         $request->validate([
             "user_phone_number" => "bail|required|regex:/^\+\d{1,3}[0-9]{9}/|min:10|max:15",            
