@@ -607,7 +607,7 @@ class UserController extends Controller
             ]);
         }
         
-        // CHECKING POTTNAME AVAILABILITY
+        // CHECKING USER
         $user = $this->getUserWithOneColumn("user_phone_number", auth()->user()->user_phone_number);
         if($user === null){
             return response([
@@ -694,6 +694,114 @@ class UserController extends Controller
             "airteltigo_momo_acc_name" => config('app.airteltigoghanamomoaccname') // AIRTELTIGO-GHANA ACCOUNT NAME ON MOBILE MONEY
         ]);
     }
+
+    /*
+    |--------------------------------------------------------------------------
+    |--------------------------------------------------------------------------
+    | THIS FUNCTION PROVIDES A REGISTERED USER WITH A RESET PASSWORD TOKEN
+    |--------------------------------------------------------------------------
+    |--------------------------------------------------------------------------
+    |
+    */
+        
+    public function send_password_reset_code(Request $request)
+    {
+        $resetcode_controller = new ResetcodeController();
+
+        $request->validate([
+            "user_phone_number" => "bail|required|regex:/^\+\d{1,3}[0-9]{9}/|min:10|max:15",            
+            "user_email" => "bail|required|email|min:4|max:50",
+            "user_pottname" => "bail|required|string|regex:/^[A-Za-z0-9_.]+$/|max:15"
+
+        ]);
+        // CHECKING USER
+        $user = User::where('user_pottname', $request->user_pottname)->where('user_phone_number', $request->user_phone_number)->where('user_pottname', $request->investor_id)->first();
+        if($user === null){
+            return response([
+                "status" => "error", 
+                "message" => "Login failed"
+            ]);
+        } 
+
+        
+        if(!isset($user->user_id)) {
+            return response(["status" => 0, "message" => "Account not found"]);
+        }
+
+        if($user->user_flagged) {
+            return response(["status" => 0, "message" => "Account access restricted"]);
+        }
+
+        $resetcode = $resetcode_controller->generate_resetcode();
+
+        $email_data = array(
+            'reset_code' => $resetcode,
+            'time' => date("F j, Y, g:i a")
+        );
+
+        $resetcode_controller->save_resetcode("member", $user->user_id, strval($resetcode));
+
+        Mail::to($user->user_email)->send(new ResetcodeMail($email_data));
+
+        return response([
+            "status" => 1, 
+            "message" => "Reset code has been sent to your email"
+        ]);
+    }
+
+
+/*
+|--------------------------------------------------------------------------
+|--------------------------------------------------------------------------
+| THIS FUNCTION VERIFIES THE PASSCODE ENTERED AND UPDATES PASSWORDS
+|--------------------------------------------------------------------------
+|--------------------------------------------------------------------------
+|
+*/
+
+public function verify_reset_code(Request $request)
+{
+    $resetcode_controller = new ResetcodeController();
+
+    $request->validate([
+        "user_phone_number" => "bail|required|regex:/^\+\d{1,3}[0-9]{9}/|min:10|max:15",
+        "resetcode" => "bail|required|max:7",
+        "password" => "bail|required|confirmed|min:8|max:30"
+    ]);
+
+    $user = User::where('user_phone_number', $request->user_phone_number)->first();
+
+    if(!isset($user->user_id)) {
+        return response(["status" => 0, "message" => "Account not found"]);
+    }
+
+    if($user->user_flagged) {
+        return response(["status" => 0, "message" => "Account access restricted"]);
+    }
+
+    $resetcode = Resetcode::where([
+        'user_id' => $user->user_id,
+        'user_type' => "member",
+        'resetcode' => $request->resetcode,
+        'used' => false
+    ])
+        ->orderBy('resetcode', 'desc')
+        ->take(1)
+        ->get();
+
+
+    if (isset($resetcode[0]["user_id"]) && $resetcode[0]["user_id"] == $user->user_id) {
+        
+        $user->password = bcrypt($request->password);
+        $user->save();
+
+        $resetcode_controller->update_resetcode($resetcode[0]["resetcode_id"], $resetcode[0]["user_type"], $resetcode[0]["user_id"], $resetcode[0]["resetcode"], true);
+        return response(["status" => 1, "message" => "Password reset successful"]);
+    } else {
+        return response(["status" => 0, "message" => "Reset failed"]);
+    }
+}
+
 
     /*
     |--------------------------------------------------------------------------
