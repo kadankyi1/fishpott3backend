@@ -11,14 +11,16 @@ class ResetCodeMail extends Mailable
 {
     use Queueable, SerializesModels;
 
+    private $email_data;
+
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($email_data)
     {
-        //
+        $this->email_data = $email_data;
     }
 
     /**
@@ -28,6 +30,6 @@ class ResetCodeMail extends Mailable
      */
     public function build()
     {
-        return $this->view('view.name');
+        return $this->markdown('emails.member.resetcode')->with('data', $this->email_data);
     }
 }
