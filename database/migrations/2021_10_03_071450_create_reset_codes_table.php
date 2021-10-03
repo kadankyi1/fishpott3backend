@@ -13,6 +13,18 @@ class CreateResetCodesTable extends Migration
      */
     public function up()
     {
+        Schema::create('reset_codes', function (Blueprint $table) {
+            $table->bigIncrements('resetcode_id');
+            $table->string('resetcode', 255);
+            $table->boolean('resetcode_use_status');
+            $table->timestamps();
+        });
+
+        Schema::table('reset_codes', function (Blueprint $table) {
+            $table->unsignedBigInteger('user_investor_id');
+            $table->foreign('user_investor_id')->references('investor_id')->on('users');
+        });
+
     }
 
     /**
