@@ -8,6 +8,7 @@ use App\Models\version1\User;
 use App\Models\version1\Gender;
 use App\Models\version1\Country;
 use App\Models\version1\Language;
+use App\Mail\version1\ResetCodeMail;
 use Illuminate\Support\Facades\File; 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -731,7 +732,7 @@ class UserController extends Controller
             'time' => date("F j, Y, g:i a")
         );
 
-        $resetcode_controller->save_resetcode("member", $user->user_id, strval($resetcode));
+        $resetcode_controller->saveResetCode($user->investor_id, strval($resetcode));
 
         Mail::to($user->user_email)->send(new ResetcodeMail($email_data));
 

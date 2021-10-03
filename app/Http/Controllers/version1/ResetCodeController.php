@@ -20,18 +20,17 @@ class ResetCodeController extends Controller
 		return $str;
     }
 
-    public function save_resetcode($user_type, $user_id, $thisresetcode)
+    public function saveResetCode($investor_id, $thisresetcode)
     {
         $resetcode = new ResetCode();
-        $resetcode->user_type = $user_type; 
-        $resetcode->user_id = $user_id;
+        $resetcode->user_investor_id = $investor_id;
         $resetcode->resetcode = $thisresetcode;
         $resetcode->used = false;
         $resetcode->save();
 
     }
 
-    public function update_resetcode($thisresetcode_id, $user_type, $user_id, $thisresetcode, $used_status){
+    public function updateResetCode($thisresetcode_id, $user_type, $user_id, $thisresetcode, $used_status){
 
         $resetcode = ResetCode::find($thisresetcode_id);
         $resetcode->resetcode_id = $thisresetcode_id; 
