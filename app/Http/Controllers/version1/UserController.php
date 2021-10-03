@@ -714,16 +714,16 @@ class UserController extends Controller
             "user_pottname" => "bail|required|string|regex:/^[A-Za-z0-9_.]+$/|max:15"
 
         ]);
+
         // CHECKING USER
         $user = User::where('user_pottname', $request->user_pottname)->where('user_phone_number', $request->user_phone_number)->where('user_pottname', $request->investor_id)->first();
         if($user === null){
             return response([
-                "status" => "error", 
-                "message" => "Login failed"
+                "status" => 1, 
+                "message" => "If you have an account with us, check your inbox/spam for a reset code to reset your password"
             ]);
         } 
 
-        
         if(!isset($user->user_id)) {
             return response(["status" => 0, "message" => "Account not found"]);
         }
