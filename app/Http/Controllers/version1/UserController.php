@@ -717,20 +717,12 @@ class UserController extends Controller
 
         // CHECKING USER
         $user = User::where('user_pottname', $request->user_pottname)->where('user_phone_number', $request->user_phone_number)->where('user_pottname', $request->investor_id)->first();
-        if($user === null){
+        if($user === null || $user->user_flagged){
             return response([
                 "status" => 1, 
                 "message" => "If you have an account with us, check your inbox/spam for a reset code to reset your password"
             ]);
         } 
-
-        if(!isset($user->user_id)) {
-            return response(["status" => 0, "message" => "Account not found"]);
-        }
-
-        if($user->user_flagged) {
-            return response(["status" => 0, "message" => "Account access restricted"]);
-        }
 
         $resetcode = $resetcode_controller->generate_resetcode();
 
