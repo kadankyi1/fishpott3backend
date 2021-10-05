@@ -715,9 +715,22 @@ class UserController extends Controller
         $request->validate([
             "user_phone_number" => "bail|required|regex:/^\+\d{1,3}[0-9]{9}/|min:10|max:15",            
             "user_email" => "bail|required|email|min:4|max:50",
-            "user_pottname" => "bail|required|string|regex:/^[A-Za-z0-9_.]+$/|max:15"
-
+            "user_pottname" => "bail|required|string|regex:/^[A-Za-z0-9_.]+$/|max:15",
+            "user_language" => "bail|required|max:3",
+            "app_type" => "bail|required|max:8",
+            "app_version_code" => "bail|required|integer"
         ]);
+
+        // MAKING SURE VERSION CODE IS ALLOWED
+        if($request->app_type == "ANDROID" && 
+            ($request->app_version_code < intval(config('app.androidminvc')) || $request->app_version_code > intval(config('app.androidmaxvc')))
+        ){
+            return response([
+                "status" => "error", 
+                "message" => "Please update your app from the Google Play Store."
+            ]);
+        }
+
 
         // CHECKING USER
         $user = User::where('user_pottname', $request->user_pottname)->where('user_phone_number', $request->user_phone_number)->where('user_email', $request->user_email)->first();
@@ -756,19 +769,37 @@ class UserController extends Controller
 
 public function verify_reset_code(Request $request)
 {
-    $resetcode_controller = new ResetcodeController();
+    $resetcode_controller = new ResetCodeController();
 
     $request->validate([
-        "user_phone_number" => "bail|required|regex:/^\+\d{1,3}[0-9]{9}/|min:10|max:15",
-        "resetcode" => "bail|required|max:7",
-        "password" => "bail|required|confirmed|min:8|max:30"
+        "user_phone_number" => "bail|required|regex:/^\+\d{1,3}[0-9]{9}/|min:10|max:15",            
+        "user_email" => "bail|required|email|min:4|max:50",
+        "user_pottname" => "bail|required|string|regex:/^[A-Za-z0-9_.]+$/|max:15",
+        "user_language" => "bail|required|max:3",
+        "app_type" => "bail|required|max:8",
+        "app_version_code" => "bail|required|integer"
     ]);
-
-    $user = User::where('user_phone_number', $request->user_phone_number)->first();
-
-    if(!isset($user->user_id)) {
-        return response(["status" => 0, "message" => "Account not found"]);
+    
+    // MAKING SURE VERSION CODE IS ALLOWED
+    if($request->app_type == "ANDROID" && 
+        ($request->app_version_code < intval(config('app.androidminvc')) || $request->app_version_code > intval(config('app.androidmaxvc')))
+    ){
+        return response([
+            "status" => "error", 
+            "message" => "Please update your app from the Google Play Store."
+        ]);
     }
+
+
+    // CHECKING USER
+    $user = User::where('user_pottname', $request->user_pottname)->where('user_phone_number', $request->user_phone_number)->where('user_email', $request->user_email)->first();
+    if($user === null || $user->user_flagged){
+        return response([
+            "status" => "yes", 
+            "message" => "If you have an account with us, check your inbox/spam for a reset code to reset your password"
+        ]);
+    } 
+
 
     if($user->user_flagged) {
         return response(["status" => 0, "message" => "Account access restricted"]);
