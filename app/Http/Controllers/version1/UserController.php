@@ -767,7 +767,7 @@ class UserController extends Controller
 |--------------------------------------------------------------------------
 */
 
-public function verify_reset_code(Request $request)
+public function changePasswordWithResetCode(Request $request)
 {
     $resetcode_controller = new ResetCodeController();
 

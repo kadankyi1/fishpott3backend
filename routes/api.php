@@ -27,6 +27,9 @@ Route::post('/v1/user/login',[App\Http\Controllers\version1\UserController::clas
 // SEND PASSWORD RESET
 Route::post('/v1/user/send-password-reset-code',[App\Http\Controllers\version1\UserController::class, 'sendPasswordResetCode']);
 
+// SEND PASSWORD RESET
+Route::post('/v1/user/change-password-with-reset-code',[App\Http\Controllers\version1\UserController::class, 'changePasswordWithResetCode']);
+
 // UPLOAD PROFILE PICTURE
 Route::middleware('auth:api')->post('/v1/user/upload-pott-pic', [App\Http\Controllers\version1\UserController::class, 'uploadProfilePicture']);
 //Route::middleware('auth:api')->post('/v1/user/upload-pott-pic', 'App\Http\Controllers\version1\UserController@uploadProfilePicture');
