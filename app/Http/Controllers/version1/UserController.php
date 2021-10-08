@@ -834,12 +834,13 @@ public function changePasswordWithResetCode(Request $request)
     $user = User::where('user_phone_number', $request->user_phone_number)->first();
     if($user === null || $user->user_flagged){
         return response([
-            "status" => "yes", 
+            "status" => "error", 
             "message" => "User not found"
         ]);
     } 
 
 
+    //  GETTING THE RESET CODE FROM BASED ON THE USAGE STATUS AND USER INVESTOR ID
     $resetcode = ResetCode::where([
         'user_investor_id' => $user->investor_id,
         'resetcode_used_status' => false,
@@ -847,13 +848,11 @@ public function changePasswordWithResetCode(Request $request)
     ])
     ->orderBy('resetcode', 'desc')->first();
 
-    ;
-    echo "getDateDiff: " . $this->getDateDiff("2021-10-8 12:30:00", "2021-10-8 1:30:00", "minutes"); exit;
 
-    if($resetcode === null || $this->getDateDiff($resetcode->created_at, $this->reformatDate($resetcode->created_at, '+ 15 minutes', 'Y-m-d H:i:s'), "minutes")){
+    if($resetcode === null || $this->getDateDiff($resetcode->created_at, date('Y-m-d H:i:s'), "minutes") > 15){
         return response([
-            "status" => "yes", 
-            "message" => "Reset code not found"
+            "status" => "error", 
+            "message" => "Reset code not found. Please get a new code"
         ]);
     } 
 
