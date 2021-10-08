@@ -834,7 +834,7 @@ public function changePasswordWithResetCode(Request $request)
     $user = User::where('user_phone_number', $request->user_phone_number)->first();
     if($user === null || $user->user_flagged){
         return response([
-            "status" => "error", 
+            "status" => "0", 
             "message" => "User not found"
         ]);
     } 
