@@ -226,9 +226,30 @@ class UserController extends Controller
 
     }
 
+    /*
+    |--------------------------------------------------------------------------
+    |--------------------------------------------------------------------------
+    | THIS FUNCTION GETS OUTPUTS NEW REFORMATED DATE GIVEN A TIME PERIOD
+    |--------------------------------------------------------------------------
+    |--------------------------------------------------------------------------
+    */
+
     public function reformatDate($date, $difference_str, $return_format)
     {
         return date($return_format, strtotime($date. ' ' . $difference_str));
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    |--------------------------------------------------------------------------
+    | THIS FUNCTION GETS DATE DIFFERENCE IN ANY FORMAT
+    |--------------------------------------------------------------------------
+    |--------------------------------------------------------------------------
+    */
+
+    public function getDateDiff()
+    {
+
     }
 
     /*
@@ -814,7 +835,7 @@ public function changePasswordWithResetCode(Request $request)
     ->orderBy('resetcode', 'desc')->first();
 
 
-    if($resetcode === null){
+    if($resetcode === null || $this->getDateDiff($resetcode->created_at, $this->reformatDate($resetcode->created_at, '+ 15 minutes', 'Y-m-d H:i:s'))){
         return response([
             "status" => "yes", 
             "message" => "Reset code not found"
