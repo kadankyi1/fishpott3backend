@@ -8,6 +8,7 @@ use App\Models\version1\User;
 use App\Models\version1\Gender;
 use App\Models\version1\Country;
 use App\Models\version1\Language;
+use App\Models\version1\ResetCode;
 use App\Mail\version1\ResetCodeMail;
 use Illuminate\Support\Facades\File; 
 use Illuminate\Support\Facades\Auth;
@@ -799,15 +800,23 @@ public function changePasswordWithResetCode(Request $request)
         ]);
     } 
 
-    $resetcode = Resetcode::where([
+    $resetcode = ResetCode::where([
         'user_investor_id' => $user->investor_id,
-        'resetcode_used_status' => $request->resetcode,
-        'resetcode' => $request->resetcode,
-        'used' => false
-    ])->orderBy('resetcode', 'desc')->first();
+        'resetcode_used_status' => false,
+        'resetcode' => $request->resetcode
+    ])
+    ->where('DATEDIFF(created_at)<=1')
+    ->orderBy('resetcode', 'desc')->first();
 
-    echo "resetcode: " . $resetcode->resetcode;
 
+    if($resetcode === null || $user->user_flagged){
+        return response([
+            "status" => "yes", 
+            "message" => "Reset code not found"
+        ]);
+    } 
+
+    echo "resetcode: " . $resetcode->resetcode; exit;
 
     if (isset($resetcode[0]["user_id"]) && $resetcode[0]["user_id"] == $user->user_id) {
         
