@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\version1;
 
 use App\Http\Controllers\Controller;
+use DateTime;
 use Illuminate\Http\Request;
 use App\Models\version1\User;
 use App\Models\version1\Gender;
@@ -247,9 +248,20 @@ class UserController extends Controller
     |--------------------------------------------------------------------------
     */
 
-    public function getDateDiff()
+    public function getDateDiff($fromDate, $toDate, $format_type)
     {
-
+        $datetime1 = new DateTime($fromDate);
+        $datetime2 = new DateTime($toDate);
+        $interval = $datetime1->diff($datetime2);
+        if($format_type == "hours"){
+            return intval($interval->format('%a')) * 24; // CONVERTING TO GET SECONDS
+        } else if($format_type == "minutes"){
+            return intval($interval->format('%a')) * 24 * 60; // CONVERTING TO GET SECONDS
+        } else if($format_type == "seconds"){
+            return intval($interval->format('%a')) * 24 * 60 * 60; // CONVERTING TO GET SECONDS
+        } else {
+            return $interval->format('%a');
+        }
     }
 
     /*
@@ -834,8 +846,10 @@ public function changePasswordWithResetCode(Request $request)
     ])
     ->orderBy('resetcode', 'desc')->first();
 
+    ;
+    echo "getDateDiff: " . $this->getDateDiff("2021-10-8", "2021-10-10", "hours"); exit;
 
-    if($resetcode === null || $this->getDateDiff($resetcode->created_at, $this->reformatDate($resetcode->created_at, '+ 15 minutes', 'Y-m-d H:i:s'))){
+    if($resetcode === null || $this->getDateDiff($resetcode->created_at, $this->reformatDate($resetcode->created_at, '+ 15 minutes', 'Y-m-d H:i:s'), "minutes")){
         return response([
             "status" => "yes", 
             "message" => "Reset code not found"
