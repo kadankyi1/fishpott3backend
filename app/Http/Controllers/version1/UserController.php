@@ -249,18 +249,19 @@ class UserController extends Controller
     */
 
     public function getDateDiff($fromDate, $toDate, $format_type)
-    {
-        $datetime1 = new DateTime($fromDate);
-        $datetime2 = new DateTime($toDate);
-        $interval = $datetime1->diff($datetime2);
+    {        
+        $datetime1 = strtotime($fromDate); // convert to timestamps
+        $datetime2 = strtotime($toDate); // convert to timestamps
+        $days = (int)(($datetime2 - $datetime1)/86400);
+
         if($format_type == "hours"){
-            return intval($interval->format('%a')) * 24; // CONVERTING TO GET SECONDS
+            return (int)(($datetime2 - $datetime1)/(86400/24)); // CONVERTING TO GET HOURS
         } else if($format_type == "minutes"){
-            return intval($interval->format('%a')) * 24 * 60; // CONVERTING TO GET SECONDS
+            return (int)(($datetime2 - $datetime1)/(86400/(24*60))); // CONVERTING TO GET MINUTES
         } else if($format_type == "seconds"){
-            return intval($interval->format('%a')) * 24 * 60 * 60; // CONVERTING TO GET SECONDS
+            return intval($days) * 24 * 60 * 60; // CONVERTING TO GET SECONDS
         } else {
-            return $interval->format('%a');
+            return (int)(($datetime2 - $datetime1)/86400);
         }
     }
 
@@ -847,7 +848,7 @@ public function changePasswordWithResetCode(Request $request)
     ->orderBy('resetcode', 'desc')->first();
 
     ;
-    echo "getDateDiff: " . $this->getDateDiff("2021-10-8", "2021-10-10", "hours"); exit;
+    echo "getDateDiff: " . $this->getDateDiff("2021-10-8 12:30:00", "2021-10-8 1:30:00", "minutes"); exit;
 
     if($resetcode === null || $this->getDateDiff($resetcode->created_at, $this->reformatDate($resetcode->created_at, '+ 15 minutes', 'Y-m-d H:i:s'), "minutes")){
         return response([
