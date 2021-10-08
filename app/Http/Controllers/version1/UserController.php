@@ -226,6 +226,11 @@ class UserController extends Controller
 
     }
 
+    public function reformatDate($date, $difference_str, $return_format)
+    {
+        return date($return_format, strtotime($date. ' ' . $difference_str));
+    }
+
     /*
     |--------------------------------------------------------------------------
     |--------------------------------------------------------------------------
@@ -803,7 +808,7 @@ public function changePasswordWithResetCode(Request $request)
     $resetcode = ResetCode::where([
         'user_investor_id' => $user->investor_id,
         'resetcode_used_status' => false,
-        'resetcode' => $request->resetcode
+        'resetcode' => $request->user_password_reset_code
     ])
     ->where('DATEDIFF(created_at)<=1')
     ->orderBy('resetcode', 'desc')->first();
