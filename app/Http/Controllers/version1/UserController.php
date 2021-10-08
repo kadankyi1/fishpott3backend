@@ -796,7 +796,7 @@ public function changePasswordWithResetCode(Request $request)
         ]);
     }
 
-    // CHECKING USER
+    // CHECKING USER IS FOUND
     $user = User::where('user_phone_number', $request->user_phone_number)->first();
     if($user === null || $user->user_flagged){
         return response([
@@ -805,16 +805,16 @@ public function changePasswordWithResetCode(Request $request)
         ]);
     } 
 
+
     $resetcode = ResetCode::where([
         'user_investor_id' => $user->investor_id,
         'resetcode_used_status' => false,
         'resetcode' => $request->user_password_reset_code
     ])
-    ->where('DATEDIFF(created_at)<=1')
     ->orderBy('resetcode', 'desc')->first();
 
 
-    if($resetcode === null || $user->user_flagged){
+    if($resetcode === null){
         return response([
             "status" => "yes", 
             "message" => "Reset code not found"
