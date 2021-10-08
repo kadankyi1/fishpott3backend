@@ -839,7 +839,6 @@ public function changePasswordWithResetCode(Request $request)
         ]);
     } 
 
-
     //  GETTING THE RESET CODE FROM BASED ON THE USAGE STATUS AND USER INVESTOR ID
     $resetcode = ResetCode::where([
         'user_investor_id' => $user->investor_id,
@@ -856,17 +855,22 @@ public function changePasswordWithResetCode(Request $request)
         ]);
     } 
 
-    echo "resetcode: " . $resetcode->resetcode; exit;
-
-    if (isset($resetcode[0]["user_id"]) && $resetcode[0]["user_id"] == $user->user_id) {
+    if (!empty($resetcode->resetcode) && $resetcode->resetcode == $request->user_password_reset_code) {
         
-        $user->password = bcrypt($request->password);
+        // UPDATING RESET CODE USAGE STATUS 
+        $resetcode->resetcode_used_status = false;
+        $resetcode->save();
+
+        // UPDATING THE NEW PASSWORD
+        $user->password = bcrypt($request->user_new_password);
         $user->save();
 
-        $resetcode_controller->update_resetcode($resetcode[0]["resetcode_id"], $resetcode[0]["user_type"], $resetcode[0]["user_id"], $resetcode[0]["resetcode"], true);
-        return response(["status" => 1, "message" => "Password reset successful"]);
+        return response(["status" => 1, "message" => "Password changed successfully"]);
     } else {
-        return response(["status" => 0, "message" => "Reset failed"]);
+        return response([
+            "status" => "error", 
+            "message" => "Reset code not valid. Please get a new code"
+        ]);
     }
 }
 
