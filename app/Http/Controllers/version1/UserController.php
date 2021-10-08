@@ -791,18 +791,13 @@ public function changePasswordWithResetCode(Request $request)
     }
 
     // CHECKING USER
-    $user = User::where('user_phone_number', $request->user_phone_number)->where('', $request->user_phone_number)->where('user_email', $request->user_email)->first();
+    $user = User::where('user_phone_number', $request->user_phone_number)->first();
     if($user === null || $user->user_flagged){
         return response([
             "status" => "yes", 
             "message" => "User not found"
         ]);
     } 
-
-    // MAKING SURE ACCOUNT IS NOT FLAGGED
-    if($user->user_flagged) {
-        return response(["status" => 0, "message" => "Account access restricted"]);
-    }
 
     $resetcode = Resetcode::where([
         'user_investor_id' => $user->investor_id,
