@@ -858,14 +858,17 @@ public function changePasswordWithResetCode(Request $request)
     if (!empty($resetcode->resetcode) && $resetcode->resetcode == $request->user_password_reset_code) {
         
         // UPDATING RESET CODE USAGE STATUS 
-        $resetcode->resetcode_used_status = false;
+        $resetcode->resetcode_used_status = true;
         $resetcode->save();
 
         // UPDATING THE NEW PASSWORD
         $user->password = bcrypt($request->user_new_password);
         $user->save();
 
-        return response(["status" => 1, "message" => "Password changed successfully"]);
+        return response([
+            "status" => "yes", 
+            "message" => "Password changed successfully"
+        ]);
     } else {
         return response([
             "status" => "error", 
