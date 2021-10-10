@@ -1085,7 +1085,7 @@ public function changePasswordWithResetCode(Request $request)
             "investor_id" => "bail|required",
             // ADD ANY OTHER REQUIRED INPUTS FROM HERE
             "suggesto_question" => "bail|required",
-            "suggesto_answers_added" => "bail|required",
+            "suggesto_answers_added" => "bail|required|min:|max:1",
             "investor_id" => "bail|required",
 
             // END OF  OTHER REQUIRED INPUTS FROM HERE
