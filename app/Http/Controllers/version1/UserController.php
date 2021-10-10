@@ -1076,7 +1076,7 @@ public function changePasswordWithResetCode(Request $request)
     {
 /*
 |**************************************************************************
-| VALIDATION STARTS -------------------------------------------------------
+| VALIDATION STARTS 
 |**************************************************************************
 */
         // MAKING SURE THE INPUT HAS THE EXPECTED VALUES
@@ -1096,9 +1096,11 @@ public function changePasswordWithResetCode(Request $request)
         }
 /*
 |**************************************************************************
-| VALIDATION ENDED --------------------------------------------------------
+| VALIDATION ENDED 
 |**************************************************************************
 */
+
+        
 
 
 
