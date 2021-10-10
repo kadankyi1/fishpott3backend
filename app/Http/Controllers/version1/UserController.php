@@ -1074,6 +1074,11 @@ public function changePasswordWithResetCode(Request $request)
 
     public function getSuggesto(Request $request)
     {
+/*
+|**************************************************************************
+| VALIDATION STARTS -------------------------------------------------------
+|**************************************************************************
+*/
         // MAKING SURE THE INPUT HAS THE EXPECTED VALUES
         $validatedData = $request->validate([
             "user_phone_number" => "bail|required|regex:/^\+\d{10,15}$/|min:10|max:15",
@@ -1089,15 +1094,12 @@ public function changePasswordWithResetCode(Request $request)
         } else {
             $user = $validation_response;
         }
+/*
+|**************************************************************************
+| VALIDATION ENDED --------------------------------------------------------
+|**************************************************************************
+*/
 
-
-    
-
-        /*
-        |--------------------------------------------------------------------------
-        |  USER VALIDATION COMPLETED
-        |--------------------------------------------------------------------------
-        */
 
 
         return response([
