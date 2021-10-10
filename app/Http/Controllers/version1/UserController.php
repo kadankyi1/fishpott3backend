@@ -1012,6 +1012,17 @@ public function changePasswordWithResetCode(Request $request)
     |--------------------------------------------------------------------------
     |--------------------------------------------------------------------------
     */
+    public function validateUserWithAuthToken()
+    {
+        // CHECKING THAT THE REQUEST FROM THE USER HAS A VALID TOKEN
+        if (!Auth::guard('api')->check()) {
+            return response([
+                "status" => "error", 
+                "message" => "Session closed. You have to login again"
+            ]); exit;
+        }
+
+    }
     public function sendSuggesto(Request $request)
     {
         /*
@@ -1019,14 +1030,8 @@ public function changePasswordWithResetCode(Request $request)
         |  USER VALIDATION STARTED
         |--------------------------------------------------------------------------
         */
+        $this->validateUserWithAuthToken();
 
-        // CHECKING THAT THE REQUEST FROM THE USER HAS A VALID TOKEN
-        if (!Auth::guard('api')->check()) {
-            return response([
-                "status" => "error", 
-                "message" => "Session closed. You have to login again"
-            ]);
-        }
     
         // CHECKING THAT USER TOKEN HAS THE RIGHT PERMISSION
         if (!$request->user()->tokenCan('view-info')) {
@@ -1044,16 +1049,6 @@ public function changePasswordWithResetCode(Request $request)
                 "message" => "Account flagged."
             ]);
          }
-    
-        // MAKING SURE THE INPUT HAS THE EXPECTED VALUES
-        $validatedData = $request->validate([
-            "user_phone_number" => "bail|required|regex:/^\+\d{10,15}$/|min:10|max:15",
-            "investor_id" => "bail|required",
-            "pott_picture" => "bail|required",
-            "user_language" => "bail|required|max:3",
-            "app_type" => "bail|required|max:8",
-            "app_version_code" => "bail|required|integer"
-        ]);
 
         // MAKING SURE VERSION CODE IS ALLOWED
         if(
@@ -1065,6 +1060,17 @@ public function changePasswordWithResetCode(Request $request)
                 "message" => "Please update your app from the Google Play Store."
             ]);
         }
+    
+        // MAKING SURE THE INPUT HAS THE EXPECTED VALUES
+        $validatedData = $request->validate([
+            "user_phone_number" => "bail|required|regex:/^\+\d{10,15}$/|min:10|max:15",
+            "investor_id" => "bail|required",
+            "pott_picture" => "bail|required",
+            "user_language" => "bail|required|max:3",
+            "app_type" => "bail|required|max:8",
+            "app_version_code" => "bail|required|integer"
+        ]);
+
         
         // GETTING USER
         $user = User::where('user_pottname', auth()->user()->user_pottname)->where('user_phone_number', $request->user_phone_number)->where('investor_id', $request->investor_id)->first();
