@@ -1065,7 +1065,6 @@ public function changePasswordWithResetCode(Request $request)
         $validatedData = $request->validate([
             "user_phone_number" => "bail|required|regex:/^\+\d{10,15}$/|min:10|max:15",
             "investor_id" => "bail|required",
-            "pott_picture" => "bail|required",
             "user_language" => "bail|required|max:3",
             "app_type" => "bail|required|max:8",
             "app_version_code" => "bail|required|integer"
