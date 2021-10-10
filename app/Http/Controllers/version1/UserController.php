@@ -268,6 +268,65 @@ class UserController extends Controller
     /*
     |--------------------------------------------------------------------------
     |--------------------------------------------------------------------------
+    | THIS FUNCTION VALIDATES A REQUEST AND THE USER MAKING IT
+    |--------------------------------------------------------------------------
+    |--------------------------------------------------------------------------
+    */
+
+    public function validateUserWithAuthToken($request, $user)
+    {
+        // CHECKING IF USER FLAGGED
+        if ($user->user_flagged) {
+            $request->user()->token()->revoke();
+            return [
+                "status" => "error", 
+                "message" => "Account flagged."
+            ]; 
+         }
+
+        // CHECKING THAT USER TOKEN HAS THE RIGHT PERMISSION
+        if (!$request->user()->tokenCan('view-info')) {
+            return [
+                "status" => "error", 
+                "message" => "You do not have permission"
+            ];
+        }
+
+        // MAKING SURE VERSION CODE IS ALLOWED
+        if(
+            strtoupper($request->app_type) == "ANDROID" && 
+            (intval($request->app_version_code) < intval(config('app.androidminvc')) || $request->app_version_code > intval(config('app.androidmaxvc')))
+        ){
+            return [
+                "status" => "error", 
+                "message" => "Please update your app from the Google Play Store."
+            ]; exit;
+        }
+
+        // GETTING USER
+        $user = User::where('user_pottname', $user->user_pottname)->where('user_phone_number', $request->user_phone_number)->where('investor_id', $request->investor_id)->first();
+        if($user == null){
+            return [
+                "status" => "error", 
+                "message" => "Session closed. You have to login again."
+            ]; exit;
+        }
+
+        // SAVING APP TYPE VERSION CODE
+        if($request->app_type == "ANDROID"){
+            $user->user_android_app_version_code = $request->app_version_code;
+        } else if($request->app_type == "IOS"){
+            $user->user_ios_app_version_code = $request->app_version_code;
+        }
+        // SAVING CHANGES MADE TO THE USER
+        $user->save();    
+        
+        return $user;
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    |--------------------------------------------------------------------------
     | THIS FUNCTION REGISTES A USER AND PROVIDES THEM WITH AN ACCESS TOKEN
     |--------------------------------------------------------------------------
     |--------------------------------------------------------------------------
@@ -1012,55 +1071,9 @@ public function changePasswordWithResetCode(Request $request)
     |--------------------------------------------------------------------------
     |--------------------------------------------------------------------------
     */
-    public function validateUserWithAuthToken()
-    {
-        // CHECKING THAT THE REQUEST FROM THE USER HAS A VALID TOKEN
-        if (!Auth::guard('api')->check()) {
-            return response([
-                "status" => "error", 
-                "message" => "Session closed. You have to login again"
-            ]); exit;
-        }
 
-    }
     public function getSuggesto(Request $request)
     {
-        /*
-        |--------------------------------------------------------------------------
-        |  USER VALIDATION STARTED
-        |--------------------------------------------------------------------------
-        */
-        $this->validateUserWithAuthToken();
-
-    
-        // CHECKING THAT USER TOKEN HAS THE RIGHT PERMISSION
-        if (!$request->user()->tokenCan('view-info')) {
-            return response([
-                "status" => "error", 
-                "message" => "You do not have permission"
-            ]);
-        }
-    
-        // CHECKING IF USER FLAGGED
-        if (auth()->user()->user_flagged) {
-            $request->user()->token()->revoke();
-            return response([
-                "status" => "error", 
-                "message" => "Account flagged."
-            ]);
-         }
-
-        // MAKING SURE VERSION CODE IS ALLOWED
-        if(
-            $request->app_type == "ANDROID" && 
-            ($request->app_version_code < intval(config('app.androidminvc')) || $request->app_version_code > intval(config('app.androidmaxvc')))
-        ){
-            return response([
-                "status" => "error", 
-                "message" => "Please update your app from the Google Play Store."
-            ]);
-        }
-    
         // MAKING SURE THE INPUT HAS THE EXPECTED VALUES
         $validatedData = $request->validate([
             "user_phone_number" => "bail|required|regex:/^\+\d{10,15}$/|min:10|max:15",
@@ -1069,23 +1082,16 @@ public function changePasswordWithResetCode(Request $request)
             "app_type" => "bail|required|max:8",
             "app_version_code" => "bail|required|integer"
         ]);
+        // MAKING SURE THE REQUEST AND USER IS VALIDATED
+        $validation_response = $this->validateUserWithAuthToken($request, auth()->user());
+        if(!empty($validation_response["status"]) && trim($validation_response["status"]) == "error"){
+            return response($validation_response);
+        } else {
+            $user = $validation_response;
+        }
 
-        
-        // GETTING USER
-        $user = User::where('user_pottname', auth()->user()->user_pottname)->where('user_phone_number', $request->user_phone_number)->where('investor_id', $request->investor_id)->first();
-        if($user == null){
-            return response([
-                "status" => "error", 
-                "message" => "Session closed. You have to login again."
-            ]);
-        }
-        
-        // SAVING APP TYPE VERSION CODE
-        if($request->app_type == "ANDROID"){
-            $user->user_android_app_version_code = $validatedData["app_version_code"];
-        } else if($request->app_type == "IOS"){
-            $user->user_ios_app_version_code = $validatedData["app_version_code"];
-        }
+
+    
 
         /*
         |--------------------------------------------------------------------------
@@ -1093,30 +1099,10 @@ public function changePasswordWithResetCode(Request $request)
         |--------------------------------------------------------------------------
         */
 
-    
-    
-        // SAVING CHANGES MADE TO THE USER
-        $user->user_profile_picture = $img_ext;    
-        $user->save();    
-
-        // SAVING THIS POTT INFORMATION AS WE LOOP
-        $next  = array(
-            'pot_name' => $pot_name, 
-            'fullname' => $fullname, 
-            'profile_picture' => $profile_picture,  
-            'verified_tag' => $verified_tag, 
-            'investor_id' => $investor_id, 
-            'account_type' => $account_type,
-            'fetch_reason' => $fetch_reason
-            );
-        array_push($pott_suggestions, $next); 
-        
-
 
         return response([
             "status" => "yes", 
             "message" => "Upload complete",
-            "linkups_suggestions_returned" => $img_url, 
             "government_verification_is_on" => false,
             "media_allowed" => intval(config('app.canpostpicsandvids')),
             "user_android_app_max_vc" => intval(config('app.androidmaxvc')),
