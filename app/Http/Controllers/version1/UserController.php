@@ -1005,14 +1005,14 @@ public function changePasswordWithResetCode(Request $request)
         ]);
     }
 
-        /*
+    /*
     |--------------------------------------------------------------------------
     |--------------------------------------------------------------------------
-    | THIS FUNCTION ALLOWS USERS TO UPLOAD A PROFILE PICTURE
+    | THIS FUNCTION SENDS A SUGGESTO - WHICH IS A WEALTH GENERATING SUGGESTION
     |--------------------------------------------------------------------------
     |--------------------------------------------------------------------------
     */
-    public function getSuggestedPotts(Request $request)
+    public function sendSuggesto(Request $request)
     {
         /*
         |--------------------------------------------------------------------------
