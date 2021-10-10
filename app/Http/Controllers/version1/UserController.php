@@ -1023,7 +1023,7 @@ public function changePasswordWithResetCode(Request $request)
         }
 
     }
-    public function sendSuggesto(Request $request)
+    public function getSuggesto(Request $request)
     {
         /*
         |--------------------------------------------------------------------------
