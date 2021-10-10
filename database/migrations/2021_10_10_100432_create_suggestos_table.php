@@ -28,6 +28,7 @@ class CreateSuggestosTable extends Migration
             $table->timestamps();
         });
         
+
         Schema::table('suggestos', function (Blueprint $table) {
             $table->string('suggesto_maker_investor_id', 255);
             $table->foreign('suggesto_maker_investor_id')->references('investor_id')->on('users');

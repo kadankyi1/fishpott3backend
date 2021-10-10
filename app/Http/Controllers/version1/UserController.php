@@ -1064,6 +1064,73 @@ public function changePasswordWithResetCode(Request $request)
         ]);
     }
 
+        /*
+    |--------------------------------------------------------------------------
+    |--------------------------------------------------------------------------
+    | THIS FUNCTION ADDS A SUGGESTO
+    |--------------------------------------------------------------------------
+    |--------------------------------------------------------------------------
+    */
+
+    public function addSuggesto(Request $request)
+    {
+        /*
+        |**************************************************************************
+        | VALIDATION STARTS 
+        |**************************************************************************
+        */
+        // MAKING SURE THE INPUT HAS THE EXPECTED VALUES
+        $validatedData = $request->validate([
+            "user_phone_number" => "bail|required|regex:/^\+\d{10,15}$/|min:10|max:15",
+            "investor_id" => "bail|required",
+            // ADD ANY OTHER REQUIRED INPUTS FROM HERE
+            "suggesto_question" => "bail|required",
+            "suggesto_answers_added" => "bail|required",
+            "investor_id" => "bail|required",
+
+            // END OF  OTHER REQUIRED INPUTS FROM HERE
+            "investor_id" => "bail|required",
+            "user_language" => "bail|required|max:3",
+            "app_type" => "bail|required|max:8",
+            "app_version_code" => "bail|required|integer"
+        ]);
+        // MAKING SURE THE REQUEST AND USER IS VALIDATED
+        $validation_response = $this->validateUserWithAuthToken($request, auth()->user());
+        if(!empty($validation_response["status"]) && trim($validation_response["status"]) == "error"){
+            return response($validation_response);
+        } else {
+            $user = $validation_response;
+        }
+        /*
+        |**************************************************************************
+        | VALIDATION ENDED 
+        |**************************************************************************
+        */
+
+        'suggesto_id', 
+        'suggesto_sys_id', 
+        'suggesto_question',
+        'suggesto_answer_1',
+        'suggesto_answer_2',
+        'suggesto_answer_3',
+        'suggesto_answer_4',
+        'suggesto_answer_implied_traits_1',
+        'suggesto_answer_implied_traits_2',
+        'suggesto_answer_implied_traits_3',
+        'suggesto_answer_implied_traits_4',
+        'suggesto_maker_investor_id',
+
+        return response([
+            "status" => "yes", 
+            "message" => "Upload complete",
+            "government_verification_is_on" => false,
+            "media_allowed" => intval(config('app.canpostpicsandvids')),
+            "user_android_app_max_vc" => intval(config('app.androidmaxvc')),
+            "user_android_app_force_update" => boolval(config('app.androidforceupdatetomaxvc')),
+            "phone_verification_is_on" => boolval(config('app.phoneverificationrequiredstatus'))
+        ]);
+    }
+
     /*
     |--------------------------------------------------------------------------
     |--------------------------------------------------------------------------
@@ -1074,11 +1141,11 @@ public function changePasswordWithResetCode(Request $request)
 
     public function getSuggesto(Request $request)
     {
-/*
-|**************************************************************************
-| VALIDATION STARTS 
-|**************************************************************************
-*/
+        /*
+        |**************************************************************************
+        | VALIDATION STARTS 
+        |**************************************************************************
+        */
         // MAKING SURE THE INPUT HAS THE EXPECTED VALUES
         $validatedData = $request->validate([
             "user_phone_number" => "bail|required|regex:/^\+\d{10,15}$/|min:10|max:15",
@@ -1094,15 +1161,11 @@ public function changePasswordWithResetCode(Request $request)
         } else {
             $user = $validation_response;
         }
-/*
-|**************************************************************************
-| VALIDATION ENDED 
-|**************************************************************************
-*/
-
-        
-
-
+        /*
+        |**************************************************************************
+        | VALIDATION ENDED 
+        |**************************************************************************
+        */
 
         return response([
             "status" => "yes", 
@@ -1114,7 +1177,4 @@ public function changePasswordWithResetCode(Request $request)
             "phone_verification_is_on" => boolval(config('app.phoneverificationrequiredstatus'))
         ]);
     }
-
-
-
 }
