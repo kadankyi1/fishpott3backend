@@ -1090,7 +1090,6 @@ public function changePasswordWithResetCode(Request $request)
             "app_version_code" => "bail|required|integer",
             // ADD ANY OTHER REQUIRED INPUTS FROM HERE
             "suggesto_question" => "bail|required|max:100",
-            "suggesto_answers_added" => "required|integer|between:0,1",
             "suggesto_answer_1" => "max:100",
             "suggesto_answer_2" => "max:100",
             "suggesto_answer_3" => "max:100",
