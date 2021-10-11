@@ -11,6 +11,7 @@ use App\Models\version1\Country;
 use App\Models\version1\Language;
 use App\Models\version1\ResetCode;
 use App\Mail\version1\ResetCodeMail;
+use App\Models\version1\Suggesto;
 use Illuminate\Support\Facades\File; 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -1064,7 +1065,7 @@ public function changePasswordWithResetCode(Request $request)
         ]);
     }
 
-        /*
+    /*
     |--------------------------------------------------------------------------
     |--------------------------------------------------------------------------
     | THIS FUNCTION ADDS A SUGGESTO
@@ -1083,17 +1084,19 @@ public function changePasswordWithResetCode(Request $request)
         $validatedData = $request->validate([
             "user_phone_number" => "bail|required|regex:/^\+\d{10,15}$/|min:10|max:15",
             "investor_id" => "bail|required",
-            // ADD ANY OTHER REQUIRED INPUTS FROM HERE
-            "suggesto_question" => "bail|required",
-            "suggesto_answers_added" => "bail|required|min:|max:1",
-            "investor_id" => "bail|required",
-
-            // END OF  OTHER REQUIRED INPUTS FROM HERE
             "investor_id" => "bail|required",
             "user_language" => "bail|required|max:3",
             "app_type" => "bail|required|max:8",
-            "app_version_code" => "bail|required|integer"
+            "app_version_code" => "bail|required|integer",
+            // ADD ANY OTHER REQUIRED INPUTS FROM HERE
+            "suggesto_question" => "bail|required",
+            "suggesto_answers_added" => "required|integer|between:0,1",
+            "suggesto_answer_1" => "",
+            "suggesto_answer_2" => "",
+            "suggesto_answer_3" => "",
+            "suggesto_answer_4" => ""
         ]);
+
         // MAKING SURE THE REQUEST AND USER IS VALIDATED
         $validation_response = $this->validateUserWithAuthToken($request, auth()->user());
         if(!empty($validation_response["status"]) && trim($validation_response["status"]) == "error"){
@@ -1107,18 +1110,19 @@ public function changePasswordWithResetCode(Request $request)
         |**************************************************************************
         */
 
-        'suggesto_id', 
-        'suggesto_sys_id', 
-        'suggesto_question',
-        'suggesto_answer_1',
-        'suggesto_answer_2',
-        'suggesto_answer_3',
-        'suggesto_answer_4',
-        'suggesto_answer_implied_traits_1',
-        'suggesto_answer_implied_traits_2',
-        'suggesto_answer_implied_traits_3',
-        'suggesto_answer_implied_traits_4',
-        'suggesto_maker_investor_id',
+        //CREATING THE USER DATA TO ADD TO DB
+        $suggestoData["suggesto_sys_id"] = $validatedData["user_surname"];
+        $suggestoData["suggesto_question"] = $validatedData["user_firstname"];
+        $suggestoData["suggesto_answer_1"] = $validatedData["user_pottname"];
+        $suggestoData["suggesto_answer_2"] = $validatedData["user_dob"];
+        $suggestoData["suggesto_answer_3"] = $validatedData["user_phone_number"];
+        $suggestoData["suggesto_answer_4"] = $validatedData["user_email"];
+        $suggestoData["suggesto_maker_investor_id"] = $gender->gender_id;
+
+        //$userData["ssssssss"] = $validatedData["user_surname"];
+
+        $user1 = Suggesto::create($userData);
+        
 
         return response([
             "status" => "yes", 
