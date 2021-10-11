@@ -14,9 +14,16 @@ class CreateSuggestoTypesTable extends Migration
     public function up()
     {
         Schema::create('suggesto_types', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('suggesto_type_id');
+            $table->string('suggesto_type_name', 255)->unique();
             $table->timestamps();
         });
+
+        DB::table('genders')->insert([
+            ['suggesto_type_id' => 1, 'suggesto_type_name' => 'Question'],
+            ['suggesto_type_id' => 2, 'suggesto_type_name' => 'Stock']
+        ]);
+
     }
 
     /**
@@ -25,7 +32,10 @@ class CreateSuggestoTypesTable extends Migration
      * @return void
      */
     public function down()
-    {
+    {   
+        
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         Schema::dropIfExists('suggesto_types');
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 }
