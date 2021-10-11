@@ -13,7 +13,7 @@ class SuggestoTypes extends Model
      *
      * @var string
      */
-    protected $primaryKey = 'gender_id';
+    protected $primaryKey = 'suggesto_type_id';
 
 
     /**
@@ -22,8 +22,8 @@ class SuggestoTypes extends Model
      * @var array
      */
     protected $fillable = [
-        'gender_id', 
-        'gender_name',
+        'suggesto_type_id', 
+        'suggesto_type_name',
         'created_at',
         'updated_at',
     ];
