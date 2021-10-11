@@ -25,7 +25,6 @@ class CreateQuestionsTable extends Migration
             $table->text('question_answer_implied_traits_2');
             $table->text('question_answer_implied_traits_3');
             $table->text('question_answer_implied_traits_4');
-            $table->boolean('question_broadcasted')->default(false);
             $table->boolean('question_flagged')->default(false);
             $table->timestamps();
         });
