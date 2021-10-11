@@ -16,8 +16,6 @@ class Suggesto extends Model
      */
     protected $primaryKey = 'suggesto_id';
 
-
-
     /**
      * The attributes that are mass assignable.
      *

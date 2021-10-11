@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\version1;
 
-use App\Http\Controllers\Controller;
+use DB;
 use DateTime;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\version1\User;
 use App\Models\version1\Gender;
@@ -1168,7 +1169,19 @@ public function changePasswordWithResetCode(Request $request)
         |**************************************************************************
         */
 
-        $suggesto = Suggesto::where('suggesto_broadcasted', false)->where('suggesto_flagged', false)->first();
+        // GETTING A SUGGESTO THAT HAS NOT BEEN BROADCASTED AND NOT FLAGGED
+        $suggesto = DB::table('suggestos')
+            ->select(
+                'suggesto.suggesto_question', 
+                'suggesto.suggesto_answer_1', 
+                'suggesto.suggesto_answer_2', 
+                'suggesto.suggesto_answer_3', 
+                'suggesto.suggesto_answer_4'
+                )
+            ->join('users', 'suggestos.suggesto_maker_investor_id', '=', 'user.investor_id')
+            ->first();
+
+        //$suggesto = Suggesto::with(['user'])->where('suggesto_broadcasted', false)->where('suggesto_flagged', false)->first();
         if($suggesto == null){
             return [
                 "status" => "error", 
@@ -1176,7 +1189,17 @@ public function changePasswordWithResetCode(Request $request)
             ]; exit;
         }
 
+
         //var_dump($suggesto); exit;
+        $suggesto_prepped =  [
+            "suggesto_question" => $suggesto->suggesto_question,
+            "suggesto_answer_1" => $suggesto->suggesto_answer_1,
+            "suggesto_answer_2" => $suggesto->suggesto_answer_2,
+            "suggesto_answer_3" => $suggesto->suggesto_answer_3,
+            "suggesto_answer_4" => $suggesto->suggesto_answer_4,
+            "suggesto_maker_name" => $suggesto->suggesto_question,
+            "suggesto_maker_pottname" => $suggesto->user->user_pottname
+        ];
 
 
         return response([
