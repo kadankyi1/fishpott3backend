@@ -1084,7 +1084,6 @@ public function changePasswordWithResetCode(Request $request)
         $validatedData = $request->validate([
             "user_phone_number" => "bail|required|regex:/^\+\d{10,15}$/|min:10|max:15",
             "investor_id" => "bail|required",
-            "investor_id" => "bail|required",
             "user_language" => "bail|required|max:3",
             "app_type" => "bail|required|max:8",
             "app_version_code" => "bail|required|integer",
@@ -1114,14 +1113,22 @@ public function changePasswordWithResetCode(Request $request)
         $suggestoData["suggesto_question"] = $validatedData["suggesto_question"];
         $suggestoData["suggesto_answer_1"] = $validatedData["suggesto_answer_1"];
         $suggestoData["suggesto_answer_2"] = $validatedData["suggesto_answer_2"];
-        $suggestoData["suggesto_answer_3"] = $validatedData["suggesto_answer_3"];
-        $suggestoData["suggesto_answer_4"] = $validatedData["suggesto_answer_4"];
+        if(!empty($validatedData["suggesto_answer_3"])){
+            $suggestoData["suggesto_answer_3"] = $validatedData["suggesto_answer_3"];
+        }
+        if(!empty($validatedData["suggesto_answer_4"])){
+            $suggestoData["suggesto_answer_4"] = $validatedData["suggesto_answer_4"];
+        }
+        $suggestoData["suggesto_answer_implied_traits_1"] = "";
+        $suggestoData["suggesto_answer_implied_traits_2"] = "";
+        $suggestoData["suggesto_answer_implied_traits_3"] = "";
+        $suggestoData["suggesto_answer_implied_traits_4"] = "";
         $suggestoData["suggesto_maker_investor_id"] = $user->investor_id;
         $suggesto1 = Suggesto::create($suggestoData);
 
         return response([
             "status" => "yes", 
-            "message" => "Suggesto created. You will be notified when its posted."
+            "message" => "Your Suggesto is in your Pott in queue. You will know when it broadcasts worldwide ."
         ]);
     }
 
