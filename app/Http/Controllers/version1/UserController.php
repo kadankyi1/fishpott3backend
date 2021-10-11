@@ -1111,24 +1111,18 @@ public function changePasswordWithResetCode(Request $request)
         */
 
         //CREATING THE USER DATA TO ADD TO DB
-        $suggestoData["suggesto_sys_id"] = $validatedData["user_surname"];
-        $suggestoData["suggesto_question"] = $validatedData["user_firstname"];
-        $suggestoData["suggesto_answer_1"] = $validatedData["user_pottname"];
-        $suggestoData["suggesto_answer_2"] = $validatedData["user_dob"];
-        $suggestoData["suggesto_answer_3"] = $validatedData["user_phone_number"];
-        $suggestoData["suggesto_answer_4"] = $validatedData["user_email"];
-        $suggestoData["suggesto_maker_investor_id"] = $gender->gender_id;
-        $user1 = Suggesto::create($userData);
-        
+        $suggestoData["suggesto_sys_id"] = $user->pottname . "-" . substr($validatedData["user_phone_number"] ,1,strlen($validatedData["user_phone_number"])) . date("Y-m-d-H-i-s") . $this->getRandomString(50);
+        $suggestoData["suggesto_question"] = $validatedData["suggesto_question"];
+        $suggestoData["suggesto_answer_1"] = $validatedData["suggesto_answer_1"];
+        $suggestoData["suggesto_answer_2"] = $validatedData["suggesto_answer_2"];
+        $suggestoData["suggesto_answer_3"] = $validatedData["suggesto_answer_3"];
+        $suggestoData["suggesto_answer_4"] = $validatedData["suggesto_answer_4"];
+        $suggestoData["suggesto_maker_investor_id"] = $user->investor_id;
+        $suggesto1 = Suggesto::create($suggestoData);
 
         return response([
             "status" => "yes", 
-            "message" => "Upload complete",
-            "government_verification_is_on" => false,
-            "media_allowed" => intval(config('app.canpostpicsandvids')),
-            "user_android_app_max_vc" => intval(config('app.androidmaxvc')),
-            "user_android_app_force_update" => boolval(config('app.androidforceupdatetomaxvc')),
-            "phone_verification_is_on" => boolval(config('app.phoneverificationrequiredstatus'))
+            "message" => "Suggesto created. You will be notified when its posted."
         ]);
     }
 
