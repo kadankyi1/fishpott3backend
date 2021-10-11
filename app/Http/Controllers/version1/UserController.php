@@ -1128,7 +1128,7 @@ public function changePasswordWithResetCode(Request $request)
 
         return response([
             "status" => "yes", 
-            "message" => "Your Suggesto is in your Pott in queue. You will know when it broadcasts worldwide ."
+            "message" => "Your Suggesto is in your Pott now. You will know when it broadcasts worldwide ."
         ]);
     }
 

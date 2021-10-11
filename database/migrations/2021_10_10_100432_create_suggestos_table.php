@@ -25,9 +25,9 @@ class CreateSuggestosTable extends Migration
             $table->text('suggesto_answer_implied_traits_2');
             $table->text('suggesto_answer_implied_traits_3');
             $table->text('suggesto_answer_implied_traits_4');
+            $table->boolean('suggesto_broadcasted')->default(false);
             $table->timestamps();
         });
-        
 
         Schema::table('suggestos', function (Blueprint $table) {
             $table->string('suggesto_maker_investor_id', 255);
