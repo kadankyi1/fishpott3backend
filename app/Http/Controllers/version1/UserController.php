@@ -1089,12 +1089,12 @@ public function changePasswordWithResetCode(Request $request)
             "app_type" => "bail|required|max:8",
             "app_version_code" => "bail|required|integer",
             // ADD ANY OTHER REQUIRED INPUTS FROM HERE
-            "suggesto_question" => "bail|required",
+            "suggesto_question" => "bail|required|max:100",
             "suggesto_answers_added" => "required|integer|between:0,1",
-            "suggesto_answer_1" => "",
-            "suggesto_answer_2" => "",
-            "suggesto_answer_3" => "",
-            "suggesto_answer_4" => ""
+            "suggesto_answer_1" => "max:100",
+            "suggesto_answer_2" => "max:100",
+            "suggesto_answer_3" => "max:100",
+            "suggesto_answer_4" => "max:100",
         ]);
 
         // MAKING SURE THE REQUEST AND USER IS VALIDATED
@@ -1118,9 +1118,6 @@ public function changePasswordWithResetCode(Request $request)
         $suggestoData["suggesto_answer_3"] = $validatedData["user_phone_number"];
         $suggestoData["suggesto_answer_4"] = $validatedData["user_email"];
         $suggestoData["suggesto_maker_investor_id"] = $gender->gender_id;
-
-        //$userData["ssssssss"] = $validatedData["user_surname"];
-
         $user1 = Suggesto::create($userData);
         
 
