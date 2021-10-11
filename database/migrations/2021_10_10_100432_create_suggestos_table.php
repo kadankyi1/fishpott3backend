@@ -16,23 +16,15 @@ class CreateSuggestosTable extends Migration
         Schema::create('suggestos', function (Blueprint $table) {
             $table->bigIncrements('suggesto_id');
             $table->string('suggesto_sys_id', 255)->unique();
-            $table->string('suggesto_question', 255)->default;
-            $table->string('suggesto_answer_1', 255);
-            $table->string('suggesto_answer_2', 255);
-            $table->string('suggesto_answer_3', 255)->default("");
-            $table->string('suggesto_answer_4', 255)->default("");
-            $table->text('suggesto_answer_implied_traits_1');
-            $table->text('suggesto_answer_implied_traits_2');
-            $table->text('suggesto_answer_implied_traits_3');
-            $table->text('suggesto_answer_implied_traits_4');
+            $table->string('suggesto_item_reference_id', 255);
             $table->boolean('suggesto_broadcasted')->default(false);
             $table->boolean('suggesto_flagged')->default(false);
             $table->timestamps();
         });
 
         Schema::table('suggestos', function (Blueprint $table) {
-            $table->string('suggesto_maker_investor_id', 255);
-            $table->foreign('suggesto_maker_investor_id')->references('investor_id')->on('users');
+            $table->unsignedBigInteger('suggesto_suggesto_type_id');
+            $table->foreign('suggesto_suggesto_type_id')->references('suggesto_type_id')->on('suggesto_types');
         });
     }
 

@@ -24,11 +24,11 @@ class Suggesto extends Model
     protected $fillable = [
         'suggesto_id', 
         'suggesto_sys_id', 
-        'suggesto_type',
-        'suggesto_reference_id',
+        'suggesto_item_reference_id',
+        'suggesto_broadcasted',
         'suggesto_flagged',
-        'suggesto_maker_investor_id',
-        'suggesto_maker_investor_name',
+        'suggesto_suggesto_type_id',
+        'suggesto_type',
         'created_at',
         'updated_at',
     ];
