@@ -35,6 +35,7 @@ class Suggesto extends Model
         'suggesto_answer_implied_traits_2',
         'suggesto_answer_implied_traits_3',
         'suggesto_answer_implied_traits_4',
+        'suggesto_flagged',
         'suggesto_maker_investor_id',
         'suggesto_maker_investor_name',
         'created_at',

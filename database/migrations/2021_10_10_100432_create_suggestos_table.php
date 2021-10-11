@@ -26,6 +26,7 @@ class CreateSuggestosTable extends Migration
             $table->text('suggesto_answer_implied_traits_3');
             $table->text('suggesto_answer_implied_traits_4');
             $table->boolean('suggesto_broadcasted')->default(false);
+            $table->boolean('suggesto_flagged')->default(false);
             $table->timestamps();
         });
 

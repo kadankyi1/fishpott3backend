@@ -1088,9 +1088,9 @@ public function changePasswordWithResetCode(Request $request)
             "app_type" => "bail|required|max:8",
             "app_version_code" => "bail|required|integer",
             // ADD ANY OTHER REQUIRED INPUTS FROM HERE
-            "suggesto_question" => "bail|required|max:100",
-            "suggesto_answer_1" => "max:100",
-            "suggesto_answer_2" => "max:100",
+            "suggesto_question" => "bail|required|min:5|max:100",
+            "suggesto_answer_1" => "bail|required|min:2|max:100",
+            "suggesto_answer_2" => "bail|required|min:2|max:100",
             "suggesto_answer_3" => "max:100",
             "suggesto_answer_4" => "max:100",
         ]);
@@ -1109,7 +1109,7 @@ public function changePasswordWithResetCode(Request $request)
         */
 
         //CREATING THE USER DATA TO ADD TO DB
-        $suggestoData["suggesto_sys_id"] = $user->pottname . "-" . substr($validatedData["user_phone_number"] ,1,strlen($validatedData["user_phone_number"])) . date("Y-m-d-H-i-s") . $this->getRandomString(50);
+        $suggestoData["suggesto_sys_id"] = $user->user_pottname . "-" . substr($validatedData["user_phone_number"] ,1,strlen($validatedData["user_phone_number"])) . date("Y-m-d-H-i-s") . $this->getRandomString(50);
         $suggestoData["suggesto_question"] = $validatedData["suggesto_question"];
         $suggestoData["suggesto_answer_1"] = $validatedData["suggesto_answer_1"];
         $suggestoData["suggesto_answer_2"] = $validatedData["suggesto_answer_2"];
@@ -1168,9 +1168,21 @@ public function changePasswordWithResetCode(Request $request)
         |**************************************************************************
         */
 
+        $suggesto = Suggesto::where('suggesto_broadcasted', false)->where('suggesto_flagged', false)->first();
+        if($suggesto == null){
+            return [
+                "status" => "error", 
+                "message" => "Suggesto not found."
+            ]; exit;
+        }
+
+        //var_dump($suggesto); exit;
+
+
         return response([
             "status" => "yes", 
             "message" => "Upload complete",
+            "suggesto" => $suggesto,
             "government_verification_is_on" => false,
             "media_allowed" => intval(config('app.canpostpicsandvids')),
             "user_android_app_max_vc" => intval(config('app.androidmaxvc')),
