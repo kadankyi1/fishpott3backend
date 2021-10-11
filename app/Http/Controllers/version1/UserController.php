@@ -1170,16 +1170,11 @@ public function changePasswordWithResetCode(Request $request)
         */
 
         // GETTING A SUGGESTO THAT HAS NOT BEEN BROADCASTED AND NOT FLAGGED
+
         $suggesto = DB::table('suggestos')
-            ->select(
-                'suggesto.suggesto_question', 
-                'suggesto.suggesto_answer_1', 
-                'suggesto.suggesto_answer_2', 
-                'suggesto.suggesto_answer_3', 
-                'suggesto.suggesto_answer_4'
-                )
-            ->join('users', 'suggestos.suggesto_maker_investor_id', '=', 'user.investor_id')
-            ->first();
+        ->select('suggestos.suggesto_question', 'suggestos.suggesto_answer_1', 'suggestos.suggesto_answer_2', 'suggestos.suggesto_answer_3', 'suggestos.suggesto_answer_4', 'users.user_firstname', 'users.user_surname', 'users.user_pottname', 'users.investor_id')
+        ->join('users', 'suggestos.suggesto_maker_investor_id', '=', 'users.investor_id')
+        ->first();
 
         //$suggesto = Suggesto::with(['user'])->where('suggesto_broadcasted', false)->where('suggesto_flagged', false)->first();
         if($suggesto == null){
@@ -1197,8 +1192,10 @@ public function changePasswordWithResetCode(Request $request)
             "suggesto_answer_2" => $suggesto->suggesto_answer_2,
             "suggesto_answer_3" => $suggesto->suggesto_answer_3,
             "suggesto_answer_4" => $suggesto->suggesto_answer_4,
-            "suggesto_maker_name" => $suggesto->suggesto_question,
-            "suggesto_maker_pottname" => $suggesto->user->user_pottname
+            "suggesto_maker_first_name" => $suggesto->user_firstname,
+            "suggesto_maker_last_name" => $suggesto->user_surname,
+            "suggesto_maker_pottname" => $suggesto->user_pottname,
+            "suggesto_maker_investor_id" => $suggesto->investor_id
         ];
 
 
