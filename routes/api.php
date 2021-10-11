@@ -33,5 +33,8 @@ Route::post('/v1/user/change-password-with-reset-code',[App\Http\Controllers\ver
 // UPLOAD PROFILE PICTURE
 Route::middleware('auth:api')->post('/v1/user/upload-pott-pic', [App\Http\Controllers\version1\UserController::class, 'uploadProfilePicture']);
 
-// UPLOAD PROFILE PICTURE
+// ADD SUGGESTO
+Route::middleware('auth:api')->post('/v1/user/add-suggesto', [App\Http\Controllers\version1\UserController::class, 'addSuggesto']);
+
+// GET SUGGESTO
 Route::middleware('auth:api')->get('/v1/user/get-suggesto', [App\Http\Controllers\version1\UserController::class, 'getSuggesto']);
