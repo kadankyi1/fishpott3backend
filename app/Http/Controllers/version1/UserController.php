@@ -12,6 +12,7 @@ use App\Models\version1\Country;
 use App\Models\version1\Language;
 use App\Models\version1\ResetCode;
 use App\Mail\version1\ResetCodeMail;
+use App\Models\version1\Question;
 use App\Models\version1\Suggesto;
 use Illuminate\Support\Facades\File; 
 use Illuminate\Support\Facades\Auth;
@@ -1089,11 +1090,11 @@ public function changePasswordWithResetCode(Request $request)
             "app_type" => "bail|required|max:8",
             "app_version_code" => "bail|required|integer",
             // ADD ANY OTHER REQUIRED INPUTS FROM HERE
-            "suggesto_question" => "min:5|max:100",
-            "suggesto_answer_1" => "min:2|max:100",
-            "suggesto_answer_2" => "min:2|max:100",
-            "suggesto_answer_3" => "max:100",
-            "suggesto_answer_4" => "max:100",
+            "question_question" => "min:5|max:100",
+            "question_answer_1" => "min:2|max:100",
+            "question_answer_2" => "min:2|max:100",
+            "question_answer_3" => "max:100",
+            "question_answer_4" => "max:100",
         ]);
 
         // MAKING SURE THE REQUEST AND USER IS VALIDATED
@@ -1110,26 +1111,26 @@ public function changePasswordWithResetCode(Request $request)
         */
 
         //CREATING THE USER DATA TO ADD TO DB
-        $suggestoData["suggesto_sys_id"] = $user->user_pottname . "-" . substr($validatedData["user_phone_number"] ,1,strlen($validatedData["user_phone_number"])) . date("Y-m-d-H-i-s") . $this->getRandomString(50);
-        $suggestoData["suggesto_question"] = $validatedData["suggesto_question"];
-        $suggestoData["suggesto_answer_1"] = $validatedData["suggesto_answer_1"];
-        $suggestoData["suggesto_answer_2"] = $validatedData["suggesto_answer_2"];
-        if(!empty($validatedData["suggesto_answer_3"])){
-            $suggestoData["suggesto_answer_3"] = $validatedData["suggesto_answer_3"];
+        $questionData["question_sys_id"] = $user->user_pottname . "-" . substr($validatedData["user_phone_number"] ,1,strlen($validatedData["user_phone_number"])) . date("Y-m-d-H-i-s") . $this->getRandomString(50);
+        $questionData["question_question"] = $validatedData["question_question"];
+        $questionData["question_answer_1"] = $validatedData["question_answer_1"];
+        $questionData["question_answer_2"] = $validatedData["question_answer_2"];
+        if(!empty($validatedData["question_answer_3"])){
+            $questionData["question_answer_3"] = $validatedData["question_answer_3"];
         }
-        if(!empty($validatedData["suggesto_answer_4"])){
-            $suggestoData["suggesto_answer_4"] = $validatedData["suggesto_answer_4"];
+        if(!empty($validatedData["question_answer_4"])){
+            $questionData["question_answer_4"] = $validatedData["question_answer_4"];
         }
-        $suggestoData["suggesto_answer_implied_traits_1"] = "";
-        $suggestoData["suggesto_answer_implied_traits_2"] = "";
-        $suggestoData["suggesto_answer_implied_traits_3"] = "";
-        $suggestoData["suggesto_answer_implied_traits_4"] = "";
-        $suggestoData["suggesto_maker_investor_id"] = $user->investor_id;
-        $suggesto1 = Suggesto::create($suggestoData);
+        $questionData["question_answer_implied_traits_1"] = "";
+        $questionData["question_answer_implied_traits_1"] = "";
+        $questionData["question_answer_implied_traits_1"] = "";
+        $questionData["question_answer_implied_traits_1"] = "";
+        $questionData["question_maker_investor_id"] = $user->investor_id;
+        $suggesto1 = Question::create($questionData);
 
         return response([
             "status" => "yes", 
-            "message" => "Your Suggesto is in your Pott now. You will know when it broadcasts worldwide ."
+            "message" => "Your Suggesto is now in your Pott. You will know when it broadcasts worldwide."
         ]);
     }
 
