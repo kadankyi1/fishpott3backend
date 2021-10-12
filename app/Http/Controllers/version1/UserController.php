@@ -1075,7 +1075,7 @@ public function changePasswordWithResetCode(Request $request)
     |--------------------------------------------------------------------------
     */
     
-    public function addQuestion(Request $request)
+    public function addSuggestoQuestion(Request $request)
     {
         /*
         |**************************************************************************
