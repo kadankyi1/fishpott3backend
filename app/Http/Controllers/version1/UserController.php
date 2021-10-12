@@ -1073,8 +1073,8 @@ public function changePasswordWithResetCode(Request $request)
     |--------------------------------------------------------------------------
     |--------------------------------------------------------------------------
     */
-
-    public function addSuggesto(Request $request)
+    
+    public function addQuestion(Request $request)
     {
         /*
         |**************************************************************************
@@ -1089,9 +1089,9 @@ public function changePasswordWithResetCode(Request $request)
             "app_type" => "bail|required|max:8",
             "app_version_code" => "bail|required|integer",
             // ADD ANY OTHER REQUIRED INPUTS FROM HERE
-            "suggesto_question" => "bail|required|min:5|max:100",
-            "suggesto_answer_1" => "bail|required|min:2|max:100",
-            "suggesto_answer_2" => "bail|required|min:2|max:100",
+            "suggesto_question" => "min:5|max:100",
+            "suggesto_answer_1" => "min:2|max:100",
+            "suggesto_answer_2" => "min:2|max:100",
             "suggesto_answer_3" => "max:100",
             "suggesto_answer_4" => "max:100",
         ]);
