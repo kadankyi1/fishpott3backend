@@ -19,7 +19,7 @@ class CreateSuggestoTypesTable extends Migration
             $table->timestamps();
         });
 
-        DB::table('genders')->insert([
+        DB::table('suggesto_types')->insert([
             ['suggesto_type_id' => 1, 'suggesto_type_name' => 'Question'],
             ['suggesto_type_id' => 2, 'suggesto_type_name' => 'Stock']
         ]);

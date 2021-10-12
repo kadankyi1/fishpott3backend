@@ -1122,11 +1122,11 @@ public function changePasswordWithResetCode(Request $request)
             $questionData["question_answer_4"] = $validatedData["question_answer_4"];
         }
         $questionData["question_answer_implied_traits_1"] = "";
-        $questionData["question_answer_implied_traits_1"] = "";
-        $questionData["question_answer_implied_traits_1"] = "";
-        $questionData["question_answer_implied_traits_1"] = "";
+        $questionData["question_answer_implied_traits_2"] = "";
+        $questionData["question_answer_implied_traits_3"] = "";
+        $questionData["question_answer_implied_traits_4"] = "";
         $questionData["question_maker_investor_id"] = $user->investor_id;
-        $suggesto1 = Question::create($questionData);
+        Question::create($questionData);
 
         return response([
             "status" => "yes", 
