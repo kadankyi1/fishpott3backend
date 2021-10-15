@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSuggestoTypesTable extends Migration
+class CreateSuggestionsTypesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,15 @@ class CreateSuggestoTypesTable extends Migration
      */
     public function up()
     {
-        Schema::create('suggesto_types', function (Blueprint $table) {
-            $table->bigIncrements('suggesto_type_id');
-            $table->string('suggesto_type_name', 255)->unique();
+        Schema::create('suggestion_types', function (Blueprint $table) {
+            $table->bigIncrements('suggestion_type_id');
+            $table->string('suggestion_type_name', 255)->unique();
             $table->timestamps();
         });
 
-        DB::table('suggesto_types')->insert([
-            ['suggesto_type_id' => 1, 'suggesto_type_name' => 'Question'],
-            ['suggesto_type_id' => 2, 'suggesto_type_name' => 'Stock']
+        DB::table('suggestion_types')->insert([
+            ['suggestion_type_id' => 1, 'suggestion_type_name' => 'Drill'],
+            ['suggestion_type_id' => 2, 'suggestion_type_name' => 'Business']
         ]);
 
     }
@@ -35,7 +35,7 @@ class CreateSuggestoTypesTable extends Migration
     {   
         
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-        Schema::dropIfExists('suggesto_types');
+        Schema::dropIfExists('suggestion_types');
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 }
