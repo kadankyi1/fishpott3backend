@@ -14,25 +14,25 @@ class CreateQuestionsTable extends Migration
     public function up()
     {
         Schema::create('drills', function (Blueprint $table) {
-            $table->bigIncrements('question_id');
-            $table->string('question_sys_id', 255)->unique();
-            $table->string('question_question', 255)->default;
-            $table->string('question_answer_1', 255);
-            $table->string('question_answer_2', 255);
-            $table->string('question_answer_3', 255)->default("");
-            $table->string('question_answer_4', 255)->default("");
-            $table->text('question_answer_implied_traits_1');
-            $table->text('question_answer_implied_traits_2');
-            $table->text('question_answer_implied_traits_3');
-            $table->text('question_answer_implied_traits_4');
-            $table->boolean('question_passed_as_suggesto')->default(false);
-            $table->boolean('question_flagged')->default(false);
+            $table->bigIncrements('drill_id');
+            $table->string('drill_sys_id', 255)->unique();
+            $table->string('drill_question', 255)->default;
+            $table->string('drill_answer_1', 255);
+            $table->string('drill_answer_2', 255);
+            $table->string('drill_answer_3', 255)->default("");
+            $table->string('drill_answer_4', 255)->default("");
+            $table->text('drill_answer_implied_traits_1');
+            $table->text('drill_answer_implied_traits_2');
+            $table->text('drill_answer_implied_traits_3');
+            $table->text('drill_answer_implied_traits_4');
+            $table->boolean('drill_passed_as_suggesto')->default(false);
+            $table->boolean('drill_flagged')->default(false);
             $table->timestamps();
         });
 
         Schema::table('drills', function (Blueprint $table) {
-            $table->string('question_maker_investor_id', 255);
-            $table->foreign('question_maker_investor_id')->references('investor_id')->on('users');
+            $table->string('drill_maker_investor_id', 255);
+            $table->foreign('drill_maker_investor_id')->references('investor_id')->on('users');
         });
     }
 
