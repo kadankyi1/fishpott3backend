@@ -12,7 +12,7 @@ use App\Models\version1\Country;
 use App\Models\version1\Language;
 use App\Models\version1\ResetCode;
 use App\Mail\version1\ResetCodeMail;
-use App\Models\version1\Question;
+use App\Models\version1\Drill;
 use App\Models\version1\Suggesto;
 use Illuminate\Support\Facades\File; 
 use Illuminate\Support\Facades\Auth;
@@ -1130,7 +1130,7 @@ public function changePasswordWithResetCode(Request $request)
 
         return response([
             "status" => "yes", 
-            "message" => "Your Suggesto is now in your Pott. You will know when it broadcasts worldwide."
+            "message" => "Drill saved to your Pott. You will know when it broadcasts worldwide."
         ]);
     }
 
