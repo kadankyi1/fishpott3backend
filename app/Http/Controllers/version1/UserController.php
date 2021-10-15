@@ -1181,7 +1181,7 @@ public function changePasswordWithResetCode(Request $request)
         if($suggesto == null){
             return [
                 "status" => "error", 
-                "message" => "Suggesto not found."
+                "message" => "Suggestion not found."
             ]; exit;
         }
 
