@@ -1075,7 +1075,7 @@ public function changePasswordWithResetCode(Request $request)
     |--------------------------------------------------------------------------
     */
     
-    public function addFishPottDrill(Request $request)
+    public function addDrill(Request $request)
     {
         /*
         |**************************************************************************
@@ -1142,7 +1142,7 @@ public function changePasswordWithResetCode(Request $request)
     |--------------------------------------------------------------------------
     */
 
-    public function getSuggesto(Request $request)
+    public function getDrill(Request $request)
     {
         /*
         |**************************************************************************

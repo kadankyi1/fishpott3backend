@@ -34,7 +34,7 @@ Route::post('/v1/user/change-password-with-reset-code',[App\Http\Controllers\ver
 Route::middleware('auth:api')->post('/v1/user/upload-pott-pic', [App\Http\Controllers\version1\UserController::class, 'uploadProfilePicture']);
 
 // ADD SUGGESTO
-Route::middleware('auth:api')->post('/v1/user/add-suggesto-question', [App\Http\Controllers\version1\UserController::class, 'addSuggestoQuestion']);
+Route::middleware('auth:api')->post('/v1/user/add-drill', [App\Http\Controllers\version1\UserController::class, 'addDrill']);
 
 // GET SUGGESTO
-Route::middleware('auth:api')->get('/v1/user/get-suggesto', [App\Http\Controllers\version1\UserController::class, 'getSuggesto']);
+Route::middleware('auth:api')->get('/v1/user/get-drill', [App\Http\Controllers\version1\UserController::class, 'getSuggesto']);

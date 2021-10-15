@@ -5,16 +5,16 @@ namespace App\Models\version1;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class SuggestoTypes extends Model
+class Suggesto extends Model
 {
     use HasFactory;
+
     /**
      * The primary key associated with the table.
      *
      * @var string
      */
-    protected $primaryKey = 'suggesto_type_id';
-
+    protected $primaryKey = 'suggestion_id';
 
     /**
      * The attributes that are mass assignable.
@@ -22,8 +22,13 @@ class SuggestoTypes extends Model
      * @var array
      */
     protected $fillable = [
-        'suggesto_type_id', 
-        'suggesto_type_name',
+        'suggestion_id', 
+        'suggestion_sys_id', 
+        'suggestion_item_reference_id',
+        'suggestion_broadcasted',
+        'suggestion_flagged',
+        'suggestion_suggestion_type_id',
+        'suggestion_type',
         'created_at',
         'updated_at',
     ];
