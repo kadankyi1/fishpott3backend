@@ -13,7 +13,7 @@ class SuggestionTypes extends Model
      *
      * @var string
      */
-    protected $primaryKey = 'suggesto_type_id';
+    protected $primaryKey = 'suggestion_type_id';
 
 
     /**
@@ -22,8 +22,8 @@ class SuggestionTypes extends Model
      * @var array
      */
     protected $fillable = [
-        'suggesto_type_id', 
-        'suggesto_type_name',
+        'suggestion_type_id', 
+        'suggestion_type_name',
         'created_at',
         'updated_at',
     ];
