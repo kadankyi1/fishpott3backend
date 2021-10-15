@@ -11,14 +11,14 @@ class SendDrillCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'command:name';
+    protected $signature = 'drill:send';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Send drill to users';
 
     /**
      * Create a new command instance.
@@ -37,6 +37,6 @@ class SendDrillCommand extends Command
      */
     public function handle()
     {
-        return 0;
+        
     }
 }
