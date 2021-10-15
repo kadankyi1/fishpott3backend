@@ -32,6 +32,7 @@ class Drill extends Model
         'drill_answer_implied_traits_2',
         'drill_answer_implied_traits_3',
         'drill_answer_implied_traits_4',
+        'drill_passed_as_suggestion',
         'drill_flagged',
         'drill_maker_investor_id',
         'drill_maker_investor_name',

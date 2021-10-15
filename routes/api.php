@@ -37,4 +37,4 @@ Route::middleware('auth:api')->post('/v1/user/upload-pott-pic', [App\Http\Contro
 Route::middleware('auth:api')->post('/v1/user/add-drill', [App\Http\Controllers\version1\UserController::class, 'addDrill']);
 
 // GET SUGGESTO
-Route::middleware('auth:api')->get('/v1/user/get-drill', [App\Http\Controllers\version1\UserController::class, 'getSuggesto']);
+Route::middleware('auth:api')->get('/v1/user/get-drill', [App\Http\Controllers\version1\UserController::class, 'getDrill']);

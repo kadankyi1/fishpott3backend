@@ -1172,7 +1172,7 @@ public function changePasswordWithResetCode(Request $request)
 
         // GETTING A SUGGESTO THAT HAS NOT BEEN BROADCASTED AND NOT FLAGGED
 
-        $suggesto = DB::table('suggestos')
+        $suggesto = DB::table('suggestions')
         ->select('suggestos.suggesto_question', 'suggestos.suggesto_answer_1', 'suggestos.suggesto_answer_2', 'suggestos.suggesto_answer_3', 'suggestos.suggesto_answer_4', 'users.user_firstname', 'users.user_surname', 'users.user_pottname', 'users.investor_id')
         ->join('users', 'suggestos.suggesto_maker_investor_id', '=', 'users.investor_id')
         ->first();
@@ -1202,7 +1202,7 @@ public function changePasswordWithResetCode(Request $request)
 
         return response([
             "status" => "yes", 
-            "message" => "Upload complete",
+            "message" => "Drill fetched",
             "suggesto" => $suggesto,
             "government_verification_is_on" => false,
             "media_allowed" => intval(config('app.canpostpicsandvids')),

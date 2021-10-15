@@ -25,7 +25,7 @@ class CreateDrillsTable extends Migration
             $table->text('drill_answer_implied_traits_2');
             $table->text('drill_answer_implied_traits_3');
             $table->text('drill_answer_implied_traits_4');
-            $table->boolean('drill_passed_as_suggesto')->default(false);
+            $table->boolean('drill_passed_as_suggestion')->default(false);
             $table->boolean('drill_flagged')->default(false);
             $table->timestamps();
         });
