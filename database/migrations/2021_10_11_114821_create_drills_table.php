@@ -13,7 +13,7 @@ class CreateQuestionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('questions', function (Blueprint $table) {
+        Schema::create('drills', function (Blueprint $table) {
             $table->bigIncrements('question_id');
             $table->string('question_sys_id', 255)->unique();
             $table->string('question_question', 255)->default;
@@ -30,7 +30,7 @@ class CreateQuestionsTable extends Migration
             $table->timestamps();
         });
 
-        Schema::table('questions', function (Blueprint $table) {
+        Schema::table('drills', function (Blueprint $table) {
             $table->string('question_maker_investor_id', 255);
             $table->foreign('question_maker_investor_id')->references('investor_id')->on('users');
         });
@@ -43,6 +43,6 @@ class CreateQuestionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('questions');
+        Schema::dropIfExists('drills');
     }
 }

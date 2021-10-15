@@ -1075,7 +1075,7 @@ public function changePasswordWithResetCode(Request $request)
     |--------------------------------------------------------------------------
     */
     
-    public function addSuggestoQuestion(Request $request)
+    public function addFishPottDrill(Request $request)
     {
         /*
         |**************************************************************************
@@ -1090,11 +1090,11 @@ public function changePasswordWithResetCode(Request $request)
             "app_type" => "bail|required|max:8",
             "app_version_code" => "bail|required|integer",
             // ADD ANY OTHER REQUIRED INPUTS FROM HERE
-            "question_question" => "min:5|max:100",
-            "question_answer_1" => "min:2|max:100",
-            "question_answer_2" => "min:2|max:100",
-            "question_answer_3" => "max:100",
-            "question_answer_4" => "max:100",
+            "drill_question" => "min:5|max:100",
+            "drill_answer_1" => "min:2|max:100",
+            "drill_answer_2" => "min:2|max:100",
+            "drill_answer_3" => "max:100",
+            "drill_answer_4" => "max:100",
         ]);
 
         // MAKING SURE THE REQUEST AND USER IS VALIDATED
@@ -1111,22 +1111,22 @@ public function changePasswordWithResetCode(Request $request)
         */
 
         //CREATING THE USER DATA TO ADD TO DB
-        $questionData["question_sys_id"] = $user->user_pottname . "-" . substr($validatedData["user_phone_number"] ,1,strlen($validatedData["user_phone_number"])) . date("Y-m-d-H-i-s") . $this->getRandomString(50);
-        $questionData["question_question"] = $validatedData["question_question"];
-        $questionData["question_answer_1"] = $validatedData["question_answer_1"];
-        $questionData["question_answer_2"] = $validatedData["question_answer_2"];
-        if(!empty($validatedData["question_answer_3"])){
-            $questionData["question_answer_3"] = $validatedData["question_answer_3"];
+        $drillData["drill_sys_id"] = $user->user_pottname . "-" . substr($validatedData["user_phone_number"] ,1,strlen($validatedData["user_phone_number"])) . date("Y-m-d-H-i-s") . $this->getRandomString(50);
+        $drillData["drill_question"] = $validatedData["drill_question"];
+        $drillData["drill_answer_1"] = $validatedData["drill_answer_1"];
+        $drillData["drill_answer_2"] = $validatedData["drill_answer_2"];
+        if(!empty($validatedData["drill_answer_3"])){
+            $drillData["drill_answer_3"] = $validatedData["drill_answer_3"];
         }
-        if(!empty($validatedData["question_answer_4"])){
-            $questionData["question_answer_4"] = $validatedData["question_answer_4"];
+        if(!empty($validatedData["drill_answer_4"])){
+            $drillData["drill_answer_4"] = $validatedData["drill_answer_4"];
         }
-        $questionData["question_answer_implied_traits_1"] = "";
-        $questionData["question_answer_implied_traits_2"] = "";
-        $questionData["question_answer_implied_traits_3"] = "";
-        $questionData["question_answer_implied_traits_4"] = "";
-        $questionData["question_maker_investor_id"] = $user->investor_id;
-        Question::create($questionData);
+        $drillData["drill_answer_implied_traits_1"] = "";
+        $drillData["drill_answer_implied_traits_2"] = "";
+        $drillData["drill_answer_implied_traits_3"] = "";
+        $drillData["drill_answer_implied_traits_4"] = "";
+        $drillData["drill_maker_investor_id"] = $user->investor_id;
+        Drill::create($drillData);
 
         return response([
             "status" => "yes", 

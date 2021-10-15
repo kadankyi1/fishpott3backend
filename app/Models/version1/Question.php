@@ -5,7 +5,7 @@ namespace App\Models\version1;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Question extends Model
+class Drill extends Model
 {
     use HasFactory;
         /**
@@ -13,7 +13,7 @@ class Question extends Model
      *
      * @var string
      */
-    protected $primaryKey = 'question_id';
+    protected $primaryKey = 'drill_id';
 
     /**
      * The attributes that are mass assignable.
@@ -21,20 +21,20 @@ class Question extends Model
      * @var array
      */
     protected $fillable = [
-        'question_id', 
-        'question_sys_id', 
-        'question_question',
-        'question_answer_1',
-        'question_answer_2',
-        'question_answer_3',
-        'question_answer_4',
-        'question_answer_implied_traits_1',
-        'question_answer_implied_traits_2',
-        'question_answer_implied_traits_3',
-        'question_answer_implied_traits_4',
-        'question_flagged',
-        'question_maker_investor_id',
-        'question_maker_investor_name',
+        'drill_id', 
+        'drill_sys_id', 
+        'drill_question',
+        'drill_answer_1',
+        'drill_answer_2',
+        'drill_answer_3',
+        'drill_answer_4',
+        'drill_answer_implied_traits_1',
+        'drill_answer_implied_traits_2',
+        'drill_answer_implied_traits_3',
+        'drill_answer_implied_traits_4',
+        'drill_flagged',
+        'drill_maker_investor_id',
+        'drill_maker_investor_name',
         'created_at',
         'updated_at',
     ];
