@@ -37,6 +37,7 @@ class SendDrillReadyNotificationCommand extends Command
      */
     public function handle()
     {
+        // SENDING DRILL READY NOTIFICATION
         
     }
 }
