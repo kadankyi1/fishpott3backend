@@ -327,7 +327,7 @@ class UserController extends Controller
         return $user;
     }
 
-    //$this->send_fcm_notification("New Herald Of Glory", "Added Successfully", "/topics/ALPHA", "ALPHA");
+    //$this->sendFirebaseNotification("New Herald Of Glory", "Added Successfully", "/topics/ALPHA", "ALPHA");
     public function sendFirebaseNotification($title,$body,$target,$chid)
     {
         // SETTING API ACCESS KEY

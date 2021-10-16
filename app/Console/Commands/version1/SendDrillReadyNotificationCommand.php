@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands\version1;
 
+use App\Http\Controllers\version1\UserController;
 use Illuminate\Console\Command;
 
 class SendDrillReadyNotificationCommand extends Command
@@ -38,6 +39,6 @@ class SendDrillReadyNotificationCommand extends Command
     public function handle()
     {
         // SENDING DRILL READY NOTIFICATION
-        
+        UserController::sendFirebaseNotification("New Herald Of Glory", "Added Successfully", "/topics/ALPHA", "ALPHA");
     }
 }
