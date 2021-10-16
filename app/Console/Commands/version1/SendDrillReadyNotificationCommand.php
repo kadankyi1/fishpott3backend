@@ -39,6 +39,8 @@ class SendDrillReadyNotificationCommand extends Command
     public function handle()
     {
         // SENDING DRILL READY NOTIFICATION
-        UserController::sendFirebaseNotification("New Herald Of Glory", "Added Successfully", "/topics/ALPHA", "ALPHA");
+        $user_controller = new UserController();
+        
+        $user_controller->sendFirebaseNotification("New Herald Of Glory", "Added Successfully", "/topics/ALPHA", "ALPHA");
     }
 }
