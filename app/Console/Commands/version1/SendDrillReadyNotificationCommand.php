@@ -11,14 +11,14 @@ class SendDrillReadyNotificationCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'command:name';
+    protected $signature = 'drill:sendreadynotification';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Send notification that a drill is available';
 
     /**
      * Create a new command instance.
@@ -37,6 +37,6 @@ class SendDrillReadyNotificationCommand extends Command
      */
     public function handle()
     {
-        return 0;
+        
     }
 }
