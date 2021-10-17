@@ -2,8 +2,9 @@
 
 namespace App\Console\Commands\version1;
 
-use App\Http\Controllers\version1\UserController;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Log;
+use App\Http\Controllers\version1\UserController;
 
 class SendDrillReadyNotificationCommand extends Command
 {
@@ -38,8 +39,10 @@ class SendDrillReadyNotificationCommand extends Command
      */
     public function handle()
     {
+        Log::info("Cron is working fine!");
         // CREATING THE USER OBJECT AND CALLING THE SEND FCM METHOD
-        $user_controller = new UserController();
-        $user_controller->sendFirebaseNotification("New Herald Of Glory", "Added Successfully", "/topics/ALPHA", "ALPHA");
+        //$user_controller = new UserController();
+        //$user_controller->sendFirebaseNotification("New Herald Of Glory", "Added Successfully", "/topics/ALPHA", "ALPHA");
+        $this->info('drill:sendreadynotification Command Run successfully!');
     }
 }

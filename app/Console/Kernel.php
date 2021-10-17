@@ -25,6 +25,9 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('inspire')->hourly();
+
+        // ADDING SCHDULE
+        $schedule->command('drill:sendreadynotification')->everyMinute();
     }
 
     /**
