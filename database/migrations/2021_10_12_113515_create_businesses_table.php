@@ -22,7 +22,10 @@ class CreateBusinessesTable extends Migration
             $table->timestamps();
             $table->string('business_type', 255);
             $table->string('business_logo', 255)->unique();
-            $table->string('drill_answer_4', 255)->default("");
+            $table->string('business_full_name', 255);
+            $table->string('business_short_name', 255);
+            $table->string('business_short_name', 255);
+            $table->string('business_short_name', 255);
             $table->text('drill_answer_implied_traits_2');
             $table->text('drill_answer_implied_traits_3');
             $table->text('drill_answer_implied_traits_4');
