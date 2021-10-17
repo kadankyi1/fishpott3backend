@@ -45,6 +45,10 @@ class Business extends Model
         'business_debt',
         'business_cash_on_hand',
         'business_net_worth',
+        'business_net_valuation',
+        'business_investments_amount_needed',
+        'business_maximum_number_of_investors_allowed',
+        'business_descriptive_financial_bio',
         // TEAM
         'business_executive1_firstname',
         'business_executive1_lastname',
