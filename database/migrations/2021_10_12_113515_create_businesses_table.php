@@ -26,6 +26,12 @@ class CreateBusinessesTable extends Migration
             $table->string('business_short_name', 255);
             $table->string('business_descriptive_bio', 255);
             $table->string('business_address', 255);
+            $table->string('business_pitch_text', 255);
+            $table->string('business_pitch_video', 255);
+            $table->string('business_address', 255);
+            $table->string('business_address', 255);
+            $table->string('business_address', 255);
+            $table->string('business_address', 255);
             $table->text('drill_answer_implied_traits_2');
             $table->text('drill_answer_implied_traits_3');
             $table->text('drill_answer_implied_traits_4');
