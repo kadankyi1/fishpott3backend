@@ -21,13 +21,15 @@ class Business extends Model
      * @var array
      */
     protected $fillable = [
+        // SYST
         'business_id', 
         'business_sys_id', 
+        'business_business_pott_name',
+        
+        // BIO
         'business_type',
         'business_full_name',
         'business_short_name',
-        'business_business_pott_name',
-        'business_business_pott_name',
         'business_business_address',
         'business_business_country',
         'business_business_revenue_last_year',
@@ -51,7 +53,7 @@ class Business extends Model
         'business_business_executive4_lastname',
         'business_business_executive4_profile_picture',
         'business_business_executive4_description',
-        //
+        //s
         'business_flagged',
         'created_at',
         'updated_at',
