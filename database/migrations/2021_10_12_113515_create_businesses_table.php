@@ -29,6 +29,12 @@ class CreateBusinessesTable extends Migration
             $table->boolean('drill_flagged')->default(false);
             $table->timestamps();
         });
+
+        Schema::table('drills', function (Blueprint $table) {
+            $table->string('drill_maker_investor_id', 255);
+            $table->foreign('drill_maker_investor_id')->references('investor_id')->on('users');
+        });
+
     }
 
     /**
@@ -38,6 +44,8 @@ class CreateBusinessesTable extends Migration
      */
     public function down()
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         Schema::dropIfExists('businesses');
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 }
