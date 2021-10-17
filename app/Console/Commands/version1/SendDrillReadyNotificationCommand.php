@@ -43,6 +43,6 @@ class SendDrillReadyNotificationCommand extends Command
         // CREATING THE USER OBJECT AND CALLING THE SEND FCM METHOD
         //$user_controller = new UserController();
         //$user_controller->sendFirebaseNotification("New Herald Of Glory", "Added Successfully", "/topics/ALPHA", "ALPHA");
-        $this->info('drill:sendreadynotification Command Run successfully!');
+        Log::info('drill:sendreadynotification Command Run successfully!');
     }
 }
