@@ -23,7 +23,7 @@ class CreateBusinessesTable extends Migration
             $table->string('business_type', 255);
             $table->string('business_logo', 255)->unique();
             $table->string('business_full_name', 255);
-            $table->string('business_short_name', 255);
+            $table->string('business_stockmarket_shortname', 255);
             $table->string('business_descriptive_bio', 255);
             $table->string('business_address', 255);
             $table->string('business_pitch_text', 255);
