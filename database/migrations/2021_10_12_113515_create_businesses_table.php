@@ -33,10 +33,12 @@ class CreateBusinessesTable extends Migration
             $table->bigInteger('business_debt_usd');
             $table->bigInteger('business_cash_on_hand_usd');
             $table->bigInteger('business_net_worth_usd');
+            $table->bigInteger('business_net_valuation_usd');
+            $table->bigInteger('business_investments_amount_needed_usd');
+            $table->integer('business_maximum_number_of_investors_allowed');
+            $table->text('business_descriptive_financial_bio');
             $table->string('business_address', 255);
             $table->string('business_address', 255);
-            $table->string('business_address', 255);
-            $table->text('drill_answer_implied_traits_2');
             $table->text('drill_answer_implied_traits_3');
             $table->text('drill_answer_implied_traits_4');
             $table->boolean('drill_passed_as_suggestion')->default(false);
