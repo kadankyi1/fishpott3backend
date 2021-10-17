@@ -41,6 +41,8 @@ class CreateBusinessesTable extends Migration
             $table->string('business_executive1_lastname', 255);
             $table->string('business_executive1_profile_picture', 255);
             $table->string('business_executive1_description', 255);
+            $table->string('business_executive1_facebook_url', 255);
+            $table->string('business_executive1_linkedin_url', 255);
             $table->string('business_address', 255);
             $table->text('drill_answer_implied_traits_3');
             $table->text('drill_answer_implied_traits_4');
