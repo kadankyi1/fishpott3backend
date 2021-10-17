@@ -61,13 +61,14 @@ class CreateBusinessesTable extends Migration
             $table->text('business_executive4_description');
             $table->string('business_executive4_facebook_url', 255);
             $table->string('business_executive4_linkedin_url', 255);
-            $table->boolean('drill_passed_as_suggestion')->default(false);
         });
 
+        /*
         Schema::table('drills', function (Blueprint $table) {
             $table->string('drill_maker_investor_id', 255);
             $table->foreign('drill_maker_investor_id')->references('investor_id')->on('users');
         });
+        */
 
     }
 
