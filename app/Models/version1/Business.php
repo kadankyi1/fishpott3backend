@@ -73,6 +73,8 @@ class Business extends Model
         'business_executive4_lastname',
         'business_executive4_profile_picture',
         'business_executive4_description',
+        'business_executive4_facebook_url',
+        'business_executive4_linkedin_url',
     ];
 
 }
