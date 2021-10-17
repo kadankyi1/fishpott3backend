@@ -1160,6 +1160,74 @@ public function changePasswordWithResetCode(Request $request)
         ]);
     }
 
+        /*
+    |--------------------------------------------------------------------------
+    |--------------------------------------------------------------------------
+    | THIS FUNCTION ADDS A BUSINESS' PROFILE
+    |--------------------------------------------------------------------------
+    |--------------------------------------------------------------------------
+    */
+    
+    public function addBusiness(Request $request)
+    {
+        /*
+        |**************************************************************************
+        | VALIDATION STARTS 
+        |**************************************************************************
+        */
+        // MAKING SURE THE INPUT HAS THE EXPECTED VALUES
+        $validatedData = $request->validate([
+            "user_phone_number" => "bail|required|regex:/^\+\d{10,15}$/|min:10|max:15",
+            "investor_id" => "bail|required",
+            "user_language" => "bail|required|max:3",
+            "app_type" => "bail|required|max:8",
+            "app_version_code" => "bail|required|integer",
+            // ADD ANY OTHER REQUIRED INPUTS FROM HERE
+            "drill_question" => "min:5|max:100",
+            "drill_answer_1" => "min:2|max:100",
+            "drill_answer_2" => "min:2|max:100",
+            "drill_answer_3" => "max:100",
+            "drill_answer_4" => "max:100",
+        ]);
+
+        // MAKING SURE THE REQUEST AND USER IS VALIDATED
+        $validation_response = $this->validateUserWithAuthToken($request, auth()->user());
+        if(!empty($validation_response["status"]) && trim($validation_response["status"]) == "error"){
+            return response($validation_response);
+        } else {
+            $user = $validation_response;
+        }
+        /*
+        |**************************************************************************
+        | VALIDATION ENDED 
+        |**************************************************************************
+        */
+
+        //CREATING THE USER DATA TO ADD TO DB
+        $drillData["drill_sys_id"] = $user->user_pottname . "-" . substr($validatedData["user_phone_number"] ,1,strlen($validatedData["user_phone_number"])) . date("Y-m-d-H-i-s") . $this->getRandomString(50);
+        $drillData["drill_question"] = $validatedData["drill_question"];
+        $drillData["drill_answer_1"] = $validatedData["drill_answer_1"];
+        $drillData["drill_answer_2"] = $validatedData["drill_answer_2"];
+        if(!empty($validatedData["drill_answer_3"])){
+            $drillData["drill_answer_3"] = $validatedData["drill_answer_3"];
+        }
+        if(!empty($validatedData["drill_answer_4"])){
+            $drillData["drill_answer_4"] = $validatedData["drill_answer_4"];
+        }
+        $drillData["drill_answer_implied_traits_1"] = "";
+        $drillData["drill_answer_implied_traits_2"] = "";
+        $drillData["drill_answer_implied_traits_3"] = "";
+        $drillData["drill_answer_implied_traits_4"] = "";
+        $drillData["drill_maker_investor_id"] = $user->investor_id;
+        Drill::create($drillData);
+
+        return response([
+            "status" => "yes", 
+            "message" => "Drill saved to your Pott. You will know when it broadcasts worldwide."
+        ]);
+    }
+
+
     /*
     |--------------------------------------------------------------------------
     |--------------------------------------------------------------------------
