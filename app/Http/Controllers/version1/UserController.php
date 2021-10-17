@@ -1190,7 +1190,7 @@ public function changePasswordWithResetCode(Request $request)
             "business_stockmarket_shortname" => "bail|required|min:5|max:10",
             "business_descriptive_bio" => "bail|required|min:50|max:300",
             "business_address" => "bail|required|min:5|max:150",
-            "business_pitch_text" => "bail|required|integer|min:5|max:100",
+            "business_pitch_text" => "bail|required|min:10|max:200",
             "business_pitch_video" => "bail|required|integer|min:5|max:100",
             "business_revenue_usd" => "bail|required|integer|min:5|max:100",
             "business_loss_usd" => "bail|required|integer|min:5|max:100",
