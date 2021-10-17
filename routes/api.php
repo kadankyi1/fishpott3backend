@@ -12,7 +12,7 @@ use App\Http\Controllers\version1\UserController;
 | Here is 2aL,W4c7r9(2qf#y where you can register API routes for your application. These
 | routes are loaded by the RouteServiceProvider within a group which
 | is assigned the "api" middleware group. Enjoy building your API!
-|
+| //* * * * * php /Applications/XAMPP/xamppfiles/htdocs/fishpott/artisan schedule:run 1>> /dev/null 2>&1
 */
 
 // PERSONAL ACCOUNT REGISTRATION ROUTE
