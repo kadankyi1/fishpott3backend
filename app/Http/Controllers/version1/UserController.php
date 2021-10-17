@@ -1183,11 +1183,48 @@ public function changePasswordWithResetCode(Request $request)
             "app_type" => "bail|required|max:8",
             "app_version_code" => "bail|required|integer",
             // ADD ANY OTHER REQUIRED INPUTS FROM HERE
-            "drill_question" => "min:5|max:100",
-            "drill_answer_1" => "min:2|max:100",
-            "drill_answer_2" => "min:2|max:100",
-            "drill_answer_3" => "max:100",
-            "drill_answer_4" => "max:100",
+            "business_pott_name" => "bail|required|integer|min:5|max:100",
+            "business_type" => "bail|required|integer|min:5|max:100",
+            "business_logo" => "bail|required|integer|min:5|max:100",
+            "business_full_name" => "bail|required|integer|min:5|max:100",
+            "business_short_name" => "bail|required|integer|min:5|max:100",
+            "business_descriptive_bio" => "bail|required|integer|min:5|max:100",
+            "business_address" => "bail|required|integer|min:5|max:100",
+            "business_pitch_text" => "bail|required|integer|min:5|max:100",
+            "business_pitch_video" => "bail|required|integer|min:5|max:100",
+            "business_revenue_usd" => "bail|required|integer|min:5|max:100",
+            "business_loss_usd" => "bail|required|integer|min:5|max:100",
+            "business_debt_usd" => "bail|required|integer|min:5|max:100",
+            "business_cash_on_hand_usd" => "bail|required|integer|min:5|max:100",
+            "business_net_worth_usd" => "bail|required|integer|min:5|max:100",
+            "business_net_valuation_usd" => "bail|required|integer|min:5|max:100",
+            "business_investments_amount_needed_usd" => "bail|required|integer|min:5|max:100",
+            "business_maximum_number_of_investors_allowed" => "bail|required|integer|min:5|max:100",
+            "business_descriptive_financial_bio" => "bail|required|integer|min:5|max:100",
+            "business_executive1_firstname" => "bail|required|integer|min:5|max:100",
+            "business_executive1_lastname" => "bail|required|integer|min:5|max:100",
+            "business_executive1_profile_picture" => "bail|required|integer|min:5|max:100",
+            "business_executive1_description" => "bail|required|integer|min:5|max:100",
+            "business_executive1_facebook_url" => "bail|required|integer|min:5|max:100",
+            "business_executive1_linkedin_url" => "bail|required|integer|min:5|max:100",
+            "business_executive2_firstname" => "bail|required|integer|min:5|max:100",
+            "business_executive2_lastname" => "bail|required|integer|min:5|max:100",
+            "business_executive2_profile_picture" => "bail|required|integer|min:5|max:100",
+            "business_executive2_description" => "bail|required|integer|min:5|max:100",
+            "business_executive2_facebook_url" => "bail|required|integer|min:5|max:100",
+            "business_executive2_linkedin_url" => "bail|required|integer|min:5|max:100",
+            "business_executive3_firstname" => "bail|required|integer|min:5|max:100",
+            "business_executive3_lastname" => "bail|required|integer|min:5|max:100",
+            "business_executive3_profile_picture" => "bail|required|integer|min:5|max:100",
+            "business_executive3_description" => "bail|required|integer|min:5|max:100",
+            "business_executive3_facebook_url" => "bail|required|integer|min:5|max:100",
+            "business_executive3_linkedin_url" => "bail|required|integer|min:5|max:100",
+            "business_executive4_firstname" => "bail|required|integer|min:5|max:100",
+            "business_executive4_lastname" => "bail|required|integer|min:5|max:100",
+            "business_executive4_profile_picture" => "bail|required|integer|min:5|max:100",
+            "business_executive4_description" => "bail|required|integer|min:5|max:100",
+            "business_executive4_facebook_url" => "bail|required|integer|min:5|max:100",
+            "business_executive4_linkedin_url" => "bail|required|integer|min:5|max:100",
         ]);
 
         // MAKING SURE THE REQUEST AND USER IS VALIDATED
@@ -1204,7 +1241,7 @@ public function changePasswordWithResetCode(Request $request)
         */
 
         //CREATING THE USER DATA TO ADD TO DB
-        $drillData["drill_sys_id"] = $user->user_pottname . "-" . substr($validatedData["user_phone_number"] ,1,strlen($validatedData["user_phone_number"])) . date("Y-m-d-H-i-s") . $this->getRandomString(50);
+        $drillData["business_sys_id"] = $user->user_pottname . "-" . substr($validatedData["user_phone_number"] ,1,strlen($validatedData["user_phone_number"])) . date("Y-m-d-H-i-s") . $this->getRandomString(50);
         $drillData["drill_question"] = $validatedData["drill_question"];
         $drillData["drill_answer_1"] = $validatedData["drill_answer_1"];
         $drillData["drill_answer_2"] = $validatedData["drill_answer_2"];
