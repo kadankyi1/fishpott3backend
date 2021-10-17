@@ -30,8 +30,8 @@ class CreateBusinessesTable extends Migration
             $table->string('business_pitch_video', 255);
             $table->bigInteger('business_revenue_usd');
             $table->bigInteger('business_loss_usd');
-            $table->bigInteger('business_address');
-            $table->bigInteger('business_address');
+            $table->bigInteger('business_debt_usd');
+            $table->bigInteger('business_cash_on_hand_usd');
             $table->bigInteger('business_address');
             $table->string('business_address', 255);
             $table->string('business_address', 255);
