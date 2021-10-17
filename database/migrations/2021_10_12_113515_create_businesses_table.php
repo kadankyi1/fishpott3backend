@@ -14,7 +14,7 @@ class CreateBusinessesTable extends Migration
     public function up()
     {
         Schema::create('businesses', function (Blueprint $table) {
-            $table->bigIncrements('drill_id');
+            $table->bigIncrements('business_id');
             $table->string('drill_sys_id', 255)->unique();
             $table->string('drill_question', 255)->default;
             $table->string('drill_answer_1', 255);
