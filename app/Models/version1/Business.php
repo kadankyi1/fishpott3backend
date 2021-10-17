@@ -31,12 +31,18 @@ class Business extends Model
         'business_logo',
         'business_full_name',
         'business_short_name',
+        'business_descriptive_bio',
         'business_business_address',
         'business_business_country',
-        'business_business_revenue_last_year',
-        'business_business_revenue_last_year',
+        
+        // PITCH
         'business_business_pitch_text',
         'business_business_pitch_video',
+
+        // 
+        'business_business_revenue_last_year',
+        'business_business_revenue_last_year',
+
         // TEAM
         'business_business_executive1_firstname',
         'business_business_executive1_lastname',
@@ -54,6 +60,7 @@ class Business extends Model
         'business_business_executive4_lastname',
         'business_business_executive4_profile_picture',
         'business_business_executive4_description',
+
         //s
         'business_flagged',
         'created_at',
