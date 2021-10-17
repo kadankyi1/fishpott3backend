@@ -43,6 +43,8 @@ class Business extends Model
         'business_revenue',
         'business_loss',
         'business_debt',
+        'business_cash_on_hand',
+        'business_net_worth',
         // TEAM
         'business_executive1_firstname',
         'business_executive1_lastname',
