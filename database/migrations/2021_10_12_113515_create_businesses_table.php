@@ -19,8 +19,9 @@ class CreateBusinessesTable extends Migration
             $table->string('business_pott_name', 255);
             $table->boolean('business_flagged')->default(false);
             $table->text('business_flagged_reason');
-            $table->string('drill_answer_2', 255);
-            $table->string('drill_answer_3', 255)->default("");
+            $table->timestamps();
+            $table->string('business_type', 255);
+            $table->string('business_logo', 255)->unique();
             $table->string('drill_answer_4', 255)->default("");
             $table->text('drill_answer_implied_traits_2');
             $table->text('drill_answer_implied_traits_3');
