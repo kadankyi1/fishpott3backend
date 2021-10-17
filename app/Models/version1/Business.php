@@ -24,7 +24,7 @@ class Business extends Model
         // SYSTEM
         'business_id', 
         'business_sys_id', 
-        'business_pott_name',
+        'business_pottname',
         'business_flagged',
         'business_flagged_reason',
         'created_at',
