@@ -67,6 +67,8 @@ class Business extends Model
         'business_executive3_lastname',
         'business_executive3_profile_picture',
         'business_executive3_description',
+        'business_executive3_facebook_url',
+        'business_executive3_linkedin_url',
         'business_executive4_firstname',
         'business_executive4_lastname',
         'business_executive4_profile_picture',
