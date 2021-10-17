@@ -43,6 +43,8 @@ class CreateDrillsTable extends Migration
      */
     public function down()
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         Schema::dropIfExists('drills');
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 }
