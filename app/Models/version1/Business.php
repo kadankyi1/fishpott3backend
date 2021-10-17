@@ -26,6 +26,7 @@ class Business extends Model
         'business_sys_id', 
         'business_pott_name',
         'business_flagged',
+        'business_flagged_reason',
         'created_at',
         'updated_at',
         // BIO
