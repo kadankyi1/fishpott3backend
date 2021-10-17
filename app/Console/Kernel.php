@@ -13,7 +13,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        Commands\SendDrillReadyNotificationCommand::class,
+        Commands\version1\SendDrillReadyNotificationCommand::class,
     ];
 
     /**
