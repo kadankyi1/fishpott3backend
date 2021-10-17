@@ -21,11 +21,13 @@ class Business extends Model
      * @var array
      */
     protected $fillable = [
-        // SYST
+        // SYSTEM
         'business_id', 
         'business_sys_id', 
         'business_business_pott_name',
-
+        'business_flagged',
+        'created_at',
+        'updated_at',
         // BIO
         'business_type',
         'business_logo',
@@ -34,15 +36,12 @@ class Business extends Model
         'business_descriptive_bio',
         'business_business_address',
         'business_business_country',
-        
         // PITCH
         'business_business_pitch_text',
         'business_business_pitch_video',
-
         // 
-        'business_business_revenue_last_year',
-        'business_business_revenue_last_year',
-
+        //'business_business_revenue_last_year',
+        //'business_business_revenue_last_year',
         // TEAM
         'business_business_executive1_firstname',
         'business_business_executive1_lastname',
@@ -60,11 +59,6 @@ class Business extends Model
         'business_business_executive4_lastname',
         'business_business_executive4_profile_picture',
         'business_business_executive4_description',
-
-        //s
-        'business_flagged',
-        'created_at',
-        'updated_at',
     ];
 
 }
