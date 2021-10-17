@@ -26,7 +26,6 @@ class CreateBusinessesTable extends Migration
             $table->text('drill_answer_implied_traits_3');
             $table->text('drill_answer_implied_traits_4');
             $table->boolean('drill_passed_as_suggestion')->default(false);
-            $table->timestamps();
         });
 
         Schema::table('drills', function (Blueprint $table) {
