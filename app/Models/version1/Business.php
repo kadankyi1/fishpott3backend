@@ -25,9 +25,10 @@ class Business extends Model
         'business_id', 
         'business_sys_id', 
         'business_business_pott_name',
-        
+
         // BIO
         'business_type',
+        'business_logo',
         'business_full_name',
         'business_short_name',
         'business_business_address',
