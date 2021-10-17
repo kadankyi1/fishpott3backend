@@ -1219,12 +1219,12 @@ public function changePasswordWithResetCode(Request $request)
             "business_executive3_description" => "bail|required|min:5|max:150",
             //"business_executive3_facebook_url" => "bail|required",
             //"business_executive3_linkedin_url" => "bail|required",
-            "business_executive4_firstname" => "bail|required|integer|min:5|max:100",
-            "business_executive4_lastname" => "bail|required|integer|min:5|max:100",
-            "business_executive4_profile_picture" => "bail|required|integer|min:5|max:100",
-            "business_executive4_description" => "bail|required|integer|min:5|max:100",
-            "business_executive4_facebook_url" => "bail|required|integer|min:5|max:100",
-            "business_executive4_linkedin_url" => "bail|required|integer|min:5|max:100",
+            "business_executive4_firstname" => "bail|required|min:2|max:100",
+            "business_executive4_lastname" => "bail|required|min:2|max:100",
+            "business_executive4_profile_picture" => "bail|required",
+            "business_executive4_description" => "bail|required|min:5|max:150",
+            //"business_executive4_facebook_url" => "bail|required",
+            //"business_executive4_linkedin_url" => "bail|required",
         ]);
 
         // MAKING SURE THE REQUEST AND USER IS VALIDATED
