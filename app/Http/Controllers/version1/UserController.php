@@ -1184,8 +1184,7 @@ public function changePasswordWithResetCode(Request $request)
             "app_version_code" => "bail|required|integer",
             // ADD ANY OTHER REQUIRED INPUTS FROM HERE
             "business_pottname" => "bail|required|string|regex:/^[A-Za-z0-9_.]+$/|max:15",
-            "" => "bail|required|min:5|max:100",
-            "business_type" => "bail|required|integer|min:5|max:100",
+            "business_type" => "bail|required|string|min:5|max:100",
             "business_logo" => "bail|required|integer|min:5|max:100",
             "business_full_name" => "bail|required|integer|min:5|max:100",
             "business_short_name" => "bail|required|integer|min:5|max:100",
