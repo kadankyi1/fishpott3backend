@@ -25,15 +25,16 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
-
+        
         Passport::routes();
         Passport::tokensCan([
-
-            //ADMIN SCOPE
             'get-info-on-apps' => 'View information on apps',
-            'get-stock-suggestions' => 'Get Stock Suggestions',
-            'answer-questions' => 'Answer Questions',
-            'buy-stock-suggested' => 'Buy Stocks Suggested',
+            'get-business-suggestions' => 'Get business suggestions',
+            'answer-drills' => 'Answer drills',
+            'buy-business-stocks' => 'Buy business stocks',
+            'transfer-business-stocks' => 'Transfer business stocks',
+            
+            //ADMIN SCOPE
             'add-admins' => 'Can add administrators Stocks',
 
         ]);

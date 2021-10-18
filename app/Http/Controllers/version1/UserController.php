@@ -481,7 +481,7 @@ class UserController extends Controller
         } else if($request->app_type == "IOS"){
             $userData["user_ios_app_version_code"] = $validatedData["app_version_code"];
         } 
-        $userData["user_scope"] = "get-info-on-apps get-stock-suggestions answer-questions buy-stock-suggested trade-stocks";
+        $userData["user_scope"] = "get-info-on-apps get-business-suggestions answer-drills buy-business-stocks transfer-business-stocks";
         $userData["user_phone_verification_requested"] = boolval(config('app.phoneverificationrequiredstatus'));
         $userData["user_id_verification_requested"] = boolval(config('app.idverificationrequiredstatus'));
 
@@ -650,7 +650,7 @@ class UserController extends Controller
             $userData["user_ios_app_version_code"] = $validatedData["app_version_code"];
         } 
         $userData["user_app_version_code"] = $validatedData["app_version_code"];
-        $userData["user_scope"] = "get-info-on-apps get-stock-suggestions answer-questions buy-stock-suggested trade-stocks";
+        $userData["user_scope"] = "get-info-on-apps get-business-suggestions answer-drills buy-business-stocks transfer-business-stocks";
         $userData["user_phone_verification_requested"] = boolval(config('app.phoneverificationrequiredstatus'));
         $userData["user_id_verification_requested"] = boolval(config('app.idverificationrequiredstatus'));
 
