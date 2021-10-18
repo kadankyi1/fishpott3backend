@@ -49,7 +49,7 @@ return [
             'hash' => false,
         ],
         
-        'administrator' => [
+        'administrator-api' => [
             'driver' => 'passport',
             'provider' => 'administrators',
             'hash'=>false,

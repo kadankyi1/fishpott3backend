@@ -58,4 +58,9 @@ class Administrator extends Authenticatable
         'administrator_pin', 'remember_token',
         'password', 'remember_token',
     ];
+    
+    public function getAuthPassword()
+    {
+        return $this->password;
+    }
 }
