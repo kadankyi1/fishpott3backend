@@ -25,45 +25,6 @@ class AdministratorController extends Controller
     /*
     |--------------------------------------------------------------------------
     |--------------------------------------------------------------------------
-    | THIS FUNCTION REGISTES THE ADMIN AND PROVIDES THEM WITH AN ACCESS TOKEN
-    |--------------------------------------------------------------------------
-    |--------------------------------------------------------------------------
-    |
-    */
-    public function registerFirstAdmin(Request $request)
-    {
-
-        $validatedData = $request->validate([
-            "administrator_sys_id" => "bail|required|max:55",
-            "administrator_user_pottname" => "bail|required|max:55",
-            "administrator_surname" => "bail|required|max:55",
-            "administrator_firstname" => "bail|required|max:55",
-            "administrator_phone_number" => "bail|required|regex:/^\+\d{10,15}$/|min:10|max:15",
-            "administrator_email" => "bail|email|required|max:100",
-            "administrator_pin" => "bail|required|min:4|max:8",
-            "password" => "bail|required|min:8|max:30",
-            "administrator_scope" => "bail|required",
-            "added_by_administrator_id" => "bail|required",
-            "frontend_key" => "bail|required|in:2aLW4c7r9(2qf#y"
-        ]);
-
-        $validatedData["administrator_pin"] = Hash::make($request->administrator_pin);
-        $validatedData["password"] = bcrypt($request->password);
-        $validatedData["administrator_flagged"] = false;
-
-        $administrator = Administrator::create($validatedData);
-
-        $accessToken = $administrator->createToken("authToken", [$validatedData["administrator_scope"]])->accessToken;
-
-        return response([
-            "administrator" => $administrator, 
-            "administrator_user_pottname" => $request->administrator_user_pottname, 
-            "access_token" => $accessToken
-        ]);
-    }
-    /*
-    |--------------------------------------------------------------------------
-    |--------------------------------------------------------------------------
     | THIS FUNCTION VALIDATES A REQUEST AND THE USER MAKING IT
     |--------------------------------------------------------------------------
     |--------------------------------------------------------------------------
@@ -118,6 +79,46 @@ class AdministratorController extends Controller
         $user->save();    
         
         return $user;
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    |--------------------------------------------------------------------------
+    | THIS FUNCTION REGISTES THE ADMIN AND PROVIDES THEM WITH AN ACCESS TOKEN
+    |--------------------------------------------------------------------------
+    |--------------------------------------------------------------------------
+    |
+    */
+    public function registerFirstAdmin(Request $request)
+    {
+
+        $validatedData = $request->validate([
+            "administrator_sys_id" => "bail|required|max:55",
+            "administrator_user_pottname" => "bail|required|string|regex:/^[A-Za-z0-9_.]+$/|max:15",
+            "administrator_surname" => "bail|required|max:55",
+            "administrator_firstname" => "bail|required|max:55",
+            "administrator_phone_number" => "bail|required|regex:/^\+\d{10,15}$/|min:10|max:15",
+            "administrator_email" => "bail|email|required|max:100",
+            "administrator_pin" => "bail|required|min:4|max:8",
+            "password" => "bail|required|min:8|max:30",
+            "administrator_scope" => "bail|required",
+            "added_by_administrator_id" => "bail|required",
+            "frontend_key" => "bail|required|in:2aLW4c7r9(2qf#y"
+        ]);
+
+        $validatedData["administrator_pin"] = Hash::make($request->administrator_pin);
+        $validatedData["password"] = bcrypt($request->password);
+        $validatedData["administrator_flagged"] = false;
+
+        $administrator = Administrator::create($validatedData);
+
+        $accessToken = $administrator->createToken("authToken", [$validatedData["administrator_scope"]])->accessToken;
+
+        return response([
+            "administrator" => $administrator, 
+            "administrator_user_pottname" => $request->administrator_user_pottname, 
+            "access_token" => $accessToken
+        ]);
     }
 
     /*
@@ -320,29 +321,17 @@ class AdministratorController extends Controller
     */
     public function loginAsAdministrator(Request $request)
     {
-
         // MAKING SURE THE INPUT HAS THE EXPECTED VALUES
         $validatedData = $request->validate([
-            "user_phone_number" => "bail|required|regex:/^\+\d{10,15}$/|min:10|max:15",
+            "administrator_phone_number" => "bail|required|regex:/^\+\d{10,15}$/|min:10|max:15",
+            "administrator_user_pottname" => "bail|required|string|regex:/^[A-Za-z0-9_.]+$/|max:15",
             "password" => "bail|required",
-            "user_language" => "bail|required|max:3",
-            "app_type" => "bail|required|max:8",
-            "app_version_code" => "bail|required|integer"
+            "frontend_key" => "bail|required|in:2aLW4c7r9(2qf#y"
         ]);
 
-        $loginData["user_phone_number"] = $validatedData["user_phone_number"];
+        $loginData["administrator_phone_number"] = $validatedData["administrator_phone_number"];
         $loginData["password"] = $validatedData["password"];
 
-        // MAKING SURE VERSION CODE IS ALLOWED
-        if(
-            $request->app_type == "ANDROID" && 
-            ($request->app_version_code < intval(config('app.androidminvc')) || $request->app_version_code > intval(config('app.androidmaxvc')))
-        ){
-            return response([
-                "status" => "error", 
-                "message" => "Please update your app from the Google Play Store."
-            ]);
-        }
 
         // VALIDATING USER CREDENTIALS
         if (!auth()->attempt($loginData)) {
@@ -351,6 +340,8 @@ class AdministratorController extends Controller
                 "message" => "Invalid Credentials"
             ]);
         }
+
+        echo "passed"; exit;
 
         // CHECKING IF USER FLAGGED
         if (auth()->user()->user_flagged) {
