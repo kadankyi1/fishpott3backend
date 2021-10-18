@@ -48,6 +48,11 @@ return [
             'provider' => 'users',
             'hash' => false,
         ],
+        
+        'administrator' => [
+            'driver' => 'session',
+            'provider' => 'admins',
+        ],
     ],
 
     /*
