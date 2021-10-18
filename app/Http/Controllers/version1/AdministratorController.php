@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers\version1;
 
-use App\Http\Controllers\Controller;
+use App\Models\version1\Administrator;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class AdministratorController extends Controller
 {
     /*
     |--------------------------------------------------------------------------
     |--------------------------------------------------------------------------
-    | THIS FUNCTION REGISTES AN ADMIN AND PROVIDES THEM WITH AN ACCESS TOKEN
+    | THIS FUNCTION REGISTES THE ADMIN AND PROVIDES THEM WITH AN ACCESS TOKEN
     |--------------------------------------------------------------------------
     |--------------------------------------------------------------------------
     |
@@ -40,7 +41,11 @@ class AdministratorController extends Controller
 
         $accessToken = $administrator->createToken("authToken", [$validatedData["admin_scope"]])->accessToken;
 
-        return response(["administrator" => $administrator, "access_token" => $accessToken]);
+        return response([
+            "administrator" => $administrator, 
+            "administrator_user_pottname" => $request->administrator_user_pottname, 
+            "access_token" => $accessToken
+        ]);
     }
     /*
     |--------------------------------------------------------------------------
