@@ -17,7 +17,6 @@ class CreateAdministratorsTable extends Migration
             $table->bigIncrements('administrator_id');
             $table->string('administrator_surname', 255);
             $table->string('administrator_firstname', 255);
-            $table->string('administrator_othernames', 255)->nullable();
             $table->string('administrator_phone_number', 255)->unique();
             $table->string('administrator_email', 255)->unique();
             $table->string('administrator_pin', 255);

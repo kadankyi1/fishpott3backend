@@ -29,7 +29,6 @@ class Administrator extends Authenticatable
         'administrator_user_pottname',
         'administrator_surname', 
         'administrator_firstname', 
-        'administrator_othernames', 
         'administrator_phone_number',
         'administrator_email',
         'administrator_pin',
