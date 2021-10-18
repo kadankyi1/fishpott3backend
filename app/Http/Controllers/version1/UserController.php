@@ -1093,10 +1093,156 @@ public function changePasswordWithResetCode(Request $request)
         ]);
     }
 
+
+    /*
+    |-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|
+    | |-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-| ADMINISTRATOR SECTION ADMINISTRATOR SECTION ADMINISTRATOR SECTION ADMINISTRATOR SECTION |-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|
+    | |-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-| ADMINISTRATOR SECTION ADMINISTRATOR SECTION ADMINISTRATOR SECTION ADMINISTRATOR SECTION |-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|
+    | |-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-| ADMINISTRATOR SECTION ADMINISTRATOR SECTION ADMINISTRATOR SECTION ADMINISTRATOR SECTION |-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|
+    |-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|
+    */
+
     /*
     |--------------------------------------------------------------------------
     |--------------------------------------------------------------------------
-    | THIS FUNCTION ADDS A SUGGESTO
+    | THIS FUNCTION REGISTES A USER AND PROVIDES THEM WITH AN ACCESS TOKEN
+    |--------------------------------------------------------------------------
+    |--------------------------------------------------------------------------
+    */
+    public function loginAsAdministrator(Request $request)
+    {
+
+        // MAKING SURE THE INPUT HAS THE EXPECTED VALUES
+        $validatedData = $request->validate([
+            "user_phone_number" => "bail|required|regex:/^\+\d{10,15}$/|min:10|max:15",
+            "password" => "bail|required",
+            "user_language" => "bail|required|max:3",
+            "app_type" => "bail|required|max:8",
+            "app_version_code" => "bail|required|integer"
+        ]);
+
+        $loginData["user_phone_number"] = $validatedData["user_phone_number"];
+        $loginData["password"] = $validatedData["password"];
+
+        // MAKING SURE VERSION CODE IS ALLOWED
+        if(
+            $request->app_type == "ANDROID" && 
+            ($request->app_version_code < intval(config('app.androidminvc')) || $request->app_version_code > intval(config('app.androidmaxvc')))
+        ){
+            return response([
+                "status" => "error", 
+                "message" => "Please update your app from the Google Play Store."
+            ]);
+        }
+
+        // VALIDATING USER CREDENTIALS
+        if (!auth()->attempt($loginData)) {
+            return response([
+                "status" => "error", 
+                "message" => "Invalid Credentials"
+            ]);
+        }
+
+        // CHECKING IF USER FLAGGED
+        if (auth()->user()->user_flagged) {
+            return response([
+                "status" => "0", 
+                "message" => "Account access restricted"
+            ]);
+        }
+        
+        // CHECKING USER
+        $user = $this->getUserWithOneColumn("user_phone_number", auth()->user()->user_phone_number);
+        if($user === null){
+            return response([
+                "status" => "error", 
+                "message" => "Login failed"
+            ]);
+        } 
+
+        //GETTING GENDER 
+        $gender = Gender::where('gender_id', '=', $user->user_gender_id)->first();
+        if($gender === null){
+            return response([
+                "status" => "error", 
+                "message" => "Gender validation error."
+            ]);
+        }
+
+        //GETTING COUNTRY 
+        $country = Country::where('country_id', '=', $user->user_country_id)->first();
+        if($country === null){
+            return response([
+                "status" => "error", 
+                "message" => "Country validation error."
+            ]);
+        }
+
+        //GETTING LANGUAGE 
+        $language = Language::where('language_id', '=', $user->user_language_id)->first();
+        if($language === null){
+            return response([
+                "status" => "error", 
+                "message" => "Language validation error."
+            ]);
+        }
+
+        // SAVING APP TYPE VERSION CODE
+        if($request->app_type == "ANDROID"){
+            $user->user_android_app_version_code = $validatedData["app_version_code"];
+        } else if($request->app_type == "IOS"){
+            $user->user_ios_app_version_code = $validatedData["app_version_code"];
+        }
+
+        // GENERATING USER ACCESS TOKEN
+        $accessToken = auth()->user()->createToken("authToken", ["view-info get-stock-suggestions answer-questions buy-stock-suggested trade-stocks"])->accessToken;
+
+        // CHECKING IF PROFILE PICTURE EXISTS
+        $img_url = config('app.url') . '/uploads/images/' . $user->user_profile_picture;
+        if(empty($user->user_profile_picture) || !file_exists(public_path() . '/uploads/images/' . $user->user_profile_picture)){
+            $img_url = "";
+        }
+
+        // CHECKING ID VERIFICATION
+        if(boolval(config('app.idverificationrequiredstatus'))){
+            $user->user_id_verification_requested = $user->user_id_verification_requested;
+        }
+
+        $user->save();    
+
+        return response([
+            "status" => "yes", 
+            "message" => "",
+            "user_phone" => $user->user_phone_number,
+            "user_id" => $user->investor_id,
+            "access_token" => $accessToken,
+            "user_pott_name" => $user->user_pottname,
+            "user_full_name" => $user->user_firstname . " " . $user->user_surname,
+            "user_profile_picture" => $img_url,
+            "user_country" => $country->country_real_name,
+            "user_verified_status" => 0,
+            "user_type" => "Investor",
+            "user_gender" => $gender->gender_name,
+            "user_date_of_birth" => $user->user_dob,
+            "user_currency" => "USD",
+            "id_verification_is_on" => boolval($user->user_id_verification_requested),
+            "media_allowed" => intval(config('app.canpostpicsandvids')),
+            "user_android_app_max_vc" => intval(config('app.androidmaxvc')),
+            "user_android_app_force_update" => boolval(config('app.androidforceupdatetomaxvc')),
+            "phone_verification_is_on" => boolval(config('app.phoneverificationrequiredstatus')),
+            "mtn_momo_number" => config('app.mtnghanamomonum'), // MTN-GHANA MOBILE MONEY NUMBER
+            "mtn_momo_acc_name" => config('app.mtnghanamomoaccname'), // MTN-GHANA ACCOUNT NAME  ON MOBILE MONEY
+            "vodafone_momo_number" => config('app.vodafoneghanamomonum'), // VODAFONE-GHANA MOBILE MONEY NUMBER
+            "vodafone_momo_acc_name" => config('app.vodafoneghanamomoaccname'), // VODAFONE-GHANA ACCOUNT NAME ON MOBILE MONEY
+            "airteltigo_momo_number" => config('app.airteltigoghanamomonum'), // AIRTELTIGO-GHANA MOBILE MONEY NUMBER
+            "airteltigo_momo_acc_name" => config('app.airteltigoghanamomoaccname') // AIRTELTIGO-GHANA ACCOUNT NAME ON MOBILE MONEY
+        ]);
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    |--------------------------------------------------------------------------
+    | THIS FUNCTION ADDS A DRILL
     |--------------------------------------------------------------------------
     |--------------------------------------------------------------------------
     */
@@ -1160,7 +1306,7 @@ public function changePasswordWithResetCode(Request $request)
         ]);
     }
 
-        /*
+    /*
     |--------------------------------------------------------------------------
     |--------------------------------------------------------------------------
     | THIS FUNCTION ADDS A BUSINESS' PROFILE
@@ -1261,83 +1407,6 @@ public function changePasswordWithResetCode(Request $request)
         return response([
             "status" => "yes", 
             "message" => "Drill saved to your Pott. You will know when it broadcasts worldwide."
-        ]);
-    }
-
-
-    /*
-    |--------------------------------------------------------------------------
-    |--------------------------------------------------------------------------
-    | THIS FUNCTION SENDS A SUGGESTO - WHICH IS A WEALTH GENERATING SUGGESTION
-    |--------------------------------------------------------------------------
-    |--------------------------------------------------------------------------
-    */
-    public function getDrill(Request $request)
-    {
-        /*
-        |**************************************************************************
-        | VALIDATION STARTS 
-        |**************************************************************************
-        */
-        // MAKING SURE THE INPUT HAS THE EXPECTED VALUES
-        $validatedData = $request->validate([
-            "user_phone_number" => "bail|required|regex:/^\+\d{10,15}$/|min:10|max:15",
-            "investor_id" => "bail|required",
-            "user_language" => "bail|required|max:3",
-            "app_type" => "bail|required|max:8",
-            "app_version_code" => "bail|required|integer"
-        ]);
-        // MAKING SURE THE REQUEST AND USER IS VALIDATED
-        $validation_response = $this->validateUserWithAuthToken($request, auth()->user());
-        if(!empty($validation_response["status"]) && trim($validation_response["status"]) == "error"){
-            return response($validation_response);
-        } else {
-            $user = $validation_response;
-        }
-        /*
-        |**************************************************************************
-        | VALIDATION ENDED 
-        |**************************************************************************
-        */
-
-        // GETTING A SUGGESTO THAT HAS NOT BEEN BROADCASTED AND NOT FLAGGED
-        $suggesto = DB::table('suggestions')
-        ->select('suggestos.suggesto_question', 'suggestos.suggesto_answer_1', 'suggestos.suggesto_answer_2', 'suggestos.suggesto_answer_3', 'suggestos.suggesto_answer_4', 'users.user_firstname', 'users.user_surname', 'users.user_pottname', 'users.investor_id')
-        ->join('users', 'suggestos.suggesto_maker_investor_id', '=', 'users.investor_id')
-        ->first();
-
-        //$suggesto = Suggesto::with(['user'])->where('suggesto_broadcasted', false)->where('suggesto_flagged', false)->first();
-        if($suggesto == null){
-            return [
-                "status" => "error", 
-                "message" => "Suggestion not found."
-            ]; exit;
-        }
-
-
-        //var_dump($suggesto); exit;
-        $suggesto_prepped =  [
-            "suggesto_question" => $suggesto->suggesto_question,
-            "suggesto_answer_1" => $suggesto->suggesto_answer_1,
-            "suggesto_answer_2" => $suggesto->suggesto_answer_2,
-            "suggesto_answer_3" => $suggesto->suggesto_answer_3,
-            "suggesto_answer_4" => $suggesto->suggesto_answer_4,
-            "suggesto_maker_first_name" => $suggesto->user_firstname,
-            "suggesto_maker_last_name" => $suggesto->user_surname,
-            "suggesto_maker_pottname" => $suggesto->user_pottname,
-            "suggesto_maker_investor_id" => $suggesto->investor_id
-        ];
-
-
-        return response([
-            "status" => "yes", 
-            "message" => "Drill fetched",
-            "suggesto" => $suggesto,
-            "government_verification_is_on" => false,
-            "media_allowed" => intval(config('app.canpostpicsandvids')),
-            "user_android_app_max_vc" => intval(config('app.androidmaxvc')),
-            "user_android_app_force_update" => boolval(config('app.androidforceupdatetomaxvc')),
-            "phone_verification_is_on" => boolval(config('app.phoneverificationrequiredstatus'))
         ]);
     }
 }
