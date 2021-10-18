@@ -490,7 +490,7 @@ class UserController extends Controller
         $user1 = User::create($userData);
         
         // GENERATING THE ACCESS TOKEN FOR THE REGISTERED USER
-        $accessToken = $user1->createToken("authToken", ["get-info-on-apps get-stock-suggestions answer-questions buy-stock-suggested trade-stocks"])->accessToken;
+        $accessToken = $user1->createToken("authToken", ["get-info-on-apps get-business-suggestions answer-drills buy-business-stocks transfer-business-stocks"])->accessToken;
 
 
         return response([
