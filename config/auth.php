@@ -51,7 +51,7 @@ return [
         
         'administrator' => [
             'driver' => 'session',
-            'provider' => 'admins',
+            'provider' => 'administrators',
         ],
     ],
 
@@ -78,6 +78,10 @@ return [
             'model' => App\Models\version1\User::class,
         ],
 
+        'administrators' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\version1\Administrator::class,
+        ],
         // 'users' => [
         //     'driver' => 'database',
         //     'table' => 'users',
