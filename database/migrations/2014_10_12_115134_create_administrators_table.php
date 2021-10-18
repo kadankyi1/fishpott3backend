@@ -28,9 +28,9 @@ class CreateAdministratorsTable extends Migration
             $table->timestamps();
         });
 
-        Schema::table('drills', function (Blueprint $table) {
-            $table->string('drill_maker_investor_id', 255);
-            $table->foreign('drill_maker_investor_id')->references('investor_id')->on('users');
+        Schema::table('administrators', function (Blueprint $table) {
+            $table->string('admin_user_pottname', 255);
+            $table->foreign('admin_user_pottname')->references('user_pottname')->on('users');
         });
     }
 
