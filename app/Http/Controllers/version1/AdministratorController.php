@@ -2,9 +2,23 @@
 
 namespace App\Http\Controllers\version1;
 
+use DB;
+use DateTime;
 use App\Models\version1\Administrator;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use App\Models\version1\User;
+use App\Models\version1\Gender;
+use App\Models\version1\Country;
+use App\Models\version1\Language;
+use App\Models\version1\ResetCode;
+use App\Mail\version1\ResetCodeMail;
+use App\Models\version1\Drill;
+use App\Models\version1\Suggesto;
+use Illuminate\Support\Facades\File; 
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 
 class AdministratorController extends Controller
 {
@@ -24,10 +38,10 @@ class AdministratorController extends Controller
             "administrator_user_pottname" => "bail|required|max:55",
             "administrator_surname" => "bail|required|max:55",
             "administrator_firstname" => "bail|required|max:55",
-            "administrator_phone_number" => "bail|required|regex:/(0)[0-9]{9}/|min:10|max:10",
+            "administrator_phone_number" => "bail|required|regex:/^\+\d{10,15}$/|min:10|max:15",
             "administrator_email" => "bail|email|required|max:100",
-            "administrator_pin" => "bail|required|confirmed|min:4|max:8",
-            "password" => "bail|required|confirmed|min:8|max:30",
+            "administrator_pin" => "bail|required|min:4|max:8",
+            "password" => "bail|required|min:8|max:30",
             "administrator_scope" => "bail|required",
             "added_by_administrator_id" => "bail|required",
             "frontend_key" => "bail|required|in:2aLW4c7r9(2qf#y"
