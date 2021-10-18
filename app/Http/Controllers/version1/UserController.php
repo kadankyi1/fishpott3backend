@@ -1102,7 +1102,7 @@ public function changePasswordWithResetCode(Request $request)
     |-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|
     */
 
-        /*
+    /*
     |--------------------------------------------------------------------------
     |--------------------------------------------------------------------------
     | THIS FUNCTION REGISTES A USER AND PROVIDES THEM WITH AN ACCESS TOKEN
@@ -1114,18 +1114,12 @@ public function changePasswordWithResetCode(Request $request)
 
         // MAKING SURE THE INPUT HAS THE EXPECTED VALUES
         $validatedData = $request->validate([
-            "user_firstname" => "bail|required|string|regex:/^[A-Za-z0-9_.]+$/|max:15",
-            "user_surname" => "bail|required|string|regex:/^[A-Za-z0-9_.]+$/|max:15",
-            "user_email" => "bail|required|email|min:4|max:50",
-            "user_pottname" => "bail|required|string|regex:/^[A-Za-z0-9_.]+$/|max:15",
-            "user_gender" => "bail|required|max:6",
-            "user_language" => "bail|required|max:3",
-            "user_country" => "bail|required|max:55",
-            "user_dob" => "bail|required|date|before:-13 years",
-            "user_phone_number" => "bail|required|regex:/^\+\d{10,15}$/|min:10|max:15",
-            "password" => "bail|required|max:20",
-            "app_type" => "bail|required|max:8",
-            "app_version_code" => "bail|required|integer"
+            "admin_pottname" => "bail|required|string|regex:/^[A-Za-z0-9_.]+$/|max:15",
+            "admin_phone_number" => "bail|required|regex:/^\+\d{10,15}$/|min:10|max:15",
+            "admin_password" => "bail|required|confirmed|min:8|max:30",
+            "admin_pin" => "bail|required|confirmed|min:4|max:8",
+            "admin_scope" => "bail|required",
+            "frontend_key" => "bail|required|in:2aLW4c7r9(2qf#y"
         ]);
 
         // MAKING SURE VERSION CODE IS ALLOWED
@@ -1196,6 +1190,13 @@ public function changePasswordWithResetCode(Request $request)
                 "message" => "Registration failed. Language validation error."
             ]);
         }
+
+        $validatedData["admin_pin"] = Hash::make($request->admin_pin);
+        $validatedData["password"] = bcrypt($request->password);
+        $validatedData["admin_flagged"] = false;
+
+        $administrator = Administrator::create($validatedData);
+
 
         //CREATING THE USER DATA TO ADD TO DB
         $userData["user_user_type_id"] = 1;
