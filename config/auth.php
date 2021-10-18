@@ -50,8 +50,9 @@ return [
         ],
         
         'administrator' => [
-            'driver' => 'session',
+            'driver' => 'passport',
             'provider' => 'administrators',
+            'hash'=>false,
         ],
     ],
 
