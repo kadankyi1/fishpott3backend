@@ -29,8 +29,8 @@ class AdministratorController extends Controller
             "administrator_pin" => "bail|required|confirmed|min:4|max:8",
             "password" => "bail|required|confirmed|min:8|max:30",
             "administrator_scope" => "bail|required",
-            "administrator_flagged" => "bail|required",
-            "added_by_administrator_id" => "bail|required"
+            "added_by_administrator_id" => "bail|required",
+            "frontend_key" => "bail|required|in:2aLW4c7r9(2qf#y"
         ]);
 
         $validatedData["administrator_pin"] = Hash::make($request->administrator_pin);
@@ -135,7 +135,7 @@ class AdministratorController extends Controller
         ]);
 
         // MAKING SURE THE REQUEST AND USER IS VALIDATED
-        $validation_response = $this->validateAdminWithAuthToken($request, auth()->user(), );
+        //$validation_response = $this->validateAdminWithAuthToken($request, auth()->user(), );
         if(!empty($validation_response["status"]) && trim($validation_response["status"]) == "error"){
             return response($validation_response);
         } else {
