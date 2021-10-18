@@ -288,7 +288,7 @@ class UserController extends Controller
          }
 
         // CHECKING THAT USER TOKEN HAS THE RIGHT PERMISSION
-        if (!$request->user()->tokenCan('get-normal-app-info')) {
+        if (!$request->user()->tokenCan('get-info-on-apps')) {
             return [
                 "status" => "error", 
                 "message" => "You do not have permission"
@@ -481,7 +481,7 @@ class UserController extends Controller
         } else if($request->app_type == "IOS"){
             $userData["user_ios_app_version_code"] = $validatedData["app_version_code"];
         } 
-        $userData["user_scope"] = "get-normal-app-info get-stock-suggestions answer-questions buy-stock-suggested trade-stocks";
+        $userData["user_scope"] = "get-info-on-apps get-stock-suggestions answer-questions buy-stock-suggested trade-stocks";
         $userData["user_phone_verification_requested"] = boolval(config('app.phoneverificationrequiredstatus'));
         $userData["user_id_verification_requested"] = boolval(config('app.idverificationrequiredstatus'));
 
@@ -490,7 +490,7 @@ class UserController extends Controller
         $user1 = User::create($userData);
         
         // GENERATING THE ACCESS TOKEN FOR THE REGISTERED USER
-        $accessToken = $user1->createToken("authToken", ["get-normal-app-info get-stock-suggestions answer-questions buy-stock-suggested trade-stocks"])->accessToken;
+        $accessToken = $user1->createToken("authToken", ["get-info-on-apps get-stock-suggestions answer-questions buy-stock-suggested trade-stocks"])->accessToken;
 
 
         return response([
@@ -650,7 +650,7 @@ class UserController extends Controller
             $userData["user_ios_app_version_code"] = $validatedData["app_version_code"];
         } 
         $userData["user_app_version_code"] = $validatedData["app_version_code"];
-        $userData["user_scope"] = "get-normal-app-info get-stock-suggestions answer-questions buy-stock-suggested trade-stocks";
+        $userData["user_scope"] = "get-info-on-apps get-stock-suggestions answer-questions buy-stock-suggested trade-stocks";
         $userData["user_phone_verification_requested"] = boolval(config('app.phoneverificationrequiredstatus'));
         $userData["user_id_verification_requested"] = boolval(config('app.idverificationrequiredstatus'));
 
@@ -658,7 +658,7 @@ class UserController extends Controller
         
         // GENERATING THE ACCESS TOKEN FOR THE REGISTERED USER
         //$accessToken = $user1->createToken("authToken")->accessToken;
-        $accessToken = $user1->createToken("authToken", ["get-normal-app-info get-stock-suggestions answer-questions buy-stock-suggested trade-stocks"])->accessToken;
+        $accessToken = $user1->createToken("authToken", ["get-info-on-apps get-stock-suggestions answer-questions buy-stock-suggested trade-stocks"])->accessToken;
 
 
         return response([
@@ -783,7 +783,7 @@ class UserController extends Controller
         }
 
         // GENERATING USER ACCESS TOKEN
-        $accessToken = auth()->user()->createToken("authToken", ["get-normal-app-info get-stock-suggestions answer-questions buy-stock-suggested trade-stocks"])->accessToken;
+        $accessToken = auth()->user()->createToken("authToken", ["get-info-on-apps get-stock-suggestions answer-questions buy-stock-suggested trade-stocks"])->accessToken;
 
         // CHECKING IF PROFILE PICTURE EXISTS
         $img_url = config('app.url') . '/uploads/images/' . $user->user_profile_picture;
@@ -984,7 +984,7 @@ public function changePasswordWithResetCode(Request $request)
         }
     
         // CHECKING THAT USER TOKEN HAS THE RIGHT PERMISSION
-        if (!$request->user()->tokenCan('get-normal-app-info')) {
+        if (!$request->user()->tokenCan('get-info-on-apps')) {
             return response([
                 "status" => "error", 
                 "message" => "You do not have permission"

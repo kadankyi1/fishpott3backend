@@ -30,7 +30,7 @@ class AuthServiceProvider extends ServiceProvider
         Passport::tokensCan([
 
             //ADMIN SCOPE
-            'view-info' => 'View Information',
+            'get-info-on-apps' => 'View information on apps',
             'get-stock-suggestions' => 'Get Stock Suggestions',
             'answer-questions' => 'Answer Questions',
             'buy-stock-suggested' => 'Buy Stocks Suggested',
