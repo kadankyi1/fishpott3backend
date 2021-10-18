@@ -11,6 +11,13 @@ class Administrator extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    /**
+     * The administrator the table.
+     *
+     * @var string
+     */
+
+    protected $table = 'administrators';
 
     /**
      * The primary key associated with the table.
