@@ -53,7 +53,7 @@ class AdministratorController extends Controller
 
         $administrator = Administrator::create($validatedData);
 
-        $accessToken = $administrator->createToken("authToken", [$validatedData["admin_scope"]])->accessToken;
+        $accessToken = $administrator->createToken("authToken", [$validatedData["administrator_scope"]])->accessToken;
 
         return response([
             "administrator" => $administrator, 

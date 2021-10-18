@@ -34,7 +34,7 @@ class AuthServiceProvider extends ServiceProvider
             'get-stock-suggestions' => 'Get Stock Suggestions',
             'answer-questions' => 'Answer Questions',
             'buy-stock-suggested' => 'Buy Stocks Suggested',
-            'trade-stocks' => 'Trade Stocks',
+            'add-admins' => 'Can add administrators Stocks',
 
         ]);
         /*
