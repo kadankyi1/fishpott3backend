@@ -1190,7 +1190,7 @@ public function changePasswordWithResetCode(Request $request)
         ]);
 
         // MAKING SURE THE REQUEST AND USER IS VALIDATED
-        $validation_response = $this->validateUserWithAuthToken($request, auth()->user());
+        $validation_response = $this->validateAdminWithAuthToken($request, auth()->user(), );
         if(!empty($validation_response["status"]) && trim($validation_response["status"]) == "error"){
             return response($validation_response);
         } else {
