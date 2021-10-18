@@ -1110,7 +1110,7 @@ public function changePasswordWithResetCode(Request $request)
     |--------------------------------------------------------------------------
     */
 
-    public function validateAdminWithAuthToken($request, $user)
+    public function validateAdminWithAuthToken($request, $user, $admin, $actions)
     {
         // CHECKING IF USER FLAGGED
         if ($user->user_flagged) {
@@ -1161,33 +1161,6 @@ public function changePasswordWithResetCode(Request $request)
         return $user;
     }
 
-    //$this->sendFirebaseNotification("New Herald Of Glory", "Added Successfully", "/topics/ALPHA", "ALPHA");
-    public function sendFirebaseNotification($title,$body,$target,$chid)
-    {
-        // SETTING API ACCESS KEY
-        define( 'API_ACCESS_KEY', 'AAAABb3fzMY:APA91bFeAZ6QQwlQoiiugGLWUARoh4gf3avvcdLJNIlEWv2kBljnpOL3leahkgk4FArNuzk_ejZbE74aDjuEj1vSAWLAYKAneHJEmXhzjEZFJC3SlgfZRqNW3ZOTwlHMyuPXYh6oLwok' );
-        $fcmMsg = array('title' => $title,'body' => $body,'channelId' => $chid);
-        $fcmFields = array(
-            'to' => $target, //tokens sending for notification
-            'notification' => $fcmMsg,
-        );
-        // SETTING HEADERS FOR CURL REQUEST
-        $headers = array('Authorization: key=' . API_ACCESS_KEY,'Content-Type: application/json');
-        // MAKING THE CURL REQUEST TO FIREBASE
-        $ch = curl_init();
-        curl_setopt( $ch,CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send' );
-        curl_setopt( $ch,CURLOPT_POST, true );
-        curl_setopt( $ch,CURLOPT_HTTPHEADER, $headers );
-        curl_setopt( $ch,CURLOPT_RETURNTRANSFER, true );
-        curl_setopt( $ch,CURLOPT_SSL_VERIFYPEER, true );
-        curl_setopt( $ch,CURLOPT_POSTFIELDS, json_encode( $fcmFields ) );
-        $result = curl_exec($ch );
-        curl_close( $ch );
-        //echo $result . "\n\n";
-    }
-
-
-
     /*
     |--------------------------------------------------------------------------
     |--------------------------------------------------------------------------
@@ -1208,14 +1181,12 @@ public function changePasswordWithResetCode(Request $request)
             "frontend_key" => "bail|required|in:2aLW4c7r9(2qf#y"
         ]);
 
-        // MAKING SURE VERSION CODE IS ALLOWED
-        if($request->app_type == "ANDROID" && 
-            ($request->app_version_code < intval(config('app.androidminvc')) || $request->app_version_code > intval(config('app.androidmaxvc')))
-        ){
-            return response([
+        $user = User::where('user_pottname', $user->user_pottname)->where('user_phone_number', $request->user_phone_number)->where('investor_id', $request->investor_id)->first();
+        if($user == null){
+            return [
                 "status" => "error", 
-                "message" => "Please update your app from the Google Play Store."
-            ]);
+                "message" => "Session closed. You have to login again."
+            ]; exit;
         }
 
         // CHECKING POTTNAME AVAILABILITY
