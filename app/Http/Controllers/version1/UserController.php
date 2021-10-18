@@ -1172,16 +1172,38 @@ public function changePasswordWithResetCode(Request $request)
     {
 
         // MAKING SURE THE INPUT HAS THE EXPECTED VALUES
+        /*
+        |**************************************************************************
+        | VALIDATION STARTS 
+        |**************************************************************************
+        */
+        // MAKING SURE THE INPUT HAS THE EXPECTED VALUES
         $validatedData = $request->validate([
             "admin_pottname" => "bail|required|string|regex:/^[A-Za-z0-9_.]+$/|max:15",
-            "admin_phone_number" => "bail|required|regex:/^\+\d{10,15}$/|min:10|max:15",
-            "admin_password" => "bail|required|confirmed|min:8|max:30",
-            "admin_pin" => "bail|required|confirmed|min:4|max:8",
-            "admin_scope" => "bail|required",
+            "admin_pin" => "bail|required|min:4|max:8",
+            "new_admin_pottname" => "bail|required|string|regex:/^[A-Za-z0-9_.]+$/|max:15",
+            "new_admin_phone_number" => "bail|required|regex:/^\+\d{10,15}$/|min:10|max:15",
+            "new_admin_password" => "bail|required|min:8|max:30",
+            "new_admin_pin" => "bail|required|confirmed|min:4|max:8",
+            "new_admin_scope" => "bail|required",
             "frontend_key" => "bail|required|in:2aLW4c7r9(2qf#y"
         ]);
 
-        $user = User::where('user_pottname', $user->user_pottname)->where('user_phone_number', $request->user_phone_number)->where('investor_id', $request->investor_id)->first();
+        // MAKING SURE THE REQUEST AND USER IS VALIDATED
+        $validation_response = $this->validateUserWithAuthToken($request, auth()->user());
+        if(!empty($validation_response["status"]) && trim($validation_response["status"]) == "error"){
+            return response($validation_response);
+        } else {
+            $user = $validation_response;
+        }
+        /*
+        |**************************************************************************
+        | VALIDATION ENDED 
+        |**************************************************************************
+        */
+
+        // MA
+        $user = User::where('user_pottname', $request->user_pottname)->where('user_phone_number', $request->user_phone_number)->where('investor_id', $request->investor_id)->first();
         if($user == null){
             return [
                 "status" => "error", 
