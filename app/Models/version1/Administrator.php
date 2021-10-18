@@ -17,7 +17,7 @@ class Administrator extends Authenticatable
      *
      * @var string
      */
-    protected $primaryKey = 'admin_id';
+    protected $primaryKey = 'administrator_id';
 
     /**
      * The attributes that are mass assignable.
@@ -25,17 +25,17 @@ class Administrator extends Authenticatable
      * @var string[]
      */
     protected $fillable = [
-        'admin_id', 
-        'admin_pottname',
-        'admin_surname', 
-        'admin_firstname', 
-        'admin_othernames', 
-        'admin_phone_number',
-        'admin_email',
-        'admin_pin',
+        'administrator_id', 
+        'administrator_user_pottname',
+        'administrator_surname', 
+        'administrator_firstname', 
+        'administrator_othernames', 
+        'administrator_phone_number',
+        'administrator_email',
+        'administrator_pin',
         'password',
-        'admin_flagged',
-        'admin_scope',
+        'administrator_flagged',
+        'administrator_scope',
         'created_at',
         'updated_at',
     ];
@@ -46,7 +46,7 @@ class Administrator extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'admin_pin', 'remember_token',
+        'administrator_pin', 'remember_token',
         'password', 'remember_token',
     ];
 }
