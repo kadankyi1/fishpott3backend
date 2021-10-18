@@ -33,8 +33,10 @@ class Administrator extends Authenticatable
         'administrator_email',
         'administrator_pin',
         'password',
-        'administrator_flagged',
         'administrator_scope',
+        'administrator_flagged',
+        'added_by_administrator_id',
+        'added_by_administrator_name',
         'created_at',
         'updated_at',
     ];
