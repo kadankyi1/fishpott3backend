@@ -34,6 +34,7 @@ class Administrator extends Authenticatable
     protected $fillable = [
         'administrator_id', 
         'administrator_sys_id',
+        'administrator_user_pott_investor_id',
         'administrator_user_pottname',
         'administrator_surname', 
         'administrator_firstname', 
