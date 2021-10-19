@@ -341,59 +341,14 @@ class AdministratorController extends Controller
             ]);
         }
 
-        echo "passed"; exit;
-
         // CHECKING IF USER FLAGGED
-        if (auth()->user()->user_flagged) {
+        if (auth()->guard('administrator')->user()->user_flagged) {
             return response([
                 "status" => "0", 
                 "message" => "Account access restricted"
             ]);
         }
         
-        // CHECKING USER
-        $user = $this->getUserWithOneColumn("user_phone_number", auth()->user()->user_phone_number);
-        if($user === null){
-            return response([
-                "status" => "error", 
-                "message" => "Login failed"
-            ]);
-        } 
-
-        //GETTING GENDER 
-        $gender = Gender::where('gender_id', '=', $user->user_gender_id)->first();
-        if($gender === null){
-            return response([
-                "status" => "error", 
-                "message" => "Gender validation error."
-            ]);
-        }
-
-        //GETTING COUNTRY 
-        $country = Country::where('country_id', '=', $user->user_country_id)->first();
-        if($country === null){
-            return response([
-                "status" => "error", 
-                "message" => "Country validation error."
-            ]);
-        }
-
-        //GETTING LANGUAGE 
-        $language = Language::where('language_id', '=', $user->user_language_id)->first();
-        if($language === null){
-            return response([
-                "status" => "error", 
-                "message" => "Language validation error."
-            ]);
-        }
-
-        // SAVING APP TYPE VERSION CODE
-        if($request->app_type == "ANDROID"){
-            $user->user_android_app_version_code = $validatedData["app_version_code"];
-        } else if($request->app_type == "IOS"){
-            $user->user_ios_app_version_code = $validatedData["app_version_code"];
-        }
-
         // GENERATING USER ACCESS TOKEN
         $accessToken = auth()->user()->createToken("authToken", ["view-info get-stock-suggestions answer-questions buy-stock-suggested trade-stocks"])->accessToken;
 
@@ -402,13 +357,6 @@ class AdministratorController extends Controller
         if(empty($user->user_profile_picture) || !file_exists(public_path() . '/uploads/images/' . $user->user_profile_picture)){
             $img_url = "";
         }
-
-        // CHECKING ID VERIFICATION
-        if(boolval(config('app.idverificationrequiredstatus'))){
-            $user->user_id_verification_requested = $user->user_id_verification_requested;
-        }
-
-        $user->save();    
 
         return response([
             "status" => "yes", 
