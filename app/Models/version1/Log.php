@@ -23,8 +23,8 @@ class Log extends Model
      */
     protected $fillable = [
         'log_id', 
-        'user_type', 
-        'user_id_or_phone_or_email',
+        'log_user_type', 
+        'log_user_id_or_phone_or_email',
         'log_title', 
         'log_description',
         'created_at',
