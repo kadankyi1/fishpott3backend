@@ -334,7 +334,7 @@ class AdministratorController extends Controller
 
 
         // VALIDATING USER CREDENTIALS
-        if (!auth()->attempt($loginData)) {
+        if (!auth()->guard('administrator')->attempt($loginData)) {
             return response([
                 "status" => "error", 
                 "message" => "Invalid Credentials"
