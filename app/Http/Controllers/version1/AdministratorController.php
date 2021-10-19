@@ -162,13 +162,13 @@ class AdministratorController extends Controller
         //echo "\n administrator_scope: " . auth()->guard('administrator')->user()->administrator_scope; exit;
         
         // GENERATING USER ACCESS TOKEN
-        $accessToken = auth()->user()->createToken("authToken", [auth()->guard('administrator')->user()->administrator_scope])->accessToken;
+        $accessToken = auth()->guard('administrator')->user()->createToken("authToken", [auth()->guard('administrator')->user()->administrator_scope])->accessToken;
 
         return response([
             "status" => "yes", 
             "message" => "",
             "access_token" => $accessToken,
-            "user_pott_name" => auth()->guard('administrator')->user()->administrator_user_pottname,
+            "administrator_user_pottname" => auth()->guard('administrator')->user()->administrator_user_pottname,
             "administrator_firstname" => auth()->guard('administrator')->user()->administrator_firstname,
             "administrator_surname" => auth()->guard('administrator')->user()->administrator_surname
         ]);
