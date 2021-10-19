@@ -58,22 +58,16 @@ class AdministratorController extends Controller
             ]; exit;
         }
 
-        "" => "bail|required|regex:/^\+\d{10,15}$/|min:10|max:15",
-        "" => "bail|required",
-        "frontend_key" => "bail|required|in:2aLW4c7r9(2qf#y",
-        "app_type" => "bail|required|max:8",
-        "app_version_code" => "bail|required|integer",
-
         // GETTING ADMIN
-        $user = Administrator::where('administrator_phone_number', $admin->administrator_phone_number)->where('administrator_sys_id', $request->administrator_sys_id)->first();
-        if($user == null){
+        $administrator = Administrator::where('administrator_phone_number', $admin->administrator_phone_number)->where('administrator_sys_id', $request->administrator_sys_id)->first();
+        if($administrator == null){
             return [
                 "status" => "error", 
                 "message" => "Session closed. You have to login again."
             ]; exit;
         }   
         
-        return $user;
+        return $administrator;
     }
 
     /*
