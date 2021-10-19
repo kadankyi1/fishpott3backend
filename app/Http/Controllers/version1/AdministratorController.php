@@ -66,7 +66,8 @@ class AdministratorController extends Controller
                 "message" => "Session closed. You have to login again."
             ]; exit;
         }   
-        
+        LogController::save_log("administrator", $admin->administrator_sys_id, "Validation Admin", "Validation successful");
+
         return $administrator;
     }
 
