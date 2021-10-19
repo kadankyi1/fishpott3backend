@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class LogController extends Controller
 {
-    public function save_log($user_type, $access_token_or_phone_or_email, $log_title, $log_description)
+    public static function save_log($user_type, $access_token_or_phone_or_email, $log_title, $log_description)
     {
         $log = new Log();
         $log->user_type = $user_type; 

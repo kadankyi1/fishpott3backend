@@ -31,7 +31,6 @@ class AdministratorController extends Controller
     |--------------------------------------------------------------------------
     */
 
-    public $log = new Log();
 
     public function validateAdminWithAuthToken($request, $user, $admin, $actions)
     {
@@ -179,7 +178,7 @@ class AdministratorController extends Controller
         // GENERATING ADMIN ACCESS TOKEN
         $accessToken = auth()->guard('administrator')->user()->createToken("authToken", [auth()->guard('administrator')->user()->administrator_scope])->accessToken;
 
-        Log::save_log("administrator", auth()->guard('administrator')->user()->administrator_scope, "Login Admin", "Login successful");
+        LogController::save_log("administrator", auth()->guard('administrator')->user()->administrator_scope, "Login Admin", "Login successful");
 
         return response([
             "status" => "yes", 
