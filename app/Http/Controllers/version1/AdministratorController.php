@@ -84,6 +84,7 @@ class AdministratorController extends Controller
 
         $validatedData = $request->validate([
             "administrator_sys_id" => "bail|required|max:55",
+            "administrator_user_pott_investor_id" => "bail|required",
             "administrator_user_pottname" => "bail|required|string|regex:/^[A-Za-z0-9_.]+$/|max:15",
             "administrator_surname" => "bail|required|max:55",
             "administrator_firstname" => "bail|required|max:55",
