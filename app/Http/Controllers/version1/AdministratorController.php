@@ -241,7 +241,7 @@ class AdministratorController extends Controller
 
         return response([
             "status" => "yes", 
-            "message" => "Drill saved to your Pott. You will know when it broadcasts worldwide."
+            "message" => "Drill saved"
         ]);
     }
 
