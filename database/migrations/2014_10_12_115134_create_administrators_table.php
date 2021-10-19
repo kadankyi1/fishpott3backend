@@ -29,6 +29,8 @@ class CreateAdministratorsTable extends Migration
         });
 
         Schema::table('administrators', function (Blueprint $table) {
+            $table->string('administrator_user_pott_investor_id', 255);
+            $table->foreign('administrator_user_pott_investor_id')->references('investor_id')->on('users');
             $table->string('administrator_user_pottname', 255);
             $table->foreign('administrator_user_pottname')->references('user_pottname')->on('users');
         });
