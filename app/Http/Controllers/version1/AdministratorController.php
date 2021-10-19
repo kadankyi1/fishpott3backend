@@ -136,22 +136,22 @@ class AdministratorController extends Controller
             "administrator_phone_number" => "bail|required|regex:/^\+\d{10,15}$/|min:10|max:15",
             "password" => "bail|required",
             "administrator_user_pottname" => "bail|required|string|regex:/^[A-Za-z0-9_.]+$/|max:15",
-            "administrator_user_password" => "bail|required",
+            "administrator_pott_password" => "bail|required",
             "frontend_key" => "bail|required|in:2aLW4c7r9(2qf#y"
         ]);
 
         $loginData["administrator_phone_number"] = $validatedData["administrator_phone_number"];
         $loginData["password"] = $validatedData["password"];
 
-        $pottLoginData["administrator_user_pottname"] = $validatedData["administrator_user_pottname"];
-        $pottLoginData["password"] = $validatedData["password"];
+        $pottLoginData["administrator_phone_number"] = $validatedData["administrator_user_pottname"];
+        $pottLoginData["password"] = $validatedData["administrator_pott_password"];
 
 
         // VALIDATING ADMIN CREDENTIALS
         if (!auth()->guard('administrator')->attempt($loginData)) {
             return response([
                 "status" => "error", 
-                "message" => "Invalid Credentials"
+                "message" => "Invalid Credentials - a"
             ]);
         }
 
@@ -159,7 +159,7 @@ class AdministratorController extends Controller
         if (!auth()->attempt($pottLoginData)) {
             return response([
                 "status" => "error", 
-                "message" => "Invalid Credentials."
+                "message" => "Invalid Credentials - p"
             ]);
         }
 
