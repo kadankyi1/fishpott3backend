@@ -33,7 +33,7 @@ class AdministratorController extends Controller
     */
     public function validateAdminWithAuthToken($request, $admin, $actions)
     {
-        // CHECKING IF USER FLAGGED
+        // CHECKING IF ADMIN FLAGGED
         if ($admin->administrator_flagged) {
             $request->auth()->guard('administrator')->user()->token()->revoke();
             return [
@@ -42,7 +42,7 @@ class AdministratorController extends Controller
             ]; 
          }
 
-        // CHECKING THAT USER TOKEN HAS THE RIGHT PERMISSION
+        // CHECKING THAT ADMIN TOKEN HAS THE RIGHT PERMISSION
         if (!$request->auth()->guard('administrator')->user()->tokenCan($actions)) {
             return [
                 "status" => "error", 
@@ -54,7 +54,7 @@ class AdministratorController extends Controller
         if(strtoupper($request->frontend_key) == config('app.adminfrontendkey')){
             return [
                 "status" => "error", 
-                "message" => "Please update your app from the Google Play Store."
+                "message" => "Device not recognized."
             ]; exit;
         }
 
