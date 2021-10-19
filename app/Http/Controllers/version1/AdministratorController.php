@@ -26,12 +26,10 @@ class AdministratorController extends Controller
     /*
     |--------------------------------------------------------------------------
     |--------------------------------------------------------------------------
-    | THIS FUNCTION VALIDATES A REQUEST AND THE USER MAKING IT
+    | THIS FUNCTION VALIDATES A REQUEST AND THE ADMIN MAKING IT
     |--------------------------------------------------------------------------
     |--------------------------------------------------------------------------
     */
-
-
     public function validateAdminWithAuthToken($request, $user, $admin, $actions)
     {
         // CHECKING IF USER FLAGGED
@@ -178,7 +176,7 @@ class AdministratorController extends Controller
         // GENERATING ADMIN ACCESS TOKEN
         $accessToken = auth()->guard('administrator')->user()->createToken("authToken", [auth()->guard('administrator')->user()->administrator_scope])->accessToken;
 
-        LogController::save_log("administrator", auth()->guard('administrator')->user()->administrator_scope, "Login Admin", "Login successful");
+        LogController::save_log("administrator", auth()->guard('administrator')->user()->administrator_sys_id, "Login Admin", "Login successful");
 
         return response([
             "status" => "yes", 
@@ -186,7 +184,8 @@ class AdministratorController extends Controller
             "access_token" => $accessToken,
             "administrator_user_pottname" => auth()->guard('administrator')->user()->administrator_user_pottname,
             "administrator_firstname" => auth()->guard('administrator')->user()->administrator_firstname,
-            "administrator_surname" => auth()->guard('administrator')->user()->administrator_surname
+            "administrator_surname" => auth()->guard('administrator')->user()->administrator_surname,
+            "administrator_sys_id" => auth()->guard('administrator')->user()->administrator_sys_id
         ]);
     }
 
@@ -207,7 +206,7 @@ class AdministratorController extends Controller
         */
         // MAKING SURE THE INPUT HAS THE EXPECTED VALUES
         $validatedData = $request->validate([
-            "user_phone_number" => "bail|required|regex:/^\+\d{10,15}$/|min:10|max:15",
+            "administrator_phone_number" => "bail|required|regex:/^\+\d{10,15}$/|min:10|max:15",
             "investor_id" => "bail|required",
             "user_language" => "bail|required|max:3",
             "app_type" => "bail|required|max:8",
@@ -219,6 +218,10 @@ class AdministratorController extends Controller
             "drill_answer_3" => "max:100",
             "drill_answer_4" => "max:100",
         ]);
+        "password" => "bail|required",
+        "administrator_user_pottname" => "bail|required|string|regex:/^[A-Za-z0-9_.]+$/|max:15",
+        "administrator_pott_password" => "bail|required",
+        "frontend_key" => "bail|required|in:2aLW4c7r9(2qf#y"
 
         // MAKING SURE THE REQUEST AND USER IS VALIDATED
         $validation_response = $this->validateUserWithAuthToken($request, auth()->user());
