@@ -310,8 +310,6 @@ class AdministratorController extends Controller
         ]);
     }
 
-
-
     /*
     |--------------------------------------------------------------------------
     |--------------------------------------------------------------------------
@@ -358,28 +356,10 @@ class AdministratorController extends Controller
         return response([
             "status" => "yes", 
             "message" => "",
-            "user_id" => $user->investor_id,
             "access_token" => $accessToken,
             "user_pott_name" => auth()->guard('administrator')->user()->administrator_user_pottname,
-            "user_full_name" => $user->user_firstname . " " . $user->user_surname,
-            "user_profile_picture" => $img_url,
-            "user_country" => $country->country_real_name,
-            "user_verified_status" => 0,
-            "user_type" => "Investor",
-            "user_gender" => $gender->gender_name,
-            "user_date_of_birth" => $user->user_dob,
-            "user_currency" => "USD",
-            "id_verification_is_on" => boolval($user->user_id_verification_requested),
-            "media_allowed" => intval(config('app.canpostpicsandvids')),
-            "user_android_app_max_vc" => intval(config('app.androidmaxvc')),
-            "user_android_app_force_update" => boolval(config('app.androidforceupdatetomaxvc')),
-            "phone_verification_is_on" => boolval(config('app.phoneverificationrequiredstatus')),
-            "mtn_momo_number" => config('app.mtnghanamomonum'), // MTN-GHANA MOBILE MONEY NUMBER
-            "mtn_momo_acc_name" => config('app.mtnghanamomoaccname'), // MTN-GHANA ACCOUNT NAME  ON MOBILE MONEY
-            "vodafone_momo_number" => config('app.vodafoneghanamomonum'), // VODAFONE-GHANA MOBILE MONEY NUMBER
-            "vodafone_momo_acc_name" => config('app.vodafoneghanamomoaccname'), // VODAFONE-GHANA ACCOUNT NAME ON MOBILE MONEY
-            "airteltigo_momo_number" => config('app.airteltigoghanamomonum'), // AIRTELTIGO-GHANA MOBILE MONEY NUMBER
-            "airteltigo_momo_acc_name" => config('app.airteltigoghanamomoaccname') // AIRTELTIGO-GHANA ACCOUNT NAME ON MOBILE MONEY
+            "administrator_firstname" => auth()->guard('administrator')->user()->administrator_firstname,
+            "administrator_surname" => auth()->guard('administrator')->user()->administrator_surname
         ]);
     }
 
