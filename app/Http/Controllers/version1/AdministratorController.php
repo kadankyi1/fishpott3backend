@@ -23,6 +23,7 @@ use Illuminate\Support\Facades\Mail;
 
 class AdministratorController extends Controller
 {
+
     /*
     |--------------------------------------------------------------------------
     |--------------------------------------------------------------------------
@@ -49,11 +50,8 @@ class AdministratorController extends Controller
             ];
         }
 
-        // MAKING SURE VERSION CODE IS ALLOWED
-        if(
-            strtoupper($request->app_type) == "ANDROID" && 
-            (intval($request->app_version_code) < intval(config('app.androidminvc')) || $request->app_version_code > intval(config('app.androidmaxvc')))
-        ){
+        // MAKING SURE FRONTEND HAS THE RIGHT KEY
+        if(strtoupper($request->frontend_key) == config('app.adminfrontendkey')){
             return [
                 "status" => "error", 
                 "message" => "Please update your app from the Google Play Store."
