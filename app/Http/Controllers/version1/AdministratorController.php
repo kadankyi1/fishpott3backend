@@ -236,7 +236,7 @@ class AdministratorController extends Controller
         $drillData["drill_answer_implied_traits_2"] = "";
         $drillData["drill_answer_implied_traits_3"] = "";
         $drillData["drill_answer_implied_traits_4"] = "";
-        $drillData["drill_maker_investor_id"] = $admin->administrator_sys_id;
+        $drillData["drill_maker_investor_id"] = $admin->administrator_user_pott_investor_id;
         Drill::create($drillData);
 
         return response([
