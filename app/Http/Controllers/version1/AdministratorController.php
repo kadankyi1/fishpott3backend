@@ -143,12 +143,23 @@ class AdministratorController extends Controller
         $loginData["administrator_phone_number"] = $validatedData["administrator_phone_number"];
         $loginData["password"] = $validatedData["password"];
 
+        $pottLoginData["administrator_user_pottname"] = $validatedData["administrator_user_pottname"];
+        $pottLoginData["password"] = $validatedData["password"];
+
 
         // VALIDATING ADMIN CREDENTIALS
         if (!auth()->guard('administrator')->attempt($loginData)) {
             return response([
                 "status" => "error", 
                 "message" => "Invalid Credentials"
+            ]);
+        }
+
+        // VALIDATING ADMIN CREDENTIALS
+        if (!auth()->attempt($pottLoginData)) {
+            return response([
+                "status" => "error", 
+                "message" => "Invalid Credentials."
             ]);
         }
 
@@ -161,7 +172,7 @@ class AdministratorController extends Controller
         }
 
         //echo "administrator_flagged: " . auth()->guard('administrator')->user()->administrator_flagged;
-        //echo "\n administrator_scope: " . auth()->guard('administrator')->user()->administrator_scope; exit;
+        echo "\n administrator_scope: " . auth()->guard('administrator')->user()->administrator_scope; exit;
         
         // GENERATING ADMIN ACCESS TOKEN
         $accessToken = auth()->guard('administrator')->user()->createToken("authToken", [auth()->guard('administrator')->user()->administrator_scope])->accessToken;
