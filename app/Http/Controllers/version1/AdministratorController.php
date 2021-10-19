@@ -348,23 +348,19 @@ class AdministratorController extends Controller
                 "message" => "Account access restricted"
             ]);
         }
+
+        //echo "administrator_flagged: " . auth()->guard('administrator')->user()->administrator_flagged;
+        //echo "\n administrator_scope: " . auth()->guard('administrator')->user()->administrator_scope; exit;
         
         // GENERATING USER ACCESS TOKEN
-        $accessToken = auth()->user()->createToken("authToken", ["view-info get-stock-suggestions answer-questions buy-stock-suggested trade-stocks"])->accessToken;
-
-        // CHECKING IF PROFILE PICTURE EXISTS
-        $img_url = config('app.url') . '/uploads/images/' . $user->user_profile_picture;
-        if(empty($user->user_profile_picture) || !file_exists(public_path() . '/uploads/images/' . $user->user_profile_picture)){
-            $img_url = "";
-        }
+        $accessToken = auth()->user()->createToken("authToken", [auth()->guard('administrator')->user()->administrator_scope])->accessToken;
 
         return response([
             "status" => "yes", 
             "message" => "",
-            "user_phone" => $user->user_phone_number,
             "user_id" => $user->investor_id,
             "access_token" => $accessToken,
-            "user_pott_name" => $user->user_pottname,
+            "user_pott_name" => auth()->guard('administrator')->user()->administrator_user_pottname,
             "user_full_name" => $user->user_firstname . " " . $user->user_surname,
             "user_profile_picture" => $img_url,
             "user_country" => $country->country_real_name,
