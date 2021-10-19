@@ -30,11 +30,11 @@ class AdministratorController extends Controller
     |--------------------------------------------------------------------------
     |--------------------------------------------------------------------------
     */
-    public function validateAdminWithAuthToken($request, $user, $admin, $actions)
+    public function validateAdminWithAuthToken($request, $admin, $actions)
     {
         // CHECKING IF USER FLAGGED
-        if ($user->user_flagged) {
-            $request->user()->token()->revoke();
+        if ($admin->administrator_flagged) {
+            $request->auth()->guard('administrator')->user()->token()->revoke();
             return [
                 "status" => "error", 
                 "message" => "Account flagged."
@@ -42,7 +42,7 @@ class AdministratorController extends Controller
          }
 
         // CHECKING THAT USER TOKEN HAS THE RIGHT PERMISSION
-        if (!$request->user()->tokenCan('view-info')) {
+        if (!$request->auth()->guard('administrator')->user()->tokenCan($actions)) {
             return [
                 "status" => "error", 
                 "message" => "You do not have permission"
@@ -220,7 +220,7 @@ class AdministratorController extends Controller
         ]);
 
         // MAKING SURE THE REQUEST AND USER IS VALIDATED
-        $validation_response = $this->validateUserWithAuthToken($request, auth()->user());
+        $validation_response = $this->validateAdminWithAuthToken($request, auth()->user());
         if(!empty($validation_response["status"]) && trim($validation_response["status"]) == "error"){
             return response($validation_response);
         } else {
@@ -324,7 +324,7 @@ class AdministratorController extends Controller
         ]);
 
         // MAKING SURE THE REQUEST AND USER IS VALIDATED
-        $validation_response = $this->validateUserWithAuthToken($request, auth()->user());
+        $validation_response = $this->validateAdminWithAuthToken($request, auth()->user());
         if(!empty($validation_response["status"]) && trim($validation_response["status"]) == "error"){
             return response($validation_response);
         } else {
