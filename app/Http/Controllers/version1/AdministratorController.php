@@ -31,6 +31,8 @@ class AdministratorController extends Controller
     |--------------------------------------------------------------------------
     */
 
+    public $log = new Log();
+
     public function validateAdminWithAuthToken($request, $user, $admin, $actions)
     {
         // CHECKING IF USER FLAGGED
