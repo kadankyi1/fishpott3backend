@@ -49,10 +49,9 @@ return [
             'hash' => false,
         ],
         
-        'administrator-api' => [
-            'driver' => 'passport',
-            'provider' => 'administrators',
-            'hash'=>false,
+        'administrator' => [
+            'driver' => 'session',
+            'provider' => 'administrators'
         ],
         
         'administrator-api' => [
