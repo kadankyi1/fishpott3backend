@@ -33,10 +33,7 @@ Route::post('/v1/user/change-password-with-reset-code',[App\Http\Controllers\ver
 // UPLOAD PROFILE PICTURE
 Route::middleware('auth:api')->post('/v1/user/upload-pott-pic', [App\Http\Controllers\version1\UserController::class, 'uploadProfilePicture']);
 
-// ADD SUGGESTO
-Route::middleware('auth:api')->post('/v1/user/add-drill', [App\Http\Controllers\version1\UserController::class, 'addDrill']);
-
-// GET SUGGESTO
+// GET DRILL
 Route::middleware('auth:api')->get('/v1/user/get-drill', [App\Http\Controllers\version1\UserController::class, 'getDrill']);
 
 /*
@@ -53,6 +50,8 @@ Route::post('/v1/admin/register-first-admin',[App\Http\Controllers\version1\Admi
 // ADD FIRST ADMINISTRATOR
 Route::post('/v1/admin/login',[App\Http\Controllers\version1\AdministratorController::class, 'loginAsAdministrator']);
 
+// ADD DRILL
+Route::middleware('auth:api')->post('/v1/admin/add-drill', [App\Http\Controllers\version1\UserController::class, 'addDrill']);
 
 // ADD NEW ADMINISTRATOR
 //Route::middleware('auth:administrator-api')->get('/v1/user/get-drill', [App\Http\Controllers\version1\AdministratorController::class, 'registerFirstAdmin']);
