@@ -208,7 +208,7 @@ class AdministratorController extends Controller
         ]);
 
         // MAKING SURE THE REQUEST AND USER IS VALIDATED
-        $validation_response = $this->validateAdminWithAuthToken($request, auth()->user());
+        $validation_response = $this->validateAdminWithAuthToken($request, auth()->guard('administrator')->user(), "add-drill");
         if(!empty($validation_response["status"]) && trim($validation_response["status"]) == "error"){
             return response($validation_response);
         } else {
