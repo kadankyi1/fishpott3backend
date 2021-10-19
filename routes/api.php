@@ -51,7 +51,7 @@ Route::post('/v1/admin/register-first-admin',[App\Http\Controllers\version1\Admi
 Route::post('/v1/admin/login',[App\Http\Controllers\version1\AdministratorController::class, 'loginAsAdministrator']);
 
 // ADD DRILL
-Route::middleware('auth:api')->post('/v1/admin/add-drill', [App\Http\Controllers\version1\UserController::class, 'addDrill']);
+Route::middleware('auth:administrator-api')->post('/v1/admin/add-drill', [App\Http\Controllers\version1\AdministratorController::class, 'addDrill']);
 
 // ADD NEW ADMINISTRATOR
 //Route::middleware('auth:administrator-api')->get('/v1/user/get-drill', [App\Http\Controllers\version1\AdministratorController::class, 'registerFirstAdmin']);
