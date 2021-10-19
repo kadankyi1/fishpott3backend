@@ -58,23 +58,20 @@ class AdministratorController extends Controller
             ]; exit;
         }
 
-        // GETTING USER
-        $user = User::where('user_pottname', $user->user_pottname)->where('user_phone_number', $request->user_phone_number)->where('investor_id', $request->investor_id)->first();
+        "" => "bail|required|regex:/^\+\d{10,15}$/|min:10|max:15",
+        "" => "bail|required",
+        "frontend_key" => "bail|required|in:2aLW4c7r9(2qf#y",
+        "app_type" => "bail|required|max:8",
+        "app_version_code" => "bail|required|integer",
+
+        // GETTING ADMIN
+        $user = Administrator::where('administrator_phone_number', $admin->administrator_phone_number)->where('administrator_sys_id', $request->administrator_sys_id)->first();
         if($user == null){
             return [
                 "status" => "error", 
                 "message" => "Session closed. You have to login again."
             ]; exit;
-        }
-
-        // SAVING APP TYPE VERSION CODE
-        if($request->app_type == "ANDROID"){
-            $user->user_android_app_version_code = $request->app_version_code;
-        } else if($request->app_type == "IOS"){
-            $user->user_ios_app_version_code = $request->app_version_code;
-        }
-        // SAVING CHANGES MADE TO THE USER
-        $user->save();    
+        }   
         
         return $user;
     }
