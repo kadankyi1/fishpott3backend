@@ -143,7 +143,7 @@ class AdministratorController extends Controller
         $loginData["password"] = $validatedData["password"];
 
 
-        // VALIDATING USER CREDENTIALS
+        // VALIDATING ADMIN CREDENTIALS
         if (!auth()->guard('administrator')->attempt($loginData)) {
             return response([
                 "status" => "error", 
@@ -151,7 +151,7 @@ class AdministratorController extends Controller
             ]);
         }
 
-        // CHECKING IF USER FLAGGED
+        // CHECKING IF ADMIN FLAGGED
         if (auth()->guard('administrator')->user()->user_flagged) {
             return response([
                 "status" => "0", 
@@ -162,8 +162,10 @@ class AdministratorController extends Controller
         //echo "administrator_flagged: " . auth()->guard('administrator')->user()->administrator_flagged;
         //echo "\n administrator_scope: " . auth()->guard('administrator')->user()->administrator_scope; exit;
         
-        // GENERATING USER ACCESS TOKEN
+        // GENERATING ADMIN ACCESS TOKEN
         $accessToken = auth()->guard('administrator')->user()->createToken("authToken", [auth()->guard('administrator')->user()->administrator_scope])->accessToken;
+
+        Log::save_log("administrator", auth()->guard('administrator')->user()->administrator_scope, "Login Admin", "Login successful");
 
         return response([
             "status" => "yes", 
