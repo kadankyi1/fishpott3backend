@@ -769,4 +769,71 @@ public function changePasswordWithResetCode(Request $request)
             "phone_verification_is_on" => boolval(config('app.phoneverificationrequiredstatus'))
         ]);
     }
+
+        /*
+    |--------------------------------------------------------------------------
+    |--------------------------------------------------------------------------
+    | THIS FUNCTION ADDS A DRILL
+    |--------------------------------------------------------------------------
+    |--------------------------------------------------------------------------
+    */
+    
+    public function getDrill(Request $request)
+    {
+        /*
+        |**************************************************************************
+        | VALIDATION STARTS 
+        |**************************************************************************
+        */
+        // MAKING SURE THE INPUT HAS THE EXPECTED VALUES
+        $validatedData = $request->validate([
+            "administrator_phone_number" => "bail|required|regex:/^\+\d{10,15}$/|min:10|max:15",
+            "administrator_sys_id" => "bail|required",
+            "frontend_key" => "bail|required|in:2aLW4c7r9(2qf#y",
+            // ADD ANY OTHER REQUIRED INPUTS FROM HERE
+            "drill_question" => "min:5|max:100",
+            "drill_answer_1" => "min:2|max:100",
+            "drill_answer_2" => "min:2|max:100",
+            "drill_answer_3" => "max:100",
+            "drill_answer_4" => "max:100",
+        ]);
+
+        // MAKING SURE THE REQUEST AND USER IS VALIDATED
+        $validation_response = UtilController::validateAdminWithAuthToken($request, auth()->guard('administrator-api')->user(), "add-drill");
+        if(!empty($validation_response["status"]) && trim($validation_response["status"]) == "error"){
+            return response($validation_response);
+        } else {
+            $admin = $validation_response;
+        }
+        /*
+        |**************************************************************************
+        | VALIDATION ENDED 
+        |**************************************************************************
+        */
+
+        //CREATING THE USER DATA TO ADD TO DB
+        $drillData["drill_sys_id"] = $admin->administrator_user_pottname . "-" . substr($validatedData["administrator_phone_number"] ,1,strlen($validatedData["administrator_phone_number"])) . date("Y-m-d-H-i-s") . UtilController::getRandomString(50);
+        $drillData["drill_question"] = $validatedData["drill_question"];
+        $drillData["drill_answer_1"] = $validatedData["drill_answer_1"];
+        $drillData["drill_answer_2"] = $validatedData["drill_answer_2"];
+        if(!empty($validatedData["drill_answer_3"])){
+            $drillData["drill_answer_3"] = $validatedData["drill_answer_3"];
+        }
+        if(!empty($validatedData["drill_answer_4"])){
+            $drillData["drill_answer_4"] = $validatedData["drill_answer_4"];
+        }
+        $drillData["drill_answer_implied_traits_1"] = "";
+        $drillData["drill_answer_implied_traits_2"] = "";
+        $drillData["drill_answer_implied_traits_3"] = "";
+        $drillData["drill_answer_implied_traits_4"] = "";
+        $drillData["drill_maker_investor_id"] = $admin->administrator_user_pott_investor_id;
+        Drill::create($drillData);
+
+        return response([
+            "status" => "yes", 
+            "message" => "Drill saved"
+        ]);
+    }
+
+
 }
