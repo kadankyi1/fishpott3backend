@@ -115,4 +115,21 @@ class UtilController extends Controller
         }
     }
 
+    /*
+    |--------------------------------------------------------------------------
+    |--------------------------------------------------------------------------
+    | THIS FUNCTION REMOVES ALL ALPHABETS AND SYMBOLS AND LEAVES NUMBERS
+    |--------------------------------------------------------------------------
+    |--------------------------------------------------------------------------
+    */
+
+    public function removeAllCharactersAndLeaveNumbers($input)
+    {
+        if($input != ""){
+            return preg_replace('/[^0-9]/', '', $input);
+        } else {
+            return false;				
+        }
+
+    }
 }
