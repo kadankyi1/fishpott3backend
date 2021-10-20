@@ -103,26 +103,6 @@ class UserController extends Controller
         }
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    |--------------------------------------------------------------------------
-    | THIS FUNCTION CHECKS IF A STRING HAS NO XML TAGS
-    |--------------------------------------------------------------------------
-    |--------------------------------------------------------------------------
-    */
-    public function stringContainsNoTags($input) 
-    {
-        if($input != ""){
-            if($input != strip_tags($input)) {
-                $validation = false;
-            } else {
-                $validation = true;
-            }
-            return $validation;
-        } else {
-            return false;
-        }
-    }
 
     /*
     |--------------------------------------------------------------------------

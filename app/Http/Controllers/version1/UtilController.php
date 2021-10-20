@@ -24,7 +24,29 @@ class UtilController extends Controller
 			$str .= $characters[$rand];
 		}
 		return $str;
-	}// END OF randomString
+	}
+    
+    /*
+    |--------------------------------------------------------------------------
+    |--------------------------------------------------------------------------
+    | THIS FUNCTION CHECKS IF A STRING HAS NO XML TAGS
+    |--------------------------------------------------------------------------
+    |--------------------------------------------------------------------------
+    */
+    public function stringContainsNoTags($input) 
+    {
+        if($input != ""){
+            if($input != strip_tags($input)) {
+                $validation = false;
+            } else {
+                $validation = true;
+            }
+            return $validation;
+        } else {
+            return false;
+        }
+    }
+
 
 
 }
