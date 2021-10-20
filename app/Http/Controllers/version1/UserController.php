@@ -67,7 +67,7 @@ class UserController extends Controller
         }
 
         // CHECKING POTTNAME AVAILABILITY
-        if(!$this->pottnameIsAvailable($validatedData["user_pottname"])){
+        if(!UtilController::pottnameIsAvailable($validatedData["user_pottname"])){
             return response([
                 "status" => "error", 
                 "message" => "Registration failed. The pott name is already taken"
@@ -91,7 +91,7 @@ class UserController extends Controller
         } 
 
         // CHECKING IF REFERRER USERNAME IS REAL
-        if(empty($request->user_referred_by) || $this->pottnameIsAvailable($request->user_referred_by)){
+        if(empty($request->user_referred_by) || UtilController::pottnameIsAvailable($request->user_referred_by)){
             $validatedData["user_referred_by"] = "";
         } else {
             $validatedData["user_referred_by"] = $request->user_referred_by;
@@ -235,7 +235,7 @@ class UserController extends Controller
         }
 
         // CHECKING POTTNAME AVAILABILITY
-        if(!$this->pottnameIsAvailable($validatedData["user_pottname"])){
+        if(!UtilController::pottnameIsAvailable($validatedData["user_pottname"])){
             return response([
                 "status" => "error", 
                 "message" => "Registration failed. The pott name is already taken"
@@ -259,7 +259,7 @@ class UserController extends Controller
         } 
 
         // CHECKING IF REFERRER USERNAME IS REAL
-        if(empty($request->user_referred_by) || $this->pottnameIsAvailable($request->user_referred_by)){
+        if(empty($request->user_referred_by) || UtilController::pottnameIsAvailable($request->user_referred_by)){
             $validatedData["user_referred_by"] = "";
         } else {
             $validatedData["user_referred_by"] = $request->user_referred_by;
