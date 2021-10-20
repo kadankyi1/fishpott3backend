@@ -613,7 +613,7 @@ public function changePasswordWithResetCode(Request $request)
     ->orderBy('resetcode', 'desc')->first();
 
 
-    if($resetcode === null || $this->getDateDiff($resetcode->created_at, date('Y-m-d H:i:s'), "minutes") > 15){
+    if($resetcode === null || UtilController::getDateDiff($resetcode->created_at, date('Y-m-d H:i:s'), "minutes") > 15){
         return response([
             "status" => "error", 
             "message" => "Reset code not found. Please get a new code"

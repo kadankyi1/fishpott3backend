@@ -145,7 +145,7 @@ class UtilController extends Controller
         return date($return_format, strtotime($date. ' ' . $difference_str));
     }
 
-        /*
+    /*
     |--------------------------------------------------------------------------
     |--------------------------------------------------------------------------
     | THIS FUNCTION GETS DATE DIFFERENCE IN ANY FORMAT
