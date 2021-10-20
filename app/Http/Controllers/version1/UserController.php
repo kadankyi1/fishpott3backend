@@ -417,7 +417,7 @@ class UserController extends Controller
         }
         
         // CHECKING USER
-        $user = $this->getUserWithOneColumn("user_phone_number", auth()->user()->user_phone_number);
+        $user = UtilController::getUserWithOneColumn("user_phone_number", auth()->user()->user_phone_number);
         if($user === null){
             return response([
                 "status" => "error", 
