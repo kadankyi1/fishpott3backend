@@ -75,7 +75,7 @@ class UserController extends Controller
         } 
 
         // PHONE NUMBER IS TAKEN
-        if(!$this->phoneNumberIsAvailable($validatedData["user_phone_number"])){
+        if(!UtilController::phoneNumberIsAvailable($validatedData["user_phone_number"])){
             return response([
                 "status" => "error", 
                 "message" => "Registration failed. The phone number is already taken"
