@@ -106,30 +106,6 @@ class UserController extends Controller
 
 
 
-    /*
-    |--------------------------------------------------------------------------
-    |--------------------------------------------------------------------------
-    | THIS FUNCTION CHECKS IF AN INPUT CONTAINS ONLY ALPHABETS AND UNDERSCORE
-    |--------------------------------------------------------------------------
-    |--------------------------------------------------------------------------
-    */
-
-    public function inputContainsOnlyAlphabetsWithListedSpecialCharacters($input, $include_some_special_characters, $special_characters_array)
-    {
-        if(trim($input) == ""){
-            return false;
-        }
-        if($include_some_special_characters === true){
-            for ($i=0; $i < count($special_characters_array); $i++) {
-                $input = str_replace($special_characters_array[$i],"",$input);
-            }
-        }
-        if (!preg_match('/[^A-Za-z0-9]/', $input)) {
-            return true;
-        } else {
-            return false;
-        }
-    }
 
     /*
     |--------------------------------------------------------------------------
