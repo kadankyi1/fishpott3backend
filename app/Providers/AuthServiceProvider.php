@@ -37,6 +37,7 @@ class AuthServiceProvider extends ServiceProvider
             //ADMIN SCOPE
             'add-admins' => 'Can add administrators Stocks',
             'add-drill' => 'Can add drill',
+            'add-business' => 'Can add business',
 
         ]);
         /*
