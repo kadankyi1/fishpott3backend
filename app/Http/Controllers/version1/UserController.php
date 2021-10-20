@@ -127,7 +127,7 @@ class UserController extends Controller
 
         //CREATING THE USER DATA TO ADD TO DB
         $userData["user_user_type_id"] = 1;
-        $userData["investor_id"] = $validatedData["user_pottname"] . substr($validatedData["user_phone_number"] ,1,strlen($validatedData["user_phone_number"])) . $this->getRandomString(91);
+        $userData["investor_id"] = $validatedData["user_pottname"] . substr($validatedData["user_phone_number"] ,1,strlen($validatedData["user_phone_number"])) . UtilController::getRandomString(91);
         $userData["user_surname"] = $validatedData["user_surname"];
         $userData["user_firstname"] = $validatedData["user_firstname"];
         $userData["user_pottname"] = $validatedData["user_pottname"];
@@ -295,7 +295,7 @@ class UserController extends Controller
 
         //CREATING THE USER DATA TO ADD TO DB
         $userData["user_user_type_id"] = 2;
-        $userData["investor_id"] = $validatedData["user_pottname"] . substr($validatedData["user_phone_number"] ,1,strlen($validatedData["user_phone_number"])) . $this->getRandomString(91);
+        $userData["investor_id"] = $validatedData["user_pottname"] . substr($validatedData["user_phone_number"] ,1,strlen($validatedData["user_phone_number"])) . UtilController::getRandomString(91);
         $userData["user_surname"] = $validatedData["user_surname"];
         $userData["user_firstname"] = $validatedData["user_firstname"];
         $userData["user_pottname"] = $validatedData["user_pottname"];
