@@ -17,6 +17,7 @@ class CreateSuggestionsTable extends Migration
             $table->bigIncrements('suggestion_id');
             $table->string('suggestion_sys_id', 255)->unique();
             $table->string('suggestion_item_reference_id', 255);
+            $table->string('suggestion_directed_at_user_investor_id', 255);
             $table->boolean('suggestion_broadcasted')->default(false);
             $table->boolean('suggestion_flagged')->default(false);
             $table->timestamps();

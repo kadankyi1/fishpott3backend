@@ -24,12 +24,12 @@ class Suggestion extends Model
     protected $fillable = [
         'suggestion_id', 
         'suggestion_sys_id', 
+        'suggestion_type',
         'suggestion_item_reference_id',
         'suggestion_directed_at_user_investor_id',
         'suggestion_broadcasted',
         'suggestion_flagged',
         'suggestion_suggestion_type_id',
-        'suggestion_type',
         'created_at',
         'updated_at',
     ];
