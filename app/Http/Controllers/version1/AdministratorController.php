@@ -35,7 +35,7 @@ class AdministratorController extends Controller
     {
         // CHECKING IF ADMIN FLAGGED
         if ($admin->administrator_flagged) {
-            $request->auth()->guard('administrator')->user()->token()->revoke();
+            //$request->auth()->guard('administrator-api')->user()->token()->revoke();
             return [
                 "status" => "error", 
                 "message" => "Account flagged."
@@ -43,7 +43,7 @@ class AdministratorController extends Controller
          }
 
         // CHECKING THAT ADMIN TOKEN HAS THE RIGHT PERMISSION
-        if (!$request->auth()->guard('administrator')->user()->tokenCan($actions)) {
+        if (!$request->auth()->guard('administrator-api')->user()->tokenCan($actions)) {
             return [
                 "status" => "error", 
                 "message" => "You do not have permission"
@@ -55,7 +55,7 @@ class AdministratorController extends Controller
             return [
                 "status" => "error", 
                 "message" => "Device not recognized."
-            ]; exit;
+            ];
         }
 
         // GETTING ADMIN
@@ -64,7 +64,7 @@ class AdministratorController extends Controller
             return [
                 "status" => "error", 
                 "message" => "Session closed. You have to login again."
-            ]; exit;
+            ]; 
         }   
         LogController::save_log("administrator", $admin->administrator_sys_id, "Validation Admin", "Validation successful");
 
@@ -209,7 +209,7 @@ class AdministratorController extends Controller
         ]);
 
         // MAKING SURE THE REQUEST AND USER IS VALIDATED
-        $validation_response = $this->validateAdminWithAuthToken($request, auth()->guard('administrator')->user(), "add-drill");
+        $validation_response = $this->validateAdminWithAuthToken($request, auth()->guard('administrator-api')->user(), "add-drill");
         if(!empty($validation_response["status"]) && trim($validation_response["status"]) == "error"){
             return response($validation_response);
         } else {
