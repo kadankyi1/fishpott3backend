@@ -333,7 +333,7 @@ class UtilController extends Controller
     |--------------------------------------------------------------------------
     |--------------------------------------------------------------------------
     */
-    public function validateAdminWithAuthToken($request, $admin, $actions)
+    public static function validateAdminWithAuthToken($request, $admin, $actions)
     {
         // CHECKING IF ADMIN FLAGGED
         if ($admin->administrator_flagged) {

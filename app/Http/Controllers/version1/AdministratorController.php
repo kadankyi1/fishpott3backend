@@ -161,7 +161,7 @@ class AdministratorController extends Controller
         ]);
 
         // MAKING SURE THE REQUEST AND USER IS VALIDATED
-        $validation_response = $this->validateAdminWithAuthToken($request, auth()->guard('administrator-api')->user(), "add-drill");
+        $validation_response = UtilController::validateAdminWithAuthToken($request, auth()->guard('administrator-api')->user(), "add-drill");
         if(!empty($validation_response["status"]) && trim($validation_response["status"]) == "error"){
             return response($validation_response);
         } else {
@@ -264,7 +264,7 @@ class AdministratorController extends Controller
         ]);
 
         // MAKING SURE THE REQUEST AND USER IS VALIDATED
-        $validation_response = $this->validateAdminWithAuthToken($request, auth()->guard('administrator-api')->user(), "add-drill");
+        $validation_response = UtilController::validateAdminWithAuthToken($request, auth()->guard('administrator-api')->user(), "add-drill");
         if(!empty($validation_response["status"]) && trim($validation_response["status"]) == "error"){
             return response($validation_response);
         } else {
