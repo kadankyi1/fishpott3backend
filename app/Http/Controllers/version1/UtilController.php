@@ -33,7 +33,7 @@ class UtilController extends Controller
     |--------------------------------------------------------------------------
     |--------------------------------------------------------------------------
     */
-    public function stringContainsNoTags($input) 
+    public static function stringContainsNoTags($input) 
     {
         if($input != ""){
             if($input != strip_tags($input)) {
@@ -54,7 +54,7 @@ class UtilController extends Controller
     |--------------------------------------------------------------------------
     |--------------------------------------------------------------------------
     */
-    public function stringIsNotMoreThanMaxLength($input, $max_allowed_input_length)
+    public static function stringIsNotMoreThanMaxLength($input, $max_allowed_input_length)
     {
         $validation = false;
         if($input != "" && $max_allowed_input_length > 0){
@@ -78,7 +78,7 @@ class UtilController extends Controller
     |--------------------------------------------------------------------------
     |--------------------------------------------------------------------------
     */
-    public function inputContainsOnlyNumbers($input)
+    public static function inputContainsOnlyNumbers($input)
     {
         if(trim($input) == ""){
             return false;
@@ -98,7 +98,7 @@ class UtilController extends Controller
     |--------------------------------------------------------------------------
     */
 
-    public function inputContainsOnlyAlphabetsWithListedSpecialCharacters($input, $include_some_special_characters, $special_characters_array)
+    public static function inputContainsOnlyAlphabetsWithListedSpecialCharacters($input, $include_some_special_characters, $special_characters_array)
     {
         if(trim($input) == ""){
             return false;
@@ -123,7 +123,7 @@ class UtilController extends Controller
     |--------------------------------------------------------------------------
     */
 
-    public function removeAllCharactersAndLeaveNumbers($input)
+    public static function removeAllCharactersAndLeaveNumbers($input)
     {
         if($input != ""){
             return preg_replace('/[^0-9]/', '', $input);
@@ -140,7 +140,7 @@ class UtilController extends Controller
     |--------------------------------------------------------------------------
     |--------------------------------------------------------------------------
     */
-    public function reformatDate($date, $difference_str, $return_format)
+    public static function reformatDate($date, $difference_str, $return_format)
     {
         return date($return_format, strtotime($date. ' ' . $difference_str));
     }
@@ -153,7 +153,7 @@ class UtilController extends Controller
     |--------------------------------------------------------------------------
     */
 
-    public function getDateDiff($fromDate, $toDate, $format_type)
+    public static function getDateDiff($fromDate, $toDate, $format_type)
     {        
         $datetime1 = strtotime($fromDate); // convert to timestamps
         $datetime2 = strtotime($toDate); // convert to timestamps
@@ -171,7 +171,7 @@ class UtilController extends Controller
     }
 
     //$this->sendFirebaseNotification("New Herald Of Glory", "Added Successfully", "/topics/ALPHA", "ALPHA");
-    public function sendFirebaseNotification($title,$body,$target,$chid)
+    public static function sendFirebaseNotification($title,$body,$target,$chid)
     {
         // SETTING API ACCESS KEY
         define( 'API_ACCESS_KEY', 'AAAABb3fzMY:APA91bFeAZ6QQwlQoiiugGLWUARoh4gf3avvcdLJNIlEWv2kBljnpOL3leahkgk4FArNuzk_ejZbE74aDjuEj1vSAWLAYKAneHJEmXhzjEZFJC3SlgfZRqNW3ZOTwlHMyuPXYh6oLwok' );
@@ -202,7 +202,7 @@ class UtilController extends Controller
     |--------------------------------------------------------------------------
     |--------------------------------------------------------------------------
     */
-    public function getUserWithOneColumn($column, $keyword)
+    public static function getUserWithOneColumn($column, $keyword)
     {
         return User::where($column, '=', $keyword)->first();
     }
@@ -214,7 +214,7 @@ class UtilController extends Controller
     |--------------------------------------------------------------------------
     |--------------------------------------------------------------------------
     */
-    public function phoneNumberIsAvailable($keyword)
+    public static function phoneNumberIsAvailable($keyword)
     {
         $user = User::where('user_phone_number', '=', $keyword)->first();
         if ($user !== null) {
@@ -232,7 +232,7 @@ class UtilController extends Controller
     |--------------------------------------------------------------------------
     |--------------------------------------------------------------------------
     */
-    public function emailIsAvailable($keyword)
+    public static function emailIsAvailable($keyword)
     {
         if(empty($keyword)){
             return false;
@@ -253,7 +253,7 @@ class UtilController extends Controller
     |--------------------------------------------------------------------------
     |--------------------------------------------------------------------------
     */
-    public function pottnameIsAvailable($keyword)
+    public static function pottnameIsAvailable($keyword)
     {
         if(empty($keyword) || strlen($keyword) < 5 || $keyword == "mylinkups"){
             return false;
@@ -281,7 +281,7 @@ class UtilController extends Controller
     |--------------------------------------------------------------------------
     */
 
-    public function validateUserWithAuthToken($request, $user)
+    public static function validateUserWithAuthToken($request, $user)
     {
         // CHECKING IF USER FLAGGED
         if ($user->user_flagged) {
