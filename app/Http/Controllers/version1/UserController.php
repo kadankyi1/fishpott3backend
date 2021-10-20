@@ -108,18 +108,6 @@ class UserController extends Controller
 
 
 
-    /*
-    |--------------------------------------------------------------------------
-    |--------------------------------------------------------------------------
-    | THIS FUNCTION GETS OUTPUTS NEW REFORMATED DATE GIVEN A TIME PERIOD
-    |--------------------------------------------------------------------------
-    |--------------------------------------------------------------------------
-    */
-
-    public function reformatDate($date, $difference_str, $return_format)
-    {
-        return date($return_format, strtotime($date. ' ' . $difference_str));
-    }
 
     /*
     |--------------------------------------------------------------------------
