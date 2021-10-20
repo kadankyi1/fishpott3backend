@@ -222,7 +222,7 @@ class AdministratorController extends Controller
         */
 
         //CREATING THE USER DATA TO ADD TO DB
-        $drillData["drill_sys_id"] = $admin->administrator_user_pottname . "-" . substr($validatedData["administrator_phone_number"] ,1,strlen($validatedData["administrator_phone_number"])) . date("Y-m-d-H-i-s") . UserController::getRandomString(50);
+        $drillData["drill_sys_id"] = $admin->administrator_user_pottname . "-" . substr($validatedData["administrator_phone_number"] ,1,strlen($validatedData["administrator_phone_number"])) . date("Y-m-d-H-i-s") . UtilController::getRandomString(50);
         $drillData["drill_question"] = $validatedData["drill_question"];
         $drillData["drill_answer_1"] = $validatedData["drill_answer_1"];
         $drillData["drill_answer_2"] = $validatedData["drill_answer_2"];
