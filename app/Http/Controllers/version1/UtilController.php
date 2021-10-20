@@ -2,8 +2,24 @@
 
 namespace App\Http\Controllers\version1;
 
+use DB;
+use DateTime;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\version1\User;
+use App\Models\version1\Gender;
+use App\Models\version1\Country;
+use App\Models\version1\Language;
+use App\Models\version1\ResetCode;
+use App\Mail\version1\ResetCodeMail;
+use App\Models\version1\Drill;
+use App\Models\version1\Suggesto;
+use App\Models\version1\Administrator;
+use Illuminate\Support\Facades\File; 
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use App\Http\Controllers\version1\LogController;
 
 class UtilController extends Controller
 {
