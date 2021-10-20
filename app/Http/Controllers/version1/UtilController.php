@@ -144,4 +144,31 @@ class UtilController extends Controller
     {
         return date($return_format, strtotime($date. ' ' . $difference_str));
     }
+
+        /*
+    |--------------------------------------------------------------------------
+    |--------------------------------------------------------------------------
+    | THIS FUNCTION GETS DATE DIFFERENCE IN ANY FORMAT
+    |--------------------------------------------------------------------------
+    |--------------------------------------------------------------------------
+    */
+
+    public function getDateDiff($fromDate, $toDate, $format_type)
+    {        
+        $datetime1 = strtotime($fromDate); // convert to timestamps
+        $datetime2 = strtotime($toDate); // convert to timestamps
+        $days = (int)(($datetime2 - $datetime1)/86400);
+
+        if($format_type == "hours"){
+            return (int)(($datetime2 - $datetime1)/(86400/24)); // CONVERTING TO GET HOURS
+        } else if($format_type == "minutes"){
+            return (int)(($datetime2 - $datetime1)/(86400/(24*60))); // CONVERTING TO GET MINUTES
+        } else if($format_type == "seconds"){
+            return intval($days) * 24 * 60 * 60; // CONVERTING TO GET SECONDS
+        } else {
+            return (int)(($datetime2 - $datetime1)/86400);
+        }
+    }
+
+
 }
