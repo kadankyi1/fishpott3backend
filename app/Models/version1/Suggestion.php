@@ -25,6 +25,7 @@ class Suggestion extends Model
         'suggestion_id', 
         'suggestion_sys_id', 
         'suggestion_item_reference_id',
+        'suggestion_directed_at_user_investor_id',
         'suggestion_broadcasted',
         'suggestion_flagged',
         'suggestion_suggestion_type_id',
