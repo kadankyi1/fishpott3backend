@@ -83,7 +83,7 @@ class UserController extends Controller
         } 
 
         // EMAIL IS TAKEN
-        if(!$this->emailIsAvailable($validatedData["user_email"])){
+        if(!UtilController::emailIsAvailable($validatedData["user_email"])){
             return response([
                 "status" => "error", 
                 "message" => "Registration failed. The email address is already taken"
@@ -251,7 +251,7 @@ class UserController extends Controller
         } 
 
         // EMAIL IS TAKEN
-        if(!$this->emailIsAvailable($validatedData["user_email"])){
+        if(!UtilController::emailIsAvailable($validatedData["user_email"])){
             return response([
                 "status" => "error", 
                 "message" => "Registration failed. The email address is already taken"
