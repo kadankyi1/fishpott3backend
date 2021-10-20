@@ -195,4 +195,141 @@ class UtilController extends Controller
         //echo $result . "\n\n";
     }
 
+    /*
+    |--------------------------------------------------------------------------
+    |--------------------------------------------------------------------------
+    | THIS FUNCTION GETS A USER
+    |--------------------------------------------------------------------------
+    |--------------------------------------------------------------------------
+    */
+    public function getUserWithOneColumn($column, $keyword)
+    {
+        return User::where($column, '=', $keyword)->first();
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    |--------------------------------------------------------------------------
+    | THIS FUNCTION CHECKS IF A PHONE NUMBER IS NOT USED
+    |--------------------------------------------------------------------------
+    |--------------------------------------------------------------------------
+    */
+    public function phoneNumberIsAvailable($keyword)
+    {
+        $user = User::where('user_phone_number', '=', $keyword)->first();
+        if ($user !== null) {
+            return false;
+        } else {
+            // user doesn't exist
+            return true;
+        }
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    |--------------------------------------------------------------------------
+    | THIS FUNCTION CHECKS IF A PHONE NUMBER IS NOT USED
+    |--------------------------------------------------------------------------
+    |--------------------------------------------------------------------------
+    */
+    public function emailIsAvailable($keyword)
+    {
+        if(empty($keyword)){
+            return false;
+        }
+        $user = User::where('user_email', '=', $keyword)->first();
+        if ($user === null) {
+            return true;
+        } else {
+            // user doesn't exist
+            return false;
+        }
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    |--------------------------------------------------------------------------
+    | THIS FUNCTION CHECKS IF A POTTNAME IS AVAILABLE
+    |--------------------------------------------------------------------------
+    |--------------------------------------------------------------------------
+    */
+    public function pottnameIsAvailable($keyword)
+    {
+        if(empty($keyword) || strlen($keyword) < 5 || $keyword == "mylinkups"){
+            return false;
+        }
+        $user = User::where('user_pottname', '=', $keyword)->first();
+        if ($user === null) {
+            return true;
+        } else {
+            // user doesn't exist
+            return false;
+        }
+    }
+
+
+
+
+
+
+
+    /*
+    |--------------------------------------------------------------------------
+    |--------------------------------------------------------------------------
+    | THIS FUNCTION VALIDATES A REQUEST AND THE USER MAKING IT
+    |--------------------------------------------------------------------------
+    |--------------------------------------------------------------------------
+    */
+
+    public function validateUserWithAuthToken($request, $user)
+    {
+        // CHECKING IF USER FLAGGED
+        if ($user->user_flagged) {
+            $request->user()->token()->revoke();
+            return [
+                "status" => "error", 
+                "message" => "Account flagged."
+            ]; 
+         }
+
+        // CHECKING THAT USER TOKEN HAS THE RIGHT PERMISSION
+        if (!$request->user()->tokenCan('get-info-on-apps')) {
+            return [
+                "status" => "error", 
+                "message" => "You do not have permission"
+            ];
+        }
+
+        // MAKING SURE VERSION CODE IS ALLOWED
+        if(
+            strtoupper($request->app_type) == "ANDROID" && 
+            (intval($request->app_version_code) < intval(config('app.androidminvc')) || $request->app_version_code > intval(config('app.androidmaxvc')))
+        ){
+            return [
+                "status" => "error", 
+                "message" => "Please update your app from the Google Play Store."
+            ]; exit;
+        }
+
+        // GETTING USER
+        $user = User::where('user_pottname', $user->user_pottname)->where('user_phone_number', $request->user_phone_number)->where('investor_id', $request->investor_id)->first();
+        if($user == null){
+            return [
+                "status" => "error", 
+                "message" => "Session closed. You have to login again."
+            ]; exit;
+        }
+
+        // SAVING APP TYPE VERSION CODE
+        if($request->app_type == "ANDROID"){
+            $user->user_android_app_version_code = $request->app_version_code;
+        } else if($request->app_type == "IOS"){
+            $user->user_ios_app_version_code = $request->app_version_code;
+        }
+        // SAVING CHANGES MADE TO THE USER
+        $user->save();    
+        
+        return $user;
+    }
+
 }
