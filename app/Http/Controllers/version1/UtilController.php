@@ -71,5 +71,24 @@ class UtilController extends Controller
         }
     }
 
+    /*
+    |--------------------------------------------------------------------------
+    |--------------------------------------------------------------------------
+    | THIS FUNCTION CHECKS IF AN INPUT CONTAINS ONLY NUMBERS
+    |--------------------------------------------------------------------------
+    |--------------------------------------------------------------------------
+    */
+    public function inputContainsOnlyNumbers($input)
+    {
+        if(trim($input) == ""){
+            return false;
+        }
+        if (ctype_digit($input)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 
 }
