@@ -43,7 +43,7 @@ class AdministratorController extends Controller
          }
 
         // CHECKING THAT ADMIN TOKEN HAS THE RIGHT PERMISSION
-        if (!$request->auth()->guard('administrator-api')->user()->tokenCan($actions)) {
+        if (!$admin->tokenCan($actions)) {
             return [
                 "status" => "error", 
                 "message" => "You do not have permission"
