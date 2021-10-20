@@ -267,12 +267,6 @@ class UtilController extends Controller
         }
     }
 
-
-
-
-
-
-
     /*
     |--------------------------------------------------------------------------
     |--------------------------------------------------------------------------
@@ -331,5 +325,53 @@ class UtilController extends Controller
         
         return $user;
     }
+
+    /*
+    |--------------------------------------------------------------------------
+    |--------------------------------------------------------------------------
+    | THIS FUNCTION VALIDATES A REQUEST AND THE ADMIN MAKING IT
+    |--------------------------------------------------------------------------
+    |--------------------------------------------------------------------------
+    */
+    public function validateAdminWithAuthToken($request, $admin, $actions)
+    {
+        // CHECKING IF ADMIN FLAGGED
+        if ($admin->administrator_flagged) {
+            //$request->auth()->guard('administrator-api')->user()->token()->revoke();
+            return [
+                "status" => "error", 
+                "message" => "Account flagged."
+            ]; 
+         }
+
+        // CHECKING THAT ADMIN TOKEN HAS THE RIGHT PERMISSION
+        if (!$admin->tokenCan($actions)) {
+            return [
+                "status" => "error", 
+                "message" => "You do not have permission"
+            ];
+        }
+
+        // MAKING SURE FRONTEND HAS THE RIGHT KEY
+        if(strtoupper($request->frontend_key) == config('app.adminfrontendkey')){
+            return [
+                "status" => "error", 
+                "message" => "Device not recognized."
+            ];
+        }
+
+        // GETTING ADMIN
+        $administrator = Administrator::where('administrator_phone_number', $admin->administrator_phone_number)->where('administrator_sys_id', $request->administrator_sys_id)->first();
+        if($administrator == null){
+            return [
+                "status" => "error", 
+                "message" => "Session closed. You have to login again."
+            ]; 
+        }   
+        LogController::save_log("administrator", $admin->administrator_sys_id, "Validation Admin", "Validation successful");
+
+        return $administrator;
+    }
+
 
 }
