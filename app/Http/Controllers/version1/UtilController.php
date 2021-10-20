@@ -47,6 +47,29 @@ class UtilController extends Controller
         }
     }
 
+    /*
+    |--------------------------------------------------------------------------
+    |--------------------------------------------------------------------------
+    | THIS FUNCTION CHECKS IF A STRING IS MORE THAN A GIVEN LENGTH
+    |--------------------------------------------------------------------------
+    |--------------------------------------------------------------------------
+    */
+    public function stringIsNotMoreThanMaxLength($input, $max_allowed_input_length)
+    {
+        $validation = false;
+        if($input != "" && $max_allowed_input_length > 0){
+            if(strlen($input) > $max_allowed_input_length){
+                $validation = false;
+            } else {
+                if($validation != false){
+                    $validation = true;
+                }
+            }
+            return $validation;
+        } else {
+            return false;
+        }
+    }
 
 
 }
