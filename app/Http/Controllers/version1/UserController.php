@@ -787,15 +787,13 @@ public function changePasswordWithResetCode(Request $request)
         */
         // MAKING SURE THE INPUT HAS THE EXPECTED VALUES
         $validatedData = $request->validate([
-            "administrator_phone_number" => "bail|required|regex:/^\+\d{10,15}$/|min:10|max:15",
-            "administrator_sys_id" => "bail|required",
-            "frontend_key" => "bail|required|in:2aLW4c7r9(2qf#y",
+            "user_phone_number" => "bail|required|regex:/^\+\d{10,15}$/|min:10|max:15",
+            "investor_id" => "bail|required",
+            "user_language" => "bail|required|max:3",
+            "app_type" => "bail|required|max:8",
+            "app_version_code" => "bail|required|integer",
             // ADD ANY OTHER REQUIRED INPUTS FROM HERE
-            "drill_question" => "min:5|max:100",
-            "drill_answer_1" => "min:2|max:100",
-            "drill_answer_2" => "min:2|max:100",
-            "drill_answer_3" => "max:100",
-            "drill_answer_4" => "max:100",
+            //"drill_question" => "min:5|max:100",
         ]);
 
         // MAKING SURE THE REQUEST AND USER IS VALIDATED
@@ -812,7 +810,13 @@ public function changePasswordWithResetCode(Request $request)
         */
 
 
-        // CHECKING IF USER HAS A BUSINESS SUGGESTION THAT IS NOT MORE THAN 72 HOURS OR NOT MARKED AS PASS ON
+        // CHECKING IF USER HAS A BUSINESS SUGGESTION IS BROADCASTING THAT IS NOT MORE THAN 72 HOURS OR NOT MARKED AS PASS ON
+
+        // CHECKING FOR A NEW DRILL SUGGESTION IF NO BUSINESS SUGGESTION IS BROADCASTING AND IF THE OLD SUGGESTION HAS BEEN EXPIRED IF IT'S A QUESTION.
+
+        // DD
+
+
         return response([
             "status" => "yes", 
             "message" => "Drill saved"
