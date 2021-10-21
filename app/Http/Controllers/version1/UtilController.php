@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Controllers\version1\LogController;
 use App\Models\version1\Business;
+use App\Models\version1\Suggestion;
 
 class UtilController extends Controller
 {
@@ -403,10 +404,9 @@ class UtilController extends Controller
             return false;
         }
 
-        $business = Business::where('suggestion_directed_at_user_investor_id', '=', $user_investor_id)->first();
+        $suggestion = Suggestion::where('suggestion_directed_at_user_investor_id', '=', $user_investor_id)->first();
 
-        if(getDateDiff($business->created_at, date('Y-m-d H:i:s'), "minutes") > 15
-        if ($user === null) {
+        if (getDateDiff($suggestion->created_at, date('Y-m-d H:i:s'), "minutes") > 15 === null) {
             return true;
         } else {
             // user doesn't exist
