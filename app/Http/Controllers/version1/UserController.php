@@ -810,14 +810,17 @@ public function changePasswordWithResetCode(Request $request)
         */
 
         // CHECKING IF USER HAS A BUSINESS SUGGESTION IS BROADCASTING THAT IS NOT MORE THAN 72 HOURS OR NOT MARKED AS PASS ON
-        // GETTING THE SUGGESTION
         $suggestion = UtilController::getSuggestionMadeToUser($user->investor_id);
-
-        if (UtilController::getDateDiff($suggestion->created_at, date('Y-m-d H:i:s'), "hours") >= intval(config('app.timedurationinhoursforsuggestions'))) {
-            return true;
-        } else {
-            // user doesn't exist
-            return false;
+        if (UtilController::getDateDiff($suggestion->created_at, date('Y-m-d H:i:s'), "hours") < intval(config('app.timedurationinhoursforsuggestions'))) {
+            return response([
+                "status" => "error", 
+                "message" => "New drill still processing",
+                "government_verification_is_on" => false,
+                "media_allowed" => intval(config('app.canpostpicsandvids')),
+                "user_android_app_max_vc" => intval(config('app.androidmaxvc')),
+                "user_android_app_force_update" => boolval(config('app.androidforceupdatetomaxvc')),
+                "phone_verification_is_on" => boolval(config('app.phoneverificationrequiredstatus'))
+            ]);
         }
 
 
