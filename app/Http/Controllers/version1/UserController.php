@@ -797,11 +797,11 @@ public function changePasswordWithResetCode(Request $request)
         ]);
 
         // MAKING SURE THE REQUEST AND USER IS VALIDATED
-        $validation_response = UtilController::validateAdminWithAuthToken($request, auth()->guard('administrator-api')->user(), "add-drill");
+        $validation_response = UtilController::validateUserWithAuthToken($request, auth()->user(), "get-info-on-apps");
         if(!empty($validation_response["status"]) && trim($validation_response["status"]) == "error"){
             return response($validation_response);
         } else {
-            $admin = $validation_response;
+            $user = $validation_response;
         }
         /*
         |**************************************************************************
@@ -811,6 +811,7 @@ public function changePasswordWithResetCode(Request $request)
 
 
         // CHECKING IF USER HAS A BUSINESS SUGGESTION IS BROADCASTING THAT IS NOT MORE THAN 72 HOURS OR NOT MARKED AS PASS ON
+        
 
         // CHECKING FOR A NEW DRILL SUGGESTION IF NO BUSINESS SUGGESTION IS BROADCASTING AND IF THE OLD SUGGESTION HAS BEEN EXPIRED IF IT'S A QUESTION.
 
