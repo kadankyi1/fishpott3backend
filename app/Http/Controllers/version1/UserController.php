@@ -810,6 +810,10 @@ public function changePasswordWithResetCode(Request $request)
         */
 
         // CHECKING IF USER HAS A BUSINESS SUGGESTION IS BROADCASTING THAT IS NOT MORE THAN 72 HOURS OR NOT MARKED AS PASS ON
+        // GETTING THE SUGGESTION
+        $suggestion = UtilController::getSuggestionMadeToUser($user->investor_id);
+
+
         if (getDateDiff($suggestion->created_at, date('Y-m-d H:i:s'), "minutes") >= intval(config('app.timedurationinhoursforsuggestions'))) {
             return true;
         } else {
