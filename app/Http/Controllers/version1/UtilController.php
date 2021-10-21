@@ -318,7 +318,7 @@ class UtilController extends Controller
             return [
                 "status" => "error", 
                 "message" => "Please update your app from the Google Play Store."
-            ]; exit;
+            ]; 
         }
 
         // GETTING USER
@@ -327,7 +327,7 @@ class UtilController extends Controller
             return [
                 "status" => "error", 
                 "message" => "Session closed. You have to login again."
-            ]; exit;
+            ]; 
         }
 
         // SAVING APP TYPE VERSION CODE
