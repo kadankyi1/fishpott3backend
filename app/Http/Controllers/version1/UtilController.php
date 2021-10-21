@@ -404,13 +404,8 @@ class UtilController extends Controller
             return false;
         }
 
-        $suggestion = Suggestion::where('suggestion_directed_at_user_investor_id', '=', $user_investor_id)->first();
-
-        if (getDateDiff($suggestion->created_at, date('Y-m-d H:i:s'), "minutes") > 15 === null) {
-            return true;
-        } else {
-            // user doesn't exist
-            return false;
+        // GETTING THE RECENT
+        return Suggestion::where('suggestion_directed_at_user_investor_id', '=', $user_investor_id)->where('suggestion_broadcasted', true)->where('suggestion_flagged', false)->first();
 
     }
 
