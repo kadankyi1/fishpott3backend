@@ -286,12 +286,12 @@ class UtilController extends Controller
     /*
     |--------------------------------------------------------------------------
     |--------------------------------------------------------------------------
-    | THIS FUNCTION VALIDATES A REQUEST AND THE USER MAKING IT
+    | THIS FUNCTION VALIDATES A REQUEST FROM A USER
     |--------------------------------------------------------------------------
     |--------------------------------------------------------------------------
     */
 
-    public static function validateUserWithAuthToken($request, $user)
+    public static function validateUserWithAuthToken($request, $user, $actions)
     {
         // CHECKING IF USER FLAGGED
         if ($user->user_flagged) {
@@ -345,7 +345,7 @@ class UtilController extends Controller
     /*
     |--------------------------------------------------------------------------
     |--------------------------------------------------------------------------
-    | THIS FUNCTION VALIDATES A REQUEST AND THE ADMIN MAKING IT
+    | THIS FUNCTION VALIDATES A REQUEST FROM AN ADMIN
     |--------------------------------------------------------------------------
     |--------------------------------------------------------------------------
     */
@@ -388,6 +388,7 @@ class UtilController extends Controller
 
         return $administrator;
     }
+
 
 
 }
