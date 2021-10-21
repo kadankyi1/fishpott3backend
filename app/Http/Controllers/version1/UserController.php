@@ -813,8 +813,7 @@ public function changePasswordWithResetCode(Request $request)
         // GETTING THE SUGGESTION
         $suggestion = UtilController::getSuggestionMadeToUser($user->investor_id);
 
-
-        if (getDateDiff($suggestion->created_at, date('Y-m-d H:i:s'), "minutes") >= intval(config('app.timedurationinhoursforsuggestions'))) {
+        if (UtilController::getDateDiff($suggestion->created_at, date('Y-m-d H:i:s'), "hours") >= intval(config('app.timedurationinhoursforsuggestions'))) {
             return true;
         } else {
             // user doesn't exist
