@@ -303,7 +303,7 @@ class UtilController extends Controller
          }
 
         // CHECKING THAT USER TOKEN HAS THE RIGHT PERMISSION
-        if (!$request->user()->tokenCan('get-info-on-apps')) {
+        if (!$request->user()->tokenCan($actions)) {
             return [
                 "status" => "error", 
                 "message" => "You do not have permission"
