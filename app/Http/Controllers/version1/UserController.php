@@ -809,7 +809,6 @@ public function changePasswordWithResetCode(Request $request)
         |**************************************************************************
         */
 
-
         // CHECKING IF USER HAS A BUSINESS SUGGESTION IS BROADCASTING THAT IS NOT MORE THAN 72 HOURS OR NOT MARKED AS PASS ON
         
 

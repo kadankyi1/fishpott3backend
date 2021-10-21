@@ -390,5 +390,9 @@ class UtilController extends Controller
     }
 
 
+    public static function getSuggestionMadeToUser()
+    {
+        
+    }
 
 }
