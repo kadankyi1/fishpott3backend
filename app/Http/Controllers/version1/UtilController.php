@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Controllers\version1\LogController;
+use App\Models\version1\Business;
 
 class UtilController extends Controller
 {
@@ -389,10 +390,28 @@ class UtilController extends Controller
         return $administrator;
     }
 
-
-    public static function getSuggestionMadeToUser()
+    /*
+    |--------------------------------------------------------------------------
+    |--------------------------------------------------------------------------
+    | THIS FUNCTION GETS A SUGGESTION DIRECTED AT A SPECIFIC USER
+    |--------------------------------------------------------------------------
+    |--------------------------------------------------------------------------
+    */
+    public static function getSuggestionMadeToUser($user_investor_id)
     {
-        
+        if(empty($user_investor_id)){
+            return false;
+        }
+
+        $business = Business::where('suggestion_directed_at_user_investor_id', '=', $user_investor_id)->first();
+
+        if(getDateDiff($business->created_at, date('Y-m-d H:i:s'), "minutes") > 15
+        if ($user === null) {
+            return true;
+        } else {
+            // user doesn't exist
+            return false;
+
     }
 
 }
