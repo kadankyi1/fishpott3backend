@@ -778,7 +778,7 @@ public function changePasswordWithResetCode(Request $request)
     |--------------------------------------------------------------------------
     */
     
-    public function getDrill(Request $request)
+    public function getDrillAsUser(Request $request)
     {
         /*
         |**************************************************************************
@@ -809,12 +809,12 @@ public function changePasswordWithResetCode(Request $request)
         |**************************************************************************
         */
 
-        // CHECKING IF USER HAS A BUSINESS SUGGESTION IS BROADCASTING THAT IS NOT MORE THAN 72 HOURS OR NOT MARKED AS PASS ON
+        // CHECKING IF USER HAS A SUGGESTION IS BROADCASTING THAT IS NOT MORE THAN 72 HOURS OR NOT MARKED AS PASS ON
         $suggestion = UtilController::getSuggestionMadeToUser($user->investor_id);
-        if (UtilController::getDateDiff($suggestion->created_at, date('Y-m-d H:i:s'), "hours") < intval(config('app.timedurationinhoursforsuggestions'))) {
+        if ($suggestion != null && UtilController::getDateDiff($suggestion->created_at, date('Y-m-d H:i:s'), "hours") < intval(config('app.timedurationinhoursforsuggestions'))) {
             return response([
                 "status" => "error", 
-                "message" => "New drill still processing",
+                "message" => "You have an active drill",
                 "government_verification_is_on" => false,
                 "media_allowed" => intval(config('app.canpostpicsandvids')),
                 "user_android_app_max_vc" => intval(config('app.androidmaxvc')),
@@ -823,10 +823,8 @@ public function changePasswordWithResetCode(Request $request)
             ]);
         }
 
-
         // CHECKING FOR A NEW DRILL SUGGESTION IF NO BUSINESS SUGGESTION IS BROADCASTING AND IF THE OLD SUGGESTION HAS BEEN EXPIRED IF IT'S A QUESTION.
-
-        // DD
+        Drill::where('suggestion_directed_at_user_investor_id', '=', $user_investor_id)->where('suggestion_broadcasted', true)->where('suggestion_flagged', false)->first();
 
 
         return response([

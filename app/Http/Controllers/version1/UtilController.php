@@ -404,9 +404,19 @@ class UtilController extends Controller
             return false;
         }
 
-        // GETTING THE RECENT
+        // GETTING THE RECENT TAYLORED SUGGESTION
         return Suggestion::where('suggestion_directed_at_user_investor_id', '=', $user_investor_id)->where('suggestion_broadcasted', true)->where('suggestion_flagged', false)->first();
 
     }
 
+    public static function getLatestSuggestion()
+    {
+        // GETTING THE RECENT
+        $suggestion = Suggestion::where('suggestion_broadcasted', '=', true)->where('suggestion_flagged', false)->first();
+        if ($suggestion != null && UtilController::getDateDiff($suggestion->created_at, date('Y-m-d H:i:s'), "hours") > intval(config('app.timedurationinhoursforsuggestions'))) {
+            return false;
+        } 
+
+        return $suggestion;
+    }
 }
