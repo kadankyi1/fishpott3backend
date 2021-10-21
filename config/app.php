@@ -3,6 +3,12 @@
 return [
 
     // ANDROID APP MINIMUM VERSION ALLOWED
+    'timedurationinhoursforsuggestions' => env('TIME_DURATION_IN_HOURS_FOR_SUGGESTIONS', 48),
+
+    // ANDROID APP MINIMUM VERSION ALLOWED
+    'timedurationinhoursfordrills' => env('TIME_DURATION_FOR_DRILLS', '7'),
+
+    // ANDROID APP MINIMUM VERSION ALLOWED
     'androidminvc' => env('ANDROID_MIN_ALLOWED_VERSION_CODE', '7'),
 
     // ANDROID APP MAXIMUM VERSION ALLOWED
