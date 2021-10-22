@@ -824,12 +824,24 @@ public function changePasswordWithResetCode(Request $request)
         }
 
         // CHECKING FOR A NEW DRILL SUGGESTION IF NO BUSINESS SUGGESTION IS BROADCASTING AND IF THE OLD SUGGESTION HAS BEEN EXPIRED IF IT'S A QUESTION.
-        Drill::where('suggestion_directed_at_user_investor_id', '=', $user_investor_id)->where('suggestion_broadcasted', true)->where('suggestion_flagged', false)->first();
+        $suggestion = UtilController::getLatestSuggestion();
+
+        if($suggestion ==  null || $suggestion == false){
+            return response([
+                "status" => "error", 
+                "message" => "Oops.. No new drills. It happens",
+                "government_verification_is_on" => false,
+                "media_allowed" => intval(config('app.canpostpicsandvids')),
+                "user_android_app_max_vc" => intval(config('app.androidmaxvc')),
+                "user_android_app_force_update" => boolval(config('app.androidforceupdatetomaxvc')),
+                "phone_verification_is_on" => boolval(config('app.phoneverificationrequiredstatus'))
+            ]);
+        }
 
 
         return response([
             "status" => "yes", 
-            "message" => "Drill saved"
+            "message" => "Drill saved",
         ]);
     }
 
