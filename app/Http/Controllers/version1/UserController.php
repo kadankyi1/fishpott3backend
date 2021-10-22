@@ -840,8 +840,9 @@ public function changePasswordWithResetCode(Request $request)
             ]);
         }
 
+        // CHECKING SUGGESTION TYPE TO GET IT'S INFO
         if($suggestion->suggestion_type == SuggestionTypes::where('suggestion_type_name', 'Drill')){
-            
+            $suggestion = Drill::where('drill_sys_id', $suggestion->suggestion_item_reference_id);
         } else if($suggestion->suggestion_type == SuggestionTypes::where('suggestion_type_name', 'Business')){
 
         }
