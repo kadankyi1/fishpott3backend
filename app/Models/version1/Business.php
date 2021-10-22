@@ -25,28 +25,27 @@ class Business extends Model
         'business_id', 
         'business_sys_id', 
         'business_pottname',
-        'business_flagged',
-        'business_flagged_reason',
+        'business_flagged', 
+        'business_flagged_reason', 
         'created_at',
         'updated_at',
         // BIO
         'business_type',
-        'business_logo',
-        'business_full_name',
-        'business_stockmarket_shortname',
-        'business_descriptive_bio',
-        'business_address',
-        'business_country',
+        'business_logo', //
+        'business_full_name', //
+        'business_stockmarket_shortname', //
+        'business_descriptive_bio', //
+        'business_address', //
+        'business_country', //
         // PITCH
-        'business_pitch_text',
-        'business_pitch_video',
+        'business_pitch_text', //
+        'business_pitch_video', //
         // FINANCIALS
-        'business_revenue_usd',
-        'business_loss_usd',
-        'business_debt_usd',
+        'business_revenue_usd', //
+        'business_loss_usd', //
+        'business_debt_usd', //
         'business_cash_on_hand_usd',
-        'business_net_worth_usd',
-        'business_net_valuation_usd',
+        'business_net_worth_usd', //
         'business_investments_amount_needed_usd',
         'business_maximum_number_of_investors_allowed',
         'business_descriptive_financial_bio',
