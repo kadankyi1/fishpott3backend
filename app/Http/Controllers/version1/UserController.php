@@ -13,6 +13,8 @@ use App\Models\version1\Language;
 use App\Models\version1\ResetCode;
 use App\Mail\version1\ResetCodeMail;
 use App\Models\version1\Drill;
+use App\Models\version1\Suggestion;
+use App\Models\version1\SuggestionTypes;
 use App\Models\version1\Suggesto;
 use Illuminate\Support\Facades\File; 
 use Illuminate\Support\Facades\Auth;
@@ -838,10 +840,17 @@ public function changePasswordWithResetCode(Request $request)
             ]);
         }
 
+        if($suggestion->suggestion_type == SuggestionTypes::where('suggestion_type_name', 'Drill')){
+            
+        } else if($suggestion->suggestion_type == SuggestionTypes::where('suggestion_type_name', 'Business')){
+
+        }
+
 
         return response([
             "status" => "yes", 
             "message" => "Drill saved",
+            "data" => $suggestion
         ]);
     }
 
