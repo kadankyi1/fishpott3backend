@@ -422,10 +422,14 @@ class UtilController extends Controller
         return $suggestion;
     }
 
-    public static function getSuggestionType(column, $v)
+    public static function getSuggestionType($column, $value, $fetch_type)
     {
-        $suggestiontype = SuggestionTypes::where('suggestion_type_name', 'Drill')->first();
+        $suggestiontype = SuggestionTypes::where($column, $value)->first();
 
-        if()
+        if($fetch_type == 1){
+            return $suggestiontype->suggestion_type_id;
+        } else if($fetch_type == 2){
+            return $suggestiontype->suggestion_type_name;
+        }
     }
 }
