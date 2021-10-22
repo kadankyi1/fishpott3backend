@@ -780,7 +780,7 @@ public function changePasswordWithResetCode(Request $request)
     |--------------------------------------------------------------------------
     */
     
-    public function getDrillAsUser(Request $request)
+    public function getMySuggestion(Request $request)
     {
         /*
         |**************************************************************************
