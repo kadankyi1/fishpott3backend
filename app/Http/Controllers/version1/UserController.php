@@ -847,7 +847,6 @@ public function changePasswordWithResetCode(Request $request)
 
         }
 
-
         return response([
             "status" => "yes", 
             "message" => "Drill saved",
