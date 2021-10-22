@@ -842,9 +842,10 @@ public function changePasswordWithResetCode(Request $request)
         }
 
         // CHECKING SUGGESTION TYPE TO GET IT'S INFO
-        echo "getSuggestionType: " . UtilController::getSuggestionType("suggestion_type_name", "Business", 1);
+        //echo "getSuggestionType: " . UtilController::getSuggestionType("suggestion_type_name", "Drill", 1);
+        //echo "suggestion->suggestion_item_reference_id: " . $suggestion->suggestion_item_reference_id;
         if($suggestion->suggestion_suggestion_type_id == UtilController::getSuggestionType("suggestion_type_name", "Drill", 1)){
-            $suggestion = Drill::where('drill_sys_id', $suggestion->suggestion_item_reference_id);
+            $suggestion = Drill::where('drill_sys_id', $suggestion->suggestion_item_reference_id)->first();
         } else if($suggestion->suggestion_type == SuggestionTypes::where('suggestion_type_name', 'Business')){
 
         }
