@@ -790,6 +790,7 @@ public function changePasswordWithResetCode(Request $request)
         // MAKING SURE THE INPUT HAS THE EXPECTED VALUES
         $validatedData = $request->validate([
             "user_phone_number" => "bail|required|regex:/^\+\d{10,15}$/|min:10|max:15",
+            "user_pottname" => "bail|required|string|regex:/^[A-Za-z0-9_.]+$/|max:15",
             "investor_id" => "bail|required",
             "user_language" => "bail|required|max:3",
             "app_type" => "bail|required|max:8",
@@ -841,7 +842,7 @@ public function changePasswordWithResetCode(Request $request)
         }
 
         // CHECKING SUGGESTION TYPE TO GET IT'S INFO
-        if($suggestion->suggestion_type == SuggestionTypes::where('suggestion_type_name', 'Drill')){
+        if($suggestion->suggestion_suggestion_type_id == SuggestionTypes::where('suggestion_type_name', 'Drill')->first()->suggestion_suggestion_type_id){
             $suggestion = Drill::where('drill_sys_id', $suggestion->suggestion_item_reference_id);
         } else if($suggestion->suggestion_type == SuggestionTypes::where('suggestion_type_name', 'Business')){
 
@@ -849,7 +850,7 @@ public function changePasswordWithResetCode(Request $request)
 
         return response([
             "status" => "yes", 
-            "message" => "Drill saved",
+            "message" => "You have a new drill",
             "data" => $suggestion
         ]);
     }
