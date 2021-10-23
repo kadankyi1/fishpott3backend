@@ -248,6 +248,7 @@ class AdministratorController extends Controller
             "business_executive1_description" => "nullable|max:150",
             "business_executive1_facebook_url" => "nullable",
             "business_executive1_linkedin_url" => "nullable",
+
             "business_executive2_firstname" => "bail|required|min:2|max:100",
             "business_executive2_lastname" => "bail|required|min:2|max:100",
             "business_executive2_profile_picture" => "nullable",
@@ -255,6 +256,7 @@ class AdministratorController extends Controller
             "business_executive2_description" => "bail|required|min:5|max:150",
             "business_executive2_facebook_url" => "nullable",
             "business_executive2_linkedin_url" => "nullable",
+
             "business_executive3_firstname" => "nullable|min:2|max:100",
             "business_executive3_lastname" => "nullable|min:2|max:100",
             "business_executive3_profile_picture" => "nullable",
@@ -262,6 +264,7 @@ class AdministratorController extends Controller
             "business_executive3_description" => "nullable|max:150",
             "business_executive3_facebook_url" => "nullable",
             "business_executive3_linkedin_url" => "nullable",
+            
             "business_executive4_firstname" => "nullable|min:2|max:100",
             "business_executive4_lastname" => "nullable|min:2|max:100",
             "business_executive4_profile_picture" => "nullable",
