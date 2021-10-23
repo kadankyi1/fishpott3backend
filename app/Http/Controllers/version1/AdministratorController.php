@@ -221,7 +221,7 @@ class AdministratorController extends Controller
             // ADD ANY OTHER REQUIRED INPUTS FROM HERE
             "business_pottname" => "nullable|string|regex:/^[A-Za-z0-9_.]+$/|max:15",
             "business_type" => "bail|required|string|min:5|max:100",
-            "business_logo" => "bail|required|string",
+            "business_logo" => "bail|required",
             "business_full_name" => "bail|required|string|min:4|max:150",
             "business_stockmarket_shortname" => "nullable|max:10",
             "business_descriptive_bio" => "bail|required|max:150",
@@ -287,6 +287,46 @@ class AdministratorController extends Controller
         |**************************************************************************
         */
 
+        // CHECKING IF REQUEST HAS THE LOGO FILE
+        if(!$request->hasFile('business_logo')) {
+            return response([
+                "status" => "error", 
+                "message" => "Logo not found"
+            ]);
+        }
+    
+        // CHECKING IF POTT PICTURE IS UPLOADED CORRECTLY AND IS THE RIGHT FORMAT
+        if(!$request->file('pott_picture')->isValid() || (strtolower($request->file('pott_picture')->getMimeType())  !=  "image/png" && strtolower($request->file('pott_picture')->getMimeType())  !=  "image/jpg" && strtolower($request->file('pott_picture')->getMimeType())  !=  "image/jpeg")) {
+            return response([
+                "status" => "error", 
+                "message" => "Image has to be JPG or PNG"
+            ]);
+        }
+
+        // CHECKING THAT IMAGE IS NOT MORE THAN 5MB
+        if($request->file('pott_picture')->getSize() > (5 * intval(config('app.mb')))){
+            return response([
+                "status" => "error", 
+                "message" => "Image cannot be more than 5 MB"
+            ]);
+        }
+
+        //DELETING THE OLD PROFILE PHOTO
+        if(auth()->user()->user_profile_picture != ""){
+            File::delete(public_path() . '/uploads/images/' . auth()->user()->user_profile_picture);
+        }
+
+        $img_path = public_path() . '/uploads/images/';
+        $img_ext = $user->investor_id . uniqid() . date("Y-m-d-H-i-s") . "." . strtolower($request->file('pott_picture')->extension());
+        $img_url = config('app.url') . '/uploads/images/' . $img_ext;
+    
+        if(!$request->file('pott_picture')->move($img_path, $img_ext)){
+            return response([
+                "status" => "error", 
+                "message" => "Image upload failed"
+            ]);
+        }
+        
         // CREATING THE BUSINESS SYSTEM ID 
         $validatedData["business_sys_id"] = $admin->administrator_user_pottname . "-" . substr($validatedData["administrator_phone_number"] ,1,strlen($validatedData["administrator_phone_number"])) . date("Y-m-d-H-i-s") . UtilController::getRandomString(50);
 
