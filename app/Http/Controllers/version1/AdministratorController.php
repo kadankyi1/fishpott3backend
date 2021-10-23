@@ -14,6 +14,7 @@ use App\Mail\version1\ResetCodeMail;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\version1\LogController;
 use App\Models\version1\Administrator;
+use App\Models\version1\Business;
 use App\Models\version1\Drill;
 use App\Models\version1\Suggesto;
 use Illuminate\Support\Facades\File; 
@@ -268,7 +269,7 @@ class AdministratorController extends Controller
         ]);
 
         // MAKING SURE THE REQUEST AND USER IS VALIDATED
-        $validation_response = UtilController::validateAdminWithAuthToken($request, auth()->guard('administrator-api')->user(), "add-drill");
+        $validation_response = UtilController::validateAdminWithAuthToken($request, auth()->guard('administrator-api')->user(), "add-business");
         if(!empty($validation_response["status"]) && trim($validation_response["status"]) == "error"){
             return response($validation_response);
         } else {
@@ -281,26 +282,18 @@ class AdministratorController extends Controller
         */
 
         //CREATING THE USER DATA TO ADD TO DB
-        $drillData["business_sys_id"] = $user->user_pottname . "-" . substr($validatedData["user_phone_number"] ,1,strlen($validatedData["user_phone_number"])) . date("Y-m-d-H-i-s") . $this->getRandomString(50);
-        $drillData["drill_question"] = $validatedData["drill_question"];
-        $drillData["drill_answer_1"] = $validatedData["drill_answer_1"];
-        $drillData["drill_answer_2"] = $validatedData["drill_answer_2"];
+        $validatedData["business_sys_id"] = $admin->administrator_user_pottname . "-" . substr($validatedData["administrator_phone_number"] ,1,strlen($validatedData["administrator_phone_number"])) . date("Y-m-d-H-i-s") . UtilController::getRandomString(50);
         if(!empty($validatedData["drill_answer_3"])){
             $drillData["drill_answer_3"] = $validatedData["drill_answer_3"];
         }
         if(!empty($validatedData["drill_answer_4"])){
             $drillData["drill_answer_4"] = $validatedData["drill_answer_4"];
         }
-        $drillData["drill_answer_implied_traits_1"] = "";
-        $drillData["drill_answer_implied_traits_2"] = "";
-        $drillData["drill_answer_implied_traits_3"] = "";
-        $drillData["drill_answer_implied_traits_4"] = "";
-        $drillData["drill_maker_investor_id"] = $user->investor_id;
-        Drill::create($drillData);
+        Business::create($validatedData);
 
         return response([
             "status" => "yes", 
-            "message" => "Drill saved to your Pott. You will know when it broadcasts worldwide."
+            "message" => "Business saved."
         ]);
     }
 
