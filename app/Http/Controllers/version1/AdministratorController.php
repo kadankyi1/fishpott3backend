@@ -253,7 +253,7 @@ class AdministratorController extends Controller
             "business_executive2_lastname" => "bail|required|min:2|max:100",
             "business_executive2_profile_picture" => "nullable",
             "business_executive2_position" => "bail|required|max:100",
-            "business_executive2_description" => "bail|required|min:5|max:150",
+            "business_executive2_description" => "nullable|max:150",
             "business_executive2_facebook_url" => "nullable",
             "business_executive2_linkedin_url" => "nullable",
 
@@ -287,6 +287,14 @@ class AdministratorController extends Controller
         |**************************************************************************
         */
 
+        // GETTING COUNTRY ID
+        $country = Country::where('country_real_name', '=', $validatedData["business_country"])->first();
+        if($country === null){
+            return response([
+                "status" => "error", 
+                "message" => "Country validation error."
+            ]);
+        }
         // CHECKING IF REQUEST HAS THE LOGO FILE
         if(!$request->hasFile('business_logo')) {
             return response([
@@ -315,7 +323,7 @@ class AdministratorController extends Controller
         $img_ext = $admin->administrator_sys_id . uniqid() . date("Y-m-d-H-i-s") . "." . strtolower($request->file('business_logo')->extension());
         $img_url = config('app.url') . '/uploads/logos/' . $img_ext;
     
-        if(!$request->file('pott_picture')->move($img_path, $img_ext)){
+        if(!$request->file('business_logo')->move($img_path, $img_ext)){
             return response([
                 "status" => "error", 
                 "message" => "Logo upload failed"
@@ -324,7 +332,13 @@ class AdministratorController extends Controller
         
         // CREATING THE BUSINESS SYSTEM ID 
         $validatedData["business_sys_id"] = $admin->administrator_user_pottname . "-" . substr($validatedData["administrator_phone_number"] ,1,strlen($validatedData["administrator_phone_number"])) . date("Y-m-d-H-i-s") . UtilController::getRandomString(50);
+        
+        // ADDING BUSINESS COUNTRY ID
+        $validatedData["business_country_id"] = $country->country_id;
 
+        // REMOVING UN-NEEDED INFO
+        unset($validatedData["business_country"]);
+        
         // CREATING THE BUSINESS
         Business::create($validatedData);
 

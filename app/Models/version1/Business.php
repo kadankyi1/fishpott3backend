@@ -37,6 +37,7 @@ class Business extends Model
         'business_descriptive_bio', //
         'business_address', //
         'business_country', //
+        'business_country_id', //
         'business_website', //
         // PITCH
         'business_pitch_text', //

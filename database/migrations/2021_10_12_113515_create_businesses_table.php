@@ -26,6 +26,7 @@ class CreateBusinessesTable extends Migration
             $table->string('business_stockmarket_shortname', 255)->default("");
             $table->string('business_descriptive_bio', 255);
             $table->string('business_address', 255);
+            $table->string('business_website', 255);
             $table->string('business_pitch_text', 255);
             $table->string('business_pitch_video', 255);
             $table->bigInteger('business_revenue_usd');
@@ -66,12 +67,12 @@ class CreateBusinessesTable extends Migration
             $table->string('business_executive4_linkedin_url', 255)->default("");
         });
 
-        /*
-        Schema::table('drills', function (Blueprint $table) {
-            $table->string('drill_maker_investor_id', 255);
-            $table->foreign('drill_maker_investor_id')->references('investor_id')->on('users');
+        
+        Schema::table('businesses', function (Blueprint $table) {
+            $table->unsignedBigInteger('business_country_id');
+            $table->foreign('business_country_id')->references('country_id')->on('countries');
         });
-        */
+        
 
     }
 
