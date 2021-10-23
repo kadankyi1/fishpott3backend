@@ -296,7 +296,7 @@ class AdministratorController extends Controller
             ]);
         }
         // CHECKING IF REQUEST HAS THE LOGO FILE
-        if(!$request->hasFile('business_logo')) {
+        if(!$request->hasFile('business_logo_file')) {
             return response([
                 "status" => "error", 
                 "message" => "Logo not found"
@@ -304,7 +304,7 @@ class AdministratorController extends Controller
         }
     
         // CHECKING IF POTT PICTURE IS UPLOADED CORRECTLY AND IS THE RIGHT FORMAT
-        if(!$request->file('business_logo')->isValid() || (strtolower($request->file('business_logo')->getMimeType())  !=  "image/png" && strtolower($request->file('business_logo')->getMimeType())  !=  "image/jpg" && strtolower($request->file('business_logo')->getMimeType())  !=  "image/jpeg")) {
+        if(!$request->file('business_logo_file')->isValid() || (strtolower($request->file('business_logo_file')->getMimeType())  !=  "image/png" && strtolower($request->file('business_logo_file')->getMimeType())  !=  "image/jpg" && strtolower($request->file('business_logo_file')->getMimeType())  !=  "image/jpeg")) {
             return response([
                 "status" => "error", 
                 "message" => "Image has to be JPG or PNG"
@@ -312,7 +312,7 @@ class AdministratorController extends Controller
         }
 
         // CHECKING THAT IMAGE IS NOT MORE THAN 2MB
-        if($request->file('business_logo')->getSize() > (2 * intval(config('app.mb')))){
+        if($request->file('business_logo_file')->getSize() > (2 * intval(config('app.mb')))){
             return response([
                 "status" => "error", 
                 "message" => "Logo cannot be more than 2 MB"
@@ -320,10 +320,10 @@ class AdministratorController extends Controller
         }
 
         $img_path = public_path() . '/uploads/logos/';
-        $img_ext = $admin->administrator_sys_id . uniqid() . date("Y-m-d-H-i-s") . "." . strtolower($request->file('business_logo')->extension());
+        $img_ext = $admin->administrator_sys_id . uniqid() . date("Y-m-d-H-i-s") . "." . strtolower($request->file('business_logo_file')->extension());
         $img_url = config('app.url') . '/uploads/logos/' . $img_ext;
     
-        if(!$request->file('business_logo')->move($img_path, $img_ext)){
+        if(!$request->file('business_logo_file')->move($img_path, $img_ext)){
             return response([
                 "status" => "error", 
                 "message" => "Logo upload failed"

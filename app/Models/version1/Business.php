@@ -44,7 +44,7 @@ class Business extends Model
         'business_pitch_video', //
         // FINANCIALS
         'business_lastyr_revenue_usd', //
-        'business_profit_or_loss_usd', //
+        'business_lastyr_profit_or_loss_usd', //
         'business_debt_usd', //
         'business_cash_on_hand_usd',
         'business_net_worth_usd', //
