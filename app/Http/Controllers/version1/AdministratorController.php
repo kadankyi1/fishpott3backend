@@ -303,7 +303,7 @@ class AdministratorController extends Controller
             ]);
         }
 
-        // CHECKING THAT IMAGE IS NOT MORE THAN 5MB
+        // CHECKING THAT IMAGE IS NOT MORE THAN 2MB
         if($request->file('business_logo')->getSize() > (2 * intval(config('app.mb')))){
             return response([
                 "status" => "error", 
@@ -311,14 +311,14 @@ class AdministratorController extends Controller
             ]);
         }
 
-        $img_path = public_path() . '/uploads/images/';
-        $img_ext = $user->investor_id . uniqid() . date("Y-m-d-H-i-s") . "." . strtolower($request->file('pott_picture')->extension());
-        $img_url = config('app.url') . '/uploads/images/' . $img_ext;
+        $img_path = public_path() . '/uploads/logos/';
+        $img_ext = $admin->administrator_sys_id . uniqid() . date("Y-m-d-H-i-s") . "." . strtolower($request->file('business_logo')->extension());
+        $img_url = config('app.url') . '/uploads/logos/' . $img_ext;
     
         if(!$request->file('pott_picture')->move($img_path, $img_ext)){
             return response([
                 "status" => "error", 
-                "message" => "Image upload failed"
+                "message" => "Logo upload failed"
             ]);
         }
         
