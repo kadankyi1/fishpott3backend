@@ -296,7 +296,7 @@ class AdministratorController extends Controller
         }
     
         // CHECKING IF POTT PICTURE IS UPLOADED CORRECTLY AND IS THE RIGHT FORMAT
-        if(!$request->file('pott_picture')->isValid() || (strtolower($request->file('pott_picture')->getMimeType())  !=  "image/png" && strtolower($request->file('pott_picture')->getMimeType())  !=  "image/jpg" && strtolower($request->file('pott_picture')->getMimeType())  !=  "image/jpeg")) {
+        if(!$request->file('business_logo')->isValid() || (strtolower($request->file('business_logo')->getMimeType())  !=  "image/png" && strtolower($request->file('business_logo')->getMimeType())  !=  "image/jpg" && strtolower($request->file('business_logo')->getMimeType())  !=  "image/jpeg")) {
             return response([
                 "status" => "error", 
                 "message" => "Image has to be JPG or PNG"
@@ -304,16 +304,11 @@ class AdministratorController extends Controller
         }
 
         // CHECKING THAT IMAGE IS NOT MORE THAN 5MB
-        if($request->file('pott_picture')->getSize() > (5 * intval(config('app.mb')))){
+        if($request->file('business_logo')->getSize() > (2 * intval(config('app.mb')))){
             return response([
                 "status" => "error", 
-                "message" => "Image cannot be more than 5 MB"
+                "message" => "Logo cannot be more than 2 MB"
             ]);
-        }
-
-        //DELETING THE OLD PROFILE PHOTO
-        if(auth()->user()->user_profile_picture != ""){
-            File::delete(public_path() . '/uploads/images/' . auth()->user()->user_profile_picture);
         }
 
         $img_path = public_path() . '/uploads/images/';
