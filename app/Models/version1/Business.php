@@ -50,27 +50,31 @@ class Business extends Model
         'business_maximum_number_of_investors_allowed',
         'business_descriptive_financial_bio',
         // TEAM
-        'business_executive1_firstname',
-        'business_executive1_lastname',
+        'business_executive1_firstname', //
+        'business_executive1_lastname', //
         'business_executive1_profile_picture',
+        'business_executive1_position', //
         'business_executive1_description',
         'business_executive1_facebook_url',
         'business_executive1_linkedin_url',
-        'business_executive2_firstname',
-        'business_executive2_lastname',
+        'business_executive2_firstname', //
+        'business_executive2_lastname', //
         'business_executive2_profile_picture',
+        'business_executive2_position', //
         'business_executive2_description',
         'business_executive2_facebook_url',
         'business_executive2_linkedin_url',
         'business_executive3_firstname',
         'business_executive3_lastname',
         'business_executive3_profile_picture',
+        'business_executive3_position', //
         'business_executive3_description',
         'business_executive3_facebook_url',
         'business_executive3_linkedin_url',
         'business_executive4_firstname',
         'business_executive4_lastname',
         'business_executive4_profile_picture',
+        'business_executive4_position',//
         'business_executive4_description',
         'business_executive4_facebook_url',
         'business_executive4_linkedin_url',
