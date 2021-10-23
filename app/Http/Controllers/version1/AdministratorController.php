@@ -221,7 +221,7 @@ class AdministratorController extends Controller
             // ADD ANY OTHER REQUIRED INPUTS FROM HERE
             "business_pottname" => "nullable|string|regex:/^[A-Za-z0-9_.]+$/|max:15",
             "business_type" => "bail|required|string|min:5|max:100",
-            "business_logo" => "bail|required",
+            "business_logo_file" => "bail|required",
             "business_full_name" => "bail|required|string|min:4|max:150",
             "business_stockmarket_shortname" => "nullable|max:10",
             "business_descriptive_bio" => "bail|required|max:150",
@@ -336,8 +336,12 @@ class AdministratorController extends Controller
         // ADDING BUSINESS COUNTRY ID
         $validatedData["business_country_id"] = $country->country_id;
 
+        // ADDING LOGO PATH
+        $validatedData["business_logo"] = $img_ext;
+
         // REMOVING UN-NEEDED INFO
         unset($validatedData["business_country"]);
+        unset($validatedData["business_logo_file"]);
         
         // CREATING THE BUSINESS
         Business::create($validatedData);
