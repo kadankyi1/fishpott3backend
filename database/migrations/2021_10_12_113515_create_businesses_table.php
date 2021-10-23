@@ -38,10 +38,10 @@ class CreateBusinessesTable extends Migration
             $table->text('business_descriptive_financial_bio');
             $table->string('business_executive1_firstname', 255);
             $table->string('business_executive1_lastname', 255);
-            $table->string('business_executive1_profile_picture', 255);
-            $table->text('business_executive1_description');
-            $table->string('business_executive1_facebook_url', 255);
-            $table->string('business_executive1_linkedin_url', 255);
+            $table->string('business_executive1_profile_picture', 255)->default("");
+            $table->text('business_executive1_description')->default("");
+            $table->string('business_executive1_facebook_url', 255)->default("");
+            $table->string('business_executive1_linkedin_url', 255)->default("");
             $table->string('business_executive2_firstname', 255);
             $table->string('business_executive2_lastname', 255);
             $table->string('business_executive2_profile_picture', 255)->default("");
