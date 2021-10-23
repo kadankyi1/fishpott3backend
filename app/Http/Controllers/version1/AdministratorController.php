@@ -336,8 +336,9 @@ class AdministratorController extends Controller
         // ADDING BUSINESS COUNTRY ID
         $validatedData["business_country_id"] = $country->country_id;
 
-        // ADDING LOGO PATH
+        // ADDING LOGO PATH AND DEFAULT FLAGGED REASON
         $validatedData["business_logo"] = $img_ext;
+        $validatedData["business_flagged_reason"] = "";
 
         // REMOVING UN-NEEDED INFO
         unset($validatedData["business_country"]);
