@@ -12,6 +12,7 @@ use App\Models\version1\Country;
 use App\Models\version1\Language;
 use App\Models\version1\ResetCode;
 use App\Mail\version1\ResetCodeMail;
+use App\Models\version1\Business;
 use App\Models\version1\Drill;
 use App\Models\version1\Suggestion;
 use App\Models\version1\SuggestionTypes;
@@ -846,13 +847,15 @@ public function changePasswordWithResetCode(Request $request)
         //echo "suggestion->suggestion_item_reference_id: " . $suggestion->suggestion_item_reference_id;
         if($suggestion->suggestion_suggestion_type_id == UtilController::getSuggestionType("suggestion_type_name", "Drill", 1)){
             $suggestion = Drill::where('drill_sys_id', $suggestion->suggestion_item_reference_id)->first();
+            $message = "drill";
         } else if($suggestion->suggestion_type == SuggestionTypes::where('suggestion_type_name', 'Business')){
-
+            $suggestion = Business::where('business_sys_id', $suggestion->suggestion_item_reference_id)->first();
+            $message = "business";
         }
 
         return response([
             "status" => "yes", 
-            "message" => "You have a new drill",
+            "message" => $message,
             "data" => $suggestion
         ]);
     }
