@@ -264,7 +264,7 @@ class AdministratorController extends Controller
             "business_executive3_description" => "nullable|max:150",
             "business_executive3_facebook_url" => "nullable",
             "business_executive3_linkedin_url" => "nullable",
-            
+
             "business_executive4_firstname" => "nullable|min:2|max:100",
             "business_executive4_lastname" => "nullable|min:2|max:100",
             "business_executive4_profile_picture" => "nullable",
@@ -287,14 +287,10 @@ class AdministratorController extends Controller
         |**************************************************************************
         */
 
-        //CREATING THE USER DATA TO ADD TO DB
+        // CREATING THE BUSINESS SYSTEM ID 
         $validatedData["business_sys_id"] = $admin->administrator_user_pottname . "-" . substr($validatedData["administrator_phone_number"] ,1,strlen($validatedData["administrator_phone_number"])) . date("Y-m-d-H-i-s") . UtilController::getRandomString(50);
-        if(!empty($validatedData["drill_answer_3"])){
-            $drillData["drill_answer_3"] = $validatedData["drill_answer_3"];
-        }
-        if(!empty($validatedData["drill_answer_4"])){
-            $drillData["drill_answer_4"] = $validatedData["drill_answer_4"];
-        }
+
+        // CREATING THE BUSINESS
         Business::create($validatedData);
 
         return response([
