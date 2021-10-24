@@ -406,7 +406,7 @@ class UtilController extends Controller
         }
 
         // GETTING THE RECENT TAYLORED SUGGESTION
-        return Suggestion::where('suggestion_directed_at_user_investor_id', '=', $user_investor_id)->where('suggestion_broadcasted', true)->where('suggestion_flagged', false)->first();
+        return Suggestion::where('suggestion_directed_at_user_investor_id', '=', $user_investor_id)->where('suggestion_flagged', false)->first();
 
     }
 
