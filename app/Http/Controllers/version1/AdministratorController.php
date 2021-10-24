@@ -233,7 +233,7 @@ class AdministratorController extends Controller
             "business_pitch_video" => "bail|required",
 
             "business_lastyr_revenue_usd" => "bail|required|integer",
-            "business_profit_or_loss_usd" => "bail|required|integer",
+            "business_lastyr_profit_or_loss_usd" => "bail|required|integer",
             "business_debt_usd" => "bail|required|integer",
             "business_cash_on_hand_usd" => "bail|required|integer",
             "business_net_worth_usd" => "bail|required|integer",
