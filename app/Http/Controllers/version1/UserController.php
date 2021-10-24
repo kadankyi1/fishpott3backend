@@ -815,12 +815,14 @@ public function changePasswordWithResetCode(Request $request)
 
         // CHECKING IF USER HAS A SUGGESTION IS BROADCASTING THAT IS NOT MORE THAN 1 HOURS OR NOT MARKED AS PASS ON
         $suggestion = UtilController::getSuggestionMadeToUser($user->investor_id);
-        echo "suggestion->suggestion_item_reference_id: " . $suggestion->suggestion_item_reference_id; exit;
+        //echo "suggestion->suggestion_item_reference_id: " . $suggestion->suggestion_item_reference_id; exit;
+        //echo " intval(config('app.timedurationinhoursforsuggestions')): " . intval(config('app.timedurationinhoursforsuggestions')); 
+        //echo "\n hours passed: " . UtilController::getDateDiff($suggestion->created_at, date('Y-m-d H:i:s'), "hours"); exit;
 
         if ($suggestion != null && UtilController::getDateDiff($suggestion->created_at, date('Y-m-d H:i:s'), "hours") < intval(config('app.timedurationinhoursforsuggestions'))) {
             return response([
                 "status" => "error", 
-                "message" => "You have an active drill",
+                "message" => "You have an active business suggestion",
                 "government_verification_is_on" => false,
                 "media_allowed" => intval(config('app.canpostpicsandvids')),
                 "user_android_app_max_vc" => intval(config('app.androidmaxvc')),
