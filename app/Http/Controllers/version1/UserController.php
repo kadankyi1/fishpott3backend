@@ -821,7 +821,7 @@ public function changePasswordWithResetCode(Request $request)
 
         if ($suggestion != null && UtilController::getDateDiff($suggestion->created_at, date('Y-m-d H:i:s'), "hours") < intval(config('app.timedurationinhoursforsuggestions'))) {
             return response([
-                "status" => "error", 
+                "status" => 3, 
                 "message" => "You have an active business suggestion",
                 "government_verification_is_on" => false,
                 "media_allowed" => intval(config('app.canpostpicsandvids')),
@@ -836,7 +836,7 @@ public function changePasswordWithResetCode(Request $request)
 
         if($suggestion ==  null || $suggestion == false){
             return response([
-                "status" => "error", 
+                "status" => 3, 
                 "message" => "Oops.. No new drills. It happens",
                 "government_verification_is_on" => false,
                 "media_allowed" => intval(config('app.canpostpicsandvids')),
@@ -858,7 +858,7 @@ public function changePasswordWithResetCode(Request $request)
         }
 
         return response([
-            "status" => "yes", 
+            "status" => 1, 
             "message" => $message,
             "data" => $suggestion
         ]);

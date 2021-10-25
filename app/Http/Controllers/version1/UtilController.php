@@ -300,7 +300,7 @@ class UtilController extends Controller
         if ($user->user_flagged) {
             $request->user()->token()->revoke();
             return [
-                "status" => "error", 
+                "status" => 4, 
                 "message" => "Account flagged."
             ]; 
          }
@@ -308,7 +308,7 @@ class UtilController extends Controller
         // CHECKING THAT USER TOKEN HAS THE RIGHT PERMISSION
         if (!$request->user()->tokenCan($actions)) {
             return [
-                "status" => "error", 
+                "status" => 4, 
                 "message" => "You do not have permission"
             ];
         }
@@ -319,7 +319,7 @@ class UtilController extends Controller
             (intval($request->app_version_code) < intval(config('app.androidminvc')) || $request->app_version_code > intval(config('app.androidmaxvc')))
         ){
             return [
-                "status" => "error", 
+                "status" => 2, 
                 "message" => "Please update your app from the Google Play Store."
             ]; 
         }
@@ -328,7 +328,7 @@ class UtilController extends Controller
         $user = User::where('user_pottname', $user->user_pottname)->where('user_phone_number', $request->user_phone_number)->where('investor_id', $request->investor_id)->first();
         if($user == null){
             return [
-                "status" => "error", 
+                "status" => 5, 
                 "message" => "Session closed. You have to login again..."
             ]; 
         }
