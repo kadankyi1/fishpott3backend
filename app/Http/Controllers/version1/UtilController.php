@@ -301,7 +301,12 @@ class UtilController extends Controller
             $request->user()->token()->revoke();
             return [
                 "status" => 4, 
-                "message" => "Account flagged."
+                "message" => "Account flagged.",
+                "government_verification_is_on" => false,
+                "media_allowed" => intval(config('app.canpostpicsandvids')),
+                "user_android_app_max_vc" => intval(config('app.androidmaxvc')),
+                "user_android_app_force_update" => boolval(config('app.androidforceupdatetomaxvc')),
+                "phone_verification_is_on" => boolval(config('app.phoneverificationrequiredstatus'))
             ]; 
          }
 
@@ -309,7 +314,12 @@ class UtilController extends Controller
         if (!$request->user()->tokenCan($actions)) {
             return [
                 "status" => 4, 
-                "message" => "You do not have permission"
+                "message" => "You do not have permission",
+                "government_verification_is_on" => false,
+                "media_allowed" => intval(config('app.canpostpicsandvids')),
+                "user_android_app_max_vc" => intval(config('app.androidmaxvc')),
+                "user_android_app_force_update" => boolval(config('app.androidforceupdatetomaxvc')),
+                "phone_verification_is_on" => boolval(config('app.phoneverificationrequiredstatus'))
             ];
         }
 
@@ -320,7 +330,12 @@ class UtilController extends Controller
         ){
             return [
                 "status" => 2, 
-                "message" => "Please update your app from the Google Play Store."
+                "message" => "Please update your app from the Google Play Store.",
+                "government_verification_is_on" => false,
+                "media_allowed" => intval(config('app.canpostpicsandvids')),
+                "user_android_app_max_vc" => intval(config('app.androidmaxvc')),
+                "user_android_app_force_update" => boolval(config('app.androidforceupdatetomaxvc')),
+                "phone_verification_is_on" => boolval(config('app.phoneverificationrequiredstatus'))
             ]; 
         }
 
@@ -329,7 +344,12 @@ class UtilController extends Controller
         if($user == null){
             return [
                 "status" => 5, 
-                "message" => "Session closed. You have to login again..."
+                "message" => "Session closed. You have to login again...",
+                "government_verification_is_on" => false,
+                "media_allowed" => intval(config('app.canpostpicsandvids')),
+                "user_android_app_max_vc" => intval(config('app.androidmaxvc')),
+                "user_android_app_force_update" => boolval(config('app.androidforceupdatetomaxvc')),
+                "phone_verification_is_on" => boolval(config('app.phoneverificationrequiredstatus'))
             ]; 
         }
 

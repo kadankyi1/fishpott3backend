@@ -860,7 +860,12 @@ public function changePasswordWithResetCode(Request $request)
         return response([
             "status" => 1, 
             "message" => $message,
-            "data" => $suggestion
+            "data" => $suggestion,
+            "government_verification_is_on" => false,
+            "media_allowed" => intval(config('app.canpostpicsandvids')),
+            "user_android_app_max_vc" => intval(config('app.androidmaxvc')),
+            "user_android_app_force_update" => boolval(config('app.androidforceupdatetomaxvc')),
+            "phone_verification_is_on" => boolval(config('app.phoneverificationrequiredstatus'))
         ]);
     }
 
