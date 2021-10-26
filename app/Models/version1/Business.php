@@ -50,6 +50,7 @@ class Business extends Model
         'business_net_worth_usd', //
         'business_investments_amount_needed_usd',
         'business_maximum_number_of_investors_allowed',
+        'business_current_shareholders',
         'business_descriptive_financial_bio',
         // TEAM
         'business_executive1_firstname', //
