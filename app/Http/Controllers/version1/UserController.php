@@ -820,9 +820,12 @@ public function changePasswordWithResetCode(Request $request)
         //echo "\n hours passed: " . UtilController::getDateDiff($suggestion->created_at, date('Y-m-d H:i:s'), "hours"); exit;
 
         if ($suggestion != null && UtilController::getDateDiff($suggestion->created_at, date('Y-m-d H:i:s'), "hours") < intval(config('app.timedurationinhoursforsuggestions'))) {
+            $suggestion = Business::where('business_sys_id', $suggestion->suggestion_item_reference_id)->first();
+            $message = "business";
+
             return response([
                 "status" => 1, 
-                "message" => "business",
+                "message" => $message,
                 "data" => $suggestion,
                 "government_verification_is_on" => false,
                 "media_allowed" => intval(config('app.canpostpicsandvids')),
