@@ -822,11 +822,19 @@ public function changePasswordWithResetCode(Request $request)
         if ($suggestion != null && UtilController::getDateDiff($suggestion->created_at, date('Y-m-d H:i:s'), "hours") < intval(config('app.timedurationinhoursforsuggestions'))) {
             $suggestion = Business::where('business_sys_id', $suggestion->suggestion_item_reference_id)->first();
             $message = "business";
-
+            $country = Country::where('country_id', '=', $suggestion->business_country_id)->first();
+            if($country === null){
+                return response([
+                    "status" => "error", 
+                    "message" => "Country validation error."
+                ]);
+            }
+    
             return response([
                 "status" => 1, 
                 "message" => $message,
                 "data" => $suggestion,
+                "country" => $country->country_real_name,
                 "government_verification_is_on" => false,
                 "media_allowed" => intval(config('app.canpostpicsandvids')),
                 "user_android_app_max_vc" => intval(config('app.androidmaxvc')),
@@ -856,15 +864,26 @@ public function changePasswordWithResetCode(Request $request)
         if($suggestion->suggestion_suggestion_type_id == UtilController::getSuggestionType("suggestion_type_name", "Drill", 1)){
             $suggestion = Drill::where('drill_sys_id', $suggestion->suggestion_item_reference_id)->first();
             $message = "drill";
+            $country_real_name = "";
         } else if($suggestion->suggestion_type == SuggestionTypes::where('suggestion_type_name', 'Business')){
             $suggestion = Business::where('business_sys_id', $suggestion->suggestion_item_reference_id)->first();
             $message = "business";
+            $country = Country::where('country_id', '=', $suggestion->business_country_id)->first();
+            if($country === null){
+                return response([
+                    "status" => "error", 
+                    "message" => "Country validation error."
+                ]);
+            }
+
+            $country_real_name = $country->country_real_name;
         }
 
         return response([
             "status" => 1, 
             "message" => $message,
             "data" => $suggestion,
+            "country" => $country_real_name,
             "government_verification_is_on" => false,
             "media_allowed" => intval(config('app.canpostpicsandvids')),
             "user_android_app_max_vc" => intval(config('app.androidmaxvc')),
