@@ -821,8 +821,9 @@ public function changePasswordWithResetCode(Request $request)
 
         if ($suggestion != null && UtilController::getDateDiff($suggestion->created_at, date('Y-m-d H:i:s'), "hours") < intval(config('app.timedurationinhoursforsuggestions'))) {
             return response([
-                "status" => 3, 
-                "message" => "You have an active business suggestion",
+                "status" => 1, 
+                "message" => "business",
+                "data" => $suggestion,
                 "government_verification_is_on" => false,
                 "media_allowed" => intval(config('app.canpostpicsandvids')),
                 "user_android_app_max_vc" => intval(config('app.androidmaxvc')),
