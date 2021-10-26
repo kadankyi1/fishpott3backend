@@ -829,12 +829,12 @@ public function changePasswordWithResetCode(Request $request)
                     "message" => "Country validation error."
                 ]);
             }
-    
+            $suggestion->business_country = $country->country_real_name;
+            $suggestion->business_logo = config('app.url') . '/uploads/logos/' . $suggestion->business_logo;
             return response([
                 "status" => 1, 
                 "message" => $message,
                 "data" => $suggestion,
-                "country" => $country->country_real_name,
                 "government_verification_is_on" => false,
                 "media_allowed" => intval(config('app.canpostpicsandvids')),
                 "user_android_app_max_vc" => intval(config('app.androidmaxvc')),
@@ -875,15 +875,14 @@ public function changePasswordWithResetCode(Request $request)
                     "message" => "Country validation error."
                 ]);
             }
-
-            $country_real_name = $country->country_real_name;
+            $suggestion->business_country = $country->country_real_name;
+            $suggestion->business_logo = config('app.url') . '/uploads/logos/' . $suggestion->business_logo;
         }
 
         return response([
             "status" => 1, 
             "message" => $message,
             "data" => $suggestion,
-            "country" => $country_real_name,
             "government_verification_is_on" => false,
             "media_allowed" => intval(config('app.canpostpicsandvids')),
             "user_android_app_max_vc" => intval(config('app.androidmaxvc')),
