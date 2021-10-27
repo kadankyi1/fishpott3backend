@@ -862,7 +862,7 @@ public function changePasswordWithResetCode(Request $request)
         //echo "getSuggestionType: " . UtilController::getSuggestionType("suggestion_type_name", "Business", 1);
         //echo "suggestion->suggestion_item_reference_id: " . $suggestion->suggestion_item_reference_id; exit;
         if($suggestion->suggestion_suggestion_type_id == UtilController::getSuggestionType("suggestion_type_name", "Drill", 1)){
-            $suggestion2 = Drill::where('drill_sys_id', $suggestion->suggestion_item_reference_id)->first();
+            $suggestion2 = Drill::where('drill_sys_id', "raylight-2335536636432021-10-27-05-10-416hlHZFjnMNQEYzyjZ3nNplMbz2ugBhor1nKsiT2JH1RPmYlkwI")->first();
             $message = "drill";
             $country_real_name = "";
             echo "drill_sys_id: " . $suggestion2->drill_sys_id; exit;
