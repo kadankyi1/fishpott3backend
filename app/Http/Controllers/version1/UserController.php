@@ -862,10 +862,10 @@ public function changePasswordWithResetCode(Request $request)
         //echo "getSuggestionType: " . UtilController::getSuggestionType("suggestion_type_name", "Business", 1);
         //echo "suggestion->suggestion_item_reference_id: " . $suggestion->suggestion_item_reference_id; exit;
         if($suggestion->suggestion_suggestion_type_id == UtilController::getSuggestionType("suggestion_type_name", "Drill", 1)){
-            $suggestion = Drill::where('drill_sys_id', $suggestion->suggestion_item_reference_id)->first();
+            $suggestion2 = Drill::where('drill_sys_id', $suggestion->suggestion_item_reference_id)->first();
             $message = "drill";
             $country_real_name = "";
-            echo "drill_sys_id: " . $suggestion->drill_sys_id; exit;
+            echo "drill_sys_id: " . $suggestion2->drill_sys_id; exit;
         } else if($suggestion->suggestion_type == SuggestionTypes::where('suggestion_type_name', 'Business')){
             $suggestion = Business::where('business_sys_id', $suggestion->suggestion_item_reference_id)->first();
             $message = "business";
