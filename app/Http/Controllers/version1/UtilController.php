@@ -439,7 +439,7 @@ class UtilController extends Controller
             return false;
         } 
 
-        //echo "suggestion->suggestion_item_reference_id: " . $suggestion->suggestion_item_reference_id; exit;
+        echo "suggestion->suggestion_item_reference_id: " . $suggestion->suggestion_item_reference_id; exit;
         return $suggestion;
     }
 
