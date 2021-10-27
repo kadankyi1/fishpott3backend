@@ -434,11 +434,12 @@ class UtilController extends Controller
     {
         // GETTING THE RECENT
         $suggestion = Suggestion::where('suggestion_flagged', false)->orderby('created_at', 'desc')->first();
-        echo "hours passed: " . UtilController::getDateDiff($suggestion->created_at, date('Y-m-d H:i:s'), "hours");
+        //echo "hours passed: " . UtilController::getDateDiff($suggestion->created_at, date('Y-m-d H:i:s'), "hours");
         if ($suggestion != null && UtilController::getDateDiff($suggestion->created_at, date('Y-m-d H:i:s'), "hours") >= intval(config('app.timedurationinhoursforsuggestions'))) {
             return false;
         } 
 
+        echo "suggestion->suggestion_item_reference_id: " . $suggestion->suggestion_item_reference_id; exit;
         return $suggestion;
     }
 
