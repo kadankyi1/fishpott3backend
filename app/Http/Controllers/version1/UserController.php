@@ -14,6 +14,7 @@ use App\Models\version1\ResetCode;
 use App\Mail\version1\ResetCodeMail;
 use App\Models\version1\Business;
 use App\Models\version1\Drill;
+use App\Models\version1\DrillAnswer;
 use App\Models\version1\Suggestion;
 use App\Models\version1\SuggestionTypes;
 use App\Models\version1\Suggesto;
@@ -934,6 +935,15 @@ public function changePasswordWithResetCode(Request $request)
 
         // GETTING THE DRILL THAT WAS ANSWERED
         $drill = Drill::where('drill_sys_id', $request->drill_id)->first();
+        
+        $drillAnswerData["drill_answer_sys_id"] = $user->user_pottname . substr($user->user_phone_number ,1,strlen($user->user_phone_number)) . "_da_" . date("Y-m-d-H-i-s") .  UtilController::getRandomString(91);
+        $drillAnswerData["drill_answer_used_for_pott_intelligence_calculation"] = false;
+        $drillAnswerData["drill_answer_drill_sys_id"] = $request->drill_id;
+        $drillAnswerData["drill_answer_user_investor_id"] = $user->investor_id;
+
+        //$userData["ssssssss"] = $validatedData["user_surname"];
+
+        DrillAnswer::create($userData);
 
 
 
