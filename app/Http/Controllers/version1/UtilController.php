@@ -454,7 +454,7 @@ class UtilController extends Controller
         }
     }
 
-    public static function getAnswersFromUsers($column, $value, $fetch_type)
+    public static function getDrillAnswersGroups($column, $value, $fetch_type)
     {
         $suggestiontype = SuggestionTypes::where($column, $value)->first();
 
