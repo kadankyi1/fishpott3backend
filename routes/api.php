@@ -36,6 +36,10 @@ Route::middleware('auth:api')->post('/v1/user/upload-pott-pic', [App\Http\Contro
 // GET DRILL
 Route::middleware('auth:api')->get('/v1/user/get-my-suggestion', [App\Http\Controllers\version1\UserController::class, 'getMySuggestion']);
 
+// UPLOAD PROFILE PICTURE
+Route::middleware('auth:api')->post('/v1/user/save-drill-answer', [App\Http\Controllers\version1\UserController::class, 'saveDrillAnswerAndReturnWhatOthersSaid']);
+
+
 /*
 |-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|
 | |-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-| ADMINISTRATOR SECTION ADMINISTRATOR SECTION ADMINISTRATOR SECTION ADMINISTRATOR SECTION |-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|

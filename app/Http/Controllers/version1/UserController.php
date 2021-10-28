@@ -959,13 +959,26 @@ public function changePasswordWithResetCode(Request $request)
         DrillAnswer::create($drillAnswerData);
 
         // GETTING THE ANSWERS OF FRIENDS
-        $validation_response = UtilController::getAnswersFromUsers($request, auth()->user(), "answer-drills");
+        $answer_1_count = UtilController::getCountDrillAnswers("drill_answer_number", 1);
+        $answer_2_count = UtilController::getCountDrillAnswers("drill_answer_number", 2);
+        $answer_3_count = UtilController::getCountDrillAnswers("drill_answer_number", 3);
+        $answer_4_count = UtilController::getCountDrillAnswers("drill_answer_number", 4);
 
+        $data = array(
+            "answer_1" => $drill->drill_answer_1, 
+            "answer_1_count" => $answer_1_count, 
+            "answer_2" => $drill->drill_answer_2, 
+            "answer_2_count" => $answer_2_count, 
+            "answer_3" => $drill->drill_answer_3, 
+            "answer_3_count" => $answer_3_count, 
+            "answer_4" => $drill->drill_answer_4, 
+            "answer_4_count" => $answer_4_count, 
+        );
 
         return response([
             "status" => 1, 
-            "message" => $message,
-            "data" => $suggestion,
+            "message" => "See answers from the world",
+            "data" => $data,
             "government_verification_is_on" => false,
             "media_allowed" => intval(config('app.canpostpicsandvids')),
             "user_android_app_max_vc" => intval(config('app.androidmaxvc')),
