@@ -915,6 +915,7 @@ public function changePasswordWithResetCode(Request $request)
             "app_type" => "bail|required|max:8",
             "app_version_code" => "bail|required|integer",
             // ADD ANY OTHER REQUIRED INPUTS FROM HERE
+            "drill_id" => "bail|required|string",
             "drill_answer" => "bail|required|integer|min:1|max:4",
         ]);
 
@@ -931,68 +932,10 @@ public function changePasswordWithResetCode(Request $request)
         |**************************************************************************
         */
 
-        // CHECKING IF USER HAS A SUGGESTION IS BROADCASTING THAT IS NOT MORE THAN 1 HOURS OR NOT MARKED AS PASS ON
-        $suggestion = UtilController::getSuggestionMadeToUser($user->investor_id);
+        // GETTING THE DRILL THAT WAS ANSWERED
+        $drill = Drill::where('drill_sys_id', $request->drill_id)->first();
 
-        if ($suggestion != null && UtilController::getDateDiff($suggestion->created_at, date('Y-m-d H:i:s'), "hours") < intval(config('app.timedurationinhoursforsuggestions'))) {
-            $suggestion = Business::where('business_sys_id', $suggestion->suggestion_item_reference_id)->first();
-            $message = "business";
-            $country = Country::where('country_id', '=', $suggestion->business_country_id)->first();
-            if($country === null){
-                return response([
-                    "status" => "error", 
-                    "message" => "Country validation error."
-                ]);
-            }
-            $suggestion->business_country = $country->country_real_name;
-            $suggestion->business_logo = config('app.url') . 'http://144.202.111.61/uploads/logos/' . $suggestion->business_logo;
-            return response([
-                "status" => 1, 
-                "message" => $message,
-                "data" => $suggestion,
-                "government_verification_is_on" => false,
-                "media_allowed" => intval(config('app.canpostpicsandvids')),
-                "user_android_app_max_vc" => intval(config('app.androidmaxvc')),
-                "user_android_app_force_update" => boolval(config('app.androidforceupdatetomaxvc')),
-                "phone_verification_is_on" => boolval(config('app.phoneverificationrequiredstatus'))
-            ]);
-        }
 
-        // CHECKING FOR A NEW DRILL SUGGESTION IF NO BUSINESS SUGGESTION IS BROADCASTING AND IF THE OLD SUGGESTION HAS BEEN EXPIRED IF IT'S A QUESTION.
-        $suggestion = UtilController::getLatestSuggestion();
-
-        if($suggestion ==  null || $suggestion == false){
-            return response([
-                "status" => 3, 
-                "message" => "Oops.. No new drills. It happens",
-                "government_verification_is_on" => false,
-                "media_allowed" => intval(config('app.canpostpicsandvids')),
-                "user_android_app_max_vc" => intval(config('app.androidmaxvc')),
-                "user_android_app_force_update" => boolval(config('app.androidforceupdatetomaxvc')),
-                "phone_verification_is_on" => boolval(config('app.phoneverificationrequiredstatus'))
-            ]);
-        }
-
-        // CHECKING SUGGESTION TYPE TO GET IT'S INFO
-        //echo "getSuggestionType: " . UtilController::getSuggestionType("suggestion_type_name", "Business", 1);
-        //echo "suggestion->suggestion_item_reference_id: " . $suggestion->suggestion_item_reference_id; exit;
-        if($suggestion->suggestion_suggestion_type_id == UtilController::getSuggestionType("suggestion_type_name", "Drill", 1)){
-            $suggestion = Drill::where('drill_sys_id', $suggestion->suggestion_item_reference_id)->first();
-            $message = "drill";
-            $country_real_name = "";
-        } else if($suggestion->suggestion_type == SuggestionTypes::where('suggestion_type_name', 'Business')){
-            $suggestion = Business::where('business_sys_id', $suggestion->suggestion_item_reference_id)->first();
-            $message = "business";
-            $country = Country::where('country_id', '=', $suggestion->business_country_id)->first();
-            if($country === null){
-                return response([
-                    "status" => "error", 
-                    "message" => "Country validation error."
-                ]);
-            }
-            $suggestion->business_country = $country->country_real_name;
-            $suggestion->business_logo = config('app.url') . '/uploads/logos/' . $suggestion->business_logo;
-        }
 
         return response([
             "status" => 1, 
