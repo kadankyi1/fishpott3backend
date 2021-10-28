@@ -15,7 +15,20 @@ class CreateDrillAnswersTable extends Migration
     {
         Schema::create('drill_answers', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            $table->bigIncrements('drill_id');
+            $table->string('drill_answer_sys_id', 255)->unique();
+            $table->integer('drill_answer_number');
+            $table->boolean('drill_answer_used_for_pott_intelligence_calculation')->default(false);
+            $table->string('drill_answer_1', 255);
+            $table->text('drill_answer_implied_traits_4');
+        });
+
+        Schema::table('drill_answers', function (Blueprint $table) {
+            $table->string('drill_answer_drill_sys_id', 255);
+            $table->foreign('drill_answer_drill_sys_id')->references('drill_sys_id')->on('drills');
+
+            $table->string('drill_answer_user_investor_id', 255);
+            $table->foreign('drill_answer_user_investor_id')->references('investor_id')->on('users');
         });
     }
 

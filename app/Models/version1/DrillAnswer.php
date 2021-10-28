@@ -24,6 +24,7 @@ class DrillAnswer extends Model
     protected $fillable = [
         'drill_answer_id', 
         'drill_answer_sys_id', 
+        'drill_answer_number', 
         'drill_answer_used_for_pott_intelligence_calculation', 
         'drill_answer_drill_sys_id',
         'drill_answer_user_investor_id',

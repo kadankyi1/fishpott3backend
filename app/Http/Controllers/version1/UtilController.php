@@ -23,6 +23,7 @@ use App\Models\version1\Administrator;
 use App\Models\version1\SuggestionTypes;
 use App\Models\version1\Suggestion;
 use App\Http\Controllers\version1\LogController;
+use App\Models\version1\DrillAnswer;
 
 class UtilController extends Controller
 {
@@ -454,14 +455,9 @@ class UtilController extends Controller
         }
     }
 
-    public static function getDrillAnswersGroups($column, $value, $fetch_type)
+    public static function getCountDrillAnswers($column, $value)
     {
-        $suggestiontype = SuggestionTypes::where($column, $value)->first();
-
-        if($fetch_type == 1){
-            return $suggestiontype->suggestion_type_id;
-        } else if($fetch_type == 2){
-            return $suggestiontype->suggestion_type_name;
-        }
+        $drillAnswer = DrillAnswer::where($column, '=', $value)->get();
+        return $drillAnswer->count();
     }
 }
