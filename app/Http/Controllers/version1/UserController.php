@@ -959,7 +959,7 @@ public function changePasswordWithResetCode(Request $request)
         DrillAnswer::create($drillAnswerData);
 
         // GETTING THE ANSWERS OF FRIENDS
-        
+        $validation_response = UtilController::getAnswersFromUsers($request, auth()->user(), "answer-drills");
 
 
         return response([

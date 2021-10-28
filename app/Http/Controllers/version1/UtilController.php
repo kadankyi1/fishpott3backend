@@ -453,4 +453,15 @@ class UtilController extends Controller
             return $suggestiontype->suggestion_type_name;
         }
     }
+
+    public static function getAnswersFromUsers($column, $value, $fetch_type)
+    {
+        $suggestiontype = SuggestionTypes::where($column, $value)->first();
+
+        if($fetch_type == 1){
+            return $suggestiontype->suggestion_type_id;
+        } else if($fetch_type == 2){
+            return $suggestiontype->suggestion_type_name;
+        }
+    }
 }
