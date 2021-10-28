@@ -826,7 +826,7 @@ public function changePasswordWithResetCode(Request $request)
             $country = Country::where('country_id', '=', $suggestion->business_country_id)->first();
             if($country === null){
                 return response([
-                    "status" => "error", 
+                    "status" => 3, 
                     "message" => "Country validation error."
                 ]);
             }
@@ -872,7 +872,7 @@ public function changePasswordWithResetCode(Request $request)
             $country = Country::where('country_id', '=', $suggestion->business_country_id)->first();
             if($country === null){
                 return response([
-                    "status" => "error", 
+                    "status" => 3, 
                     "message" => "Country validation error."
                 ]);
             }
@@ -935,7 +935,19 @@ public function changePasswordWithResetCode(Request $request)
 
         // GETTING THE DRILL THAT WAS ANSWERED
         $drill = Drill::where('drill_sys_id', $request->drill_id)->first();
-        
+        if($drill == null || empty($drill->drill_sys_id)){
+            return response([
+                "status" => 3, 
+                "message" => "Drill not found",
+                "government_verification_is_on" => false,
+                "media_allowed" => intval(config('app.canpostpicsandvids')),
+                "user_android_app_max_vc" => intval(config('app.androidmaxvc')),
+                "user_android_app_force_update" => boolval(config('app.androidforceupdatetomaxvc')),
+                "phone_verification_is_on" => boolval(config('app.phoneverificationrequiredstatus'))
+            ]);
+        }
+
+        // SETTING THE INFO NEEDED FOR DRILL ANSWER CREATION
         $drillAnswerData["drill_answer_sys_id"] = $user->user_pottname . substr($user->user_phone_number ,1,strlen($user->user_phone_number)) . "_da_" . date("Y-m-d-H-i-s") .  UtilController::getRandomString(91);
         $drillAnswerData["drill_answer_used_for_pott_intelligence_calculation"] = false;
         $drillAnswerData["drill_answer_drill_sys_id"] = $request->drill_id;
@@ -943,8 +955,11 @@ public function changePasswordWithResetCode(Request $request)
 
         //$userData["ssssssss"] = $validatedData["user_surname"];
 
-        DrillAnswer::create($userData);
+        //
+        DrillAnswer::create($drillAnswerData);
 
+        // GETTING THE ANSWERS OF FRIENDS
+        
 
 
         return response([
