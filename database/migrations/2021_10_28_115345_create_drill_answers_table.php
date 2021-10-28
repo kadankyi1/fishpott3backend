@@ -14,13 +14,11 @@ class CreateDrillAnswersTable extends Migration
     public function up()
     {
         Schema::create('drill_answers', function (Blueprint $table) {
-            $table->id();
-            $table->bigIncrements('drill_id');
+            $table->bigIncrements('drill_answer_id');
             $table->string('drill_answer_sys_id', 255)->unique();
             $table->integer('drill_answer_number');
             $table->boolean('drill_answer_used_for_pott_intelligence_calculation')->default(false);
-            $table->string('drill_answer_1', 255);
-            $table->text('drill_answer_implied_traits_4');
+            $table->timestamps();
         });
 
         Schema::table('drill_answers', function (Blueprint $table) {

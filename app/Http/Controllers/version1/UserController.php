@@ -948,7 +948,8 @@ public function changePasswordWithResetCode(Request $request)
         }
 
         // SETTING THE INFO NEEDED FOR DRILL ANSWER CREATION
-        $drillAnswerData["drill_answer_sys_id"] = $user->user_pottname . substr($user->user_phone_number ,1,strlen($user->user_phone_number)) . "_da_" . date("Y-m-d-H-i-s") .  UtilController::getRandomString(91);
+        $drillAnswerData["drill_answer_sys_id"] =  "drill-answer-" . $user->user_pottname . substr($user->user_phone_number ,1,strlen($user->user_phone_number)) . $drill->drill_sys_id;
+        $drillAnswerData["drill_answer_number"] = intval($request->drill_answer);
         $drillAnswerData["drill_answer_used_for_pott_intelligence_calculation"] = false;
         $drillAnswerData["drill_answer_drill_sys_id"] = $request->drill_id;
         $drillAnswerData["drill_answer_user_investor_id"] = $user->investor_id;
