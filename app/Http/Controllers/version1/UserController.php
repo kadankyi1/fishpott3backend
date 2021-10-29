@@ -947,6 +947,8 @@ public function changePasswordWithResetCode(Request $request)
             ]);
         }
 
+
+
         // SETTING THE INFO NEEDED FOR DRILL ANSWER CREATION
         $drillAnswerData["drill_answer_sys_id"] =  "drill-answer-" . $user->user_pottname . substr($user->user_phone_number ,1,strlen($user->user_phone_number)) . $drill->drill_sys_id;
         $drillAnswerData["drill_answer_number"] = intval($request->drill_answer);
@@ -954,10 +956,11 @@ public function changePasswordWithResetCode(Request $request)
         $drillAnswerData["drill_answer_drill_sys_id"] = $request->drill_id;
         $drillAnswerData["drill_answer_user_investor_id"] = $user->investor_id;
 
-        //$userData["ssssssss"] = $validatedData["user_surname"];
-
-        //
-        DrillAnswer::create($drillAnswerData);
+        // CHECKING IF AN ANSWER IS RECORDED AND CREATING THE DRILL ANSWER
+        $drillAnswer = DrillAnswer::where('drill_answer_sys_id', $drillAnswerData["drill_answer_sys_id"])->first();
+        if($drillAnswer == null || empty($drillAnswer->drill_answer_sys_id)){
+            DrillAnswer::create($drillAnswerData);
+        }
 
         // GETTING THE ANSWERS OF FRIENDS
         $answer_1_count = UtilController::getCountDrillAnswers("drill_answer_number", 1);
