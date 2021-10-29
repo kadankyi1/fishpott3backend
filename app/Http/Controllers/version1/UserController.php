@@ -936,6 +936,7 @@ public function changePasswordWithResetCode(Request $request)
         */
 
         // GETTING THE DRILL THAT WAS ANSWERED
+        $default_msg = "See answers from the world";
         $drill = Drill::where('drill_sys_id', $request->drill_id)->first();
         if($drill == null || empty($drill->drill_sys_id)){
             return response([
@@ -962,6 +963,8 @@ public function changePasswordWithResetCode(Request $request)
         $drillAnswer = DrillAnswer::where('drill_answer_sys_id', $drillAnswerData["drill_answer_sys_id"])->first();
         if($drillAnswer == null || empty($drillAnswer->drill_answer_sys_id)){
             DrillAnswer::create($drillAnswerData);
+        } else {
+            $default_msg = "You already answered this drill.";
         }
 
         // GETTING THE ANSWERS OF FRIENDS
@@ -984,7 +987,7 @@ public function changePasswordWithResetCode(Request $request)
 
         return response([
             "status" => 1, 
-            "message" => "See answers from the world",
+            "message" => $default_msg,
             "data" => $data,
             "government_verification_is_on" => false,
             "media_allowed" => intval(config('app.canpostpicsandvids')),
