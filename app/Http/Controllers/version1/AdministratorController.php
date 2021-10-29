@@ -361,7 +361,7 @@ class AdministratorController extends Controller
         
         $pdf_path = public_path() . '/uploads/financedata/';
         $pdf_ext = $validatedData["business_registration_number"] . "." . strtolower($request->file('business_full_financial_report_pdf_url')->extension());
-        $pdf_url = config('app.url') . '/uploads/financedata/' . $img_ext;
+        $pdf_url = config('app.url') . '/uploads/financedata/' . $pdf_ext;
 
         // UPLOADING FILE
         if(!$request->file('business_full_financial_report_pdf_url')->move($pdf_path, $pdf_ext)){
