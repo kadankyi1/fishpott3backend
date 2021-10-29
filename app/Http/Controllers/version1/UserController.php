@@ -878,6 +878,7 @@ public function changePasswordWithResetCode(Request $request)
             }
             $suggestion->business_country = $country->country_real_name;
             $suggestion->business_logo = config('app.url') . '/uploads/logos/' . $suggestion->business_logo;
+            $suggestion->business_full_financial_report_pdf_url = config('app.url') . '/uploads/financedata/' . $suggestion->business_full_financial_report_pdf_url;
         }
 
         return response([
