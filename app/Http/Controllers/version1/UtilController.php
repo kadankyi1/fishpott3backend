@@ -457,7 +457,7 @@ class UtilController extends Controller
 
     public static function getCountDrillAnswers($column, $value)
     {
-        $drillAnswer = DrillAnswer::where($column, '=', $value)->get();
+        $drillAnswer = DrillAnswer::where($column[0], $value[0])->where($column[1], $value[1])->get();
         return $drillAnswer->count();
     }
 }

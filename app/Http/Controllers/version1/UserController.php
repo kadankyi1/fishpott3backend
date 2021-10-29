@@ -963,10 +963,10 @@ public function changePasswordWithResetCode(Request $request)
         }
 
         // GETTING THE ANSWERS OF FRIENDS
-        $answer_1_count = UtilController::getCountDrillAnswers("drill_answer_number", 1);
-        $answer_2_count = UtilController::getCountDrillAnswers("drill_answer_number", 2);
-        $answer_3_count = UtilController::getCountDrillAnswers("drill_answer_number", 3);
-        $answer_4_count = UtilController::getCountDrillAnswers("drill_answer_number", 4);
+        $answer_1_count = UtilController::getCountDrillAnswers(["drill_answer_sys_id", "drill_answer_number"], [$drillAnswerData['drill_answer_sys_id'], 1]);
+        $answer_2_count = UtilController::getCountDrillAnswers(["drill_answer_sys_id", "drill_answer_number"], [$drillAnswerData['drill_answer_sys_id'], 2]);
+        $answer_3_count = UtilController::getCountDrillAnswers(["drill_answer_sys_id", "drill_answer_number"], [$drillAnswerData['drill_answer_sys_id'], 3]);
+        $answer_4_count = UtilController::getCountDrillAnswers(["drill_answer_sys_id", "drill_answer_number"], [$drillAnswerData['drill_answer_sys_id'], 4]);
 
         $data = array(
             "answer_1" => $drill->drill_answer_1, 
