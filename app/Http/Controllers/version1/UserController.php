@@ -836,6 +836,11 @@ public function changePasswordWithResetCode(Request $request)
             $suggestion->business_logo = config('app.url') . '/uploads/logos/' . $suggestion->business_logo;
             $suggestion->business_full_financial_report_pdf_url = config('app.url') . '/uploads/financedata/' . $suggestion->business_full_financial_report_pdf_url;
             $suggestion->business_net_worth_usd = UtilController::formatNumberShort($suggestion->business_net_worth_usd);
+            $suggestion->business_lastyr_revenue_usd = UtilController::formatNumberShort($suggestion->business_lastyr_revenue_usd);
+            $suggestion->business_lastyr_profit_or_loss_usd = UtilController::formatNumberShort($suggestion->business_lastyr_profit_or_loss_usd);
+            $suggestion->business_debt_usd = UtilController::formatNumberShort($suggestion->business_debt_usd);
+            $suggestion->business_cash_on_hand_usd = UtilController::formatNumberShort($suggestion->business_cash_on_hand_usd);
+            $suggestion->business_investments_amount_needed_usd = UtilController::formatNumberShort($suggestion->business_investments_amount_needed_usd);
 
             // SENDING RESPONSE TO FRONTEND
             return response([
