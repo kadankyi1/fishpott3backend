@@ -834,7 +834,7 @@ public function changePasswordWithResetCode(Request $request)
             // REFORMATTING NEEDED VALUES
             $suggestion->business_country = $country->country_real_name;
             $suggestion->business_logo = config('app.url') . '/uploads/logos/' . $suggestion->business_logo;
-            $suggestion->business_logo = config('app.url') . '/uploads/pitchvideos/' . $suggestion->business_pitch_video;
+            $suggestion->business_pitch_video = config('app.url') . '/uploads/pitchvideos/' . $suggestion->business_pitch_video;
             $suggestion->business_full_financial_report_pdf_url = config('app.url') . '/uploads/financedata/' . $suggestion->business_full_financial_report_pdf_url;
             $suggestion->business_net_worth_usd = UtilController::formatNumberShort($suggestion->business_net_worth_usd);
             $suggestion->business_lastyr_revenue_usd = UtilController::formatNumberShort($suggestion->business_lastyr_revenue_usd);
