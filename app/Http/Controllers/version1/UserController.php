@@ -971,6 +971,7 @@ public function changePasswordWithResetCode(Request $request)
         $answer_4_count = UtilController::getCountDrillAnswers(["drill_answer_sys_id", "drill_answer_number"], [$drillAnswerData['drill_answer_sys_id'], 4]);
 
         $data = array(
+            "drill_next_one_time" => "Your next suggestion will be in " . strval(config('app.timedurationinhoursforsuggestions')) . " hr",
             "answer_1" => $drill->drill_answer_1, 
             "answer_1_count" => $answer_1_count, 
             "answer_2" => $drill->drill_answer_2, 

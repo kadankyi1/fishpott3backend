@@ -40,6 +40,7 @@ class Drill extends Model
         'drill_answer_3_negative_points',
         'drill_answer_4_postive_points',
         'drill_answer_4_negative_points',
+        'drill_next_one_time',
         'drill_passed_as_suggestion',
         'drill_flagged',
         'drill_maker_investor_id',
