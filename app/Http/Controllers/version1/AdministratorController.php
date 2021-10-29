@@ -239,6 +239,7 @@ class AdministratorController extends Controller
             "business_net_worth_usd" => "bail|required|integer",
             "business_investments_amount_needed_usd" => "bail|required|integer",
             "business_maximum_number_of_investors_allowed" => "bail|required|integer",
+            "business_current_shareholders" => "bail|required|integer",
             "business_descriptive_financial_bio" => "bail|required|min:5|max:150",
 
             "business_executive1_firstname" => "bail|required|min:2|max:100",
