@@ -359,12 +359,12 @@ class AdministratorController extends Controller
             ]);
         }
         
-        $img_path = public_path() . '/uploads/financedata/';
-        $img_ext = $validatedData["business_registration_number"] . "." . strtolower($request->file('business_full_financial_report_pdf_url')->extension());
-        $img_url = config('app.url') . '/uploads/financedata/' . $img_ext;
+        $pdf_path = public_path() . '/uploads/financedata/';
+        $pdf_ext = $validatedData["business_registration_number"] . "." . strtolower($request->file('business_full_financial_report_pdf_url')->extension());
+        $pdf_url = config('app.url') . '/uploads/financedata/' . $img_ext;
 
         // UPLOADING FILE
-        if(!$request->file('business_full_financial_report_pdf_url')->move($img_path, $img_ext)){
+        if(!$request->file('business_full_financial_report_pdf_url')->move($pdf_path, $pdf_ext)){
             return response([
                 "status" => "error", 
                 "message" => "Financial info PDF upload failed"
@@ -379,6 +379,7 @@ class AdministratorController extends Controller
 
         // ADDING LOGO PATH AND DEFAULT FLAGGED REASON
         $validatedData["business_logo"] = $img_ext;
+        $validatedData["business_full_financial_report_pdf_url"] = $pdf_ext;
         $validatedData["business_flagged_reason"] = "";
 
         // REMOVING UN-NEEDED INFO
