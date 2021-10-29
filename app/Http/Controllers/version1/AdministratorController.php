@@ -232,7 +232,7 @@ class AdministratorController extends Controller
             "business_website" => "nullable|max:150",
 
             "business_pitch_text" => "bail|required|min:10|max:100",
-            "business_pitch_video" => "bail|required",
+            "business_pitch_video" => "bail|required|mimes:mp4",
 
             "business_lastyr_revenue_usd" => "bail|required|integer",
             "business_lastyr_profit_or_loss_usd" => "bail|required|integer",
@@ -326,7 +326,6 @@ class AdministratorController extends Controller
 
         $img_path = public_path() . '/uploads/logos/';
         $img_ext = $validatedData["business_registration_number"] . "." . strtolower($request->file('business_logo_file')->extension());
-        $img_url = config('app.url') . '/uploads/logos/' . $img_ext;
     
         if(!$request->file('business_logo_file')->move($img_path, $img_ext)){
             return response([
@@ -361,7 +360,6 @@ class AdministratorController extends Controller
         
         $pdf_path = public_path() . '/uploads/financedata/';
         $pdf_ext = $validatedData["business_registration_number"] . "." . strtolower($request->file('business_full_financial_report_pdf_url')->extension());
-        $pdf_url = config('app.url') . '/uploads/financedata/' . $pdf_ext;
 
         // UPLOADING FILE
         if(!$request->file('business_full_financial_report_pdf_url')->move($pdf_path, $pdf_ext)){
@@ -371,15 +369,51 @@ class AdministratorController extends Controller
             ]);
         }
 
+        // CHECKING IF REQUEST HAS THE BUSINESS PITCH VIDEO
+        if(!$request->hasFile('business_pitch_video')) {
+            return response([
+                "status" => "error", 
+                "message" => "Pitch video not found"
+            ]);
+        }
+    
+        // CHECKING IF THE BUSINESS PITCH VIDEO IS UPLOADED CORRECTLY AND IS THE RIGHT FORMAT
+        if(!$request->file('business_pitch_video')->isValid()) {
+            return response([
+                "status" => "error", 
+                "message" => "Pitch video has to be valid MP4"
+            ]);
+        }
+
+        // CHECKING THAT THE BUSINESS FINANCIAL INFO PDF IS NOT MORE THAN 10MB
+        if($request->file('business_pitch_video')->getSize() > (25 * intval(config('app.mb')))){
+            return response([
+                "status" => "error", 
+                "message" => "Pitch video cannot be more than 25 MB"
+            ]);
+        }
+        
+        $business_pitch_video_path = public_path() . '/uploads/pitchvideos/';
+        $business_pitch_video_ext = $validatedData["business_registration_number"] . "." . strtolower($request->file('business_pitch_video')->extension());
+
+        // UPLOADING FILE
+        if(!$request->file('business_pitch_video')->move($business_pitch_video_path, $business_pitch_video_ext)){
+            return response([
+                "status" => "error", 
+                "message" => "Pitch video upload failed"
+            ]);
+        }
+
         // CREATING THE BUSINESS SYSTEM ID 
         $validatedData["business_sys_id"] = "business-" . $admin->administrator_user_pottname . "-" . substr($validatedData["administrator_phone_number"] ,1,strlen($validatedData["administrator_phone_number"])) . date("Y-m-d-H-i-s") . UtilController::getRandomString(50);
         
         // ADDING BUSINESS COUNTRY ID
         $validatedData["business_country_id"] = $country->country_id;
 
-        // ADDING LOGO PATH AND DEFAULT FLAGGED REASON
+        // ADDING LOGO PATH, PDF AND VIDEO PATHS AND DEFAULT FLAGGED REASON
         $validatedData["business_logo"] = $img_ext;
         $validatedData["business_full_financial_report_pdf_url"] = $pdf_ext;
+        $validatedData["business_pitch_video"] = $business_pitch_video_ext;
         $validatedData["business_flagged_reason"] = "";
 
         // REMOVING UN-NEEDED INFO
