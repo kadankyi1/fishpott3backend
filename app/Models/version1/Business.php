@@ -30,6 +30,7 @@ class Business extends Model
         'created_at',
         'updated_at',
         // BIO
+        'business_registration_number',
         'business_type',
         'business_logo', //
         'business_full_name', //
@@ -38,6 +39,7 @@ class Business extends Model
         'business_address', //
         'business_country', //
         'business_country_id', //
+        'business_start_date', //
         'business_website', //
         // PITCH
         'business_pitch_text', //

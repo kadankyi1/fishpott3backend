@@ -220,6 +220,7 @@ class AdministratorController extends Controller
             "frontend_key" => "bail|required|in:2aLW4c7r9(2qf#y",
             // ADD ANY OTHER REQUIRED INPUTS FROM HERE
             "business_pottname" => "nullable|string|regex:/^[A-Za-z0-9_.]+$/|max:15",
+            "business_registration_number" => "bail|required|string|min:5|max:100",
             "business_type" => "bail|required|string|min:5|max:100",
             "business_logo_file" => "bail|required",
             "business_full_name" => "bail|required|string|min:4|max:150",
@@ -227,6 +228,7 @@ class AdministratorController extends Controller
             "business_descriptive_bio" => "bail|required|max:150",
             "business_address" => "bail|required|min:5|max:150",
             "business_country" => "bail|required|min:5|max:150",
+            "business_start_date" => "bail|required|date|before:-1 years",
             "business_website" => "nullable|max:150",
 
             "business_pitch_text" => "bail|required|min:10|max:100",
@@ -240,6 +242,7 @@ class AdministratorController extends Controller
             "business_investments_amount_needed_usd" => "bail|required|integer",
             "business_maximum_number_of_investors_allowed" => "bail|required|integer",
             "business_current_shareholders" => "bail|required|integer",
+            "business_full_financial_report_pdf_url" => "bail|required|mimes:pdf",
             "business_descriptive_financial_bio" => "bail|required|min:5|max:150",
 
             "business_executive1_firstname" => "bail|required|min:2|max:100",
@@ -296,6 +299,7 @@ class AdministratorController extends Controller
                 "message" => "Country validation error."
             ]);
         }
+
         // CHECKING IF REQUEST HAS THE LOGO FILE
         if(!$request->hasFile('business_logo_file')) {
             return response([
@@ -321,7 +325,7 @@ class AdministratorController extends Controller
         }
 
         $img_path = public_path() . '/uploads/logos/';
-        $img_ext = $admin->administrator_sys_id . uniqid() . date("Y-m-d-H-i-s") . "." . strtolower($request->file('business_logo_file')->extension());
+        $img_ext = $validatedData["business_registration_number"] . "." . strtolower($request->file('business_logo_file')->extension());
         $img_url = config('app.url') . '/uploads/logos/' . $img_ext;
     
         if(!$request->file('business_logo_file')->move($img_path, $img_ext)){
@@ -331,6 +335,42 @@ class AdministratorController extends Controller
             ]);
         }
         
+        // CHECKING IF REQUEST HAS THE BUSINESS FINANCIAL INFO
+        if(!$request->hasFile('business_full_financial_report_pdf_url')) {
+            return response([
+                "status" => "error", 
+                "message" => "Financial info PDF not found"
+            ]);
+        }
+    
+        // CHECKING IF THE BUSINESS FINANCIAL INFO IS UPLOADED CORRECTLY AND IS THE RIGHT FORMAT
+        if(!$request->file('business_full_financial_report_pdf_url')->isValid()) {
+            return response([
+                "status" => "error", 
+                "message" => "Financial info has to be a valid PDF"
+            ]);
+        }
+
+        // CHECKING THAT THE BUSINESS FINANCIAL INFO PDF IS NOT MORE THAN 10MB
+        if($request->file('business_full_financial_report_pdf_url')->getSize() > (10 * intval(config('app.mb')))){
+            return response([
+                "status" => "error", 
+                "message" => "Financial info cannot be more than 10 MB"
+            ]);
+        }
+        
+        $img_path = public_path() . '/uploads/financedata/';
+        $img_ext = $validatedData["business_registration_number"] . "." . strtolower($request->file('business_full_financial_report_pdf_url')->extension());
+        $img_url = config('app.url') . '/uploads/financedata/' . $img_ext;
+
+        // UPLOADING FILE
+        if(!$request->file('business_full_financial_report_pdf_url')->move($img_path, $img_ext)){
+            return response([
+                "status" => "error", 
+                "message" => "Financial info PDF upload failed"
+            ]);
+        }
+
         // CREATING THE BUSINESS SYSTEM ID 
         $validatedData["business_sys_id"] = "business-" . $admin->administrator_user_pottname . "-" . substr($validatedData["administrator_phone_number"] ,1,strlen($validatedData["administrator_phone_number"])) . date("Y-m-d-H-i-s") . UtilController::getRandomString(50);
         

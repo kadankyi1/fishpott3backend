@@ -20,12 +20,14 @@ class CreateBusinessesTable extends Migration
             $table->boolean('business_flagged')->default(false);
             $table->text('business_flagged_reason');
             $table->timestamps();
+            $table->string('business_registration_number', 255)->unique();
             $table->string('business_type', 255);
             $table->string('business_logo', 255)->unique();
             $table->string('business_full_name', 255);
             $table->string('business_stockmarket_shortname', 255)->default("");
             $table->string('business_descriptive_bio', 255);
             $table->string('business_address', 255);
+            $table->date('business_start_date');
             $table->string('business_website', 255);
             $table->string('business_pitch_text', 255);
             $table->string('business_pitch_video', 255);
