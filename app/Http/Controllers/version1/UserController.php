@@ -1053,6 +1053,8 @@ public function changePasswordWithResetCode(Request $request)
                 "message" => "Invalid Credentials"
             ]);
         }
+
+        //if($request->investment_risk_protection != 0 &&)
         /*
         |**************************************************************************
         | VALIDATION ENDED 
@@ -1083,6 +1085,21 @@ public function changePasswordWithResetCode(Request $request)
                 ]);
             }
         }
+
+        $item_quantity = floor($request->investment_amt_in_dollars / $business->business_price_per_stock_usd);
+
+        $data = array(
+            "item" => $business->business_full_name, 
+            "price_per_item" => $business->business_price_per_stock_usd, 
+            "quantity" => $item_quantity, 
+            "risk" => $answer_2_count, 
+            "answer_3" => $drill->drill_answer_3, 
+            "answer_3_count" => $answer_3_count, 
+            "answer_4" => $drill->drill_answer_4, 
+            "answer_4_count" => $answer_4_count, 
+            "i" => "Your next suggestion will be in " . strval(config('app.timedurationinhoursforsuggestions')) . " hr",
+        );
+
 
         return response([
             "status" => 1, 

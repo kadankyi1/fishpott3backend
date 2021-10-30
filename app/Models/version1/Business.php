@@ -50,6 +50,7 @@ class Business extends Model
         'business_debt_usd', //
         'business_cash_on_hand_usd',
         'business_net_worth_usd', //
+        'business_price_per_stock_usd',
         'business_investments_amount_needed_usd',
         'business_investments_amount_received_usd',
         'business_investments_amount_left_to_receive_usd',
