@@ -1012,4 +1012,53 @@ public function changePasswordWithResetCode(Request $request)
         ]);
     }
 
+    public function getFinalInvestmentPriceSummary(Request $request)
+    {
+        /*
+        |**************************************************************************
+        | VALIDATION STARTS 
+        |**************************************************************************
+        */
+        // MAKING SURE THE INPUT HAS THE EXPECTED VALUES
+        $validatedData = $request->validate([
+            "user_phone_number" => "bail|required|regex:/^\+\d{10,15}$/|min:10|max:15",
+            "user_pottname" => "bail|required|string|regex:/^[A-Za-z0-9_.]+$/|max:15",
+            "investor_id" => "bail|required",
+            "user_language" => "bail|required|max:3",
+            "app_type" => "bail|required|max:8",
+            "app_version_code" => "bail|required|integer",
+            // ADD ANY OTHER REQUIRED INPUTS FROM HERE
+            "investment_amt_in_dollars" => "bail|required|string",
+            "password" => "bail|required",
+            "investment_risk_protection" => "bail|required|integer|min:0|max:100",
+        ]);
+
+        // MAKING SURE THE REQUEST AND USER IS VALIDATED
+        $validation_response = UtilController::validateUserWithAuthToken($request, auth()->user(), "get-info-on-apps");
+        if(!empty($validation_response["status"]) && trim($validation_response["status"]) == "error"){
+            return response($validation_response);
+        } else {
+            $user = $validation_response;
+        }
+        
+        // CREATING LOGIN ATTEMPT DATA
+        $loginData["user_phone_number"] = $validatedData["user_phone_number"];
+        $loginData["password"] = $validatedData["password"];
+
+        // VALIDATING USER CREDENTIALS
+        if (!auth()->attempt($loginData)) {
+            return response([
+                "status" => 3, 
+                "message" => "Invalid Credentials"
+            ]);
+        }
+        /*
+        |**************************************************************************
+        | VALIDATION ENDED 
+        |**************************************************************************
+        */
+
+
+    }
+
 }
