@@ -1059,7 +1059,7 @@ public function changePasswordWithResetCode(Request $request)
         |**************************************************************************
         */
 
-        // 
+        // GETTING THE BUSINESS
         $business = Business::where('business_sys_id', $request->business_id)->first();
         if($business == null || empty($business->business_registration_number)){
             return response([
@@ -1068,6 +1068,7 @@ public function changePasswordWithResetCode(Request $request)
             ]);
         }
 
+        // CHECKING THE INVESTMENT AMOUNT IF IT WILL BE ACCEPTED
         $business->business_investments_amount_left_to_receive_usd = $business->business_investments_amount_needed_usd - $business->business_investments_amount_received_usd;
         if(($business->business_investments_amount_needed_usd - $business->business_investments_amount_received_usd) < $request->investment_amt_in_dollars ){
             if($business->business_investments_amount_left_to_receive_usd <= 0){
