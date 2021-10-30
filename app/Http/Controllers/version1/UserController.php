@@ -1113,26 +1113,32 @@ public function changePasswordWithResetCode(Request $request)
         // CALCULATING TOTAL OVERAL COST
         $overall_total_usd = $total_item_quantity_cost + $risk_fee + $processing_fee;
 
+        // CONVERTING TO USER'S LOCAL CURRENCY
+        if($user->user_country_id == 81){ // GHANA
+            $overall_total_local_currency = "¢" . floatval(config('app.to_cedi'));
+            $rate = "$1 = " . "¢" . floatval(config('app.to_cedi'));
+        } else {
+            $overall_total_local_currency = "$" . $overall_total_usd;
+            $rate = "$1 = " . "¢" . floatval(config('app.to_cedi'));
+        }
 
-        
         $data = array(
             "item" => $business->business_full_name, 
             "price_per_item" => "$" . strval($business->business_price_per_stock_usd), 
             "quantity" => $item_quantity, 
+            "rate" => $rate, 
             "risk" => $request->investment_risk_protection,  
             "risk_statement" => $risk_statement,   
             "risk_insurance_fee" => "$" . strval($risk_fee), 
+            "processing_fee" => "$" . strval($processing_fee), 
             "overall_total_usd" => "$" . strval($overall_total_usd), 
-            "overall_total_local_currency" => $answer_3_count, 
-            "answer_4" => $drill->drill_answer_4, 
-            "answer_4_count" => $answer_4_count, 
-            "i" => "Your next suggestion will be in " . strval(config('app.timedurationinhoursforsuggestions')) . " hr",
+            "overall_total_local_currency" => $overall_total_local_currency
         );
 
 
         return response([
             "status" => 1, 
-            "message" => $default_msg,
+            "message" => "success",
             "data" => $data,
             "government_verification_is_on" => false,
             "media_allowed" => intval(config('app.canpostpicsandvids')),
