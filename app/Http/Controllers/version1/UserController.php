@@ -1093,20 +1093,26 @@ public function changePasswordWithResetCode(Request $request)
 
         // GETTING THE QUANTITY OF SHARES
         $item_quantity = floor($request->investment_amt_in_dollars / $business->business_price_per_stock_usd);
+        $total_item_quantity_cost = $item_quantity * $business->business_price_per_stock_usd;
 
         if($request->investment_risk_protection == 0){
             $risk_statement = "No risk insurance";
+            $risk_fee = "$0";
         } else if($request->investment_risk_protection != 50){
             $risk_statement = "50% Risk Insurance.";
+            $risk_fee = "$" . strval($total_item_quantity_cost * intval(config('app.fifty_risk_insurance')));
         } else if($request->investment_risk_protection != 100){
             $risk_statement = "100% Risk Insurance.";
+            $risk_fee = "$" . strval($total_item_quantity_cost * intval(config('app.hundred_risk_insurance')));
         }
 
         $data = array(
             "item" => $business->business_full_name, 
             "price_per_item" => $business->business_price_per_stock_usd, 
             "quantity" => $item_quantity, 
-            "risk" => $answer_2_count, 
+            "risk" => $request->investment_risk_protection,  
+            "risk_statement" => $risk_statement,   
+            "risk_fee" => $risk_fee, 
             "answer_3" => $drill->drill_answer_3, 
             "answer_3_count" => $answer_3_count, 
             "answer_4" => $drill->drill_answer_4, 

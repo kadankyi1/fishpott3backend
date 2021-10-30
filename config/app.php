@@ -44,6 +44,11 @@ return [
     'gb' => env('GIGA_BYTE', 1073741824),
     'tb' => env('TERA_BYTE', 1099511627776),
 
+    // RISK INSURANCE FEE PERCENTAGES
+    'zero_risk_insurance' => env('ZERO_RISK_INSURANCE', 0), // you get no payment if the shares lose it's value
+    'fifty_risk_insurance' => env('FIFTY_RISK_INSURANCE', 0.05), // you will be given a payment of 50% what you paid if the shares fails to zero 
+    'hundred_risk_insurance' => env('HUNDRED_RISK_INSURANCE', 0.1), // you will be given a payment of 100% what you paid if the shares fails to zero
+    
     /*
     |-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|
     | |-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-| ADMINISTRATOR SECTION ADMINISTRATOR SECTION ADMINISTRATOR SECTION ADMINISTRATOR SECTION |-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|
