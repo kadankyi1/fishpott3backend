@@ -862,7 +862,7 @@ public function changePasswordWithResetCode(Request $request)
         if($suggestion ==  null || $suggestion == false){
             return response([
                 "status" => 3, 
-                "message" => "Oops.. No new drills. It happens",
+                "message" => "Oops.. No new suggestions. It happens.",
                 "government_verification_is_on" => false,
                 "media_allowed" => intval(config('app.canpostpicsandvids')),
                 "user_android_app_max_vc" => intval(config('app.androidmaxvc')),
