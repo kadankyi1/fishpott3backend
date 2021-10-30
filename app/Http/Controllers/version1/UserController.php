@@ -1029,7 +1029,7 @@ public function changePasswordWithResetCode(Request $request)
             "app_version_code" => "bail|required|integer",
             // ADD ANY OTHER REQUIRED INPUTS FROM HERE
             "business_id" => "bail|required|string",
-            "investment_amt_in_dollars" => "bail|required|string",
+            "investment_amt_in_dollars" => "bail|required|integer",
             "password" => "bail|required",
             "investment_risk_protection" => "bail|required|integer|min:0|max:100",
         ]);
@@ -1059,16 +1059,40 @@ public function changePasswordWithResetCode(Request $request)
         |**************************************************************************
         */
 
+        // 
         $business = Business::where('business_sys_id', $request->business_id)->first();
         if($business == null || empty($business->business_registration_number)){
             return response([
                 "status" => 3, 
-                "message" => "Business not found Credentials"
+                "message" => "Business not found"
             ]);
         }
 
+        $business->business_investments_amount_left_to_receive_usd = $business->business_investments_amount_needed_usd - $business->business_investments_amount_received_usd;
+        if(($business->business_investments_amount_needed_usd - $business->business_investments_amount_received_usd) < $request->investment_amt_in_dollars ){
+            if($business->business_investments_amount_left_to_receive_usd <= 0){
+                return response([
+                    "status" => 3, 
+                    "message" => "This business is no longer receiving investments" 
+                ]);
+            } else {
+                return response([
+                    "status" => 3, 
+                    "message" => "You can only invest " . $business->business_investments_amount_left_to_receive_usd
+                ]);
+            }
+        }
 
-
+        return response([
+            "status" => 1, 
+            "message" => $default_msg,
+            "data" => $data,
+            "government_verification_is_on" => false,
+            "media_allowed" => intval(config('app.canpostpicsandvids')),
+            "user_android_app_max_vc" => intval(config('app.androidmaxvc')),
+            "user_android_app_force_update" => boolval(config('app.androidforceupdatetomaxvc')),
+            "phone_verification_is_on" => boolval(config('app.phoneverificationrequiredstatus'))
+        ]);
     }
 
 }

@@ -37,6 +37,7 @@ class CreateBusinessesTable extends Migration
             $table->bigInteger('business_cash_on_hand_usd');
             $table->bigInteger('business_net_worth_usd');
             $table->bigInteger('business_investments_amount_needed_usd');
+            $table->bigInteger('business_investments_amount_received_usd');
             $table->integer('business_maximum_number_of_investors_allowed');
             $table->integer('business_current_shareholders');
             $table->string('business_full_financial_report_pdf_url', 255);

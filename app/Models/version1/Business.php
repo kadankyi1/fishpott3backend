@@ -51,6 +51,8 @@ class Business extends Model
         'business_cash_on_hand_usd',
         'business_net_worth_usd', //
         'business_investments_amount_needed_usd',
+        'business_investments_amount_received_usd',
+        'business_investments_amount_left_to_receive_usd',
         'business_maximum_number_of_investors_allowed',
         'business_current_shareholders',
         'business_full_financial_report_pdf_url',
