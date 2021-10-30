@@ -1028,6 +1028,7 @@ public function changePasswordWithResetCode(Request $request)
             "app_type" => "bail|required|max:8",
             "app_version_code" => "bail|required|integer",
             // ADD ANY OTHER REQUIRED INPUTS FROM HERE
+            "business_id" => "bail|required|string",
             "investment_amt_in_dollars" => "bail|required|string",
             "password" => "bail|required",
             "investment_risk_protection" => "bail|required|integer|min:0|max:100",
@@ -1058,7 +1059,15 @@ public function changePasswordWithResetCode(Request $request)
         |**************************************************************************
         */
 
-        
+        $business = Business::where('business_sys_id', $request->business_id)->first();
+        if($business == null || empty($business->business_registration_number)){
+            return response([
+                "status" => 3, 
+                "message" => "Business not found Credentials"
+            ]);
+        }
+
+
 
     }
 
