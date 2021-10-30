@@ -1012,7 +1012,7 @@ public function changePasswordWithResetCode(Request $request)
         ]);
     }
 
-    public function getFinalInvestmentPriceSummary(Request $request)
+    public function getFinalPriceSummary(Request $request)
     {
         /*
         |**************************************************************************

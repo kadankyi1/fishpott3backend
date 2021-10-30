@@ -40,7 +40,7 @@ Route::middleware('auth:api')->get('/v1/user/get-my-suggestion', [App\Http\Contr
 Route::middleware('auth:api')->post('/v1/user/save-drill-answer', [App\Http\Controllers\version1\UserController::class, 'saveDrillAnswerAndReturnWhatOthersSaid']);
 
 // UPLOAD PROFILE PICTURE
-Route::middleware('auth:api')->post('/v1/user/get-final-price', [App\Http\Controllers\version1\UserController::class, 'getFinalInvestmentPriceSummary']);
+Route::middleware('auth:api')->post('/v1/user/get-final-price', [App\Http\Controllers\version1\UserController::class, 'getFinalPriceSummary']);
 
 
 /*
