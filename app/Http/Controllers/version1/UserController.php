@@ -1054,7 +1054,12 @@ public function changePasswordWithResetCode(Request $request)
             ]);
         }
 
-        //if($request->investment_risk_protection != 0 &&)
+        if($request->investment_risk_protection != 0 && $request->investment_risk_protection != 50 && $request->investment_risk_protection != 100){
+            return response([
+                "status" => 3, 
+                "message" => "Risk determinance failure"
+            ]);
+        }
         /*
         |**************************************************************************
         | VALIDATION ENDED 
@@ -1086,7 +1091,16 @@ public function changePasswordWithResetCode(Request $request)
             }
         }
 
+        // GETTING THE QUANTITY OF SHARES
         $item_quantity = floor($request->investment_amt_in_dollars / $business->business_price_per_stock_usd);
+
+        if($request->investment_risk_protection == 0){
+            $risk_statement = "No risk insurance";
+        } else if($request->investment_risk_protection != 50){
+            $risk_statement = "50% Risk Insurance.";
+        } else if($request->investment_risk_protection != 100){
+            $risk_statement = "100% Risk Insurance.";
+        }
 
         $data = array(
             "item" => $business->business_full_name, 

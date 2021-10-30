@@ -39,7 +39,6 @@ return [
     'airteltigoghanamomoaccname' => env('AIRTELTIGO_GHANA_MOMO_NUM', ''),
 
     // DEFINING VARIOUS SIZES
-
     'kb' => env('KILO_BYTE', 1024),
     'mb' => env('MEGA_BYTE', 1048576),
     'gb' => env('GIGA_BYTE', 1073741824),
