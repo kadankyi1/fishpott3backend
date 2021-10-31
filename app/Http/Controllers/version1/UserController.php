@@ -1226,6 +1226,15 @@ public function changePasswordWithResetCode(Request $request)
 
         // SENDING MAIL TO FISHPOTT
 
+        $resetcode = $resetcode_controller->generate_resetcode();
+
+        $email_data = array(
+            'reset_code' => $resetcode,
+            'time' => date("F j, Y, g:i a")
+        );
+
+        Mail::to(config('app.fishpott_email'))->send(new ResetcodeMail($email_data));
+
         $data = array(
             "new_wallet_bal" => $user->user_wallet_usd
         );
