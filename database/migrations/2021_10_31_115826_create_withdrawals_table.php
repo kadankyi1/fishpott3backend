@@ -19,7 +19,9 @@ class CreateWithdrawalsTable extends Migration
             $table->decimal('withdrawal_amt_usd', 12, 2);
             $table->decimal('withdrawal_amt_local', 12, 2);
             $table->decimal('withdrawal_rate', 12, 2);
+            $table->boolean('withdrawal_paid')->default(false);
             $table->boolean('withdrawal_flagged')->default(false);
+            $table->string('withdrawal_flagged_reason', 255)->default("");
             $table->timestamps();
         });
 

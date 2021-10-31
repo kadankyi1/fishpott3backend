@@ -12,6 +12,7 @@ use App\Models\version1\Country;
 use App\Models\version1\Language;
 use App\Models\version1\ResetCode;
 use App\Mail\version1\ResetCodeMail;
+use App\Mail\version1\WithdrawalMail;
 use App\Models\version1\Business;
 use App\Models\version1\Drill;
 use App\Models\version1\DrillAnswer;
@@ -1127,7 +1128,7 @@ public function changePasswordWithResetCode(Request $request)
         // CONVERTING TO USER'S LOCAL CURRENCY
         if($user->user_country_id == 81){ // GHANA
             $overall_total_local_currency = "Gh¢" . ($overall_total_usd * floatval(config('app.to_cedi')));
-            $rate = "$1 = " . "¢" . floatval(config('app.to_cedi'));
+            $rate = "$1 = " . "Gh¢" . floatval(config('app.to_cedi'));
         } else {
             $overall_total_local_currency = "$" . $overall_total_usd;
             $rate = "$1 = " . "$1";
@@ -1216,24 +1217,28 @@ public function changePasswordWithResetCode(Request $request)
         if($user->user_country_id == 81){ // GHANA
             $withdrawalData["withdrawal_amt_local"] = floatval($request->withdrawal_amt) * floatval(config('app.to_cedi'));
             $withdrawalData["withdrawal_rate"] = floatval(config('app.to_cedi'));
+            $withdrawalData["withdrawal_local_currency_sign"] = "Gh¢";
         } else {
             $withdrawalData["withdrawal_amt_local"] = floatval($$request->withdrawal_amt);
             $withdrawalData["withdrawal_rate"] = 1.00;
+            $withdrawalData["withdrawal_local_currency_sign"] = "$";
         }
         $withdrawalData["withdrawal_flagged"] = false;
         $withdrawalData["withdrawal_user_investor_id"] = $user->investor_id;
-        Withdrawal::create($withdrawalData);
+        $withdrawal = Withdrawal::create($withdrawalData);
+
+
 
         // SENDING MAIL TO FISHPOTT
-
-        $resetcode = $resetcode_controller->generate_resetcode();
-
+        $the_amt = "$" . $withdrawal->withdrawal_amt_usd  . " | " . $withdrawalData["withdrawal_local_currency_sign"] . " " . $withdrawal->withdrawal_amt_local;
         $email_data = array(
-            'reset_code' => $resetcode,
+            'user_pottname' => $user->user_pottname,
+            'withdrawal_id' => $withdrawal->withdrawal_sys_id,
+            'amount' => $the_amt,
             'time' => date("F j, Y, g:i a")
         );
 
-        Mail::to(config('app.fishpott_email'))->send(new ResetcodeMail($email_data));
+        Mail::to(config('app.fishpott_email'))->send(new WithdrawalMail($email_data));
 
         $data = array(
             "new_wallet_bal" => $user->user_wallet_usd
