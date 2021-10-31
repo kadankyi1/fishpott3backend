@@ -1030,7 +1030,7 @@ public function changePasswordWithResetCode(Request $request)
             // ADD ANY OTHER REQUIRED INPUTS FROM HERE
             "business_id" => "bail|required|string",
             "investment_amt_in_dollars" => "bail|required|integer",
-            "investment_risk_protection" => "bail|required|integer|min:0|max:100",
+            "investment_risk_protection" => "bail|required|integer|min:0|max:3",
         ]);
 
         // MAKING SURE THE REQUEST AND USER IS VALIDATED
@@ -1083,13 +1083,13 @@ public function changePasswordWithResetCode(Request $request)
         $total_item_quantity_cost = $item_quantity * $business->business_price_per_stock_usd;
 
         // CALCULATING RISK INSURANCE FEE
-        if($request->investment_risk_protection == 0){
+        if($request->investment_risk_protection == 3){
             $risk_statement = "No risk insurance";
             $risk_fee = "0";
-        } else if($request->investment_risk_protection == 50){
+        } else if($request->investment_risk_protection == 2){
             $risk_statement = "50% Risk Insurance.";
             $risk_fee = $total_item_quantity_cost * floatval(config('app.fifty_risk_insurance'));
-        } else if($request->investment_risk_protection == 100){
+        } else if($request->investment_risk_protection == 1){
             $risk_statement = "100% Risk Insurance.";
             $risk_fee = $total_item_quantity_cost * floatval(config('app.hundred_risk_insurance'));
         }
