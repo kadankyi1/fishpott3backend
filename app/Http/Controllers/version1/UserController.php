@@ -1106,12 +1106,15 @@ public function changePasswordWithResetCode(Request $request)
         if($request->investment_risk_protection == 3){
             $risk_statement = "No risk insurance";
             $risk_fee = "0";
+            $yield_info = $business->business_descriptive_financial_bio . ". Choosing no risk insurance means if the business fails, FishPott will not pay any amount back to you to cushion you.";
         } else if($request->investment_risk_protection == 2){
             $risk_statement = "50% Risk Insurance.";
             $risk_fee = $total_item_quantity_cost * floatval(config('app.fifty_risk_insurance'));
+            $yield_info = $business->business_descriptive_financial_bio . ". Choosing 50% risk insurance means if the business fails, FishPott reimburse 50% what you paid for the shares.";
         } else if($request->investment_risk_protection == 1){
             $risk_statement = "100% Risk Insurance.";
             $risk_fee = $total_item_quantity_cost * floatval(config('app.hundred_risk_insurance'));
+            $yield_info = $business->business_descriptive_financial_bio . ". Choosing 50% risk insurance means if the business fails, FishPott reimburse 100% what you paid for the shares.";
         }
 
         // CALCULATING PROCESSING FEE
