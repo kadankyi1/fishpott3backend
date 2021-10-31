@@ -45,6 +45,7 @@ class User extends Authenticatable
         'user_language', 
         'user_currency_id',
         'user_currency', 
+        'user_wallet_usd', 
         'user_net_worth', 
         'user_verified_tag', 
         'user_shield_date', 

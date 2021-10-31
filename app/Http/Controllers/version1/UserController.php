@@ -1159,7 +1159,7 @@ public function changePasswordWithResetCode(Request $request)
         ]);
     }
 
-    public function placeBuyItemOrder(Request $request)
+    public function sendWithdrawalRequest(Request $request)
     {
         /*
         |**************************************************************************
@@ -1175,29 +1175,16 @@ public function changePasswordWithResetCode(Request $request)
             "app_type" => "bail|required|max:8",
             "app_version_code" => "bail|required|integer",
             // ADD ANY OTHER REQUIRED INPUTS FROM HERE
-            "business_id" => "bail|required|string",
-            "investment_amt_in_dollars" => "bail|required|integer",
-            "investment_risk_protection" => "bail|required|integer|min:0|max:3",
+            "withdrawal_amt" => "bail|required|integer",
+            "password" => "bail|required|string",
         ]);
 
         // MAKING SURE THE REQUEST AND USER IS VALIDATED
-        $validation_response = UtilController::validateUserWithAuthToken($request, auth()->user(), "get-info-on-apps");
+        $validation_response = UtilController::validateUserWithAuthToken($request, auth()->user(), "withdraw-funds");
         if(!empty($validation_response["status"]) && trim($validation_response["status"]) == "error"){
             return response($validation_response);
         } else {
             $user = $validation_response;
-        }
-
-        if($request->investment_risk_protection != 1 && $request->investment_risk_protection != 2 && $request->investment_risk_protection != 3){
-            return response([
-                "status" => 3, 
-                "message" => "Risk determinance failure",
-                "government_verification_is_on" => false,
-                "media_allowed" => intval(config('app.canpostpicsandvids')),
-                "user_android_app_max_vc" => intval(config('app.androidmaxvc')),
-                "user_android_app_force_update" => boolval(config('app.androidforceupdatetomaxvc')),
-                "phone_verification_is_on" => boolval(config('app.phoneverificationrequiredstatus'))
-            ]);
         }
         /*
         |**************************************************************************
@@ -1205,12 +1192,10 @@ public function changePasswordWithResetCode(Request $request)
         |**************************************************************************
         */
 
-        // GETTING THE BUSINESS
-        $business = Business::where('business_sys_id', $request->business_id)->first();
-        if($business == null || empty($business->business_registration_number)){
+        if($user->user_wallet_usd < $user->withdrawal_amt){
             return response([
                 "status" => 3, 
-                "message" => "Business not found",
+                "message" => "Insufficient funds",
                 "government_verification_is_on" => false,
                 "media_allowed" => intval(config('app.canpostpicsandvids')),
                 "user_android_app_max_vc" => intval(config('app.androidmaxvc')),
@@ -1219,80 +1204,13 @@ public function changePasswordWithResetCode(Request $request)
             ]);
         }
 
-        // CHECKING THE INVESTMENT AMOUNT IF IT WILL BE ACCEPTED
-        $business->business_investments_amount_left_to_receive_usd = $business->business_investments_amount_needed_usd - $business->business_investments_amount_received_usd;
-        if(($business->business_investments_amount_needed_usd - $business->business_investments_amount_received_usd) < $request->investment_amt_in_dollars ){
-            if($business->business_investments_amount_left_to_receive_usd <= 0){
-                return response([
-                    "status" => 3, 
-                    "message" => "This business is no longer receiving investments",
-                    "government_verification_is_on" => false,
-                    "media_allowed" => intval(config('app.canpostpicsandvids')),
-                    "user_android_app_max_vc" => intval(config('app.androidmaxvc')),
-                    "user_android_app_force_update" => boolval(config('app.androidforceupdatetomaxvc')),
-                    "phone_verification_is_on" => boolval(config('app.phoneverificationrequiredstatus'))
-                ]);
-            } else {
-                return response([
-                    "status" => 3, 
-                    "message" => "You can only invest " . $business->business_investments_amount_left_to_receive_usd,
-                    "government_verification_is_on" => false,
-                    "media_allowed" => intval(config('app.canpostpicsandvids')),
-                    "user_android_app_max_vc" => intval(config('app.androidmaxvc')),
-                    "user_android_app_force_update" => boolval(config('app.androidforceupdatetomaxvc')),
-                    "phone_verification_is_on" => boolval(config('app.phoneverificationrequiredstatus'))
-                ]);
-            }
-        }
-
-        // GETTING THE QUANTITY OF SHARES
-        $item_quantity = floor($request->investment_amt_in_dollars / $business->business_price_per_stock_usd);
-        $total_item_quantity_cost = $item_quantity * $business->business_price_per_stock_usd;
-
-        // CALCULATING RISK INSURANCE FEE
-        if($request->investment_risk_protection == 3){
-            $risk_statement = "No risk insurance";
-            $risk_fee = "0";
-            $yield_info = $business->business_descriptive_financial_bio . ". Choosing no risk insurance means if the business fails, FishPott will not pay any amount back to you to cushion you.";
-        } else if($request->investment_risk_protection == 2){
-            $risk_statement = "50% Risk Insurance.";
-            $risk_fee = $total_item_quantity_cost * floatval(config('app.fifty_risk_insurance'));
-            $yield_info = $business->business_descriptive_financial_bio . ". Choosing 50% risk insurance means if the business fails, FishPott reimburse 50% what you paid for the shares.";
-        } else if($request->investment_risk_protection == 1){
-            $risk_statement = "100% Risk Insurance.";
-            $risk_fee = $total_item_quantity_cost * floatval(config('app.hundred_risk_insurance'));
-            $yield_info = $business->business_descriptive_financial_bio . ". Choosing 50% risk insurance means if the business fails, FishPott reimburse 100% what you paid for the shares.";
-        }
-
-        // CALCULATING PROCESSING FEE
-        $processing_fee = $total_item_quantity_cost * floatval(config('app.processing_fee'));
-
-        // CALCULATING TOTAL OVERAL COST
-        $overall_total_usd = $total_item_quantity_cost + $risk_fee + $processing_fee;
-
-        // CONVERTING TO USER'S LOCAL CURRENCY
-        if($user->user_country_id == 81){ // GHANA
-            $overall_total_local_currency = "¢" . ($overall_total_usd * floatval(config('app.to_cedi')));
-            $rate = "$1 = " . "¢" . floatval(config('app.to_cedi'));
-        } else {
-            $overall_total_local_currency = "$" . $overall_total_usd;
-            $rate = "$1 = " . "¢" . floatval(config('app.to_cedi'));
-        }
-
+        // UPDATING THE USER'S WALLET BALANCE
+        $user->user_wallet_usd =  $user->user_wallet_usd - intval($user->withdrawal_amt);
+        $user->save();
+        
         $data = array(
-            "item" => $business->business_full_name, 
-            "price_per_item" => "$" . strval($business->business_price_per_stock_usd), 
-            "quantity" => $item_quantity, 
-            "rate" => $rate, 
-            "risk" => $request->investment_risk_protection,  
-            "risk_statement" => $risk_statement,   
-            "risk_insurance_fee" => "$" . strval($risk_fee), 
-            "processing_fee" => "$" . strval($processing_fee), 
-            "overall_total_usd" => "$" . strval($overall_total_usd), 
-            "overall_total_local_currency" => $overall_total_local_currency, 
-            "financial_yield_info" => $yield_info
+            "new_wallet_bal" => $user->user_wallet_usd
         );
-
 
         return response([
             "status" => 1, 

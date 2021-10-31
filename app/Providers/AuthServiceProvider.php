@@ -33,6 +33,7 @@ class AuthServiceProvider extends ServiceProvider
             'answer-drills' => 'Answer drills',
             'buy-business-stocks' => 'Buy business stocks',
             'transfer-business-stocks' => 'Transfer business stocks',
+            'withdraw-funds' => 'Withdraw funds',
             
             //ADMIN SCOPE
             'add-admins' => 'Can add administrators Stocks',
