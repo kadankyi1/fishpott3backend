@@ -18,6 +18,7 @@ use App\Models\version1\DrillAnswer;
 use App\Models\version1\Suggestion;
 use App\Models\version1\SuggestionTypes;
 use App\Models\version1\Suggesto;
+use App\Models\version1\Withdrawal;
 use Illuminate\Support\Facades\File; 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -1208,9 +1209,23 @@ public function changePasswordWithResetCode(Request $request)
         $user->user_wallet_usd =  $user->user_wallet_usd - intval($user->withdrawal_amt);
         $user->save();
 
-        // CREATING THE WITHDRAWAL
-        
-        
+        // CREATING THE WITHDRAWALs
+        $withdrawalData["withdrawal_sys_id"] =  "withdrawal-" . $user->user_pottname . substr($user->user_phone_number ,1,strlen($user->user_phone_number)) . UtilController::getRandomString(91);
+        $withdrawalData["withdrawal_amt_usd"] = $request->withdrawal_amt;
+        // CONVERTING TO USER'S LOCAL CURRENCY
+        if($user->user_country_id == 81){ // GHANA
+            $withdrawalData["withdrawal_amt_local"] = floatval($request->withdrawal_amt) * floatval(config('app.to_cedi'));
+            $withdrawalData["withdrawal_rate"] = floatval(config('app.to_cedi'));
+        } else {
+            $withdrawalData["withdrawal_amt_local"] = floatval($$request->withdrawal_amt);
+            $withdrawalData["withdrawal_rate"] = 1.00;
+        }
+        $withdrawalData["withdrawal_flagged"] = false;
+        $withdrawalData["withdrawal_user_investor_id"] = $user->investor_id;
+        Withdrawal::create($withdrawalData);
+
+        // SENDING MAIL TO FISHPOTT
+
         $data = array(
             "new_wallet_bal" => $user->user_wallet_usd
         );

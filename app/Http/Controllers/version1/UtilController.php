@@ -493,4 +493,9 @@ class UtilController extends Controller
 
 		return $n_format . $suffix;
 	}
+
+    public static function getAmtInNewCurrency($user_country_id, $amount_in_usd)
+    {
+
+    }
 }
