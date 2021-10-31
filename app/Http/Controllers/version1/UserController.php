@@ -1102,7 +1102,7 @@ public function changePasswordWithResetCode(Request $request)
 
         // CONVERTING TO USER'S LOCAL CURRENCY
         if($user->user_country_id == 81){ // GHANA
-            $overall_total_local_currency = "¢" . floatval(config('app.to_cedi'));
+            $overall_total_local_currency = "¢" . ($overall_total_usd * floatval(config('app.to_cedi')));
             $rate = "$1 = " . "¢" . floatval(config('app.to_cedi'));
         } else {
             $overall_total_local_currency = "$" . $overall_total_usd;
