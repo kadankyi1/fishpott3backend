@@ -1044,7 +1044,12 @@ public function changePasswordWithResetCode(Request $request)
         if($request->investment_risk_protection != 0 && $request->investment_risk_protection != 50 && $request->investment_risk_protection != 100){
             return response([
                 "status" => 3, 
-                "message" => "Risk determinance failure"
+                "message" => "Risk determinance failure",
+                "government_verification_is_on" => false,
+                "media_allowed" => intval(config('app.canpostpicsandvids')),
+                "user_android_app_max_vc" => intval(config('app.androidmaxvc')),
+                "user_android_app_force_update" => boolval(config('app.androidforceupdatetomaxvc')),
+                "phone_verification_is_on" => boolval(config('app.phoneverificationrequiredstatus'))
             ]);
         }
         /*
@@ -1058,7 +1063,12 @@ public function changePasswordWithResetCode(Request $request)
         if($business == null || empty($business->business_registration_number)){
             return response([
                 "status" => 3, 
-                "message" => "Business not found"
+                "message" => "Business not found",
+                "government_verification_is_on" => false,
+                "media_allowed" => intval(config('app.canpostpicsandvids')),
+                "user_android_app_max_vc" => intval(config('app.androidmaxvc')),
+                "user_android_app_force_update" => boolval(config('app.androidforceupdatetomaxvc')),
+                "phone_verification_is_on" => boolval(config('app.phoneverificationrequiredstatus'))
             ]);
         }
 
@@ -1068,12 +1078,22 @@ public function changePasswordWithResetCode(Request $request)
             if($business->business_investments_amount_left_to_receive_usd <= 0){
                 return response([
                     "status" => 3, 
-                    "message" => "This business is no longer receiving investments" 
+                    "message" => "This business is no longer receiving investments",
+                    "government_verification_is_on" => false,
+                    "media_allowed" => intval(config('app.canpostpicsandvids')),
+                    "user_android_app_max_vc" => intval(config('app.androidmaxvc')),
+                    "user_android_app_force_update" => boolval(config('app.androidforceupdatetomaxvc')),
+                    "phone_verification_is_on" => boolval(config('app.phoneverificationrequiredstatus'))
                 ]);
             } else {
                 return response([
                     "status" => 3, 
-                    "message" => "You can only invest " . $business->business_investments_amount_left_to_receive_usd
+                    "message" => "You can only invest " . $business->business_investments_amount_left_to_receive_usd,
+                    "government_verification_is_on" => false,
+                    "media_allowed" => intval(config('app.canpostpicsandvids')),
+                    "user_android_app_max_vc" => intval(config('app.androidmaxvc')),
+                    "user_android_app_force_update" => boolval(config('app.androidforceupdatetomaxvc')),
+                    "phone_verification_is_on" => boolval(config('app.phoneverificationrequiredstatus'))
                 ]);
             }
         }
