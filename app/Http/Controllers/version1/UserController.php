@@ -1041,7 +1041,7 @@ public function changePasswordWithResetCode(Request $request)
             $user = $validation_response;
         }
 
-        if($request->investment_risk_protection != 0 && $request->investment_risk_protection != 50 && $request->investment_risk_protection != 100){
+        if($request->investment_risk_protection != 1 && $request->investment_risk_protection != 2 && $request->investment_risk_protection != 3){
             return response([
                 "status" => 3, 
                 "message" => "Risk determinance failure",
