@@ -36,11 +36,14 @@ Route::middleware('auth:api')->post('/v1/user/upload-pott-pic', [App\Http\Contro
 // GET DRILL
 Route::middleware('auth:api')->get('/v1/user/get-my-suggestion', [App\Http\Controllers\version1\UserController::class, 'getMySuggestion']);
 
-// UPLOAD PROFILE PICTURE
+// SAVE DRILL
 Route::middleware('auth:api')->post('/v1/user/save-drill-answer', [App\Http\Controllers\version1\UserController::class, 'saveDrillAnswerAndReturnWhatOthersSaid']);
 
-// UPLOAD PROFILE PICTURE
+// GET FINAL PRICE
 Route::middleware('auth:api')->post('/v1/user/get-final-price', [App\Http\Controllers\version1\UserController::class, 'getFinalPriceSummary']);
+
+// SEND WITHDRAWAL REQUEST
+Route::middleware('auth:api')->post('/v1/user/send-withdrawal-request', [App\Http\Controllers\version1\UserController::class, 'sendWithdrawalRequest']);
 
 
 /*

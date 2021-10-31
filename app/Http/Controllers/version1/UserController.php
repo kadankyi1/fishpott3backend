@@ -1188,6 +1188,17 @@ public function changePasswordWithResetCode(Request $request)
         } else {
             $user = $validation_response;
         }
+        $loginData["user_phone_number"] = $validatedData["user_phone_number"];
+        $loginData["password"] = $validatedData["password"];
+
+        // VALIDATING USER CREDENTIALS
+        if(!auth()->attempt($loginData)) {
+            return response([
+                "status" => "error", 
+                "message" => "Invalid Password"
+            ]);
+        }
+
         /*
         |**************************************************************************
         | VALIDATION ENDED 
