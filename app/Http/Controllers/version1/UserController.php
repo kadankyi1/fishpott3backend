@@ -164,7 +164,7 @@ class UserController extends Controller
         } else if($request->app_type == "IOS"){
             $userData["user_ios_app_version_code"] = $validatedData["app_version_code"];
         } 
-        $userData["user_scope"] = "get-info-on-apps get-business-suggestions answer-drills buy-business-stocks transfer-business-stocks";
+        $userData["user_scope"] = "get-info-on-apps get-business-suggestions answer-drills buy-business-stocks transfer-business-stocks withdraw-funds";
         $userData["user_phone_verification_requested"] = boolval(config('app.phoneverificationrequiredstatus'));
         $userData["user_id_verification_requested"] = boolval(config('app.idverificationrequiredstatus'));
 
@@ -173,7 +173,7 @@ class UserController extends Controller
         $user1 = User::create($userData);
         
         // GENERATING THE ACCESS TOKEN FOR THE REGISTERED USER
-        $accessToken = $user1->createToken("authToken", ["get-info-on-apps get-business-suggestions answer-drills buy-business-stocks transfer-business-stocks"])->accessToken;
+        $accessToken = $user1->createToken("authToken", ["get-info-on-apps get-business-suggestions answer-drills buy-business-stocks transfer-business-stocks withdraw-funds"])->accessToken;
 
 
         return response([
@@ -333,7 +333,7 @@ class UserController extends Controller
             $userData["user_ios_app_version_code"] = $validatedData["app_version_code"];
         } 
         $userData["user_app_version_code"] = $validatedData["app_version_code"];
-        $userData["user_scope"] = "get-info-on-apps get-business-suggestions answer-drills buy-business-stocks transfer-business-stocks";
+        $userData["user_scope"] = "get-info-on-apps get-business-suggestions answer-drills buy-business-stocks transfer-business-stocks withdraw-funds";
         $userData["user_phone_verification_requested"] = boolval(config('app.phoneverificationrequiredstatus'));
         $userData["user_id_verification_requested"] = boolval(config('app.idverificationrequiredstatus'));
 
@@ -341,7 +341,7 @@ class UserController extends Controller
         
         // GENERATING THE ACCESS TOKEN FOR THE REGISTERED USER
         //$accessToken = $user1->createToken("authToken")->accessToken;
-        $accessToken = $user1->createToken("authToken", ["get-info-on-apps get-business-suggestions answer-drills buy-business-stocks transfer-business-stocks"])->accessToken;
+        $accessToken = $user1->createToken("authToken", ["get-info-on-apps get-business-suggestions answer-drills buy-business-stocks transfer-business-stocks withdraw-funds"])->accessToken;
 
 
         return response([
@@ -466,7 +466,7 @@ class UserController extends Controller
         }
 
         // GENERATING USER ACCESS TOKEN
-        $accessToken = auth()->user()->createToken("authToken", ["get-info-on-apps get-business-suggestions answer-drills buy-business-stocks transfer-business-stocks"])->accessToken;
+        $accessToken = auth()->user()->createToken("authToken", ["get-info-on-apps get-business-suggestions answer-drills buy-business-stocks transfer-business-stocks withdraw-funds"])->accessToken;
 
         // CHECKING IF PROFILE PICTURE EXISTS
         $img_url = config('app.url') . '/uploads/images/' . $user->user_profile_picture;
@@ -1178,6 +1178,10 @@ public function changePasswordWithResetCode(Request $request)
             "app_version_code" => "bail|required|integer",
             // ADD ANY OTHER REQUIRED INPUTS FROM HERE
             "withdrawal_amt" => "bail|required|integer",
+            "withdrawal_receiving_bank_or_momo_account_name" => "bail|required|string",
+            "withdrawal_receiving_bank_or_momo_account_number" => "bail|required|string",
+            "withdrawal_receiving_bank_or_momo_name" => "bail|required|string",
+            "withdrawal_receiving_bank_routing_number" => "nullable|string",
             "password" => "bail|required|string",
         ]);
 
@@ -1188,14 +1192,15 @@ public function changePasswordWithResetCode(Request $request)
         } else {
             $user = $validation_response;
         }
+
         $loginData["user_phone_number"] = $validatedData["user_phone_number"];
         $loginData["password"] = $validatedData["password"];
-
+        
         // VALIDATING USER CREDENTIALS
-        if(!auth()->attempt($loginData)) {
+        if (!Auth::guard('web')->attempt($loginData)) {
             return response([
                 "status" => "error", 
-                "message" => "Invalid Password"
+                "message" => "Invalid Credentials"
             ]);
         }
 
@@ -1205,7 +1210,7 @@ public function changePasswordWithResetCode(Request $request)
         |**************************************************************************
         */
 
-        if($user->user_wallet_usd < $user->withdrawal_amt){
+        if($user->user_wallet_usd < $request->withdrawal_amt){
             return response([
                 "status" => 3, 
                 "message" => "Insufficient funds",
@@ -1218,7 +1223,7 @@ public function changePasswordWithResetCode(Request $request)
         }
 
         // UPDATING THE USER'S WALLET BALANCE
-        $user->user_wallet_usd =  $user->user_wallet_usd - intval($user->withdrawal_amt);
+        $user->user_wallet_usd =  $user->user_wallet_usd - intval($request->withdrawal_amt);
         $user->save();
 
         // CREATING THE WITHDRAWALs
@@ -1234,6 +1239,11 @@ public function changePasswordWithResetCode(Request $request)
             $withdrawalData["withdrawal_rate"] = 1.00;
             $withdrawalData["withdrawal_local_currency_sign"] = "$";
         }
+
+        $withdrawalData["withdrawal_receiving_bank_or_momo_account_name"] = $request->withdrawal_receiving_bank_or_momo_account_name;
+        $withdrawalData["withdrawal_receiving_bank_or_momo_account_number"] = $request->withdrawal_receiving_bank_or_momo_account_number;
+        $withdrawalData["withdrawal_receiving_bank_or_momo_name"] = $request->withdrawal_receiving_bank_or_momo_name;
+        $withdrawalData["withdrawal_receiving_bank_routing_number"] = $request->withdrawal_receiving_bank_routing_number;
         $withdrawalData["withdrawal_flagged"] = false;
         $withdrawalData["withdrawal_user_investor_id"] = $user->investor_id;
         $withdrawal = Withdrawal::create($withdrawalData);
@@ -1246,6 +1256,11 @@ public function changePasswordWithResetCode(Request $request)
             'user_pottname' => $user->user_pottname,
             'withdrawal_id' => $withdrawal->withdrawal_sys_id,
             'amount' => $the_amt,
+            'withdrawal_receiving_bank_or_momo_account_name' => $request->withdrawal_receiving_bank_or_momo_account_name,
+            'withdrawal_receiving_bank_or_momo_account_number' => $request->withdrawal_receiving_bank_or_momo_account_number,
+            'withdrawal_receiving_bank_or_momo_name' => $request->withdrawal_receiving_bank_or_momo_name,
+            'withdrawal_receiving_bank_routing_number' => $request->withdrawal_receiving_bank_routing_number,
+            'amount' => $the_amt,
             'time' => date("F j, Y, g:i a")
         );
 
@@ -1257,7 +1272,7 @@ public function changePasswordWithResetCode(Request $request)
 
         return response([
             "status" => 1, 
-            "message" => "success",
+            "message" => "Withdrawa request sent. You will be notified when it's paid. Your new balance is $" . $user->user_wallet_usd,
             "data" => $data,
             "government_verification_is_on" => false,
             "media_allowed" => intval(config('app.canpostpicsandvids')),

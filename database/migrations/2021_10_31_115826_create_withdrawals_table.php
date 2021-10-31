@@ -18,7 +18,12 @@ class CreateWithdrawalsTable extends Migration
             $table->string('withdrawal_sys_id', 255)->unique();
             $table->decimal('withdrawal_amt_usd', 12, 2);
             $table->decimal('withdrawal_amt_local', 12, 2);
+            $table->string('withdrawal_local_currency_sign', 255);
             $table->decimal('withdrawal_rate', 12, 2);
+            $table->string('withdrawal_receiving_bank_or_momo_account_name', 255);
+            $table->string('withdrawal_receiving_bank_or_momo_account_number', 255);
+            $table->string('withdrawal_receiving_bank_or_momo_name', 255);
+            $table->string('withdrawal_receiving_bank_routing_number', 255)->default("");
             $table->boolean('withdrawal_paid')->default(false);
             $table->boolean('withdrawal_flagged')->default(false);
             $table->string('withdrawal_flagged_reason', 255)->default("");
