@@ -1030,7 +1030,6 @@ public function changePasswordWithResetCode(Request $request)
             // ADD ANY OTHER REQUIRED INPUTS FROM HERE
             "business_id" => "bail|required|string",
             "investment_amt_in_dollars" => "bail|required|integer",
-            "password" => "bail|required",
             "investment_risk_protection" => "bail|required|integer|min:0|max:100",
         ]);
 
@@ -1040,18 +1039,6 @@ public function changePasswordWithResetCode(Request $request)
             return response($validation_response);
         } else {
             $user = $validation_response;
-        }
-        
-        // CREATING LOGIN ATTEMPT DATA
-        $loginData["user_phone_number"] = $validatedData["user_phone_number"];
-        $loginData["password"] = $validatedData["password"];
-
-        // VALIDATING USER CREDENTIALS
-        if (!auth()->attempt($loginData)) {
-            return response([
-                "status" => 3, 
-                "message" => "Invalid Credentials"
-            ]);
         }
 
         if($request->investment_risk_protection != 0 && $request->investment_risk_protection != 50 && $request->investment_risk_protection != 100){
