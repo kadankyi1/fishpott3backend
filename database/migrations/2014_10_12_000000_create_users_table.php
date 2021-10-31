@@ -25,6 +25,7 @@ class CreateUsersTable extends Migration
             $table->string('user_profile_picture', 255)->nullable();
             $table->string('password', 255);
             $table->string('user_net_worth', 255)->default(0);
+            $table->decimal('user_wallet_usd', 12, 2);
             $table->integer('user_verified_tag')->default(0);
             $table->datetime('user_shield_date', $precision = 0);
             $table->string('user_referred_by', 255)->default("");

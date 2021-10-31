@@ -27,6 +27,7 @@ class Withdrawal extends Model
         'withdrawal_amt_usd',
         'withdrawal_amt_local',
         'withdrawal_rate',
+        'withdrawal_flagged',
         'withdrawal_user_investor_id',
         'withdrawal_user_full_name',
         'created_at',
