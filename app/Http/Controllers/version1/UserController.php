@@ -1143,7 +1143,7 @@ public function changePasswordWithResetCode(Request $request)
             "processing_fee" => "$" . strval($processing_fee), 
             "overall_total_usd" => "$" . strval($overall_total_usd), 
             "overall_total_local_currency" => $overall_total_local_currency, 
-            "financial_yield_info" => $business->business_descriptive_financial_bio
+            "financial_yield_info" => $yield_info
         );
 
 
