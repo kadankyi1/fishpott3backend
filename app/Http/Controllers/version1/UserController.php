@@ -1207,6 +1207,9 @@ public function changePasswordWithResetCode(Request $request)
         // UPDATING THE USER'S WALLET BALANCE
         $user->user_wallet_usd =  $user->user_wallet_usd - intval($user->withdrawal_amt);
         $user->save();
+
+        // CREATING THE WITHDRAWAL
+        
         
         $data = array(
             "new_wallet_bal" => $user->user_wallet_usd
