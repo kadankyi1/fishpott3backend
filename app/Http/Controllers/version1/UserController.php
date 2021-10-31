@@ -1088,10 +1088,10 @@ public function changePasswordWithResetCode(Request $request)
             $risk_fee = "0";
         } else if($request->investment_risk_protection == 50){
             $risk_statement = "50% Risk Insurance.";
-            $risk_fee = $total_item_quantity_cost * intval(config('app.fifty_risk_insurance'));
+            $risk_fee = $total_item_quantity_cost * floatval(config('app.fifty_risk_insurance'));
         } else if($request->investment_risk_protection == 100){
             $risk_statement = "100% Risk Insurance.";
-            $risk_fee = $total_item_quantity_cost * intval(config('app.hundred_risk_insurance'));
+            $risk_fee = $total_item_quantity_cost * floatval(config('app.hundred_risk_insurance'));
         }
 
         // CALCULATING PROCESSING FEE
