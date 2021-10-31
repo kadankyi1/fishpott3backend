@@ -1095,7 +1095,7 @@ public function changePasswordWithResetCode(Request $request)
         }
 
         // CALCULATING PROCESSING FEE
-        $processing_fee = $total_item_quantity_cost * intval(config('app.processing_fee'));
+        $processing_fee = $total_item_quantity_cost * floatval(config('app.processing_fee'));
 
         // CALCULATING TOTAL OVERAL COST
         $overall_total_usd = $total_item_quantity_cost + $risk_fee + $processing_fee;
