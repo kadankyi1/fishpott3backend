@@ -14,8 +14,19 @@ class CreateTransactionsTable extends Migration
     public function up()
     {
         Schema::create('transactions', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('transaction_id');
+            $table->string('transaction_sys_id', 255)->unique();
+            $table->string('transaction_referenced_item_id', 255);
             $table->timestamps();
+        });
+
+
+        Schema::table('transactions', function (Blueprint $table) {
+            $table->string('transaction_transaction_type_id', 255);
+            $table->foreign('transaction_transaction_type_id')->references('transaction_type_id')->on('transaction_types');
+
+            $table->string('transaction_user_investor_id', 255);
+            $table->foreign('transaction_user_investor_id')->references('investor_id')->on('users');
         });
     }
 

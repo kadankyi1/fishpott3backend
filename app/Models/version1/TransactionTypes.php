@@ -5,7 +5,7 @@ namespace App\Models\version1;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Transaction extends Model
+class TransactionTypes extends Model
 {
     use HasFactory;
     /**
@@ -13,7 +13,7 @@ class Transaction extends Model
      *
      * @var string
      */
-    protected $primaryKey = 'transaction_id';
+    protected $primaryKey = 'transaction_type_id';
 
 
     /**
@@ -22,12 +22,9 @@ class Transaction extends Model
      * @var array
      */
     protected $fillable = [
-        'transaction_id', 
-        'transaction_sys_id',
-        'transaction_type_id',
-        'transaction_type_name',
-        'transaction_referenced_item_id',
-        'transaction_user_investor_id',
+        'transaction_type_id', 
+        'transaction_type_fullname',
+        'transaction_type_shortname',
         'created_at',
         'updated_at',
     ];
