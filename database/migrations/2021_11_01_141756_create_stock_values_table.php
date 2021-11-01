@@ -14,8 +14,14 @@ class CreateStockValuesTable extends Migration
     public function up()
     {
         Schema::create('stock_values', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('stockvalue_id');
+            $table->decimal('stockvalue_value_per_stock_usd', 12, 2);
             $table->timestamps();
+        });
+
+        Schema::table('stock_values', function (Blueprint $table) {
+            $table->unsignedBigInteger('stockvalue_business_id');
+            $table->foreign('stockvalue_business_id')->references('business_sys_id')->on('businesses');
         });
     }
 

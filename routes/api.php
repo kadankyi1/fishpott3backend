@@ -48,8 +48,9 @@ Route::middleware('auth:api')->post('/v1/user/update-order-payment-status', [App
 // SEND WITHDRAWAL REQUEST
 Route::middleware('auth:api')->post('/v1/user/send-withdrawal-request', [App\Http\Controllers\version1\UserController::class, 'sendWithdrawalRequest']);
 
-// UPDATE BUY STOCK ORDER PAYMENT STATUS
+// GET MY TRANSACTIONS
 Route::middleware('auth:api')->post('/v1/user/get-my-transactions', [App\Http\Controllers\version1\UserController::class, 'getMyTransactions']);
+
 
 /*
 |-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|

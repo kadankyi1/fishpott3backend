@@ -19,6 +19,7 @@ use App\Models\version1\Drill;
 use App\Models\version1\DrillAnswer;
 use App\Models\version1\StockOwnership;
 use App\Models\version1\StockPurchase;
+use App\Models\version1\StockValue;
 use App\Models\version1\Suggestion;
 use App\Models\version1\SuggestionTypes;
 use App\Models\version1\Suggesto;
@@ -1584,14 +1585,11 @@ public function changePasswordWithResetCode(Request $request)
                 continue;
             }
             
-            if($stockpurchase->stockpurchase_processed == 0){
-                $the_status = "Pending";
-            } else if($stockpurchase->stockpurchase_processed == 1){
-                $the_status = "Paid";
-            } else if($stockpurchase->stockpurchase_processed == 2){
-                $the_status = "Cancelled";
+            $stockvalue = StockValue::where('stockvalue_business_id', $stockownership->stockownership_business_id)->first();
+            if($stockvalue == null){
+                $the_stockvalue = "Unknown";
             } else {
-                $the_status = "Error";
+                $the_stockvalue = "$" . $stockvalue->stockvalue_value_per_stock_usd;
             }
 
             // GETTING THE COST-PER-SHARE
@@ -1600,9 +1598,9 @@ public function changePasswordWithResetCode(Request $request)
             $this_item = array(
                 'business_name' => $business->business_full_name,
                 'cost_per_share_usd' => "$" . $this_cost_per_share_usd,
-                'value_per_share_usd' => $business->business_full_name,
-                'quntity_of_stocks' => strval($stockpurchase->stockpurchase_stocks_quantity),
-                'ai_info' => date("n M y", strtotime($stockpurchase->created_at))
+                'value_per_share_usd' => $the_stockvalue,
+                'quntity_of_stocks' => $stockownership->stockownership_stocks_quantity,
+                'ai_info' => "Pott Intelligence feedback not available"
             );
             array_push($data, $this_item);
         }
