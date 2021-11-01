@@ -25,6 +25,7 @@ class Business extends Model
         'business_id', 
         'business_sys_id', 
         'business_pottname',
+        'business_find_code',
         'business_flagged', 
         'business_flagged_reason', 
         'created_at',

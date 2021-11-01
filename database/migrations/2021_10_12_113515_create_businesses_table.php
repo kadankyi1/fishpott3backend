@@ -17,6 +17,7 @@ class CreateBusinessesTable extends Migration
             $table->bigIncrements('business_id');
             $table->string('business_sys_id', 255)->unique();
             $table->string('business_pottname', 255)->default("");
+            $table->string('business_find_code', 255)->unique();
             $table->boolean('business_flagged')->default(false);
             $table->text('business_flagged_reason');
             $table->timestamps();
