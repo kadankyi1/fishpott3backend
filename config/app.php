@@ -6,7 +6,7 @@ return [
     'timedurationinhoursforsuggestions' => env('TIME_DURATION_IN_HOURS_FOR_SUGGESTIONS', 1),
 
     // ANDROID APP MINIMUM VERSION ALLOWED
-    'timedurationinhoursforbusinesssuggestionstobeavailable' => env('TIME_DURATION_IN_HOURS_FOR_BUSINESS_SUGGESTIONS_TO_BE_AVAILABLE_BUSINESSES', 1),
+    'timedurationinhoursforbusinesssuggestionstobeavailable' => env('TIME_DURATION_IN_HOURS_FOR_BUSINESS_SUGGESTIONS_TO_BE_AVAILABLE_BUSINESSES', 48),
 
     // ANDROID APP MINIMUM VERSION ALLOWED
     'androidminvc' => env('ANDROID_MIN_ALLOWED_VERSION_CODE', '7'),

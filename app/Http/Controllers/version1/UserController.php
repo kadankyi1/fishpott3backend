@@ -1698,9 +1698,18 @@ public function changePasswordWithResetCode(Request $request)
         $suggestion->business_cash_on_hand_usd = "$" . UtilController::formatNumberShort($suggestion->business_cash_on_hand_usd);
         $suggestion->business_investments_amount_needed_usd = "$" . UtilController::formatNumberShort($suggestion->business_investments_amount_needed_usd);
 
+        // CHECKING IF USER CAN BUY SHARES OR NOT FROM BUSINESS
+        $suggestion2 =  Suggestion::where('suggestion_directed_at_user_investor_id', '=', $user->investor_id)->where('suggestion_item_reference_id', $suggestion->business_sys_id)->where('suggestion_flagged', false)->first();
+
+        if ($suggestion2 != null && UtilController::getDateDiff($suggestion2->created_at, date('Y-m-d H:i:s'), "hours") < intval(config('app.timedurationinhoursforbusinesssuggestionstobeavailable'))) {
+            $can_buy = "yes";
+        } else {
+            $can_buy = "no";
+        }
         return response([
             "status" => 1, 
             "message" => $message,
+            "can_buy" => $can_buy,
             "data" => $suggestion,
             "government_verification_is_on" => false,
             "media_allowed" => intval(config('app.canpostpicsandvids')),
