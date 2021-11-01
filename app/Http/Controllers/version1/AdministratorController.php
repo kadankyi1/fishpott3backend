@@ -239,6 +239,7 @@ class AdministratorController extends Controller
             "business_debt_usd" => "bail|required|integer",
             "business_cash_on_hand_usd" => "bail|required|integer",
             "business_net_worth_usd" => "bail|required|integer",
+            "business_price_per_stock_usd" => "bail|required|numeric",
             "business_investments_amount_needed_usd" => "bail|required|integer",
             "business_maximum_number_of_investors_allowed" => "bail|required|integer",
             "business_current_shareholders" => "bail|required|integer",
@@ -415,6 +416,7 @@ class AdministratorController extends Controller
         $validatedData["business_full_financial_report_pdf_url"] = $pdf_ext;
         $validatedData["business_pitch_video"] = $business_pitch_video_ext;
         $validatedData["business_flagged_reason"] = "";
+        $validatedData["business_investments_amount_received_usd"] = 0;
 
         // REMOVING UN-NEEDED INFO
         unset($validatedData["business_country"]);

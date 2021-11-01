@@ -34,10 +34,10 @@ class CreateStockPurchasesTable extends Migration
         });
 
         Schema::table('stock_purchases', function (Blueprint $table) {
-            $table->unsignedBigInteger('stockpurchase_currency_paid_in_id', 255);
+            $table->unsignedBigInteger('stockpurchase_currency_paid_in_id');
             $table->foreign('stockpurchase_currency_paid_in_id')->references('currency_id')->on('currencies');
 
-            $table->unsignedBigInteger('stockpurchase_risk_insurance_type_id', 255);
+            $table->unsignedBigInteger('stockpurchase_risk_insurance_type_id');
             $table->foreign('stockpurchase_risk_insurance_type_id')->references('risk_type_id')->on('risk_insurance_types');
 
             $table->string('stockpurchase_user_investor_id', 255);

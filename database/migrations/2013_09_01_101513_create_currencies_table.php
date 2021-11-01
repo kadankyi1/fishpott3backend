@@ -24,7 +24,7 @@ class CreateCurrenciesTable extends Migration
 
         Schema::table('currencies', function (Blueprint $table) {
             $table->unsignedBigInteger('currency_country_id');
-            $table->foreign('currency_country_id')->references('countries')->on('user_types');
+            $table->foreign('currency_country_id')->references('country_id')->on('countries');
         });
 
         DB::table('currencies')->insert([

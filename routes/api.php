@@ -42,9 +42,11 @@ Route::middleware('auth:api')->post('/v1/user/save-drill-answer', [App\Http\Cont
 // GET FINAL PRICE
 Route::middleware('auth:api')->post('/v1/user/get-final-price', [App\Http\Controllers\version1\UserController::class, 'getFinalPriceSummary']);
 
+// UPDATE BUY STOCK ORDER PAYMENT STATUS
+Route::middleware('auth:api')->post('/v1/user/update-order-payment-status', [App\Http\Controllers\version1\UserController::class, 'updateBuyOrderPaymentInfo']);
+
 // SEND WITHDRAWAL REQUEST
 Route::middleware('auth:api')->post('/v1/user/send-withdrawal-request', [App\Http\Controllers\version1\UserController::class, 'sendWithdrawalRequest']);
-
 
 /*
 |-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|
