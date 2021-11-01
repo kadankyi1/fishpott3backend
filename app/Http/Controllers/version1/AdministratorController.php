@@ -454,7 +454,7 @@ class AdministratorController extends Controller
             "frontend_key" => "bail|required|in:2aLW4c7r9(2qf#y",
             // ADD ANY OTHER REQUIRED INPUTS FROM HERE
             "business_id" => "bail|required",
-            "new_value" => "bail|require|numeric",
+            "new_value" => "bail|required|numeric",
         ]);
 
         // MAKING SURE THE REQUEST AND USER IS VALIDATED

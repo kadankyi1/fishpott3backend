@@ -1590,18 +1590,35 @@ public function changePasswordWithResetCode(Request $request)
             $stockvalue = StockValue::where('stockvalue_business_id', $stockownership->stockownership_business_id)->first();
             if($stockvalue == null){
                 $the_stockvalue = "Unknown";
+                $the_stockvalue_numeric = -1;
             } else {
                 $the_stockvalue = "$" . $stockvalue->stockvalue_value_per_stock_usd;
+                $the_stockvalue_numeric = floatval($stockvalue->stockvalue_value_per_stock_usd);
             }
 
             // GETTING THE COST-PER-SHARE
             $this_cost_per_share_usd = $stockownership->stockownership_total_cost_usd/$stockownership->stockownership_stocks_quantity;
 
+            // GETTING VALUE PHRASE
+            if($the_stockvalue_numeric == -1){
+                $value_phrase = "Value Unchanged";
+            } else if($this_cost_per_share_usd > $the_stockvalue_numeric){
+                $value_phrase = "Value Loss";
+            } else if($this_cost_per_share_usd < $the_stockvalue_numeric){
+                $value_phrase = "Value Profit";
+            } else if($this_cost_per_share_usd == $the_stockvalue_numeric){
+                $value_phrase = "Value Unchanged";
+            } else {
+                $value_phrase = "Value Unchanged";
+            }
+
             $this_item = array(
+                'business_id' => $business->business_sys_id,
                 'business_name' => $business->business_full_name,
                 'cost_per_share_usd' => "$" . $this_cost_per_share_usd,
                 'value_per_share_usd' => $the_stockvalue,
-                'quntity_of_stocks' => $stockownership->stockownership_stocks_quantity,
+                'quantity_of_stocks' => $stockownership->stockownership_stocks_quantity,
+                'value_phrase' => $value_phrase,
                 'ai_info' => "Pott Intelligence feedback not available"
             );
             array_push($data, $this_item);
