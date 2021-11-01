@@ -18,13 +18,14 @@ class CreateStockPurchasesTable extends Migration
             $table->string('stockpurchase_sys_id', 255)->unique();
             $table->string('stockpurchase_business_id', 255);
             $table->decimal('stockpurchase_price_per_stock_usd', 12, 2);
+            $table->integer('stockpurchase_stocks_quantity');
             $table->decimal('stockpurchase_total_price_no_fees_usd', 12, 2);
             $table->decimal('stockpurchase_risk_insurance_fee_usd', 12, 2);
             $table->decimal('stockpurchase_processing_fee_usd', 12, 2);
             $table->decimal('stockpurchase_total_price_with_all_fees_usd', 12, 2);
             $table->decimal('stockpurchase_rate_of_dollar_to_currency_paid_in', 12, 2);
             $table->decimal('stockpurchase_total_all_fees_in_currency_paid_in', 12, 2);
-            $table->boolean('stockpurchase_processed')->default(false);
+            $table->integer('stockpurchase_processed')->default(0);
             $table->string('stockpurchase_processed_reason', 255);
             $table->boolean('stockpurchase_flagged')->default(false);
             $table->string('stockpurchase_flagged_reason', 255)->default("");

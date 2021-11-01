@@ -26,6 +26,7 @@ class StockPurchase extends Model
         'stockpurchase_sys_id',
         'stockpurchase_business_id',
         'stockpurchase_price_per_stock_usd',
+        'stockpurchase_quantity',
         'stockpurchase_total_price_no_fees_usd',
         'stockpurchase_risk_insurance_fee_usd',
         'stockpurchase_processing_fee_usd',

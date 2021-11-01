@@ -24,7 +24,7 @@ class CreateWithdrawalsTable extends Migration
             $table->string('withdrawal_receiving_bank_or_momo_account_number', 255);
             $table->string('withdrawal_receiving_bank_or_momo_name', 255);
             $table->string('withdrawal_receiving_bank_routing_number', 255)->default("");
-            $table->boolean('withdrawal_paid')->default(false);
+            $table->integer('withdrawal_paid')->default(0);
             $table->boolean('withdrawal_flagged')->default(false);
             $table->string('withdrawal_flagged_reason', 255)->default("");
             $table->timestamps();
