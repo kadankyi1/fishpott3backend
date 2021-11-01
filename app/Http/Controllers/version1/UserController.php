@@ -1680,7 +1680,12 @@ public function changePasswordWithResetCode(Request $request)
         if($suggestion === null){
             return response([
                 "status" => 3, 
-                "message" => "Business not found"
+                "message" => "Business not found",
+                "government_verification_is_on" => false,
+                "media_allowed" => intval(config('app.canpostpicsandvids')),
+                "user_android_app_max_vc" => intval(config('app.androidmaxvc')),
+                "user_android_app_force_update" => boolval(config('app.androidforceupdatetomaxvc')),
+                "phone_verification_is_on" => boolval(config('app.phoneverificationrequiredstatus'))
             ]);
         }
         $message = "business";
@@ -1688,7 +1693,12 @@ public function changePasswordWithResetCode(Request $request)
         if($country === null){
             return response([
                 "status" => 3, 
-                "message" => "Country validation error."
+                "message" => "Country validation error.",
+                "government_verification_is_on" => false,
+                "media_allowed" => intval(config('app.canpostpicsandvids')),
+                "user_android_app_max_vc" => intval(config('app.androidmaxvc')),
+                "user_android_app_force_update" => boolval(config('app.androidforceupdatetomaxvc')),
+                "phone_verification_is_on" => boolval(config('app.phoneverificationrequiredstatus'))
             ]);
         }
 
