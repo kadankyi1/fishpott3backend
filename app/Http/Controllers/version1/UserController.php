@@ -1151,6 +1151,7 @@ public function changePasswordWithResetCode(Request $request)
         $stockPurchaseData["stockpurchase_sys_id"] = "stockpurchase-" . $user->user_pottname . substr($user->user_phone_number ,1,strlen($user->user_phone_number)) . "-" . date("Y-m-d-H-i-s") . "-" . UtilController::getRandomString(91);
         $stockPurchaseData["stockpurchase_business_id"] = $business->business_sys_id;
         $stockPurchaseData["stockpurchase_price_per_stock_usd"] = $business->business_price_per_stock_usd;
+        $stockPurchaseData["stockpurchase_stocks_quantity"] = $item_quantity;
         $stockPurchaseData["stockpurchase_total_price_no_fees_usd"] = $total_item_quantity_cost;
         $stockPurchaseData["stockpurchase_risk_insurance_fee_usd"] = floatval($risk_fee);
         $stockPurchaseData["stockpurchase_processing_fee_usd"] = floatval($processing_fee);
