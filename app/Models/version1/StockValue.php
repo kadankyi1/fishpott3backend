@@ -25,6 +25,7 @@ class StockValue extends Model
         'stockvalue_id', 
         'stockvalue_value_per_stock_usd',
         'stockvalue_business_id',
+        'stockvalue_admin_adder_id',
         'created_at',
         'updated_at',
     ];

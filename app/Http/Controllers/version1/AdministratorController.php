@@ -16,6 +16,7 @@ use App\Http\Controllers\version1\LogController;
 use App\Models\version1\Administrator;
 use App\Models\version1\Business;
 use App\Models\version1\Drill;
+use App\Models\version1\StockValue;
 use App\Models\version1\Suggesto;
 use Illuminate\Support\Facades\File; 
 use Illuminate\Support\Facades\Auth;
@@ -428,6 +429,65 @@ class AdministratorController extends Controller
         return response([
             "status" => "yes", 
             "message" => "Business saved."
+        ]);
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    |--------------------------------------------------------------------------
+    | THIS FUNCTION ADDS A DRILL
+    |--------------------------------------------------------------------------
+    |--------------------------------------------------------------------------
+    */
+    
+    public function addNewShareValue(Request $request)
+    {
+        /*
+        |**************************************************************************
+        | VALIDATION STARTS 
+        |**************************************************************************
+        */
+        // MAKING SURE THE INPUT HAS THE EXPECTED VALUES
+        $validatedData = $request->validate([
+            "administrator_phone_number" => "bail|required|regex:/^\+\d{10,15}$/|min:10|max:15",
+            "administrator_sys_id" => "bail|required",
+            "frontend_key" => "bail|required|in:2aLW4c7r9(2qf#y",
+            // ADD ANY OTHER REQUIRED INPUTS FROM HERE
+            "business_id" => "bail|required",
+            "new_value" => "bail|require|numeric",
+        ]);
+
+        // MAKING SURE THE REQUEST AND USER IS VALIDATED
+        $validation_response = UtilController::validateAdminWithAuthToken($request, auth()->guard('administrator-api')->user(), "add-drill");
+        if(!empty($validation_response["status"]) && trim($validation_response["status"]) == "error"){
+            return response($validation_response);
+        } else {
+            $admin = $validation_response;
+        }
+        /*
+        |**************************************************************************
+        | VALIDATION ENDED 
+        |**************************************************************************
+        */
+
+        // CHECKING IF THE BUSINESS EXISTS
+        $business = Business::where('business_sys_id', $request->business_id)->first();
+        if($business == null){
+            return response([
+                "status" => "error", 
+                "message" => "Business not found"
+            ]);
+        }
+
+        //CREATING THE STOCK VALUE DATA
+        $stockValueData["stockvalue_business_id"] = $request->business_id;
+        $stockValueData["stockvalue_value_per_stock_usd"] = floatval($request->new_value);
+        $stockValueData["stockvalue_admin_adder_id"] = $admin->administrator_sys_id;
+        StockValue::create($stockValueData);
+
+        return response([
+            "status" => "yes", 
+            "message" => "New stock saved"
         ]);
     }
 

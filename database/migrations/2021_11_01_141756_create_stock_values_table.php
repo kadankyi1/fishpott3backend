@@ -20,7 +20,10 @@ class CreateStockValuesTable extends Migration
         });
 
         Schema::table('stock_values', function (Blueprint $table) {
-            $table->unsignedBigInteger('stockvalue_business_id');
+            $table->string('stockvalue_admin_adder_id', 255);
+            $table->foreign('stockvalue_admin_adder_id')->references('administrator_sys_id')->on('administrators');
+
+            $table->string('stockvalue_business_id', 255);
             $table->foreign('stockvalue_business_id')->references('business_sys_id')->on('businesses');
         });
     }
