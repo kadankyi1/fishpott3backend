@@ -1417,12 +1417,133 @@ public function changePasswordWithResetCode(Request $request)
     /*
     |--------------------------------------------------------------------------
     |--------------------------------------------------------------------------
-    | THIS FUNCTION ADDS A DRILL
+    | THIS FUNCTION GETS A USER'S TRANSACTIONS
     |--------------------------------------------------------------------------
     |--------------------------------------------------------------------------
     */
     
     public function getMyTransactions(Request $request)
+    {
+        /*
+        |**************************************************************************
+        | VALIDATION STARTS 
+        |**************************************************************************
+        */
+        // MAKING SURE THE INPUT HAS THE EXPECTED VALUES
+        $validatedData = $request->validate([
+            "user_phone_number" => "bail|required|regex:/^\+\d{10,15}$/|min:10|max:15",
+            "user_pottname" => "bail|required|string|regex:/^[A-Za-z0-9_.]+$/|max:15",
+            "investor_id" => "bail|required",
+            "user_language" => "bail|required|max:3",
+            "app_type" => "bail|required|max:8",
+            "app_version_code" => "bail|required|integer",
+            // ADD ANY OTHER REQUIRED INPUTS FROM HERE
+            
+        ]);
+
+        // MAKING SURE THE REQUEST AND USER IS VALIDATED
+        $validation_response = UtilController::validateUserWithAuthToken($request, auth()->user(), "get-info-on-apps");
+        if(!empty($validation_response["status"]) && trim($validation_response["status"]) == "error"){
+            return response($validation_response);
+        } else {
+            $user = $validation_response;
+        }
+        /*
+        |**************************************************************************
+        | VALIDATION ENDED 
+        |**************************************************************************
+        */
+        $data = array();
+        $result = Transaction::where("transaction_user_investor_id", $user->investor_id)->get();
+
+        foreach($result as $transaction){
+            // WITHDRAWAL
+            if($transaction->transaction_transaction_type_id == 1){
+                $withdrawal = Withdrawal::where('withdrawal_sys_id', $transaction->transaction_referenced_item_id)->first();
+                if($withdrawal != null){
+                    if($withdrawal->withdrawal_paid == 0){
+                        $the_status = "Pending";
+                    } else if($withdrawal->withdrawal_paid == 1){
+                        $the_status = "Paid";
+                    } else if($withdrawal->withdrawal_paid == 2){
+                        $the_status = "Cancelled";
+                    } else {
+                        $the_status = "Error";
+                    }
+                    $this_item = array(
+                        'type' => "WITHDRAWAL",
+                        'info_1' => $the_status,
+                        'info_2' => $withdrawal->withdrawal_local_currency_sign . $withdrawal->withdrawal_amt_local,
+                        'info_3' => $withdrawal->withdrawal_receiving_bank_or_momo_name,
+                        'info_4' => $withdrawal->withdrawal_receiving_bank_or_momo_account_number,
+                        'info_5' => date("n M y", strtotime($withdrawal->created_at)),
+                        'info_6' => $withdrawal->withdrawal_sys_id,
+                        'info_6' => $withdrawal->withdrawal_sys_id
+                    );
+                    array_push($data, $this_item);
+                }
+            } 
+            // CREDIT
+            if($transaction->transaction_transaction_type_id == 2){
+
+            }
+            // DIVIDEND
+            if($transaction->transaction_transaction_type_id == 3){
+
+            }
+            // STOCK PURCHASE
+            if($transaction->transaction_transaction_type_id == 4){
+                $stockpurchase = StockPurchase::where('stockpurchase_sys_id', $transaction->transaction_referenced_item_id)->first();
+                if($stockpurchase != null){
+                    if($stockpurchase->stockpurchase_processed == 0){
+                        $the_status = "Pending";
+                    } else if($stockpurchase->stockpurchase_processed == 1){
+                        $the_status = "Paid";
+                    } else if($stockpurchase->stockpurchase_processed == 2){
+                        $the_status = "Cancelled";
+                    } else {
+                        $the_status = "Error";
+                    }
+
+                    $currency = Currency::where('currency_id', $stockpurchase->stockpurchase_currency_paid_in_id)->first();
+                    $business = Business::where('business_sys_id', $stockpurchase->stockpurchase_business_id)->first();
+
+                    $this_item = array(
+                        'type' => "SHARES PURCHASE",
+                        'info_1' => $the_status,
+                        'info_2' => $currency->currency_symbol . $stockpurchase->stockpurchase_total_all_fees_in_currency_paid_in,
+                        'info_3' => $business->business_full_name,
+                        'info_4' => strval($stockpurchase->stockpurchase_stocks_quantity),
+                        'info_5' => date("n M y", strtotime($stockpurchase->created_at)),
+                        'info_6' => $stockpurchase->stockpurchase_sys_id
+                    );
+                    array_push($data, $this_item);
+                }
+
+            }
+        }
+        
+        return response([
+            "status" => 1, 
+            "message" => "success",
+            "data" => $data,
+            "government_verification_is_on" => false,
+            "media_allowed" => intval(config('app.canpostpicsandvids')),
+            "user_android_app_max_vc" => intval(config('app.androidmaxvc')),
+            "user_android_app_force_update" => boolval(config('app.androidforceupdatetomaxvc')),
+            "phone_verification_is_on" => boolval(config('app.phoneverificationrequiredstatus'))
+        ]);
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    |--------------------------------------------------------------------------
+    | THIS FUNCTION GETS A USER'S INVESTMENTS
+    |--------------------------------------------------------------------------
+    |--------------------------------------------------------------------------
+    */
+    
+    public function getMyInvestments(Request $request)
     {
         /*
         |**************************************************************************
