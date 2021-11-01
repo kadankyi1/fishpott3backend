@@ -51,6 +51,8 @@ Route::middleware('auth:api')->post('/v1/user/send-withdrawal-request', [App\Htt
 // GET MY TRANSACTIONS
 Route::middleware('auth:api')->post('/v1/user/get-my-transactions', [App\Http\Controllers\version1\UserController::class, 'getMyTransactions']);
 
+// GET MY INVESTMENTS
+Route::middleware('auth:api')->post('/v1/user/get-my-investments', [App\Http\Controllers\version1\UserController::class, 'getMyInvestments']);
 
 /*
 |-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|
