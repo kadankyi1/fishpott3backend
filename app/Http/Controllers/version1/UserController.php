@@ -1471,7 +1471,7 @@ public function changePasswordWithResetCode(Request $request)
                         $the_status = "Error";
                     }
                     $this_item = array(
-                        'type' => "1",
+                        'type' => "WITHDRAWAL",
                         'info_1' => $withdrawal->withdrawal_paid,
                         'info_2' => $withdrawal->withdrawal_local_currency_sign . $withdrawal->withdrawal_amt_local,
                         'info_3' => $withdrawal->withdrawal_receiving_bank_or_momo_name,
@@ -1508,7 +1508,7 @@ public function changePasswordWithResetCode(Request $request)
                     $business = Business::where('business_sys_id', $stockpurchase->stockpurchase_business_id)->first();
 
                     $this_item = array(
-                        'type' => "4",
+                        'type' => "SHARES PURCHASE",
                         'info_1' => $stockpurchase->stockpurchase_processed,
                         'info_2' => $currency->currency_symbol . $stockpurchase->stockpurchase_total_all_fees_in_currency_paid_in,
                         'info_3' => $business->business_full_name,
