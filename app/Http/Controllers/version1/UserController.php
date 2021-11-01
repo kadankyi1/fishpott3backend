@@ -1559,7 +1559,6 @@ public function changePasswordWithResetCode(Request $request)
             "app_type" => "bail|required|max:8",
             "app_version_code" => "bail|required|integer",
             // ADD ANY OTHER REQUIRED INPUTS FROM HERE
-            
         ]);
 
         // MAKING SURE THE REQUEST AND USER IS VALIDATED
