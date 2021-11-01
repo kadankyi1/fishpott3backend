@@ -1636,5 +1636,78 @@ public function changePasswordWithResetCode(Request $request)
         ]);
     }
 
+    /*
+    |--------------------------------------------------------------------------
+    |--------------------------------------------------------------------------
+    | THIS FUNCTION GETS FINDS A BUSINESS USING A FIND CODE
+    |--------------------------------------------------------------------------
+    |--------------------------------------------------------------------------
+    */
+    
+    public function findBusiness(Request $request)
+    {
+        /*
+        |**************************************************************************
+        | VALIDATION STARTS 
+        |**************************************************************************
+        */
+        // MAKING SURE THE INPUT HAS THE EXPECTED VALUES
+        $validatedData = $request->validate([
+            "user_phone_number" => "bail|required|regex:/^\+\d{10,15}$/|min:10|max:15",
+            "user_pottname" => "bail|required|string|regex:/^[A-Za-z0-9_.]+$/|max:15",
+            "investor_id" => "bail|required",
+            "user_language" => "bail|required|max:3",
+            "app_type" => "bail|required|max:8",
+            "app_version_code" => "bail|required|integer",
+            // ADD ANY OTHER REQUIRED INPUTS FROM HERE
+            "business_id" => "bail|required",
+        ]);
+
+        // MAKING SURE THE REQUEST AND USER IS VALIDATED
+        $validation_response = UtilController::validateUserWithAuthToken($request, auth()->user(), "get-info-on-apps");
+        if(!empty($validation_response["status"]) && trim($validation_response["status"]) == "error"){
+            return response($validation_response);
+        } else {
+            $user = $validation_response;
+        }
+        /*
+        |**************************************************************************
+        | VALIDATION ENDED 
+        |**************************************************************************
+        */
+
+        $suggestion = Business::where('business_sys_id', $request->business_id)->orWhere('business_find_code', $request->business_id)->orWhere('business_pottname', $request->business_id)->first();
+        $message = "business";
+        $country = Country::where('country_id', '=', $suggestion->business_country_id)->first();
+        if($country === null){
+            return response([
+                "status" => 3, 
+                "message" => "Country validation error."
+            ]);
+        }
+
+        // REFORMATTING NEEDED VALUES
+        $suggestion->business_country = $country->country_real_name;
+        $suggestion->business_logo = config('app.url') . '/uploads/logos/' . $suggestion->business_logo;
+        $suggestion->business_pitch_video = config('app.url') . '/uploads/pitchvideos/' . $suggestion->business_pitch_video;
+        $suggestion->business_full_financial_report_pdf_url = config('app.url') . '/uploads/financedata/' . $suggestion->business_full_financial_report_pdf_url;
+        $suggestion->business_net_worth_usd = "$" . UtilController::formatNumberShort($suggestion->business_net_worth_usd);
+        $suggestion->business_lastyr_revenue_usd = "$" . UtilController::formatNumberShort($suggestion->business_lastyr_revenue_usd);
+        $suggestion->business_lastyr_profit_or_loss_usd = "$" . UtilController::formatNumberShort($suggestion->business_lastyr_profit_or_loss_usd);
+        $suggestion->business_debt_usd = "$" . UtilController::formatNumberShort($suggestion->business_debt_usd);
+        $suggestion->business_cash_on_hand_usd = "$" . UtilController::formatNumberShort($suggestion->business_cash_on_hand_usd);
+        $suggestion->business_investments_amount_needed_usd = "$" . UtilController::formatNumberShort($suggestion->business_investments_amount_needed_usd);
+
+        return response([
+            "status" => 1, 
+            "message" => $message,
+            "data" => $suggestion,
+            "government_verification_is_on" => false,
+            "media_allowed" => intval(config('app.canpostpicsandvids')),
+            "user_android_app_max_vc" => intval(config('app.androidmaxvc')),
+            "user_android_app_force_update" => boolval(config('app.androidforceupdatetomaxvc')),
+            "phone_verification_is_on" => boolval(config('app.phoneverificationrequiredstatus'))
+        ]);
+    }
 
 }
