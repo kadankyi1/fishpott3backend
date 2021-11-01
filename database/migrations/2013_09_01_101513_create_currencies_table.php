@@ -21,12 +21,26 @@ class CreateCurrenciesTable extends Migration
             $table->timestamps();
         });
 
+
+        Schema::table('currencies', function (Blueprint $table) {
+            $table->unsignedBigInteger('currency_country_id');
+            $table->foreign('currency_country_id')->references('countries')->on('user_types');
+        });
+
         DB::table('currencies')->insert([
             [
                 'currency_id' => 1, 
                 'currency_full_name' => 'United States Dollars', 
                 'currency_short_name' => 'USD', 
-                'currency_symbol' => '$'
+                'currency_symbol' => '$', 
+                'currency_country_id' => 226
+            ],
+            [
+                'currency_id' => 2, 
+                'currency_full_name' => 'Ghana Cedi', 
+                'currency_short_name' => 'GHS', 
+                'currency_symbol' => 'Gh¢', 
+                'currency_country_id' => 81
             ]
         ]);
     }

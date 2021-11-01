@@ -26,6 +26,7 @@ class Currency extends Model
         'currency_full_name',
         'currency_short_name',
         'currency_symbol',
+        'currency_country_id',
         'created_at',
         'updated_at',
     ];

@@ -14,8 +14,10 @@ use App\Models\version1\ResetCode;
 use App\Mail\version1\ResetCodeMail;
 use App\Mail\version1\WithdrawalMail;
 use App\Models\version1\Business;
+use App\Models\version1\Currency;
 use App\Models\version1\Drill;
 use App\Models\version1\DrillAnswer;
+use App\Models\version1\StockPurchase;
 use App\Models\version1\Suggestion;
 use App\Models\version1\SuggestionTypes;
 use App\Models\version1\Suggesto;
@@ -1107,14 +1109,17 @@ public function changePasswordWithResetCode(Request $request)
 
         // CALCULATING RISK INSURANCE FEE
         if($request->investment_risk_protection == 3){
+            $risk_type_id = 3;
             $risk_statement = "No risk insurance";
             $risk_fee = "0";
             $yield_info = $business->business_descriptive_financial_bio . ". Choosing no risk insurance means if the business fails, FishPott will not pay any amount back to you to cushion you.";
         } else if($request->investment_risk_protection == 2){
+            $risk_type_id = 2;
             $risk_statement = "50% Risk Insurance.";
             $risk_fee = $total_item_quantity_cost * floatval(config('app.fifty_risk_insurance'));
             $yield_info = $business->business_descriptive_financial_bio . ". Choosing 50% risk insurance means if the business fails, FishPott reimburse 50% what you paid for the shares.";
         } else if($request->investment_risk_protection == 1){
+            $risk_type_id = 1;
             $risk_statement = "100% Risk Insurance.";
             $risk_fee = $total_item_quantity_cost * floatval(config('app.hundred_risk_insurance'));
             $yield_info = $business->business_descriptive_financial_bio . ". Choosing 50% risk insurance means if the business fails, FishPott reimburse 100% what you paid for the shares.";
@@ -1127,13 +1132,42 @@ public function changePasswordWithResetCode(Request $request)
         $overall_total_usd = $total_item_quantity_cost + $risk_fee + $processing_fee;
 
         // CONVERTING TO USER'S LOCAL CURRENCY
+        $currency_local = Currency::where("currency_country_id", '=', $user->user_country_id)->first();
+
         if($user->user_country_id == 81){ // GHANA
+            
+            $overall_total_local_currency_no_currency_sign = ($overall_total_usd * floatval(config('app.to_cedi')));
             $overall_total_local_currency = "Gh¢" . ($overall_total_usd * floatval(config('app.to_cedi')));
             $rate = "$1 = " . "Gh¢" . floatval(config('app.to_cedi'));
+            $rate_no_sign = floatval(config('app.to_cedi'));
         } else {
+            $overall_total_local_currency_no_currency_sign = $overall_total_usd;
             $overall_total_local_currency = "$" . $overall_total_usd;
             $rate = "$1 = " . "$1";
+            $rate_no_sign = 1;
         }
+
+        // RECORDING THE POSSIBLE ORDER
+        $stockPurchaseData["stockpurchase_sys_id"] = "stockpurchase-" . $user->user_pottname . substr($user->user_phone_number ,1,strlen($user->user_phone_number)) . "-" . date("Y-m-d-H-i-s") . "-" . UtilController::getRandomString(91);
+        $stockPurchaseData["stockpurchase_business_id"] = $business->business_sys_id;
+        $stockPurchaseData["stockpurchase_price_per_stock_usd"] = $business->business_price_per_stock_usd;
+        $stockPurchaseData["stockpurchase_total_price_no_fees_usd"] = $total_item_quantity_cost;
+        $stockPurchaseData["stockpurchase_risk_insurance_fee_usd"] = floatval($risk_fee);
+        $stockPurchaseData["stockpurchase_processing_fee_usd"] = floatval($processing_fee);
+        $stockPurchaseData["stockpurchase_total_price_with_all_fees_usd"] = floatval($overall_total_usd);
+        $stockPurchaseData["stockpurchase_currency_paid_in_id"] = $currency_local->currency_id;
+        $stockPurchaseData["stockpurchase_rate_of_dollar_to_currency_paid_in"] = $rate_no_sign;
+        $stockPurchaseData["stockpurchase_total_all_fees_in_currency_paid_in"] = $overall_total_local_currency_no_currency_sign;
+        $stockPurchaseData["stockpurchase_risk_insurance_type_id"] = $risk_type_id;
+        $stockPurchaseData["stockpurchase_user_investor_id"] = $user->investor_id;
+        $stockPurchaseData["stockpurchase_processed"] = false;
+        $stockPurchaseData["stockpurchase_processed_reason"] = "";
+        $stockPurchaseData["stockpurchase_flagged"] = false;
+        $stockPurchaseData["stockpurchase_flagged_reason"] = "";
+        $stockPurchaseData["stockpurchase_payment_gateway_status"] = "";
+        $stockPurchaseData["stockpurchase_payment_gateway_info"] = "";
+        StockPurchase::create($stockPurchaseData);
+
 
         $data = array(
             "item" => $business->business_full_name, 
@@ -1145,7 +1179,8 @@ public function changePasswordWithResetCode(Request $request)
             "risk_insurance_fee" => "$" . strval($risk_fee), 
             "processing_fee" => "$" . strval($processing_fee), 
             "overall_total_usd" => "$" . strval($overall_total_usd), 
-            "overall_total_local_currency" => $overall_total_local_currency, 
+            "overall_total_local_currency" => $overall_total_local_currency,
+            "overall_total_local_currency_floatval" => $overall_total_local_currency_no_currency_sign,
             "financial_yield_info" => $yield_info
         );
 
@@ -1282,20 +1317,6 @@ public function changePasswordWithResetCode(Request $request)
             $overall_total_local_currency = "$" . $overall_total_usd;
             $rate = "$1 = " . "$1";
         }
-
-        $data = array(
-            "item" => $business->business_full_name, 
-            "price_per_item" => "$" . strval($business->business_price_per_stock_usd), 
-            "quantity" => $item_quantity, 
-            "rate" => $rate, 
-            "risk" => $request->investment_risk_protection,  
-            "risk_statement" => $risk_statement,   
-            "risk_insurance_fee" => "$" . strval($risk_fee), 
-            "processing_fee" => "$" . strval($processing_fee), 
-            "overall_total_usd" => "$" . strval($overall_total_usd), 
-            "overall_total_local_currency" => $overall_total_local_currency, 
-            "financial_yield_info" => $yield_info
-        );
 
 
         return response([
