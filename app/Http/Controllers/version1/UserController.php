@@ -1465,14 +1465,14 @@ public function changePasswordWithResetCode(Request $request)
                         $the_status = "Pending";
                     } else if($withdrawal->withdrawal_paid == 1){
                         $the_status = "Paid";
-                    } else if($withdrawal->withdrawal_paid == 3){
+                    } else if($withdrawal->withdrawal_paid == 2){
                         $the_status = "Cancelled";
                     } else {
                         $the_status = "Error";
                     }
                     $this_item = array(
                         'type' => "1",
-                        'info_1' => $the_status,
+                        'info_1' => $withdrawal->withdrawal_paid,
                         'info_2' => $withdrawal->withdrawal_local_currency_sign . $withdrawal->withdrawal_amt_local,
                         'info_3' => $withdrawal->withdrawal_receiving_bank_or_momo_name,
                         'info_4' => $withdrawal->withdrawal_receiving_bank_or_momo_account_number,
@@ -1498,7 +1498,7 @@ public function changePasswordWithResetCode(Request $request)
                         $the_status = "Pending";
                     } else if($stockpurchase->stockpurchase_processed == 1){
                         $the_status = "Paid";
-                    } else if($stockpurchase->stockpurchase_processed == 3){
+                    } else if($stockpurchase->stockpurchase_processed == 2){
                         $the_status = "Cancelled";
                     } else {
                         $the_status = "Error";
@@ -1509,7 +1509,7 @@ public function changePasswordWithResetCode(Request $request)
 
                     $this_item = array(
                         'type' => "4",
-                        'info_1' => $the_status,
+                        'info_1' => $stockpurchase->stockpurchase_processed,
                         'info_2' => $currency->currency_symbol . $stockpurchase->stockpurchase_total_all_fees_in_currency_paid_in,
                         'info_3' => $business->business_full_name,
                         'info_4' => strval($stockpurchase->stockpurchase_stocks_quantity),
