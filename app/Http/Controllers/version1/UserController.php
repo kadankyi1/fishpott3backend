@@ -1703,12 +1703,15 @@ public function changePasswordWithResetCode(Request $request)
 
         if ($suggestion2 != null && UtilController::getDateDiff($suggestion2->created_at, date('Y-m-d H:i:s'), "hours") < intval(config('app.timedurationinhoursforbusinesssuggestionstobeavailable'))) {
             $can_buy = "yes";
+            $invest_message = "Awesome. You found a business that you can invest in. Simply click the 'Buy Shares' button to proceed";
         } else {
             $can_buy = "no";
+            $invest_message = "Nice. You found a business. Unfortunately, you have not been invited to buy shares in the business. For exceptions, please contact us on " . config('app.fishpott_email');
         }
         return response([
             "status" => 1, 
             "message" => $message,
+            "invest_message" => $invest_message,
             "can_buy" => $can_buy,
             "data" => $suggestion,
             "government_verification_is_on" => false,
