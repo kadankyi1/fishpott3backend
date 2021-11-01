@@ -1613,7 +1613,7 @@ public function changePasswordWithResetCode(Request $request)
             }
 
             $this_item = array(
-                'business_id' => $business->business_sys_id,
+                'business_id' => $business->business_sys_id . "Stock",
                 'business_name' => $business->business_full_name,
                 'cost_per_share_usd' => "$" . $this_cost_per_share_usd,
                 'value_per_share_usd' => $the_stockvalue,
