@@ -1475,6 +1475,8 @@ public function changePasswordWithResetCode(Request $request)
                         'info_2' => $withdrawal->withdrawal_local_currency_sign . $withdrawal->withdrawal_amt_local,
                         'info_3' => $withdrawal->withdrawal_receiving_bank_or_momo_name,
                         'info_4' => $withdrawal->withdrawal_receiving_bank_or_momo_account_number,
+                        'info_5' => date("n M y", strtotime($withdrawal->created_at)),
+                        'info_6' => $withdrawal->withdrawal_sys_id
                     );
                     array_push($data, $this_item);
                 }
@@ -1510,6 +1512,8 @@ public function changePasswordWithResetCode(Request $request)
                         'info_2' => $currency->currency_symbol . $stockpurchase->stockpurchase_total_all_fees_in_currency_paid_in,
                         'info_3' => $business->business_full_name,
                         'info_4' => strval($stockpurchase->stockpurchase_stocks_quantity),
+                        'info_5' => date("n M y", strtotime($stockpurchase->created_at)),
+                        'info_6' => $stockpurchase->stockpurchase_sys_id
                     );
                     array_push($data, $this_item);
                 }
