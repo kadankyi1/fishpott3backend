@@ -24,7 +24,7 @@ class Transaction extends Model
     protected $fillable = [
         'transaction_id', 
         'transaction_sys_id',
-        'transaction_type_id',
+        'transaction_transaction_type_id',
         'transaction_type_name',
         'transaction_referenced_item_id',
         'transaction_user_investor_id',

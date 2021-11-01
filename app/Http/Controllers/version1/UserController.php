@@ -20,6 +20,7 @@ use App\Models\version1\Suggestion;
 use App\Models\version1\SuggestionTypes;
 use App\Models\version1\Suggesto;
 use App\Models\version1\Withdrawal;
+use App\Models\version1\Transaction;
 use Illuminate\Support\Facades\File; 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -1252,6 +1253,13 @@ public function changePasswordWithResetCode(Request $request)
         $withdrawalData["withdrawal_flagged"] = false;
         $withdrawalData["withdrawal_user_investor_id"] = $user->investor_id;
         $withdrawal = Withdrawal::create($withdrawalData);
+
+        // SAVING IT AS A TRANSACTION
+        $transactionData["transaction_sys_id"] =  "transaction-" . $user->user_pottname . substr($user->user_phone_number ,1,strlen($user->user_phone_number)) . UtilController::getRandomString(91);
+        $transactionData["transaction_transaction_type_id"] = 1;
+        $transactionData["transaction_referenced_item_id"] = $withdrawalData["withdrawal_sys_id"];
+        $transactionData["transaction_user_investor_id"] = $user->investor_id;
+        $transaction = Transaction::create($withdrawalData);
 
 
 
