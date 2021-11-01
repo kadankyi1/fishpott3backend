@@ -22,7 +22,7 @@ class CreateTransactionsTable extends Migration
 
 
         Schema::table('transactions', function (Blueprint $table) {
-            $table->string('transaction_transaction_type_id', 255);
+            $table->unsignedBigInteger('transaction_transaction_type_id');
             $table->foreign('transaction_transaction_type_id')->references('transaction_type_id')->on('transaction_types');
 
             $table->string('transaction_user_investor_id', 255);
