@@ -74,5 +74,8 @@ Route::middleware('auth:administrator-api')->post('/v1/admin/add-drill', [App\Ht
 // ADD BUSINESS
 Route::middleware('auth:administrator-api')->post('/v1/admin/add-business', [App\Http\Controllers\version1\AdministratorController::class, 'addBusiness']);
 
+// ADD BUSINESS
+Route::middleware('auth:administrator-api')->post('/v1/admin/add-new-stock-value', [App\Http\Controllers\version1\AdministratorController::class, 'addNewShareValue']);
+
 // ADD NEW ADMINISTRATOR
 //Route::middleware('auth:administrator-api')->get('/v1/user/get-drill', [App\Http\Controllers\version1\AdministratorController::class, 'registerFirstAdmin']);

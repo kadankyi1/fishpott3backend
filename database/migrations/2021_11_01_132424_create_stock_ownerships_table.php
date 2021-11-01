@@ -24,8 +24,8 @@ class CreateStockOwnershipsTable extends Migration
         });
 
         Schema::table('stock_ownerships', function (Blueprint $table) {
-            $table->string('stockpurchase_business_id', 255);
-            $table->foreign('stockpurchase_business_id')->references('business_sys_id')->on('businesses');
+            $table->string('stockownership_business_id', 255);
+            $table->foreign('stockownership_business_id')->references('business_sys_id')->on('businesses');
 
             $table->string('stockownership_user_investor_id', 255);
             $table->foreign('stockownership_user_investor_id')->references('investor_id')->on('users');

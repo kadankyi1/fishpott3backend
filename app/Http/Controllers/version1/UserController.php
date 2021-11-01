@@ -1042,7 +1042,7 @@ public function changePasswordWithResetCode(Request $request)
 
         // MAKING SURE THE REQUEST AND USER IS VALIDATED
         $validation_response = UtilController::validateUserWithAuthToken($request, auth()->user(), "get-info-on-apps");
-        if(!empty($validation_response["status"]) && trim($validation_response["status"]) == "error"){
+        if(!empty($validation_response["status"])){
             return response($validation_response);
         } else {
             $user = $validation_response;
@@ -1134,6 +1134,7 @@ public function changePasswordWithResetCode(Request $request)
         $overall_total_usd = $total_item_quantity_cost + $risk_fee + $processing_fee;
 
         // CONVERTING TO USER'S LOCAL CURRENCY
+        //echo var_dump($user); exit;
         $currency_local = Currency::where("currency_country_id", '=', $user->user_country_id)->first();
 
         if($user->user_country_id == 81){ // GHANA
@@ -1576,10 +1577,11 @@ public function changePasswordWithResetCode(Request $request)
         |**************************************************************************
         */
         $data = array();
-        $result = StockOwnership::where("stockownership_sys_id", $user->investor_id)->get();
+        $result = StockOwnership::where("stockownership_user_investor_id", $user->investor_id)->get();
 
         foreach($result as $stockownership){
             // STOCK PURCHASE
+            //echo "here 1 \n stockownership->stockownership_business_id: " . $stockownership->stockownership_business_id;
             $business = Business::where('business_sys_id', $stockownership->stockownership_business_id)->first();
             if($business == null){
                 continue;
