@@ -54,6 +54,8 @@ Route::middleware('auth:api')->post('/v1/user/get-my-transactions', [App\Http\Co
 // GET MY INVESTMENTS
 Route::middleware('auth:api')->post('/v1/user/get-my-investments', [App\Http\Controllers\version1\UserController::class, 'getMyInvestments']);
 
+// FIND A BUSINESS
+Route::middleware('auth:api')->post('/v1/user/find-business', [App\Http\Controllers\version1\UserController::class, 'findBusiness']);
 /*
 |-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|
 | |-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-| ADMINISTRATOR SECTION ADMINISTRATOR SECTION ADMINISTRATOR SECTION ADMINISTRATOR SECTION |-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|
