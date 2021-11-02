@@ -19,13 +19,14 @@ class CreateUsersTable extends Migration
             $table->string('user_surname', 255)->default("");
             $table->string('user_firstname', 255);
             $table->string('user_pottname', 255)->unique();
-            $table->integer('user_pott_intelligence')->default(0);
             $table->date('user_dob');
             $table->string('user_phone_number', 255)->unique();
             $table->string('user_email', 255)->unique();
             $table->string('user_profile_picture', 255)->nullable();
             $table->string('password', 255);
-            $table->string('user_net_worth', 255)->default(0);
+            $table->bigInteger('user_net_worth_usd')->default(0);
+            $table->bigInteger('user_pott_intelligence')->default(0);
+            $table->bigInteger('user_pott_position')->default(0);
             $table->decimal('user_wallet_usd', 12, 2)->default(0);
             $table->integer('user_verified_tag')->default(0);
             $table->datetime('user_shield_date', $precision = 0);

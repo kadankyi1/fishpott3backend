@@ -494,8 +494,33 @@ class UtilController extends Controller
 		return $n_format . $suffix;
 	}
 
-    public static function getAmtInNewCurrency($user_country_id, $amount_in_usd)
+    public static function formatNumberWithPositionAffix($input_number)
     {
-
+        if($input_number == 0){
+            return "Last";
+        }
+        $number = (string) $input_number;
+        $last_digit = substr($number, -1);
+        $second_last_digit = substr($number, -2, 1);
+        $suffix = 'th';
+        if ($second_last_digit != '1')
+        {
+            switch ($last_digit)
+            {
+            case '1':
+                $suffix = 'st';
+                break;
+            case '2':
+                $suffix = 'nd';
+                break;
+            case '3':
+                $suffix = 'rd';
+                break;
+            default:
+                break;
+            }
+        }
+        if ((string) $number === '1') $suffix = 'st';
+            return $number.$suffix;
     }
 }

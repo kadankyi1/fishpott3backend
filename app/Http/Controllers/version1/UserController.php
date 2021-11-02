@@ -151,7 +151,7 @@ class UserController extends Controller
         $userData["user_country_id"] = $country->country_id;
         $userData["user_language_id"] = $language->language_id;
         $userData["user_currency_id"] = 1; //USD
-        $userData["user_net_worth"] = 0;
+        $userData["user_net_worth_usd"] = 0;
         $userData["user_verified_tag"] = 0;
         $userData["user_shield_date"] = date("Y-m-d H:i:s");
         $userData["user_referred_by"] = $validatedData["user_referred_by"];
@@ -319,7 +319,7 @@ class UserController extends Controller
         $userData["user_country_id"] = $country->country_id;
         $userData["user_language_id"] = $language->language_id;
         $userData["user_currency_id"] = 1; //USD
-        $userData["user_net_worth"] = 0;
+        $userData["user_net_worth_usd"] = 0;
         $userData["user_verified_tag"] = 0;
         $userData["user_shield_date"] = date("Y-m-d H:i:s");
         $userData["user_referred_by"] = $validatedData["user_referred_by"];
@@ -1783,12 +1783,13 @@ public function changePasswordWithResetCode(Request $request)
         |**************************************************************************
         */
 
-        $suggestion = Business::where('suggestion_directed_at_user_business_find_code', $request->business_id)->first();
+        $suggestion = User::where('suggestion_directed_at_user_business_find_code', $request->business_id)->first();
+        $all_users = User::count();   
 
         $data = array(
-            "pott_intelligence" => $user->business_full_name, 
-            "price_per_item" => "$" . strval($business->business_price_per_stock_usd), 
-            "price_per_item" => "$" . strval($business->business_price_per_stock_usd)
+            "pott_networth" => "$" . strval(UtilController::formatNumberShort($user->user_net_worth_usd)), 
+            "pott_intelligence" => $user->user_pott_intelligence . " -- Pott Intelligence", 
+            "pott_position" => UtilController::formatNumberWithPositionAffix($user->user_pott_position) . " - Your FishPott ranks at this position currently out of " . strval($all_users) . " FishPotts"
         );
 
         return response([
