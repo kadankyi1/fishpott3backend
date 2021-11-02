@@ -1783,7 +1783,6 @@ public function changePasswordWithResetCode(Request $request)
         |**************************************************************************
         */
 
-        $suggestion = User::where('suggestion_directed_at_user_business_find_code', $request->business_id)->first();
         $all_users = User::count();   
 
         $data = array(
@@ -1795,7 +1794,7 @@ public function changePasswordWithResetCode(Request $request)
         return response([
             "status" => 1, 
             "message" => "success",
-            "data" => $suggestion,
+            "data" => $data,
             "government_verification_is_on" => false,
             "media_allowed" => intval(config('app.canpostpicsandvids')),
             "user_android_app_max_vc" => intval(config('app.androidmaxvc')),
