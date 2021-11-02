@@ -56,6 +56,9 @@ Route::middleware('auth:api')->post('/v1/user/get-my-investments', [App\Http\Con
 
 // FIND A BUSINESS
 Route::middleware('auth:api')->post('/v1/user/find-business', [App\Http\Controllers\version1\UserController::class, 'findBusiness']);
+
+// UPDATE AND GET RECENT USER INFO
+Route::middleware('auth:api')->post('/v1/user/get-user-info', [App\Http\Controllers\version1\UserController::class, 'updateAndGetRecentUserInfo']);
 /*
 |-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|
 | |-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-| ADMINISTRATOR SECTION ADMINISTRATOR SECTION ADMINISTRATOR SECTION ADMINISTRATOR SECTION |-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|
