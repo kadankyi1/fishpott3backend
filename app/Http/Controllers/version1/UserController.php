@@ -1795,7 +1795,7 @@ public function changePasswordWithResetCode(Request $request)
         $all_users = User::count();   
 
         $data = array(
-            "pott_networth" => "$" . strval(UtilController::formatNumberShort($user->user_net_worth_usd)), 
+            "pott_networth" => "$" . strval(UtilController::formatNumberShort($user->user_net_worth_usd)) . " -- Pott Net Worth", 
             "pott_intelligence" => $user->user_pott_intelligence . " -- Pott Intelligence", 
             "pott_position" => UtilController::formatNumberWithPositionAffix($user->user_pott_position) . " - Your FishPott ranks at this position currently out of " . strval($all_users) . " FishPotts"
         );
