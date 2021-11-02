@@ -33,8 +33,8 @@ Route::post('/v1/user/change-password-with-reset-code',[App\Http\Controllers\ver
 // UPLOAD PROFILE PICTURE
 Route::middleware('auth:api')->post('/v1/user/upload-pott-pic', [App\Http\Controllers\version1\UserController::class, 'uploadProfilePicture']);
 
-// GET DRILL
-Route::middleware('auth:api')->get('/v1/user/get-my-suggestion', [App\Http\Controllers\version1\UserController::class, 'getMySuggestion']);
+// GET SUGGESTION
+//Route::middleware('auth:api')->get('/v1/user/get-my-suggestion', [App\Http\Controllers\version1\UserController::class, 'getMySuggestion']);
 
 // SAVE DRILL
 Route::middleware('auth:api')->post('/v1/user/save-drill-answer', [App\Http\Controllers\version1\UserController::class, 'saveDrillAnswerAndReturnWhatOthersSaid']);
