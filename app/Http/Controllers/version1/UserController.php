@@ -1744,4 +1744,113 @@ public function changePasswordWithResetCode(Request $request)
         ]);
     }
 
+    /*
+    |--------------------------------------------------------------------------
+    |--------------------------------------------------------------------------
+    | THIS FUNCTION SENDS THE RECENT USER INFO TO FRONTEND
+    |--------------------------------------------------------------------------
+    |--------------------------------------------------------------------------
+    */
+    
+    public function updateAndGetRecentUserInfo(Request $request)
+    {
+        /*
+        |**************************************************************************
+        | VALIDATION STARTS 
+        |**************************************************************************
+        */
+        // MAKING SURE THE INPUT HAS THE EXPECTED VALUES
+        $validatedData = $request->validate([
+            "user_phone_number" => "bail|required|regex:/^\+\d{10,15}$/|min:10|max:15",
+            "user_pottname" => "bail|required|string|regex:/^[A-Za-z0-9_.]+$/|max:15",
+            "investor_id" => "bail|required",
+            "user_language" => "bail|required|max:3",
+            "app_type" => "bail|required|max:8",
+            "app_version_code" => "bail|required|integer",
+            // ADD ANY OTHER REQUIRED INPUTS FROM HERE
+            "business_id" => "bail|required",
+        ]);
+
+        // MAKING SURE THE REQUEST AND USER IS VALIDATED
+        $validation_response = UtilController::validateUserWithAuthToken($request, auth()->user(), "get-info-on-apps");
+        if(!empty($validation_response["status"]) && trim($validation_response["status"]) == "error"){
+            return response($validation_response);
+        } else {
+            $user = $validation_response;
+        }
+        /*
+        |**************************************************************************
+        | VALIDATION ENDED 
+        |**************************************************************************
+        */
+
+        $suggestion = Suggestion::where('suggestion_directed_at_user_business_find_code', $request->business_id)->first();
+        if($suggestion == null){
+            $suggestion = Business::where('business_sys_id', $request->business_id)->orWhere('business_find_code', $request->business_id)->orWhere('business_pottname', $request->business_id)->first();
+        } else {
+            $suggestion = Business::where('business_sys_id', $suggestion->suggestion_item_reference_id)->first();
+        }
+
+        if($suggestion === null){
+            return response([
+                "status" => 3, 
+                "message" => "Business not found",
+                "government_verification_is_on" => false,
+                "media_allowed" => intval(config('app.canpostpicsandvids')),
+                "user_android_app_max_vc" => intval(config('app.androidmaxvc')),
+                "user_android_app_force_update" => boolval(config('app.androidforceupdatetomaxvc')),
+                "phone_verification_is_on" => boolval(config('app.phoneverificationrequiredstatus'))
+            ]);
+        }
+        $message = "business";
+        $country = Country::where('country_id', '=', $suggestion->business_country_id)->first();
+        if($country === null){
+            return response([
+                "status" => 3, 
+                "message" => "Country validation error.",
+                "government_verification_is_on" => false,
+                "media_allowed" => intval(config('app.canpostpicsandvids')),
+                "user_android_app_max_vc" => intval(config('app.androidmaxvc')),
+                "user_android_app_force_update" => boolval(config('app.androidforceupdatetomaxvc')),
+                "phone_verification_is_on" => boolval(config('app.phoneverificationrequiredstatus'))
+            ]);
+        }
+
+        // REFORMATTING NEEDED VALUES
+        $suggestion->business_country = $country->country_real_name;
+        $suggestion->business_logo = config('app.url') . '/uploads/logos/' . $suggestion->business_logo;
+        $suggestion->business_pitch_video = config('app.url') . '/uploads/pitchvideos/' . $suggestion->business_pitch_video;
+        $suggestion->business_full_financial_report_pdf_url = config('app.url') . '/uploads/financedata/' . $suggestion->business_full_financial_report_pdf_url;
+        $suggestion->business_net_worth_usd = "$" . UtilController::formatNumberShort($suggestion->business_net_worth_usd);
+        $suggestion->business_lastyr_revenue_usd = "$" . UtilController::formatNumberShort($suggestion->business_lastyr_revenue_usd);
+        $suggestion->business_lastyr_profit_or_loss_usd = "$" . UtilController::formatNumberShort($suggestion->business_lastyr_profit_or_loss_usd);
+        $suggestion->business_debt_usd = "$" . UtilController::formatNumberShort($suggestion->business_debt_usd);
+        $suggestion->business_cash_on_hand_usd = "$" . UtilController::formatNumberShort($suggestion->business_cash_on_hand_usd);
+        $suggestion->business_investments_amount_needed_usd = "$" . UtilController::formatNumberShort($suggestion->business_investments_amount_needed_usd);
+
+        // CHECKING IF USER CAN BUY SHARES OR NOT FROM BUSINESS
+        $suggestion2 =  Suggestion::where('suggestion_directed_at_user_investor_id', '=', $user->investor_id)->where('suggestion_item_reference_id', $suggestion->business_sys_id)->where('suggestion_flagged', false)->first();
+
+        if ($suggestion2 != null && UtilController::getDateDiff($suggestion2->created_at, date('Y-m-d H:i:s'), "hours") < intval(config('app.timedurationinhoursforbusinesssuggestionstobeavailable'))) {
+            $can_buy = "yes";
+            $invest_message = "Awesome. You found a business that you can invest in. Simply click the 'Buy Shares' button to proceed";
+        } else {
+            $can_buy = "no";
+            $invest_message = "Nice. You found a business. Unfortunately, you have not been invited to buy shares in the business. For exceptions, please contact us on " . config('app.fishpott_email');
+        }
+        return response([
+            "status" => 1, 
+            "message" => $message,
+            "invest_message" => $invest_message,
+            "can_buy" => $can_buy,
+            "data" => $suggestion,
+            "government_verification_is_on" => false,
+            "media_allowed" => intval(config('app.canpostpicsandvids')),
+            "user_android_app_max_vc" => intval(config('app.androidmaxvc')),
+            "user_android_app_force_update" => boolval(config('app.androidforceupdatetomaxvc')),
+            "phone_verification_is_on" => boolval(config('app.phoneverificationrequiredstatus'))
+        ]);
+    }
+
+
 }
