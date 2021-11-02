@@ -32,6 +32,7 @@ class User extends Authenticatable
         'user_surname', 
         'user_firstname', 
         'user_pottname', 
+        'user_pott_intelligence', 
         'user_dob', 
         'user_phone_number',
         'user_email',
