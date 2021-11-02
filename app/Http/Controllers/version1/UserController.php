@@ -1676,7 +1676,13 @@ public function changePasswordWithResetCode(Request $request)
         |**************************************************************************
         */
 
-        $suggestion = Business::where('business_sys_id', $request->business_id)->orWhere('business_find_code', $request->business_id)->orWhere('business_pottname', $request->business_id)->first();
+        $suggestion = Suggestion::where('suggestion_directed_at_user_business_find_code', $request->business_id)->first();
+        if($suggestion == null){
+            $suggestion = Business::where('business_sys_id', $request->business_id)->orWhere('business_find_code', $request->business_id)->orWhere('business_pottname', $request->business_id)->first();
+        } else {
+            $suggestion = Business::where('business_sys_id', $suggestion->suggestion_item_reference_id)->first();
+        }
+
         if($suggestion === null){
             return response([
                 "status" => 3, 
