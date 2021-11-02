@@ -1768,6 +1768,7 @@ public function changePasswordWithResetCode(Request $request)
             "app_type" => "bail|required|max:8",
             "app_version_code" => "bail|required|integer",
             // ADD ANY OTHER REQUIRED INPUTS FROM HERE
+            "fcm_token" => "nullable|string",
         ]);
 
         // MAKING SURE THE REQUEST AND USER IS VALIDATED
@@ -1777,12 +1778,20 @@ public function changePasswordWithResetCode(Request $request)
         } else {
             $user = $validation_response;
         }
+
+        if(strtoupper($request->app_type) == "ANDROID" && !empty($request->fcm_token)){
+            $user->user_fcm_token_android = $request->fcm_token;
+            $user->save();
+        }
         /*
         |**************************************************************************
         | VALIDATION ENDED 
         |**************************************************************************
         */
 
+        // SAVING FCM TOKEN FROM USER
+
+        // GETTING ALL USERS
         $all_users = User::count();   
 
         $data = array(
