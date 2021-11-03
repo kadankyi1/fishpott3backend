@@ -152,6 +152,8 @@ class UserController extends Controller
         $userData["user_language_id"] = $language->language_id;
         $userData["user_currency_id"] = 1; //USD
         $userData["user_net_worth_usd"] = 0;
+        $userData["user_pott_intelligence"] = 0;
+        $userData["user_pott_position"] = 0;
         $userData["user_verified_tag"] = 0;
         $userData["user_shield_date"] = date("Y-m-d H:i:s");
         $userData["user_referred_by"] = $validatedData["user_referred_by"];
@@ -320,6 +322,8 @@ class UserController extends Controller
         $userData["user_language_id"] = $language->language_id;
         $userData["user_currency_id"] = 1; //USD
         $userData["user_net_worth_usd"] = 0;
+        $userData["user_pott_intelligence"] = 0;
+        $userData["user_pott_position"] = 0;
         $userData["user_verified_tag"] = 0;
         $userData["user_shield_date"] = date("Y-m-d H:i:s");
         $userData["user_referred_by"] = $validatedData["user_referred_by"];
