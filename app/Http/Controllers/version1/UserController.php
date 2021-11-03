@@ -1852,6 +1852,7 @@ public function changePasswordWithResetCode(Request $request)
 
             echo "\n user_pottname: " . $user->user_pottname . " -- user position: " . $user_position . " -- user_net_worth_usd: " . $user->user_net_worth_usd;
             $user->user_net_worth_usd = $user->user_net_worth_usd + $user->user_wallet_usd;
+            $user->user_pott_position = $user_position;
             $user->save();
             $user_position++;
         }
