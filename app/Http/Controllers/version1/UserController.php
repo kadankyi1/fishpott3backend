@@ -1816,7 +1816,7 @@ public function changePasswordWithResetCode(Request $request)
         ]);
     }
 
-        /*
+    /*
     |--------------------------------------------------------------------------
     |--------------------------------------------------------------------------
     | THIS FUNCTION SENDS THE RECENT USER INFO TO FRONTEND
@@ -1830,7 +1830,14 @@ public function changePasswordWithResetCode(Request $request)
         $users = User::get();
 
         foreach($users as $user){
-            echo "user_pottname: " . $user->user_pottname;
+            echo "\nuser_pottname: " . $user->user_pottname;
+
+            // SUMMING UP THE SHARES OWNED
+            $stockpurchase_quantity = StockOwnership::where("stockownership_user_investor_id", $user->investor_id)->get()->count();
+            return "stockpurchase_quantity: " . $stockpurchase_quantity;
+    
+            
+
         }
     }
 
