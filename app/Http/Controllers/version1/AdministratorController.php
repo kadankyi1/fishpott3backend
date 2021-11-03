@@ -489,7 +489,7 @@ class AdministratorController extends Controller
 
         return response([
             "status" => "yes", 
-            "message" => "New stock saved"
+            "message" => "New stock value saved"
         ]);
     }
 
