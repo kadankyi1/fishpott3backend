@@ -1830,12 +1830,10 @@ public function changePasswordWithResetCode(Request $request)
         $users = User::get();
         $users = User::orderBy('user_pott_position', 'DESC')->get();
 
-        var_dump($users); exit;
-
+        //var_dump($users); exit;
+        $user_position = 1;
         foreach($users as $user){
-            $user->user_net_worth_usd = 0;
-            //echo ";
-
+            $user->user_net_worth_usd = 0;s
             // SUMMING UP THE SHARES OWNED
             $ownedstocks = StockOwnership::where("stockownership_user_investor_id", $user->investor_id)->get();
 
@@ -1852,9 +1850,10 @@ public function changePasswordWithResetCode(Request $request)
                 }
             }
 
+            echo "\n user_pottname: " . $user->user_pottname . " -- user position: " . $user_position . " -- user_net_worth_usd: " . $user->user_net_worth_usd;
             $user->user_net_worth_usd = $user->user_net_worth_usd + $user->user_wallet_usd;
             $user->save();
-            //echo "\n user_pottname: " . $user->user_pottname . " -- user_net_worth_usd: " . $user->user_net_worth_usd;
+            $user_position++;
         }
     }
 
