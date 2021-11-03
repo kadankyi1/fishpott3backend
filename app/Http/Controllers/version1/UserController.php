@@ -1833,7 +1833,7 @@ public function changePasswordWithResetCode(Request $request)
         //var_dump($users); exit;
         $user_position = 1;
         foreach($users as $user){
-            $user->user_net_worth_usd = 0;s
+            $user->user_net_worth_usd = 0;
             // SUMMING UP THE SHARES OWNED
             $ownedstocks = StockOwnership::where("stockownership_user_investor_id", $user->investor_id)->get();
 
