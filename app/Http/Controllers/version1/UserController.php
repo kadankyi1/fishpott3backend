@@ -1825,6 +1825,7 @@ public function changePasswordWithResetCode(Request $request)
         // GETTING ALL USERS
         $users = User::get();
 
+        echo "here 1\n";
         foreach($users as $user){
             echo $user->pottname;
         }
