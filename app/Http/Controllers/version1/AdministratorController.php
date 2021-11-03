@@ -224,7 +224,7 @@ class AdministratorController extends Controller
             "business_registration_number" => "bail|required|string|min:5|max:100",
             "business_type" => "bail|required|string|min:5|max:100",
             "business_logo_file" => "bail|required",
-            "business_find_code" => "bail|required|max:10",
+            //"business_find_code" => "bail|required|max:10",
             "business_full_name" => "bail|required|string|min:4|max:150",
             "business_stockmarket_shortname" => "nullable|max:10",
             "business_descriptive_bio" => "bail|required|max:150",
