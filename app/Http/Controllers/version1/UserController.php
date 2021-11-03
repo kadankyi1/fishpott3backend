@@ -1848,8 +1848,8 @@ public function changePasswordWithResetCode(Request $request)
                     $user->user_net_worth_usd = $user->user_net_worth_usd + ($ownedstock->stockownership_stocks_quantity * $stockvalue->stockvalue_value_per_stock_usd);
                 }
             }
-    
-            echo "\n user_pottname: " . $user->user_pottname . " -- user_net_worth_usd: " . $user->user_net_worth_usd;
+            $user->save();
+            //echo "\n user_pottname: " . $user->user_pottname . " -- user_net_worth_usd: " . $user->user_net_worth_usd;
         }
     }
 
