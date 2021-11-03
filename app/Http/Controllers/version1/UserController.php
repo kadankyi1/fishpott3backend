@@ -1830,14 +1830,23 @@ public function changePasswordWithResetCode(Request $request)
         $users = User::get();
 
         foreach($users as $user){
+            $user->user_net_worth_usd = 0;
             echo "\n user_pottname: " . $user->user_pottname;
 
             // SUMMING UP THE SHARES OWNED
             $ownedstocks = StockOwnership::where("stockownership_user_investor_id", $user->investor_id)->get();
 
             foreach($ownedstocks as $ownedstock){
-                echo "stockbusiness_id: " . $ownedstock->stockownership_business_id . " -- ownedstock quantity: " . $ownedstock->stockownership_stocks_quantity;
-
+                //echo "stockbusiness_id: " . $ownedstock->stockownership_business_id . " -- ownedstock quantity: " . $ownedstock->stockownership_stocks_quantity;
+                $stockvalue = StockValue::where("stockvalue_business_id", $ownedstock->stockownership_business_id)->get();
+                if($stockvalue == null){
+                    echo "\n here 1";
+                    $user->user_net_worth_usd = $user->user_net_worth_usd + $ownedstock->stockownership_total_cost_usd;
+                } else {
+                    echo "\n here 1";
+                    $user->user_net_worth_usd = $user->user_net_worth_usd + ($ownedstock->stockownership_stocks_quantity * $stockvalue->stockvalue_value_per_stock_usd);
+                }
+                echo "user_net_worth_usd: " . $user->user_net_worth_usd;
             }
     
         }
