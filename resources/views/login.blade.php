@@ -13,9 +13,6 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
       <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-      <meta name="description" content="Mega Able Bootstrap admin template made using Bootstrap 4 and it has huge amount of ready made feature, UI components, pages which completely fulfills any dashboard needs." />
-      <meta name="keywords" content="bootstrap, bootstrap admin template, admin theme, admin dashboard, dashboard template, admin template, responsive" />
-      <meta name="author" content="codedthemes" />
       <!-- Favicon icon -->
 
       <link rel="icon" href="images/favicon.ico" type="image/x-icon">
@@ -100,7 +97,7 @@
                     
                         <form class="md-float-material form-material">
                             <div class="text-center">
-                                <img src="images/logo.png" alt="logo.png">
+                                <img src="images/fishpott_icon_circle.png" style="height: 100px; width: 100px;" alt="logo.png">
                             </div>
                             <div class="auth-box card">
                                 <div class="card-block">
@@ -110,28 +107,29 @@
                                         </div>
                                     </div>
                                     <div class="form-group form-primary">
-                                        <input type="text" name="email" class="form-control" required="">
+                                        <input type="text" name="administrator_phone_number" class="form-control" required="">
                                         <span class="form-bar"></span>
-                                        <label class="float-label">Your Email Address</label>
+                                        <label class="float-label">Phone</label>
                                     </div>
                                     <div class="form-group form-primary">
                                         <input type="password" name="password" class="form-control" required="">
                                         <span class="form-bar"></span>
                                         <label class="float-label">Password</label>
                                     </div>
-                                    <div class="row m-t-25 text-left">
-                                        <div class="col-12">
-                                            <div class="checkbox-fade fade-in-primary d-">
-                                                <label>
-                                                    <input type="checkbox" value="">
-                                                    <span class="cr"><i class="cr-icon icofont icofont-ui-check txt-primary"></i></span>
-                                                    <span class="text-inverse">Remember me</span>
-                                                </label>
-                                            </div>
-                                            <div class="forgot-phone text-right f-right">
-                                                <a href="#" class="text-right f-w-600"> Forgot Password?</a>
-                                            </div>
-                                        </div>
+                                    <div class="form-group form-primary">
+                                        <input type="text" name="administrator_user_pottname" class="form-control" required="">
+                                        <span class="form-bar"></span>
+                                        <label class="float-label">Pott Name</label>
+                                    </div>
+                                    <div class="form-group form-primary">
+                                        <input type="password" name="password" class="form-control" required="">
+                                        <span class="form-bar"></span>
+                                        <label class="float-label">Pott Password</label>
+                                    </div>
+                                    <div class="form-group form-primary">
+                                        <input type="frontend_key" name="frontend_key" class="form-control" required="">
+                                        <span class="form-bar"></span>
+                                        <label class="float-label">Client Key</label>
                                     </div>
                                     <div class="row m-t-30">
                                         <div class="col-md-12">
@@ -142,7 +140,7 @@
                                     <div class="row">
                                         <div class="col-md-10">
                                             <p class="text-inverse text-left m-b-0">Thank you.</p>
-                                            <p class="text-inverse text-left"><a href="index.html"><b>Back to website</b></a></p>
+                                            <p class="text-inverse text-left"><a href="https://play.google.com/store/apps/details?id=com.fishpott.fishpott5&hl=en&gl=US"><b>Go To The App</b></a></p>
                                         </div>
                                         <div class="col-md-2">
                                             <img src="images/auth/Logo-small-bottom.png" alt="small-logo.png">
