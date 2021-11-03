@@ -15,7 +15,10 @@ use App\Http\Controllers\version1\UserController;
 | //* * * * * php /Applications/XAMPP/xamppfiles/htdocs/fishpott/artisan schedule:run 1>> /dev/null 2>&1
 */
 
-Route::post('/v1/user/calc-networth',[App\Http\Controllers\version1\UserController::class, 'calculateUsersNetworth']);
+// THESE ROUTES MUST BE DELETED --------------- START
+Route::post('/v1/user/calc-networth-and-position',[App\Http\Controllers\version1\UserController::class, 'calculateUsersNetworthAndSetPosition']);
+// THESE ROUTES MUST BE DELETED --------------- END
+
 
 // PERSONAL ACCOUNT REGISTRATION ROUTE
 Route::post('/v1/user/register-personal',[App\Http\Controllers\version1\UserController::class, 'registerPersonalAccount']);

@@ -4,6 +4,8 @@ namespace App\Console\Commands\version1;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\version1\ResetCodeMail;
 use App\Http\Controllers\version1\UserController;
 
 class SendDrillReadyNotificationCommand extends Command
@@ -44,5 +46,15 @@ class SendDrillReadyNotificationCommand extends Command
         //$user_controller = new UserController();
         //$user_controller->sendFirebaseNotification("New Herald Of Glory", "Added Successfully", "/topics/ALPHA", "ALPHA");
         Log::info('drill:sendreadynotification Command Run successfully!');
+
+        $email_data = array(
+            'reset_code' => date('Y-m-d H:i:s'),
+            'time' => date("F j, Y, g:i a")
+        );
+
+        Mail::to(config('app.fishpott_email'))->send(new ResetcodeMail($email_data));
+        $this->info('Successfully sent drill notification.');
+
+
     }
 }

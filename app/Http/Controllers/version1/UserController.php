@@ -1824,10 +1824,13 @@ public function changePasswordWithResetCode(Request $request)
     |--------------------------------------------------------------------------
     */
     
-    public function calculateUsersNetworth()
+    public function calculateUsersNetworthAndSetPosition()
     {
         // GETTING ALL USERS
         $users = User::get();
+        $users = User::orderBy('user_pott_position', 'DESC')->get();
+
+        var_dump($users); exit;
 
         foreach($users as $user){
             $user->user_net_worth_usd = 0;
@@ -1854,6 +1857,5 @@ public function changePasswordWithResetCode(Request $request)
             //echo "\n user_pottname: " . $user->user_pottname . " -- user_net_worth_usd: " . $user->user_net_worth_usd;
         }
     }
-
 
 }
