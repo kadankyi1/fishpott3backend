@@ -1834,10 +1834,8 @@ public function changePasswordWithResetCode(Request $request)
 
             // SUMMING UP THE SHARES OWNED
             $stockpurchase_quantity = StockOwnership::where("stockownership_user_investor_id", $user->investor_id)->get()->count();
-            echo "stockpurchase_quantity: " . $stockpurchase_quantity;
+            echo " -- stockpurchase_quantity: " . $stockpurchase_quantity;
     
-            
-
         }
     }
 
