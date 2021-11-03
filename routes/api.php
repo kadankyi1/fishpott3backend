@@ -78,6 +78,9 @@ Route::post('/v1/admin/register-first-admin',[App\Http\Controllers\version1\Admi
 // LOGIN AS ADMINISTRATOR
 Route::post('/v1/admin/login',[App\Http\Controllers\version1\AdministratorController::class, 'loginAsAdministrator']);
 
+// LOGIN AS ADMINISTRATOR
+Route::post('/v1/admin/logout',[App\Http\Controllers\version1\AdministratorController::class, 'logoutAsAdministrator']);
+
 // ADD DRILL
 Route::middleware('auth:administrator-api')->post('/v1/admin/add-drill', [App\Http\Controllers\version1\AdministratorController::class, 'addDrill']);
 
