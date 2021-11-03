@@ -1833,8 +1833,12 @@ public function changePasswordWithResetCode(Request $request)
             echo "\n user_pottname: " . $user->user_pottname;
 
             // SUMMING UP THE SHARES OWNED
-            $stockpurchase_quantity = StockOwnership::where("stockownership_user_investor_id", $user->investor_id)->get()->count();
-            echo " -- stockpurchase_quantity: " . $stockpurchase_quantity;
+            $ownedstocks = StockOwnership::where("stockownership_user_investor_id", $user->investor_id)->get();
+
+            foreach($ownedstocks as $ownedstock){
+                echo "stockbusiness_id: " . $ownedstocks->stockownership_business_id . " -- ownedstock quantity: " . $ownedstock->stockownership_stocks_quantity;
+
+            }
     
         }
     }
