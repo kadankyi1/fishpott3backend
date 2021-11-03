@@ -419,6 +419,7 @@ class AdministratorController extends Controller
         $validatedData["business_pitch_video"] = $business_pitch_video_ext;
         $validatedData["business_flagged_reason"] = "";
         $validatedData["business_investments_amount_received_usd"] = 0;
+        $validatedData["business_find_code"] = date('Ymd-His');
 
         // REMOVING UN-NEEDED INFO
         unset($validatedData["business_country"]);
