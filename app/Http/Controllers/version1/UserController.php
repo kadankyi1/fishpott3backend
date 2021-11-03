@@ -1812,5 +1812,23 @@ public function changePasswordWithResetCode(Request $request)
         ]);
     }
 
+        /*
+    |--------------------------------------------------------------------------
+    |--------------------------------------------------------------------------
+    | THIS FUNCTION SENDS THE RECENT USER INFO TO FRONTEND
+    |--------------------------------------------------------------------------
+    |--------------------------------------------------------------------------
+    */
+    
+    public function calculateUsersNetworth()
+    {
+        // GETTING ALL USERS
+        $users = User::get();
+
+        foreach($users as $user){
+            echo $user->pottname;
+        }
+    }
+
 
 }
