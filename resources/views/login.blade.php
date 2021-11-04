@@ -95,7 +95,7 @@
                 <div class="col-sm-12">
                     <!-- Authentication card start -->
 
-                        <form id="lform" class="md-float-material form-material">
+                        <div class="md-float-material form-material">
                             <div class="text-center">
                                 <img src="/images/fishpott_icon_circle.png" style="height: 100px; width: 100px;" alt="logo.png">
                             </div>
@@ -104,53 +104,55 @@
                                     <div class="row m-b-20">
                                         <div class="col-md-12">
                                             <h3 class="text-center">Sign In</h3>
-                                            <div class="loader-holder offset-md-5" id="loader"><div class="myloader"></div></div>
-                                            <div class="offset-md-5" id="msg_holder"></div>
+
+                                            <div class="loader-holder offset-md-5" id="loader"><br><br><br><br><br><br><div class="myloader"></div></div>
                                         </div>
                                     </div>
-                                    <div class="form-group form-primary">
-                                        <input type="text" id="administrator_phone_number" name="administrator_phone_number" class="form-control" required="">
-                                        <span class="form-bar"></span>
-                                        <label class="float-label">Phone</label>
-                                    </div>
-                                    <div class="form-group form-primary">
-                                        <input type="password" id="password" name="password" class="form-control" required="">
-                                        <span class="form-bar"></span>
-                                        <label class="float-label">Password</label>
-                                    </div>
-                                    <div class="form-group form-primary">
-                                        <input type="text" id="administrator_user_pottname" name="administrator_user_pottname" class="form-control" required="">
-                                        <span class="form-bar"></span>
-                                        <label class="float-label">Pott Name</label>
-                                    </div>
-                                    <div class="form-group form-primary">
-                                        <input type="password" id="administrator_pott_password" name="administrator_pott_password" class="form-control" required="">
-                                        <span class="form-bar"></span>
-                                        <label class="float-label">Pott Password</label>
-                                    </div>
-                                    <div class="form-group form-primary">
-                                        <input type="password" id="frontend_key" name="frontend_key" class="form-control" required="">
-                                        <span class="form-bar"></span>
-                                        <label class="float-label">Client Key</label>
-                                    </div>
-                                    <div class="row m-t-30">
-                                        <div class="col-md-12">
-                                            <input type="submit" value="Sign In" class="btn btn-primary btn-md btn-block waves-effect waves-light text-center m-b-20"/>
+                                    <form id="lform">
+                                        <div class="form-group form-primary">
+                                            <input type="text" id="administrator_phone_number" name="administrator_phone_number" class="form-control" required="">
+                                            <span class="form-bar"></span>
+                                            <label class="float-label">Phone</label>
                                         </div>
-                                    </div>
-                                    <hr/>
-                                    <div class="row">
-                                        <div class="col-md-10">
-                                            <p class="text-inverse text-left m-b-0">Thank you.</p>
-                                            <p class="text-inverse text-left"><a href="https://play.google.com/store/apps/details?id=com.fishpott.fishpott5&hl=en&gl=US"><b>Go To The App</b></a></p>
+                                        <div class="form-group form-primary">
+                                            <input type="password" id="password" name="password" class="form-control" required="">
+                                            <span class="form-bar"></span>
+                                            <label class="float-label">Password</label>
                                         </div>
-                                        <div class="col-md-2">
-                                            <img src="/images/auth/Logo-small-bottom.png" alt="small-logo.png">
+                                        <div class="form-group form-primary">
+                                            <input type="text" id="administrator_user_pottname" name="administrator_user_pottname" class="form-control" required="">
+                                            <span class="form-bar"></span>
+                                            <label class="float-label">Pott Name</label>
                                         </div>
-                                    </div>
+                                        <div class="form-group form-primary">
+                                            <input type="password" id="administrator_pott_password" name="administrator_pott_password" class="form-control" required="">
+                                            <span class="form-bar"></span>
+                                            <label class="float-label">Pott Password</label>
+                                        </div>
+                                        <div class="form-group form-primary">
+                                            <input type="password" id="frontend_key" name="frontend_key" class="form-control" required="">
+                                            <span class="form-bar"></span>
+                                            <label class="float-label">Client Key</label>
+                                        </div>
+                                        <div class="row m-t-30">
+                                            <div class="col-md-12">
+                                                <input type="submit" value="Sign In" class="btn btn-primary btn-md btn-block waves-effect waves-light text-center m-b-20"/>
+                                            </div>
+                                        </div>
+                                        <hr/>
+                                        <div class="row">
+                                            <div class="col-md-10">
+                                                <p class="text-inverse text-left m-b-0">Thank you.</p>
+                                                <p class="text-inverse text-left"><a href="https://play.google.com/store/apps/details?id=com.fishpott.fishpott5&hl=en&gl=US"><b>Go To The App</b></a></p>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <img src="/images/auth/Logo-small-bottom.png" alt="small-logo.png">
+                                            </div>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
-                        </form>
+                        </div>
                         <!-- end of form -->
                 </div>
                 <!-- end of col-sm-12 -->

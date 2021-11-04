@@ -64,6 +64,12 @@ Route::middleware('auth:api')->post('/v1/user/find-business', [App\Http\Controll
 
 // UPDATE AND GET RECENT USER INFO
 Route::middleware('auth:api')->post('/v1/user/get-user-info', [App\Http\Controllers\version1\UserController::class, 'updateAndGetRecentUserInfo']);
+
+// DEFAULT FALLBACK ROUTE
+Route::fallback(function(){
+    return response()->json([
+        'message' => 'Page Not Found. If error persists, contact info@website.com'], 404);
+});
 /*
 |-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|
 | |-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-| ADMINISTRATOR SECTION ADMINISTRATOR SECTION ADMINISTRATOR SECTION ADMINISTRATOR SECTION |-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|

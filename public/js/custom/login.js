@@ -15,14 +15,15 @@ $(document).ready(function ()
     function error_response_function(errorThrown)
     {
         fade_out_loader_and_fade_in_form("loader", "lform"); 
-        show_notification("msg_holder", "danger", "Error", errorThrown);
+        show_notification("msg_holder", "danger", "Error", "Login failed");
     }
 
     // SUBMITTING THE LOGIN FORM TO GET API TOKEN
     $("#lform").submit(function (e) 
     { 
         e.preventDefault(); 
-        console.log("lform submitted")
+        console.log("admin_api_login_url: " + admin_api_login_url);
+        console.log("form data: " + $("#lform").serialize());
         fade_in_loader_and_fade_out_form("loader", "lform");       
         send_request_to_server_from_form("post", admin_api_login_url, $("#lform").serialize(), "json", success_response_function, error_response_function);
     });

@@ -124,7 +124,7 @@ function send_request_to_server_from_form(method, url_to_server, form_data, data
         dataType: data_type,
         success: function(response){ 
             console.log(response);
-            if(response.status.trim() == "success"){
+            if(response.status == 1){
                 success_response_function(response);
             } else {
                 error_response_function(response.message);

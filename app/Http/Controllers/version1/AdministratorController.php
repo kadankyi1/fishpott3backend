@@ -94,7 +94,7 @@ class AdministratorController extends Controller
         // VALIDATING ADMIN CREDENTIALS
         if (!auth()->guard('administrator')->attempt($loginData)) {
             return response([
-                "status" => "error", 
+                "status" => 0, 
                 "message" => "Invalid Credentials - a"
             ]);
         }
@@ -102,7 +102,7 @@ class AdministratorController extends Controller
         // VALIDATING ADMIN CREDENTIALS
         if (!auth()->attempt($pottLoginData)) {
             return response([
-                "status" => "error", 
+                "status" => 0, 
                 "message" => "Invalid Credentials - p"
             ]);
         }
@@ -110,7 +110,7 @@ class AdministratorController extends Controller
         // CHECKING IF ADMIN FLAGGED
         if (auth()->guard('administrator')->user()->user_flagged) {
             return response([
-                "status" => "0", 
+                "status" => 0, 
                 "message" => "Account access restricted"
             ]);
         }
@@ -124,7 +124,7 @@ class AdministratorController extends Controller
         LogController::save_log("administrator", auth()->guard('administrator')->user()->administrator_sys_id, "Login Admin", "Login successful");
 
         return response([
-            "status" => "yes", 
+            "status" => 1, 
             "message" => "",
             "access_token" => $accessToken,
             "administrator_user_pottname" => auth()->guard('administrator')->user()->administrator_user_pottname,
@@ -147,7 +147,7 @@ class AdministratorController extends Controller
 
         $request->user()->token()->revoke();
         return response([
-            "status" => "yes", 
+            "status" => 1, 
             "message" => "Logged out"
         ]);
     }
@@ -212,7 +212,7 @@ class AdministratorController extends Controller
         Drill::create($drillData);
 
         return response([
-            "status" => "yes", 
+            "status" => 1, 
             "message" => "Drill saved"
         ]);
     }
@@ -447,7 +447,7 @@ class AdministratorController extends Controller
         Business::create($validatedData);
 
         return response([
-            "status" => "yes", 
+            "status" => 1, 
             "message" => "Business saved."
         ]);
     }
@@ -506,7 +506,7 @@ class AdministratorController extends Controller
         StockValue::create($stockValueData);
 
         return response([
-            "status" => "yes", 
+            "status" => 1, 
             "message" => "New stock value saved"
         ]);
     }
