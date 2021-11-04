@@ -11,6 +11,10 @@ var host = "http://fishpott.local";
 var admin_api_login_url = `${host}/api/v1/admin/login`;
 var admin_web_login_page_url = `${host}/admin/login`;
 
+//LOGOUT URL
+var admin_api_logout_url = `${host}/api/v1/admin/logout`;
+
+
 // CHECKING IF USER HAS AN API TOKEN
 function user_has_api_token()
 {
@@ -25,12 +29,11 @@ function user_has_api_token()
         && localStorage.getItem("administrator_user_pottname").trim() != ""
         && localStorage.getItem("administrator_firstname").trim() != "" 
         && localStorage.getItem("administrator_surname").trim() != ""
-    )
-        {
-            return true;
-        } else {
-            return false;
-        }
+    ){
+        return true;
+    } else {
+        return false;
+    }
 }
 
 // LOGGING USER OUT BY DELETING ACCESS TOKEN
