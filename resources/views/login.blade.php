@@ -104,37 +104,37 @@
                                     <div class="row m-b-20">
                                         <div class="col-md-12">
                                             <h3 class="text-center">Sign In</h3>
-                                            <div class="myloader"></div>
+                                            <div class="loader-holder offset-md-5" id="loader"><div class="myloader"></div></div>
                                         </div>
                                     </div>
                                     <div class="form-group form-primary">
-                                        <input type="text" name="administrator_phone_number" class="form-control" required="">
+                                        <input type="text" id="administrator_phone_number" name="administrator_phone_number" class="form-control" required="">
                                         <span class="form-bar"></span>
                                         <label class="float-label">Phone</label>
                                     </div>
                                     <div class="form-group form-primary">
-                                        <input type="password" name="password" class="form-control" required="">
+                                        <input type="password" id="password" name="password" class="form-control" required="">
                                         <span class="form-bar"></span>
                                         <label class="float-label">Password</label>
                                     </div>
                                     <div class="form-group form-primary">
-                                        <input type="text" name="administrator_user_pottname" class="form-control" required="">
+                                        <input type="text" id="administrator_user_pottname" name="administrator_user_pottname" class="form-control" required="">
                                         <span class="form-bar"></span>
                                         <label class="float-label">Pott Name</label>
                                     </div>
                                     <div class="form-group form-primary">
-                                        <input type="password" name="password" class="form-control" required="">
+                                        <input type="password" id="administrator_pott_password" name="administrator_pott_password" class="form-control" required="">
                                         <span class="form-bar"></span>
                                         <label class="float-label">Pott Password</label>
                                     </div>
                                     <div class="form-group form-primary">
-                                        <input type="frontend_key" name="frontend_key" class="form-control" required="">
+                                        <input type="password" id="frontend_key" name="frontend_key" class="form-control" required="">
                                         <span class="form-bar"></span>
                                         <label class="float-label">Client Key</label>
                                     </div>
                                     <div class="row m-t-30">
                                         <div class="col-md-12">
-                                            <button type="button" class="btn btn-primary btn-md btn-block waves-effect waves-light text-center m-b-20">Sign in</button>
+                                            <input type="submit" value="Sign In" class="btn btn-primary btn-md btn-block waves-effect waves-light text-center m-b-20"/>
                                         </div>
                                     </div>
                                     <hr/>
@@ -220,6 +220,7 @@
 <script type="text/javascript" src="/bower_components/i18next-browser-languagedetector/js/i18nextBrowserLanguageDetector.min.js"></script>
 <script type="text/javascript" src="/bower_components/jquery-i18next/js/jquery-i18next.min.js"></script>
 <script type="text/javascript" src="/js/common-pages.js"></script>
+<script type="text/javascript" src="/js/custom/login.js"></script>
 </body>
 
 </html>

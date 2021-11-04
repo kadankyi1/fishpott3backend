@@ -22,6 +22,7 @@ $(document).ready(function ()
     $("#lform").submit(function (e) 
     { 
         e.preventDefault(); 
+        console.log("lform submitted")
         fade_in_loader_and_fade_out_form("loader", "lform");       
         send_request_to_server_from_form("post", admin_api_login_url, $("#lform").serialize(), "json", success_response_function, error_response_function);
     });

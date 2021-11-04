@@ -16465,6 +16465,13 @@ body.dark {
 
 **********************/
 
+.loader-holder {
+  width: 100%;
+  align-content: center;
+  text-align: center;
+  display: none;
+}
+
 .myloader {
   border: 2px solid #ffffff;
   border-radius: 50%;
