@@ -95,7 +95,7 @@
                 <div class="col-sm-12">
                     <!-- Authentication card start -->
                     
-                        <form class="md-float-material form-material">
+                        <form id="lform" class="md-float-material form-material">
                             <div class="text-center">
                                 <img src="images/fishpott_icon_circle.png" style="height: 100px; width: 100px;" alt="logo.png">
                             </div>

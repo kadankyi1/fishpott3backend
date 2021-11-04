@@ -3,11 +3,13 @@ $(document).ready(function ()
     // RESENDING THE PASSCODE
     function success_response_function(response)
     {
-        localStorage.setItem("admin_firstname", response.admin_firstname);
-        localStorage.setItem("admin_surname", response.admin_surname);
-        localStorage.setItem("admin_access_token", response.access_token);
+        localStorage.setItem("access_token", response.access_token);
+        localStorage.setItem("administrator_user_pottname", response.administrator_user_pottname);
+        localStorage.setItem("administrator_firstname", response.administrator_firstname);
+        localStorage.setItem("administrator_surname", response.administrator_surname);
+        localStorage.setItem("administrator_sys_id", response.administrator_sys_id);
         show_notification("msg_holder", "success", "Success:", "Login successful");
-        redirect_to_next_page(admin_web_passcode_page_url, false);
+        redirect_to_next_page(admin_web_dashboard_page_url, false);
     }
 
     function error_response_function(errorThrown)
