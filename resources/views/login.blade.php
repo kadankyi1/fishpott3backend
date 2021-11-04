@@ -105,7 +105,7 @@
                                         <div class="col-md-12">
                                             <h3 class="text-center">Sign In</h3>
                                             <div class="loader-holder offset-md-5" id="loader"><div class="myloader"></div></div>
-                                            <div id="msg_holder"></div>
+                                            <div class="offset-md-5" id="msg_holder"></div>
                                         </div>
                                     </div>
                                     <div class="form-group form-primary">
@@ -221,6 +221,7 @@
 <script type="text/javascript" src="/bower_components/i18next-browser-languagedetector/js/i18nextBrowserLanguageDetector.min.js"></script>
 <script type="text/javascript" src="/bower_components/jquery-i18next/js/jquery-i18next.min.js"></script>
 <script type="text/javascript" src="/js/common-pages.js"></script>
+<script type="text/javascript" src="/js/vanilla-material-notifications.js"></script>
 <script type="text/javascript" src="/js/custom/config.js"></script>
 <script type="text/javascript" src="/js/custom/login.js"></script>
 </body>

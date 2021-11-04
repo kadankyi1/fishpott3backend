@@ -16492,3 +16492,58 @@ body.dark {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+
+
+.danger {
+  background: #de2e2e;
+  text-align: center;
+  z-index: 999999999;
+  width: 100%;
+  font-size: 16px;
+  margin-right: 20px;
+  margin-top: 20px;
+  color: #fff;
+  padding: 18px 5%;
+  font-weight: 400;
+  display: block;
+  position: fixed;
+  top: 0px;
+  box-shadow: 0 6px 13px -4px rgba(0, 0, 0, 0.25);
+}
+
+
+
+.success {
+background: #008a17;
+text-align: center;
+z-index: 999999999;
+width: 100%;
+font-size: 16px;
+color: #fff;
+padding: 18px 5%;
+font-weight: 400;
+display: block;
+position: fixed;
+top: 0px;
+box-shadow: 0 6px 13px -4px rgba(0, 0, 0, 0.25);
+}
+
+#close-bar {
+  font-size: 22px;
+  color: #3e3947;
+  margin-right: 0;
+  position: absolute;
+  right: 5%;
+  background: white;
+  opacity: 0.5;
+  padding: 0px;
+  height: 25px;
+  line-height: 21px;
+  width: 25px;
+  border-radius: 50%;
+  text-align: center;
+  top: 18px;
+  cursor: pointer;
+  z-index: 9999999999;
+  font-weight: 200;
+}

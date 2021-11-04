@@ -78,10 +78,16 @@ function hide_notification(){
 // SHOWING A NOTIFICATION ON THE SCREEN
 function show_notification(id, type, title, message)
 {
-    $('#'+id).html(
+    /*$('#'+id).html(
         '<div id="msg_div" class="' + type + '"><b>' + title +'</b> '+ message +'<a id="close-bar" onclick="hide_notification();">×</a></div>'
-    );
-    setTimeout(function(){ $('#close-bar').click(); }, 5000);
+    );*/
+    snackbar({
+        type: type,
+        position: 'bottomRight',
+        message: message,
+        timeout: 5000
+      });
+    //setTimeout(function(){ $('#close-bar').click(); }, 5000);
 }
 
 
