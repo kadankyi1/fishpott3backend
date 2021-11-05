@@ -9,7 +9,7 @@ var host = "http://fishpott.local";
 
 // LOGIN PAGE URLS
 var admin_web_login_page_url = `${host}/admin/login`;
-var admin_api_login_url = `${host}/api/v1/admin/get-dashboard-data`;
+var admin_api_login_url = `${host}/api/v1/admin/login`;
 
 //LOGOUT URL
 var admin_api_logout_url = `${host}/api/v1/admin/logout`;

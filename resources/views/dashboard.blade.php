@@ -954,6 +954,7 @@
     <!-- custom js -->
     <script type="text/javascript" src="/pages/dashboard/custom-dashboard.js"></script>
     <script type="text/javascript" src="/js/script.js "></script>
+    <script type="text/javascript" src="/js/custom/config.js "></script>
     <script type="text/javascript" src="/js/custom/dashboard.js "></script>
 </body>
 
