@@ -531,7 +531,7 @@
                                                         <div class="row align-items-center">
                                                             <div class="col-8">
                                                                 <h4 class="text-c-blue">500</h4>
-                                                                <h6 class="text-muted m-b-0" id="orders_pending_total_count">Pending Orders</h6>
+                                                                <h6 class="text-muted m-b-0" id="orders_pending_total_count">Pending Paid Orders</h6>
                                                             </div>
                                                             <div class="col-4 text-right">
                                                                 <i class="fa fa-list-alt f-28"></i>
@@ -541,7 +541,7 @@
                                                     <div class="card-footer bg-c-blue">
                                                         <div class="row align-items-center">
                                                             <div class="col-9">
-                                                                <p class="text-white m-b-0" id="orders_months_total_count">Month Orders: </p>
+                                                                <p class="text-white m-b-0" id="orders_months_total_count">Paid Month Orders: </p>
                                                             </div>
                                                             <div class="col-3 text-right">
                                                                 <i class="fa fa-line-chart text-white f-16"></i>
@@ -549,7 +549,7 @@
                                                         </div>
                                                         <div class="row align-items-center">
                                                             <div class="col-9">
-                                                                <p class="text-white m-b-0" id="orders_months_profit_total_count">Month Profit: </p>
+                                                                <p class="text-white m-b-0" id="orders_months_profit_total_count">Unpaid Month Profit: </p>
                                                             </div>
                                                             <div class="col-3 text-right">
                                                                 <i class="fa fa-line-chart text-white f-16"></i>

@@ -16,6 +16,8 @@ use App\Http\Controllers\version1\LogController;
 use App\Models\version1\Administrator;
 use App\Models\version1\Business;
 use App\Models\version1\Drill;
+use App\Models\version1\DrillAnswer;
+use App\Models\version1\StockPurchase;
 use App\Models\version1\StockValue;
 use App\Models\version1\Suggestion;
 use App\Models\version1\Suggesto;
@@ -192,6 +194,7 @@ class AdministratorController extends Controller
         $one_hour_ago = date('Y-m-d H:i:s',strtotime("-1 hours")); 
         $one_day_ago = date('Y-m-d',strtotime("-1 days")); 
         $thirty_days_ago = date('Y-m-d',strtotime("-31 days")); 
+        $one_yr_days_ago = date('Y-m-d',strtotime("-365 days")); 
 
         // GETTING USERS DATA
 
@@ -200,8 +203,8 @@ class AdministratorController extends Controller
         $users_today_count = User::where('last_online', ">=" , $one_day_ago)->count(); 
         $users_thirtydays_count = User::where('last_online', ">=" , $thirty_days_ago)->count(); 
 
-        
         // GETTING SUGGESTIONS DATA
+        $suggestions_active = Suggestion::where('created_at', ">=" , $one_hour_ago)->count(); 
         $suggestions_active_drill = Suggestion::where('suggestion_suggestion_type_id', "=" , 1)->where('created_at', ">=" , $one_hour_ago)->count(); 
         $suggestions_active_business = Suggestion::where('suggestion_suggestion_type_id', "=" , 2)->where('created_at', ">=" , $one_hour_ago)->count(); 
         
@@ -210,6 +213,16 @@ class AdministratorController extends Controller
         $businesses_listed = Business::where('business_stockmarket_shortname', "!=" , "")->count(); 
         $businesses_not_listed = Business::where('business_stockmarket_shortname', "=" , "")->count(); 
         
+        // GETTING ORDERS DATA
+        $orders_paid_pending = StockPurchase::where('stockpurchase_payment_gateway_status', "=" , 1)->where('stockpurchase_processed', "=" , 0)->count(); 
+        $orders_paid_thirty_days = StockPurchase::where('created_at', ">=" , $thirty_days_ago)->where('stockpurchase_payment_gateway_status', "=" , 1)->count(); 
+        $orders_unpaid_thirty_days = StockPurchase::where('created_at', ">=" , $thirty_days_ago)->where('stockpurchase_payment_gateway_status', "!=" , 1)->count(); 
+        
+        // GETTING USERS DATA
+        $answers_today_count = DrillAnswer::where('created_at', ">=" , $one_day_ago)->count(); 
+        $answers_thirtydays_count = DrillAnswer::where('created_at', ">=" , $thirty_days_ago)->count(); 
+        $answers_oneyear_count = DrillAnswer::where('created_at', ">=" , $one_yr_days_ago)->count(); 
+
         /*
         echo "\nnow : " . date('Y-m-d H:i:s');
         echo "\none_hour_ago : " . $one_hour_ago;
@@ -219,8 +232,18 @@ class AdministratorController extends Controller
             "users_total_count" => $users_all, 
             "users_today_count" => $users_today_count, 
             "users_thirtydays_count" => $users_thirtydays_count, 
+            "suggestions_active" => $suggestions_active, 
             "suggestions_active_drill" => $suggestions_active_drill, 
-            "suggestions_active_business" => $suggestions_active_business
+            "suggestions_active_business" => $suggestions_active_business, 
+            "businesses_all" => $businesses_all, 
+            "businesses_listed" => $businesses_listed, 
+            "businesses_not_listed" => $businesses_not_listed,
+            "orders_paid_pending" => $orders_paid_pending, 
+            "orders_paid_thirty_days" => $orders_paid_thirty_days, 
+            "orders_unpaid_thirty_days" => $orders_unpaid_thirty_days, 
+            "answers_today_count" => $answers_today_count, 
+            "answers_thirtydays_count" => $answers_thirtydays_count, 
+            "answers_oneyear_count" => $answers_oneyear_count
         );
 
         return response([

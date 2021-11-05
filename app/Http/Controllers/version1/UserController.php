@@ -1175,7 +1175,7 @@ public function changePasswordWithResetCode(Request $request)
         $stockPurchaseData["stockpurchase_processed_reason"] = "";
         $stockPurchaseData["stockpurchase_flagged"] = false;
         $stockPurchaseData["stockpurchase_flagged_reason"] = "";
-        $stockPurchaseData["stockpurchase_payment_gateway_status"] = "";
+        $stockPurchaseData["stockpurchase_payment_gateway_status"] = 0;
         $stockPurchaseData["stockpurchase_payment_gateway_info"] = "";
         StockPurchase::create($stockPurchaseData);
 

@@ -29,7 +29,7 @@ class CreateStockPurchasesTable extends Migration
             $table->string('stockpurchase_processed_reason', 255);
             $table->boolean('stockpurchase_flagged')->default(false);
             $table->string('stockpurchase_flagged_reason', 255)->default("");
-            $table->string('stockpurchase_payment_gateway_status', 255);
+            $table->integer('stockpurchase_payment_gateway_status')->default(0);
             $table->text('stockpurchase_payment_gateway_info');
             $table->timestamps();
         });
