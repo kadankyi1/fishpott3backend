@@ -430,7 +430,7 @@
                                                     <div class="card-block">
                                                         <div class="row align-items-center">
                                                             <div class="col-8">
-                                                                <h4 class="text-c-purple" id="users_total_count">$30200</h4>
+                                                                <h4 class="text-c-purple" id="users_total_count">10,000,000</h4>
                                                                 <h6 class="text-muted m-b-0">Users</h6>
                                                             </div>
                                                             <div class="col-4 text-right">
@@ -441,7 +441,7 @@
                                                     <div class="card-footer bg-c-purple">
                                                         <div class="row align-items-center">
                                                             <div class="col-9">
-                                                                <p class="text-white m-b-0" id="users_today_count">Users Today : 10</p>
+                                                                <p class="text-white m-b-0" id="users_today_count">Users Today : 1,000,000</p>
                                                             </div>
                                                             <div class="col-3 text-right">
                                                                 <i class="fa fa-line-chart text-white f-16"></i>
@@ -564,17 +564,17 @@
                                                         <div class="row align-items-center">
                                                             <div class="col-8">
                                                                 <h4 class="text-c-blue">500</h4>
-                                                                <h6 class="text-muted m-b-0" id="orders_pending_total_count">Drills Answers Today</h6>
+                                                                <h6 class="text-muted m-b-0" id="drillanswers_today_count">Drills Answers Today</h6>
                                                             </div>
                                                             <div class="col-4 text-right">
                                                                 <i class="fa fa-list-alt f-28"></i>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="card-footer bg-c-blue">
+                                                    <div class="card-footer bg-c-yellow">
                                                         <div class="row align-items-center">
                                                             <div class="col-9">
-                                                                <p class="text-white m-b-0" id="orders_months_total_count">Drills Answers Month: </p>
+                                                                <p class="text-white m-b-0" id="drillanswers_months_count">Drills Answers Month: </p>
                                                             </div>
                                                             <div class="col-3 text-right">
                                                                 <i class="fa fa-line-chart text-white f-16"></i>
@@ -582,7 +582,7 @@
                                                         </div>
                                                         <div class="row align-items-center">
                                                             <div class="col-9">
-                                                                <p class="text-white m-b-0" id="orders_months_profit_total_count">Drills Answers Year: </p>
+                                                                <p class="text-white m-b-0" id="drillanswers_year_count">Drills Answers Year: </p>
                                                             </div>
                                                             <div class="col-3 text-right">
                                                                 <i class="fa fa-line-chart text-white f-16"></i>
@@ -954,6 +954,7 @@
     <!-- custom js -->
     <script type="text/javascript" src="/pages/dashboard/custom-dashboard.js"></script>
     <script type="text/javascript" src="/js/script.js "></script>
+    <script type="text/javascript" src="/js/vanilla-material-notifications.js"></script>
     <script type="text/javascript" src="/js/custom/config.js "></script>
     <script type="text/javascript" src="/js/custom/dashboard.js "></script>
 </body>

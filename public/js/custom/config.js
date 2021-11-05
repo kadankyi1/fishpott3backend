@@ -28,12 +28,15 @@ function user_has_api_token()
         && localStorage.getItem("administrator_user_pottname") != null 
         && localStorage.getItem("administrator_firstname") != null
         && localStorage.getItem("administrator_surname") != null
+        && localStorage.getItem("frontend_key") != null
         && localStorage.getItem("admin_access_token").trim() != "" 
         && localStorage.getItem("administrator_sys_id").trim() != "" 
         && localStorage.getItem("administrator_phone_number").trim() != ""
         && localStorage.getItem("administrator_user_pottname").trim() != ""
         && localStorage.getItem("administrator_firstname").trim() != "" 
         && localStorage.getItem("administrator_surname").trim() != ""
+        && localStorage.getItem("administrator_firstname").trim() != "" 
+        && localStorage.getItem("frontend_key").trim() != ""
     ){
         return true;
     } else {
@@ -143,7 +146,8 @@ function send_restapi_request_to_server_from_form(method, url_to_server, authori
 {
     $.ajax({
         type: method,
-        url: url_to_server,headers: {
+        url: url_to_server,
+        headers: {
             'Authorization': authorization
          },
         data:  form_data,
@@ -155,7 +159,7 @@ function send_restapi_request_to_server_from_form(method, url_to_server, authori
                 user_token_is_no_longer_valid();
                 return;
             } 
-            if(response.status.trim() == "success"){
+            if(response.status == 1){
                 success_response_function(response);
             } else {
                 error_response_function(response.message);

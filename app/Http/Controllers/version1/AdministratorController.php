@@ -134,7 +134,8 @@ class AdministratorController extends Controller
             "administrator_user_pottname" => auth()->guard('administrator')->user()->administrator_user_pottname,
             "administrator_firstname" => auth()->guard('administrator')->user()->administrator_firstname,
             "administrator_surname" => auth()->guard('administrator')->user()->administrator_surname,
-            "administrator_sys_id" => auth()->guard('administrator')->user()->administrator_sys_id
+            "administrator_sys_id" => auth()->guard('administrator')->user()->administrator_sys_id,
+            "frontend_key" => $request->frontend_key
         ]);
     }
 

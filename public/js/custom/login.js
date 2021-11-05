@@ -20,6 +20,7 @@ $(document).ready(function ()
         localStorage.setItem("administrator_user_pottname", response.administrator_user_pottname);
         localStorage.setItem("administrator_firstname", response.administrator_firstname);
         localStorage.setItem("administrator_surname", response.administrator_surname);
+        localStorage.setItem("frontend_key", response.frontend_key);
         show_notification("msg_holder", "success", "Success:", "Login successful");
         redirect_to_next_page(admin_web_dashboard_page_url, false);
     }
