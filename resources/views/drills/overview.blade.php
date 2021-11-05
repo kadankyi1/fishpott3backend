@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Dashboard</title>
+    <title>Drills : Overview</title>
     <!-- HTML5 Shim and Respond.js IE10 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 10]>
@@ -254,7 +254,7 @@
                           </div>
                           <div class="pcoded-navigation-label" data-i18n="nav.category.navigation">Overview</div>
                           <ul class="pcoded-item pcoded-left-item">
-                              <li class="active">
+                              <li class="">
                                   <a href="index.html" class="waves-effect waves-dark">
                                       <span class="pcoded-micon"><i class="ti-home"></i><b>D</b></span>
                                       <span class="pcoded-mtext" data-i18n="nav.dash.main">Dashboard</span>
@@ -264,7 +264,7 @@
                           </ul>
                           <div class="pcoded-navigation-label" data-i18n="nav.category.forms">Drills & Suggestions</div>
                           <ul class="pcoded-item pcoded-left-item">
-                            <li class="pcoded-hasmenu">
+                            <li class="pcoded-hasmenu active">
                                 <a href="javascript:void(0)" class="waves-effect waves-dark">
                                     <span class="pcoded-micon"><i class="ti-layout-grid2-alt"></i></span>
                                     <span class="pcoded-mtext"  data-i18n="nav.basic-components.main">Drills</span>
@@ -272,7 +272,7 @@
                                 </a>
                                 <ul class="pcoded-submenu">
                                     <li class=" ">
-                                        <a href="/admin/drills/overview" class="waves-effect waves-dark">
+                                        <a href="accordion.html" class="waves-effect waves-dark">
                                             <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
                                             <span class="pcoded-mtext" data-i18n="nav.basic-components.alert">Drill Overview</span>
                                             <span class="pcoded-mcaret"></span>

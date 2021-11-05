@@ -25,7 +25,12 @@ Route::get('/admin/login', function () {
     return view('login');
 });
 
-// LOGIN PAGE
+// DASHBOARD PAGE
 Route::get('/admin/dashboard', function () {
     return view('dashboard');
+});
+
+// DRILLS OVERVIEW PAGE
+Route::get('/admin/drills/overview', function () {
+    return view('drills/overview');
 });

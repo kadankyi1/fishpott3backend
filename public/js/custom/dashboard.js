@@ -58,8 +58,10 @@ function successResponseFunction(response)
     $("#drillanswers_year_count").append(response.data.answers_oneyear_count);
 
 
+    $("#contact_email").append(response.data.contact_email);
     $("#payment_gateway_provider_name").append(response.data.payment_gateway_name);
     $("#payment_gateway_provider_url").append(response.data.payment_gateway_url);
+    $("#payment_gateway_provider_url").attr("href", response.data.payment_gateway_url);
 
     $(".theme-loader").animate({
         opacity: "0"
