@@ -174,6 +174,7 @@ class UserController extends Controller
         $userData["user_scope"] = "get-info-on-apps get-business-suggestions answer-drills buy-business-stocks transfer-business-stocks withdraw-funds";
         $userData["user_phone_verification_requested"] = boolval(config('app.phoneverificationrequiredstatus'));
         $userData["user_id_verification_requested"] = boolval(config('app.idverificationrequiredstatus'));
+        $userData["last_online"] = date("Y-m-d H:i:s");
 
         //$userData["ssssssss"] = $validatedData["user_surname"];
 
@@ -345,6 +346,7 @@ class UserController extends Controller
         $userData["user_scope"] = "get-info-on-apps get-business-suggestions answer-drills buy-business-stocks transfer-business-stocks withdraw-funds";
         $userData["user_phone_verification_requested"] = boolval(config('app.phoneverificationrequiredstatus'));
         $userData["user_id_verification_requested"] = boolval(config('app.idverificationrequiredstatus'));
+        $userData["last_online"] = date("Y-m-d H:i:s");
 
         $user1 = User::create($userData);
         
@@ -488,6 +490,7 @@ class UserController extends Controller
             $user->user_id_verification_requested = $user->user_id_verification_requested;
         }
 
+        $user->last_online = date("Y-m-d H:i:s");
         $user->save();    
 
         return response([

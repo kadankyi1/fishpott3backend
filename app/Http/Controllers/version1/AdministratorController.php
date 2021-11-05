@@ -172,11 +172,6 @@ class AdministratorController extends Controller
             "administrator_sys_id" => "bail|required",
             "frontend_key" => "bail|required|in:2aLW4c7r9(2qf#y",
             // ADD ANY OTHER REQUIRED INPUTS FROM HERE
-            "drill_question" => "min:5|max:100",
-            "drill_answer_1" => "min:2|max:100",
-            "drill_answer_2" => "min:2|max:100",
-            "drill_answer_3" => "max:100",
-            "drill_answer_4" => "max:100",
         ]);
 
         // MAKING SURE THE REQUEST AND USER IS VALIDATED
@@ -191,6 +186,20 @@ class AdministratorController extends Controller
         | VALIDATION ENDED 
         |**************************************************************************
         */
+
+        // GETTING USERS DATA
+        $all_users = User::count();   
+
+        $data = array(
+            "users_total_count" => $all_users, 
+            "pott_intelligence" => $user->user_pott_intelligence . " -- Pott Intelligence", 
+            "pott_position" => UtilController::formatNumberWithPositionAffix($user->user_pott_position) . " - Your FishPott ranks at this position currently out of " . strval($all_users) . " FishPotts"
+        );
+
+        return response([
+            "status" => 1, 
+            "message" => "Drill saved"
+        ]);
     }
 
     /*
