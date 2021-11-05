@@ -45,6 +45,10 @@ function successResponseFunction(response)
     $("#suggestions_active_drills_total_count").html(response.data.suggestions_active_drill);
     $("#suggestions_active_businesses_total_count").html(response.data.suggestions_active_business);
 
+    $("#businesses_total_count").html(response.data.businesses_all);
+    $("#businesses_listed_total_count").html(response.data.businesses_not_listed);
+    $("#businesses_non_listed_total_count").html(response.data.businesses_not_listed);
+
 
     $(".theme-loader").animate({
         opacity: "0"
