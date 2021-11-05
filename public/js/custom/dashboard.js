@@ -53,6 +53,9 @@ function successResponseFunction(response)
     $("#orders_months_total_count").html(response.data.orders_paid_thirty_days);
     $("#orders_months_profit_total_count").html(response.data.orders_unpaid_thirty_days);
 
+    $("#drillanswers_today_count").html(response.data.answers_today_count);
+    $("#drillanswers_months_count").html(response.data.answers_thirtydays_count);
+    $("#drillanswers_year_count").html(response.data.answers_oneyear_count);
 
     $(".theme-loader").animate({
         opacity: "0"
