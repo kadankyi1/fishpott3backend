@@ -41,25 +41,10 @@ function successResponseFunction(response)
     $("#users_months_count").html(response.data.users_thirtydays_count);
 
 
-    $("#users_total_count").html(response.data.users_total_count);
-    $("#users_total_count").html(response.data.users_total_count);
-    $("#users_total_count").html(response.data.users_total_count);
+    $("#suggestions_active_total_count").html(response.data.suggestions_active);
+    $("#suggestions_active_drills_total_count").html(response.data.suggestions_active_drill);
+    $("#suggestions_active_businesses_total_count").html(response.data.suggestions_active_business);
 
-        "": 2,
-        "": 1,
-        "": 2,
-        "suggestions_active": 0,
-        "suggestions_active_drill": 0,
-        "suggestions_active_business": 0,
-        "businesses_all": 1,
-        "businesses_listed": 1,
-        "businesses_not_listed": 0,
-        "orders_paid_pending": 0,
-        "orders_paid_thirty_days": 1,
-        "orders_unpaid_thirty_days": 1,
-        "answers_today_count": 1,
-        "answers_thirtydays_count": 1,
-        "answers_oneyear_count": 1
 
     $(".theme-loader").animate({
         opacity: "0"

@@ -549,7 +549,7 @@
                                                         </div>
                                                         <div class="row align-items-center">
                                                             <div class="col-9">
-                                                                <p class="text-white m-b-0" id="orders_months_profit_total_count">Unpaid Month Profit: </p>
+                                                                <p class="text-white m-b-0" id="orders_months_profit_total_count">Unpaid Month Orders: </p>
                                                             </div>
                                                             <div class="col-3 text-right">
                                                                 <i class="fa fa-line-chart text-white f-16"></i>
