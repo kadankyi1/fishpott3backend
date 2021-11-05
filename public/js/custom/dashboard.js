@@ -36,26 +36,30 @@ function getDashboardData()
 // RESENDING THE PASSCODE
 function successResponseFunction(response)
 {
-    $("#users_total_count").html(response.data.users_total_count);
-    $("#users_today_count").html(response.data.users_today_count);
-    $("#users_months_count").html(response.data.users_thirtydays_count);
+    $("#users_total_count").append(response.data.users_total_count);
+    $("#users_today_count").append(response.data.users_today_count);
+    $("#users_months_count").append(response.data.users_thirtydays_count);
 
 
-    $("#suggestions_active_total_count").html(response.data.suggestions_active);
-    $("#suggestions_active_drills_total_count").html(response.data.suggestions_active_drill);
-    $("#suggestions_active_businesses_total_count").html(response.data.suggestions_active_business);
+    $("#suggestions_active_total_count").append(response.data.suggestions_active);
+    $("#suggestions_active_drills_total_count").append(response.data.suggestions_active_drill);
+    $("#suggestions_active_businesses_total_count").append(response.data.suggestions_active_business);
 
-    $("#businesses_total_count").html(response.data.businesses_all);
-    $("#businesses_listed_total_count").html(response.data.businesses_not_listed);
-    $("#businesses_non_listed_total_count").html(response.data.businesses_not_listed);
+    $("#businesses_total_count").append(response.data.businesses_all);
+    $("#businesses_listed_total_count").append(response.data.businesses_not_listed);
+    $("#businesses_non_listed_total_count").append(response.data.businesses_not_listed);
 
-    $("#orders_pending_total_count").html(response.data.orders_paid_pending);
-    $("#orders_months_total_count").html(response.data.orders_paid_thirty_days);
-    $("#orders_months_profit_total_count").html(response.data.orders_unpaid_thirty_days);
+    $("#orders_pending_total_count").append(response.data.orders_paid_pending);
+    $("#orders_months_total_count").append(response.data.orders_paid_thirty_days);
+    $("#orders_months_profit_total_count").append(response.data.orders_unpaid_thirty_days);
 
-    $("#drillanswers_today_count").html(response.data.answers_today_count);
-    $("#drillanswers_months_count").html(response.data.answers_thirtydays_count);
-    $("#drillanswers_year_count").html(response.data.answers_oneyear_count);
+    $("#drillanswers_today_count").append(response.data.answers_today_count);
+    $("#drillanswers_months_count").append(response.data.answers_thirtydays_count);
+    $("#drillanswers_year_count").append(response.data.answers_oneyear_count);
+
+
+    $("#payment_gateway_provider_name").append(response.data.payment_gateway_name);
+    $("#payment_gateway_provider_url").append(response.data.payment_gateway_url);
 
     $(".theme-loader").animate({
         opacity: "0"

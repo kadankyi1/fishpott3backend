@@ -430,7 +430,7 @@
                                                     <div class="card-block">
                                                         <div class="row align-items-center">
                                                             <div class="col-8">
-                                                                <h4 class="text-c-purple" id="users_total_count">10,000,000</h4>
+                                                                <h4 class="text-c-purple" id="users_total_count"></h4>
                                                                 <h6 class="text-muted m-b-0">Users</h6>
                                                             </div>
                                                             <div class="col-4 text-right">
@@ -441,7 +441,7 @@
                                                     <div class="card-footer bg-c-purple">
                                                         <div class="row align-items-center">
                                                             <div class="col-9">
-                                                                <p class="text-white m-b-0" id="users_today_count">Users Today : 1,000,000</p>
+                                                                <p class="text-white m-b-0" id="users_today_count">Users Today : </p>
                                                             </div>
                                                             <div class="col-3 text-right">
                                                                 <i class="fa fa-line-chart text-white f-16"></i>
@@ -449,7 +449,7 @@
                                                         </div>
                                                         <div class="row align-items-center">
                                                             <div class="col-9">
-                                                                <p class="text-white m-b-0" id="users_months_count">Users Last Month : 10</p>
+                                                                <p class="text-white m-b-0" id="users_months_count">Users Last Month : </p>
                                                             </div>
                                                             <div class="col-3 text-right">
                                                                 <i class="fa fa-line-chart text-white f-16"></i>
@@ -464,7 +464,7 @@
                                                     <div class="card-block">
                                                         <div class="row align-items-center">
                                                             <div class="col-8">
-                                                                <h4 class="text-c-green">290+</h4>
+                                                                <h4 class="text-c-green"></h4>
                                                                 <h6 class="text-muted m-b-0" id="suggestions_active_total_count">Active Suggestions</h6>
                                                             </div>
                                                             <div class="col-4 text-right">
@@ -475,7 +475,7 @@
                                                     <div class="card-footer bg-c-green">
                                                         <div class="row align-items-center">
                                                             <div class="col-9">
-                                                                <p class="text-white m-b-0" id="suggestions_active_drills_total_count">Active Drill Sug. : 1</p>
+                                                                <p class="text-white m-b-0" id="suggestions_active_drills_total_count">Active Drill Sug. : </p>
                                                             </div>
                                                             <div class="col-3 text-right">
                                                                 <i class="fa fa-line-chart text-white f-16"></i>
@@ -483,7 +483,7 @@
                                                         </div>
                                                         <div class="row align-items-center">
                                                             <div class="col-9">
-                                                                <p class="text-white m-b-0" id="suggestions_active_businesses_total_count">Active Business Sug. : 10</p>
+                                                                <p class="text-white m-b-0" id="suggestions_active_businesses_total_count">Active Business Sug. : </p>
                                                             </div>
                                                             <div class="col-3 text-right">
                                                                 <i class="fa fa-line-chart text-white f-16"></i>
@@ -497,7 +497,7 @@
                                                     <div class="card-block">
                                                         <div class="row align-items-center">
                                                             <div class="col-8">
-                                                                <h4 class="text-c-red">145</h4>
+                                                                <h4 class="text-c-red"></h4>
                                                                 <h6 class="text-muted m-b-0" id="businesses_total_count">Businesses</h6>
                                                             </div>
                                                             <div class="col-4 text-right">
@@ -530,7 +530,7 @@
                                                     <div class="card-block">
                                                         <div class="row align-items-center">
                                                             <div class="col-8">
-                                                                <h4 class="text-c-blue">500</h4>
+                                                                <h4 class="text-c-blue"></h4>
                                                                 <h6 class="text-muted m-b-0" id="orders_pending_total_count">Pending Paid Orders</h6>
                                                             </div>
                                                             <div class="col-4 text-right">
@@ -563,7 +563,7 @@
                                                     <div class="card-block">
                                                         <div class="row align-items-center">
                                                             <div class="col-8">
-                                                                <h4 class="text-c-blue">500</h4>
+                                                                <h4 class="text-c-blue"></h4>
                                                                 <h6 class="text-muted m-b-0" id="drillanswers_today_count">Drills Answers Today</h6>
                                                             </div>
                                                             <div class="col-4 text-right">
@@ -597,9 +597,9 @@
                                                     <div class="card-block">
                                                         <h5 class="text-muted m-b-15">Notes</h5>
                                                         <h6>Inquiries</h6>
-                                                        <p class="text-muted">Go to the [company_email] to keep track of all enquiries from users</p>
+                                                        <p class="text-muted">Go to the <b><span id="contact_email"></span></b> to keep track of all enquiries from users</p>
                                                         <h6>Payments & Finances</h6>
-                                                        <p class="text-muted">Go to [payment_gateway_provider] to get any needed information regarding payments</p>
+                                                        <p class="text-muted">Go to <b><span id="payment_gateway_provider_name"></span></b> to get any needed information regarding payments. <b><a id="payment_gateway_provider_url">Click here to login</a></b></p>
                                                     </div>
                                                 </div>
                                             </div>
