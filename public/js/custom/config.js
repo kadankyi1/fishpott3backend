@@ -15,8 +15,7 @@ var admin_web_login_page_url = `${host}/admin/login`;
 var admin_api_logout_url = `${host}/api/v1/admin/logout`;
 
 //LOGOUT URL
-var admin_web_dashboard_page_url = `${host}/api/v1/admin/dashboard`;
-
+var admin_web_dashboard_page_url = `${host}/admin/dashboard`;
 
 // CHECKING IF USER HAS AN API TOKEN
 function user_has_api_token()
