@@ -17,8 +17,15 @@ Route::get('/', function () {
 });
 */
 
+// ADMINER DATABASE MANAGEMENT TOOL
+Route::any('adminer', '\Aranyasen\LaravelAdminer\AdminerController@index');
+
+// LOGIN PAGE
 Route::get('/admin/login', function () {
     return view('login');
 });
 
-Route::any('adminer', '\Aranyasen\LaravelAdminer\AdminerController@index');
+// LOGIN PAGE
+Route::get('/admin/login', function () {
+    return view('login');
+});
