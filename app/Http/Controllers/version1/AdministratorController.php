@@ -130,6 +130,7 @@ class AdministratorController extends Controller
             "status" => 1, 
             "message" => "",
             "access_token" => $accessToken,
+            "administrator_phone_number" => auth()->guard('administrator')->user()->administrator_phone_number,
             "administrator_user_pottname" => auth()->guard('administrator')->user()->administrator_user_pottname,
             "administrator_firstname" => auth()->guard('administrator')->user()->administrator_firstname,
             "administrator_surname" => auth()->guard('administrator')->user()->administrator_surname,

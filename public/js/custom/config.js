@@ -8,14 +8,15 @@ var host = "http://144.202.111.61";
 var host = "http://fishpott.local";
 
 // LOGIN PAGE URLS
-var admin_api_login_url = `${host}/api/v1/admin/login`;
 var admin_web_login_page_url = `${host}/admin/login`;
+var admin_api_login_url = `${host}/api/v1/admin/get-dashboard-data`;
 
 //LOGOUT URL
 var admin_api_logout_url = `${host}/api/v1/admin/logout`;
 
-//LOGOUT URL
+//DASHBOARD URL
 var admin_web_dashboard_page_url = `${host}/admin/dashboard`;
+var admin_api_get_dashboard_data_url = `${host}/api/v1/admin/get-dashboard-data`;
 
 // CHECKING IF USER HAS AN API TOKEN
 function user_has_api_token()
@@ -23,11 +24,13 @@ function user_has_api_token()
     if(
         localStorage.getItem("admin_access_token") != null 
         && localStorage.getItem("administrator_sys_id") != null 
+        && localStorage.getItem("administrator_phone_number") != null 
         && localStorage.getItem("administrator_user_pottname") != null 
         && localStorage.getItem("administrator_firstname") != null
         && localStorage.getItem("administrator_surname") != null
         && localStorage.getItem("admin_access_token").trim() != "" 
         && localStorage.getItem("administrator_sys_id").trim() != "" 
+        && localStorage.getItem("administrator_phone_number").trim() != ""
         && localStorage.getItem("administrator_user_pottname").trim() != ""
         && localStorage.getItem("administrator_firstname").trim() != "" 
         && localStorage.getItem("administrator_surname").trim() != ""

@@ -15,6 +15,7 @@ $(document).ready(function ()
     function success_response_function(response)
     {
         localStorage.setItem("access_token", response.access_token);
+        localStorage.setItem("administrator_phone_number", response.administrator_phone_number);
         localStorage.setItem("administrator_user_pottname", response.administrator_user_pottname);
         localStorage.setItem("administrator_firstname", response.administrator_firstname);
         localStorage.setItem("administrator_surname", response.administrator_surname);

@@ -1,42 +1,49 @@
-$(document).ready(function() {
-    
+// CHECKING IF USER IS LOGGED IN
+if(!user_has_api_token()){
+    redirect_to_next_page(admin_web_dashboard_page_url, false);
+     return;
+}
+
+$(document).ready(function () 
+{
+
+    getDashboardData()
+
+});
+
+/*
+|--------------------------------------------------------------------------
+| FUNCTIONS FOR FETCHING DASHBOARD DATA
+|--------------------------------------------------------------------------
+|--------------------------------------------------------------------------
+|
+*/
+
+function getDashboardData()
+{
+    console.log("getDashboardData STARTED");
+    var bearer = "Bearer " + localStorage.getItem("admin_access_token"); 
+    $form_data = "administrator_phone_number=" + localStorage.getItem("admin_access_token") + "&administrator_sys_id=" + localStorage.getItem("admin_access_token") + "&administrator_sys_id=";
+    show_log_in_console("url: " + url);
+    send_restapi_request_to_server_from_form("post", admin_api_get_dashboard_data_url, bearer, "", "json", successResponseFunction, errorResponseFunction);
+}
+
+// RESENDING THE PASSCODE
+function successResponseFunction(response)
+{
     $(".theme-loader").animate({
         opacity: "0"
     },1000);
     setTimeout(function() {
         $(".theme-loader").remove();
     }, 800);
-    
-});
 
-$(document).ready(function () 
+    show_notification("msg_holder", "success", "Success:", "Fetch Successful");
+    //fade_out_loader_and_fade_in_form("loader", "form"); 
+}
+
+function errorResponseFunction(errorThrown)
 {
-    // RESENDING THE PASSCODE
-    function success_response_function(response)
-    {
-        localStorage.setItem("access_token", response.access_token);
-        localStorage.setItem("administrator_user_pottname", response.administrator_user_pottname);
-        localStorage.setItem("administrator_firstname", response.administrator_firstname);
-        localStorage.setItem("administrator_surname", response.administrator_surname);
-        localStorage.setItem("administrator_sys_id", response.administrator_sys_id);
-        show_notification("msg_holder", "success", "Success:", "Login successful");
-        redirect_to_next_page(admin_web_dashboard_page_url, false);
-    }
-
-    function error_response_function(errorThrown)
-    {
-        fade_out_loader_and_fade_in_form("loader", "lform"); 
-        show_notification("msg_holder", "danger", "Error", "Login failed");
-    }
-
-    // SUBMITTING THE LOGIN FORM TO GET API TOKEN
-    $("#lform").submit(function (e) 
-    { 
-        e.preventDefault(); 
-        console.log("admin_api_login_url: " + admin_api_login_url);
-        console.log("form data: " + $("#lform").serialize());
-        fade_in_loader_and_fade_out_form("loader", "lform");       
-        send_request_to_server_from_form("post", admin_api_login_url, $("#lform").serialize(), "json", success_response_function, error_response_function);
-    });
-
-});
+    fade_out_loader_and_fade_in_form("loader", "form"); 
+    show_notification("msg_holder", "danger", "Error", errorThrown);
+}
