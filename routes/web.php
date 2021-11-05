@@ -26,6 +26,6 @@ Route::get('/admin/login', function () {
 });
 
 // LOGIN PAGE
-Route::get('/admin/login', function () {
-    return view('login');
+Route::get('/admin/dashboard', function () {
+    return view('dashboard');
 });
