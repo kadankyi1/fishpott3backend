@@ -361,7 +361,7 @@ class UtilController extends Controller
             $user->user_ios_app_version_code = $request->app_version_code;
         }
         // SAVING CHANGES MADE TO THE USER
-        if($$actions != "get-info-in-background"){
+        if($actions != "get-info-in-background"){
             $user->last_online = date("Y-m-d H:i:s");
         }
         $user->save();    

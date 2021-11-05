@@ -188,17 +188,22 @@ class AdministratorController extends Controller
         */
 
         // GETTING USERS DATA
-        $all_users = User::count();   
+        $users_all = User::count();   
+
+        // GETTING USERS FOR 24 HOURS AGO
+        $one_day_ago = UtilController::reformatDate(date('Y-m-d H:i:s'), "-1 day", date('Y-m-d H:i:s'));
+        echo "one_day_ago: " . $one_day_ago;
+        $users_today = Country::where('country_real_name', '=', $validatedData["business_country"])->first();
 
         $data = array(
-            "users_total_count" => $all_users, 
-            "pott_intelligence" => $user->user_pott_intelligence . " -- Pott Intelligence", 
-            "pott_position" => UtilController::formatNumberWithPositionAffix($user->user_pott_position) . " - Your FishPott ranks at this position currently out of " . strval($all_users) . " FishPotts"
+            "users_total_count" => $users_all, 
+            "pott_intelligence" => $users_all
         );
 
         return response([
             "status" => 1, 
-            "message" => "Drill saved"
+            "message" => "Drill saved",
+            "data" => $data
         ]);
     }
 
