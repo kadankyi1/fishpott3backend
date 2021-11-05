@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Mega Able bootstrap admin template by codedthemes </title>
+    <title>Dashboard</title>
     <!-- HTML5 Shim and Respond.js IE10 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 10]>
@@ -13,9 +13,6 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
       <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-      <meta name="description" content="Mega Able Bootstrap admin template made using Bootstrap 4 and it has huge amount of ready made feature, UI components, pages which completely fulfills any dashboard needs." />
-      <meta name="keywords" content="bootstrap, bootstrap admin template, admin theme, admin dashboard, dashboard template, admin template, responsive" />
-      <meta name="author" content="codedthemes" />
       <!-- Favicon icon -->
       <link rel="icon" href="/images/favicon.ico" type="image/x-icon">
     <!-- Google font-->
@@ -230,7 +227,7 @@
                       <div class="pcoded-inner-navbar main-menu">
                           <div class="">
                               <div class="main-menu-header">
-                                  <img class="img-80 img-radius" src="/images/avatar-4.jpg" alt="User-Profile-Image">
+                                  <img class="img-80 img-radius" src="/images/fishpott_icon_circle.png" alt="User-Profile-Image">
                                   <div class="user-details">
                                       <span id="more-details">John Doe<i class="fa fa-caret-down"></i></span>
                                   </div>
@@ -466,7 +463,7 @@
                                   <div class="col-md-8">
                                       <div class="page-header-title">
                                           <h5 class="m-b-10">Dashboard</h5>
-                                          <p class="m-b-0">Welcome to Mega Able</p>
+                                          <p class="m-b-0">Welcome FishPott Admin</p>
                                       </div>
                                   </div>
                                   <div class="col-md-4">
@@ -495,8 +492,8 @@
                                                     <div class="card-block">
                                                         <div class="row align-items-center">
                                                             <div class="col-8">
-                                                                <h4 class="text-c-purple">$30200</h4>
-                                                                <h6 class="text-muted m-b-0">All Earnings</h6>
+                                                                <h4 class="text-c-purple" id="users_total_count">$30200</h4>
+                                                                <h6 class="text-muted m-b-0">Users</h6>
                                                             </div>
                                                             <div class="col-4 text-right">
                                                                 <i class="fa fa-bar-chart f-28"></i>
@@ -506,7 +503,7 @@
                                                     <div class="card-footer bg-c-purple">
                                                         <div class="row align-items-center">
                                                             <div class="col-9">
-                                                                <p class="text-white m-b-0">% change</p>
+                                                                <p class="text-white m-b-0">Users Today : 10</p>
                                                             </div>
                                                             <div class="col-3 text-right">
                                                                 <i class="fa fa-line-chart text-white f-16"></i>
@@ -936,6 +933,7 @@
     <!-- custom js -->
     <script type="text/javascript" src="/pages/dashboard/custom-dashboard.js"></script>
     <script type="text/javascript" src="/js/script.js "></script>
+    <script type="text/javascript" src="/js/custom/dashboard.js "></script>
 </body>
 
 </html>

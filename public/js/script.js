@@ -194,12 +194,14 @@ $(document).ready(function() {
     Waves.attach('.flat-buttons', ['waves-button', 'waves-float', 'waves-light', 'flat-buttons']);
 });
 $(document).ready(function() {
+    /*    
     $(".theme-loader").animate({
         opacity: "0"
     },1000);
     setTimeout(function() {
         $(".theme-loader").remove();
     }, 800);
+    */
 });
 
 // toggle full screen
