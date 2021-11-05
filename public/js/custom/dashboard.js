@@ -49,6 +49,10 @@ function successResponseFunction(response)
     $("#businesses_listed_total_count").html(response.data.businesses_not_listed);
     $("#businesses_non_listed_total_count").html(response.data.businesses_not_listed);
 
+    $("#orders_pending_total_count").html(response.data.orders_paid_pending);
+    $("#orders_months_total_count").html(response.data.orders_paid_thirty_days);
+    $("#orders_months_profit_total_count").html(response.data.orders_unpaid_thirty_days);
+
 
     $(".theme-loader").animate({
         opacity: "0"
