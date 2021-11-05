@@ -187,29 +187,40 @@ class AdministratorController extends Controller
         | VALIDATION ENDED 
         |**************************************************************************
         */
+        
+        // GETTING TIME FRAMES
+        $one_hour_ago = date('Y-m-d H:i:s',strtotime("-1 hours")); 
+        $one_day_ago = date('Y-m-d',strtotime("-1 days")); 
+        $thirty_days_ago = date('Y-m-d',strtotime("-31 days")); 
+
+        // GETTING USERS DATA
 
         // GETTING USERS DATA
         $users_all = User::count();   
-
-        // GETTING USERS DATA
-        $one_day_ago = date('Y-m-d',strtotime("-1 days")); 
-        $users_today = User::whereDate('last_online', ">=" , $one_day_ago)->count(); 
-        $thirty_days_ago = date('Y-m-d',strtotime("-31 days")); 
-        $users_thirty_days_ago = User::whereDate('last_online', ">=" , $thirty_days_ago)->count(); 
+        $users_today_count = User::where('last_online', ">=" , $one_day_ago)->count(); 
+        $users_thirtydays_count = User::where('last_online', ">=" , $thirty_days_ago)->count(); 
 
         
         // GETTING SUGGESTIONS DATA
-        $one_day_ago = date('Y-m-d',strtotime("-1 days")); 
-        $suggestions_today = Suggestion::whereDate('created_at', ">=" , $one_day_ago)->count(); //where('country_real_name', '=', $validatedData["business_country"])->first();
-
-        $thirty_days_ago = date('Y-m-d',strtotime("-31 days")); 
-        $users_thirty_days_ago = User::whereDate('created_at', ">=" , $thirty_days_ago)->count(); //where('country_real_name', '=', $validatedData["business_country"])->first();
-
+        $suggestions_active_drill = Suggestion::where('suggestion_suggestion_type_id', "=" , 1)->where('created_at', ">=" , $one_hour_ago)->count(); 
+        $suggestions_active_business = Suggestion::where('suggestion_suggestion_type_id', "=" , 2)->where('created_at', ">=" , $one_hour_ago)->count(); 
+        
+        // GETTING BUSINESS DATA
+        $businesses_all = Business::count();   
+        $businesses_listed = Business::where('business_stockmarket_shortname', "!=" , "")->count(); 
+        $businesses_not_listed = Business::where('business_stockmarket_shortname', "=" , "")->count(); 
+        
+        /*
+        echo "\nnow : " . date('Y-m-d H:i:s');
+        echo "\none_hour_ago : " . $one_hour_ago;
+        */
         
         $data = array(
             "users_total_count" => $users_all, 
-            "users_today_count" => $users_today, 
-            "users_thirtydays_count" => $users_thirty_days_ago
+            "users_today_count" => $users_today_count, 
+            "users_thirtydays_count" => $users_thirtydays_count, 
+            "suggestions_active_drill" => $suggestions_active_drill, 
+            "suggestions_active_business" => $suggestions_active_business
         );
 
         return response([

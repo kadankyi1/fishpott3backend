@@ -36,6 +36,7 @@ class Business extends Model
         'business_logo', //
         'business_full_name', //
         'business_stockmarket_shortname', //
+        'business_stockmarket_where_listed', //
         'business_descriptive_bio', //
         'business_address', //
         'business_country', //
