@@ -68,7 +68,7 @@ Route::middleware('auth:api')->post('/v1/user/get-user-info', [App\Http\Controll
 // DEFAULT FALLBACK ROUTE
 Route::fallback(function(){
     return response()->json([
-        'message' => 'Page Not Found. If error persists, contact info@website.com'], 404);
+        'message' => 'Page Not Found. If error persists, contact info@fishpott.com'], 404);
 });
 /*
 |-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|
@@ -94,7 +94,7 @@ Route::middleware('auth:administrator-api')->post('/v1/admin/add-drill', [App\Ht
 Route::middleware('auth:administrator-api')->post('/v1/admin/add-business', [App\Http\Controllers\version1\AdministratorController::class, 'addBusiness']);
 
 // ADD BUSINESS
-Route::middleware('auth:administrator-api')->post('/v1/admin/add-new-stock-value', [App\Http\Controllers\version1\AdministratorController::class, 'addNewShareValue']);
+Route::middleware('auth:administrator-api')->post('/v1/admin/add-new-stock-value', [App\Http\Controllers\version1\AdministratorController::class, 'getDashboardData']);
 
-// ADD NEW ADMINISTRATOR
-//Route::middleware('auth:administrator-api')->get('/v1/user/get-drill', [App\Http\Controllers\version1\AdministratorController::class, 'registerFirstAdmin']);
+// GET DASHBOARD DATA
+Route::middleware('auth:administrator-api')->post('/v1/admin/get-dashboard-data', [App\Http\Controllers\version1\AdministratorController::class, 'getDashboardData']);
