@@ -245,7 +245,10 @@ class AdministratorController extends Controller
             "orders_unpaid_thirty_days" => $orders_unpaid_thirty_days, 
             "answers_today_count" => $answers_today_count, 
             "answers_thirtydays_count" => $answers_thirtydays_count, 
-            "answers_oneyear_count" => $answers_oneyear_count
+            "answers_oneyear_count" => $answers_oneyear_count, 
+            "contact_email" => config('app.fishpott_email'), 
+            "payment_gateway_name" => config('app.payment_gateway_name'), 
+            "payment_gateway_url" => config('app.payment_gateway_login_url')
         );
 
         return response([

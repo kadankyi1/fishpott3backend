@@ -55,8 +55,12 @@ return [
     // CONVERSION RATES
     'to_cedi' => env('PROCESSING_FEE', 6), 
 
-    // CONVERSION RATES
+    // SYSTEM CONTACT EMAIL
     'fishpott_email' => env('FISHPOTT_EMAIL', "fishpottcompany@gmail.com"), 
+
+    // PAYMENT GATEWAY
+    'payment_gateway_name' => env('PAYMENT_GATEWAY_NAME', "PaySwitch"), 
+    'payment_gateway_login_url' => env('PAYMENT_GATEWAY_NAME', "https://dashboard.theteller.net/login"), 
 
     /*
     |-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|
