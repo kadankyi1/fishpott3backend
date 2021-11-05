@@ -191,8 +191,12 @@ class AdministratorController extends Controller
         $users_all = User::count();   
 
         // GETTING USERS FOR 24 HOURS AGO
-        $one_day_ago = UtilController::reformatDate(date('Y-m-d H:i:s'), "-1 day", date('Y-m-d H:i:s'));
-        echo "one_day_ago: " . $one_day_ago;
+        $one_day_ago= UtilController::reformatDate(date('Y-m-d'), "-1 days", date('Y-m-d'));
+        $one_day_ago2 = date('Y-m-d',strtotime("-1 days")); 
+
+        echo "\n today: " . date('Y-m-d H:i:s');
+        echo "\n one_day_ago 1: " . $one_day_ago;
+        echo "\n one_day_ago 2: " . $one_day_ago2; exit;
         $users_today = Country::where('country_real_name', '=', $validatedData["business_country"])->first();
 
         $data = array(
