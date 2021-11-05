@@ -342,7 +342,25 @@
                                   </ul>
                               </li>
                           </ul>
-                          <div class="pcoded-navigation-label" data-i18n="nav.category.forms">Forms &amp; Tables</div>
+                          <div class="pcoded-navigation-label" data-i18n="nav.category.forms">Drills & Suggestions</div>
+                          <ul class="pcoded-item pcoded-left-item">
+                              <li>
+                                  <a href="form-elements-component.html" class="waves-effect waves-dark">
+                                      <span class="pcoded-micon"><i class="ti-layers"></i><b>FC</b></span>
+                                      <span class="pcoded-mtext" data-i18n="nav.form-components.main">Form Components</span>
+                                      <span class="pcoded-mcaret"></span>
+                                  </a>
+                              </li>
+                              <li>
+                                  <a href="bs-basic-table.html" class="waves-effect waves-dark">
+                                      <span class="pcoded-micon"><i class="ti-layers"></i><b>FC</b></span>
+                                      <span class="pcoded-mtext" data-i18n="nav.form-components.main">Basic Table</span>
+                                      <span class="pcoded-mcaret"></span>
+                                  </a>
+                              </li>
+        
+                          </ul>
+                          <div class="pcoded-navigation-label" data-i18n="nav.category.forms">Users</div>
                           <ul class="pcoded-item pcoded-left-item">
                               <li>
                                   <a href="form-elements-component.html" class="waves-effect waves-dark">
@@ -361,7 +379,7 @@
         
                           </ul>
         
-                          <div class="pcoded-navigation-label" data-i18n="nav.category.forms">Chart &amp; Maps</div>
+                          <div class="pcoded-navigation-label" data-i18n="nav.category.forms">Orders &amp;</div>
                           <ul class="pcoded-item pcoded-left-item">
                               <li>
                                   <a href="chart.html" class="waves-effect waves-dark">
@@ -410,7 +428,7 @@
         
                           </ul>
         
-                          <div class="pcoded-navigation-label" data-i18n="nav.category.other">Other</div>
+                          <div class="pcoded-navigation-label" data-i18n="nav.category.other">Businesses</div>
                           <ul class="pcoded-item pcoded-left-item">
                               <li class="pcoded-hasmenu ">
                                   <a href="javascript:void(0)" class="waves-effect waves-dark">
@@ -487,7 +505,7 @@
                                     <div class="page-body">
                                         <div class="row">
                                             <!-- task, page, download counter  start -->
-                                            <div class="col-xl-3 col-md-6">
+                                            <div class="col-xl-4 col-md-6">
                                                 <div class="card">
                                                     <div class="card-block">
                                                         <div class="row align-items-center">
@@ -496,14 +514,22 @@
                                                                 <h6 class="text-muted m-b-0">Users</h6>
                                                             </div>
                                                             <div class="col-4 text-right">
-                                                                <i class="fa fa-bar-chart f-28"></i>
+                                                                <i class="fa fa-users f-28"></i>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="card-footer bg-c-purple">
                                                         <div class="row align-items-center">
                                                             <div class="col-9">
-                                                                <p class="text-white m-b-0">Users Today : 10</p>
+                                                                <p class="text-white m-b-0" id="users_today_count">Users Today : 10</p>
+                                                            </div>
+                                                            <div class="col-3 text-right">
+                                                                <i class="fa fa-line-chart text-white f-16"></i>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row align-items-center">
+                                                            <div class="col-9">
+                                                                <p class="text-white m-b-0" id="users_months_count">Users Last Month : 10</p>
                                                             </div>
                                                             <div class="col-3 text-right">
                                                                 <i class="fa fa-line-chart text-white f-16"></i>
@@ -513,13 +539,13 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-xl-3 col-md-6">
+                                            <div class="col-xl-4 col-md-6">
                                                 <div class="card">
                                                     <div class="card-block">
                                                         <div class="row align-items-center">
                                                             <div class="col-8">
                                                                 <h4 class="text-c-green">290+</h4>
-                                                                <h6 class="text-muted m-b-0">Page Views</h6>
+                                                                <h6 class="text-muted m-b-0" id="suggestions_active_total_count">Active Suggestions</h6>
                                                             </div>
                                                             <div class="col-4 text-right">
                                                                 <i class="fa fa-file-text-o f-28"></i>
@@ -529,7 +555,15 @@
                                                     <div class="card-footer bg-c-green">
                                                         <div class="row align-items-center">
                                                             <div class="col-9">
-                                                                <p class="text-white m-b-0">% change</p>
+                                                                <p class="text-white m-b-0" id="suggestions_active_drills_total_count">Active Drill Sug. : 1</p>
+                                                            </div>
+                                                            <div class="col-3 text-right">
+                                                                <i class="fa fa-line-chart text-white f-16"></i>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row align-items-center">
+                                                            <div class="col-9">
+                                                                <p class="text-white m-b-0" id="suggestions_active_businesses_total_count">Active Business Sug. : 10</p>
                                                             </div>
                                                             <div class="col-3 text-right">
                                                                 <i class="fa fa-line-chart text-white f-16"></i>
@@ -538,23 +572,31 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-xl-3 col-md-6">
+                                            <div class="col-xl-4 col-md-6">
                                                 <div class="card">
                                                     <div class="card-block">
                                                         <div class="row align-items-center">
                                                             <div class="col-8">
                                                                 <h4 class="text-c-red">145</h4>
-                                                                <h6 class="text-muted m-b-0">Task Completed</h6>
+                                                                <h6 class="text-muted m-b-0" id="businesses_total_count">Businesses</h6>
                                                             </div>
                                                             <div class="col-4 text-right">
-                                                                <i class="fa fa-calendar-check-o f-28"></i>
+                                                                <i class="fa fa-home f-28"></i>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="card-footer bg-c-red">
                                                         <div class="row align-items-center">
                                                             <div class="col-9">
-                                                                <p class="text-white m-b-0">% change</p>
+                                                                <p class="text-white m-b-0" id="businesses_listed_total_count">Listed Businesses: </p>
+                                                            </div>
+                                                            <div class="col-3 text-right">
+                                                                <i class="fa fa-line-chart text-white f-16"></i>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row align-items-center">
+                                                            <div class="col-9">
+                                                                <p class="text-white m-b-0" id="businesses_non_listed_total_count">Non-listed Businesses: </p>
                                                             </div>
                                                             <div class="col-3 text-right">
                                                                 <i class="fa fa-line-chart text-white f-16"></i>
@@ -563,23 +605,31 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-xl-3 col-md-6">
+                                            <div class="col-xl-4 col-md-6">
                                                 <div class="card">
                                                     <div class="card-block">
                                                         <div class="row align-items-center">
                                                             <div class="col-8">
                                                                 <h4 class="text-c-blue">500</h4>
-                                                                <h6 class="text-muted m-b-0">Downloads</h6>
+                                                                <h6 class="text-muted m-b-0" id="orders_pending_total_count">Pending Orders</h6>
                                                             </div>
                                                             <div class="col-4 text-right">
-                                                                <i class="fa fa-hand-o-down f-28"></i>
+                                                                <i class="fa fa-list-alt f-28"></i>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="card-footer bg-c-blue">
                                                         <div class="row align-items-center">
                                                             <div class="col-9">
-                                                                <p class="text-white m-b-0">% change</p>
+                                                                <p class="text-white m-b-0" id="orders_months_total_count">Month Orders: </p>
+                                                            </div>
+                                                            <div class="col-3 text-right">
+                                                                <i class="fa fa-line-chart text-white f-16"></i>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row align-items-center">
+                                                            <div class="col-9">
+                                                                <p class="text-white m-b-0" id="orders_months_profit_total_count">Month Profit: </p>
                                                             </div>
                                                             <div class="col-3 text-right">
                                                                 <i class="fa fa-line-chart text-white f-16"></i>
@@ -588,9 +638,55 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <div class="col-xl-4 col-md-6">
+                                                <div class="card">
+                                                    <div class="card-block">
+                                                        <div class="row align-items-center">
+                                                            <div class="col-8">
+                                                                <h4 class="text-c-blue">500</h4>
+                                                                <h6 class="text-muted m-b-0" id="orders_pending_total_count">Drills Answers Today</h6>
+                                                            </div>
+                                                            <div class="col-4 text-right">
+                                                                <i class="fa fa-list-alt f-28"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-footer bg-c-blue">
+                                                        <div class="row align-items-center">
+                                                            <div class="col-9">
+                                                                <p class="text-white m-b-0" id="orders_months_total_count">Drills Answers Month: </p>
+                                                            </div>
+                                                            <div class="col-3 text-right">
+                                                                <i class="fa fa-line-chart text-white f-16"></i>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row align-items-center">
+                                                            <div class="col-9">
+                                                                <p class="text-white m-b-0" id="orders_months_profit_total_count">Drills Answers Year: </p>
+                                                            </div>
+                                                            <div class="col-3 text-right">
+                                                                <i class="fa fa-line-chart text-white f-16"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-xl-12 col-md-12">
+                                                <div class="card quater-card">
+                                                    <div class="card-block">
+                                                        <h5 class="text-muted m-b-15">Notes</h5>
+                                                        <h6>Inquiries</h6>
+                                                        <p class="text-muted">Go to the [company_email] to keep track of all enquiries from users</p>
+                                                        <h6>Payments & Finances</h6>
+                                                        <p class="text-muted">Go to [payment_gateway_provider] to get any needed information regarding payments</p>
+                                                    </div>
+                                                </div>
+                                            </div>
                                             <!-- task, page, download counter  end -->
     
                                             <!--  sale analytics start -->
+                                            <!--  
                                             <div class="col-xl-8 col-md-12">
                                                 <div class="card">
                                                     <div class="card-header">
@@ -644,9 +740,11 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            -->
                                             <!--  sale analytics end -->
     
                                             <!--  project and team member start -->
+                                            <!--
                                             <div class="col-xl-8 col-md-12">
                                                 <div class="card table-card">
                                                     <div class="card-header">
@@ -789,6 +887,8 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            -->
+                                            <!--
                                             <div class="col-xl-4 col-md-12">
                                                 <div class="card ">
                                                     <div class="card-header">
@@ -845,6 +945,7 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            -->
                                             <!--  project and team member end -->
                                         </div>
                                     </div>
