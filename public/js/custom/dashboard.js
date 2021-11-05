@@ -24,7 +24,7 @@ function getDashboardData()
     console.log("getDashboardData STARTED");
     var bearer = "Bearer " + localStorage.getItem("admin_access_token"); 
     $form_data = "administrator_phone_number=" + localStorage.getItem("administrator_phone_number") + "&administrator_sys_id=" + localStorage.getItem("administrator_sys_id") + "&frontend_key=" + localStorage.getItem("frontend_key");
-    show_log_in_console("form_data: " + form_data);
+    console.log("form_data: " + form_data);
     send_restapi_request_to_server_from_form("post", admin_api_get_dashboard_data_url, bearer, "", "json", successResponseFunction, errorResponseFunction);
 }
 
