@@ -17,6 +17,7 @@ use App\Models\version1\Administrator;
 use App\Models\version1\Business;
 use App\Models\version1\Drill;
 use App\Models\version1\StockValue;
+use App\Models\version1\Suggestion;
 use App\Models\version1\Suggesto;
 use Illuminate\Support\Facades\File; 
 use Illuminate\Support\Facades\Auth;
@@ -190,23 +191,30 @@ class AdministratorController extends Controller
         // GETTING USERS DATA
         $users_all = User::count();   
 
-        // GETTING USERS FOR 24 HOURS AGO
-        $one_day_ago= UtilController::reformatDate(date('Y-m-d'), "-1 days", date('Y-m-d'));
-        $one_day_ago2 = date('Y-m-d',strtotime("-1 days")); 
+        // GETTING USERS DATA
+        $one_day_ago = date('Y-m-d',strtotime("-1 days")); 
+        $users_today = User::whereDate('last_online', ">=" , $one_day_ago)->count(); 
+        $thirty_days_ago = date('Y-m-d',strtotime("-31 days")); 
+        $users_thirty_days_ago = User::whereDate('last_online', ">=" , $thirty_days_ago)->count(); 
 
-        echo "\n today: " . date('Y-m-d H:i:s');
-        echo "\n one_day_ago 1: " . $one_day_ago;
-        echo "\n one_day_ago 2: " . $one_day_ago2; exit;
-        $users_today = Country::where('country_real_name', '=', $validatedData["business_country"])->first();
+        
+        // GETTING SUGGESTIONS DATA
+        $one_day_ago = date('Y-m-d',strtotime("-1 days")); 
+        $suggestions_today = Suggestion::whereDate('created_at', ">=" , $one_day_ago)->count(); //where('country_real_name', '=', $validatedData["business_country"])->first();
 
+        $thirty_days_ago = date('Y-m-d',strtotime("-31 days")); 
+        $users_thirty_days_ago = User::whereDate('created_at', ">=" , $thirty_days_ago)->count(); //where('country_real_name', '=', $validatedData["business_country"])->first();
+
+        
         $data = array(
             "users_total_count" => $users_all, 
-            "pott_intelligence" => $users_all
+            "users_today_count" => $users_today, 
+            "users_thirtydays_count" => $users_thirty_days_ago
         );
 
         return response([
             "status" => 1, 
-            "message" => "Drill saved",
+            "message" => "success",
             "data" => $data
         ]);
     }
