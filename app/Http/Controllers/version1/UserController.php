@@ -1779,7 +1779,7 @@ public function changePasswordWithResetCode(Request $request)
         ]);
 
         // MAKING SURE THE REQUEST AND USER IS VALIDATED
-        $validation_response = UtilController::validateUserWithAuthToken($request, auth()->user(), "get-info-on-apps");
+        $validation_response = UtilController::validateUserWithAuthToken($request, auth()->user(), "get-info-in-background");
         if(!empty($validation_response["status"]) && trim($validation_response["status"]) == "error"){
             return response($validation_response);
         } else {

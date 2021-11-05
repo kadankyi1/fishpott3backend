@@ -29,6 +29,7 @@ class AuthServiceProvider extends ServiceProvider
         Passport::routes();
         Passport::tokensCan([
             'get-info-on-apps' => 'View information on apps',
+            'get-info-in-background' => 'Get information while app is in background',
             'get-business-suggestions' => 'Get business suggestions',
             'answer-drills' => 'Answer drills',
             'buy-business-stocks' => 'Buy business stocks',
