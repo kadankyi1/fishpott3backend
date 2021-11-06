@@ -29,9 +29,9 @@ $(document).ready(function ()
     {
         fade_out_loader_and_fade_in_form("loader", "lform"); 
         if(errorThrown.message == null){
-            show_notification("msg_holder", "danger", "Error", errorThrown);
+            show_notification("msg_holder", "error", "Error", errorThrown);
         } else {
-            show_notification("msg_holder", "danger", "Error", errorThrown.message);
+            show_notification("msg_holder", "error", "Error", errorThrown.message);
         }
     }
 

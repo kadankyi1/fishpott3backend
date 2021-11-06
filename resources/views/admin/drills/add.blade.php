@@ -21,37 +21,39 @@ $page_title = "Add a new question to be used as a drill";
                                 <h5>Add a </h5>
                                 <span>Make sure questions are <code>interesting, controversial and relevant </code> to FishPott Drills' <code>mission of getting to know</code> the user </span>
                             </div>
+                            <div class="loader-holder offset-md-5" id="loader" style="display: none"><br><br><br><br><br><br><div class="myloader"></div></div>
+
                             <div class="card-block">
-                                <h4 class="sub-title">Basic Inputs</h4>
-                                <form>
+                                <form id="form">
+                                    <h4 class="sub-title">Basic Inputs</h4>
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">Drill Question</label>
                                         <div class="col-sm-10">
-                                            <textarea id="drill_question" name="drill_question" rows="3" cols="5" class="form-control" placeholder="Drill Question"></textarea>
+                                            <textarea id="drill_question" maxlength="100" name="drill_question" rows="3" cols="5" class="form-control" placeholder="Drill Question"></textarea>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">First Answer</label>
                                         <div class="col-sm-10">
-                                            <input id="drill_answer_1" name="drill_answer_1" type="text" class="form-control" placeholder="First Answer">
+                                            <input id="drill_answer_1" minlength="2" maxlength="100" name="drill_answer_1" type="text" class="form-control" placeholder="First Answer">
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">Second Answer</label>
                                         <div class="col-sm-10">
-                                            <input id="drill_answer_2" name="drill_answer_2" type="text" class="form-control" placeholder="Second Answer">
+                                            <input id="drill_answer_2" minlength="2" maxlength="100"  name="drill_answer_2" type="text" class="form-control" placeholder="Second Answer">
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">Third Answer</label>
                                         <div class="col-sm-10">
-                                            <input id="drill_answer_3" name="drill_answer_3" type="text" class="form-control" placeholder="Third Answer">
+                                            <input id="drill_answer_3" minlength="2" maxlength="100"  name="drill_answer_3" type="text" class="form-control" placeholder="Third Answer">
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">Fourth Answer</label>
                                         <div class="col-sm-10">
-                                            <input id="drill_answer_4" name="drill_answer_4" type="text" class="form-control" placeholder="Fourth Answer">
+                                            <input id="drill_answer_4" minlength="2" maxlength="100"  name="drill_answer_4" type="text" class="form-control" placeholder="Fourth Answer">
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -113,7 +115,8 @@ $page_title = "Add a new question to be used as a drill";
         <!-- custom js -->
         <script type="text/javascript" src="/pages/dashboard/custom-dashboard.js"></script>
         <script type="text/javascript" src="/js/script.js "></script>
-        <script type="text/javascript" src="/js/vanilla-material-notifications.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-noty/2.3.7/packaged/jquery.noty.packaged.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.4.0/animate.min.css">
         <script type="text/javascript" src="/js/custom/config.js "></script>
-        <script type="text/javascript" src="/js/custom/dashboard.js "></script>
+        <script type="text/javascript" src="/js/custom/drills.js "></script>
     @endsection

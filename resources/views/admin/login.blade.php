@@ -223,7 +223,9 @@
 <script type="text/javascript" src="/bower_components/i18next-browser-languagedetector/js/i18nextBrowserLanguageDetector.min.js"></script>
 <script type="text/javascript" src="/bower_components/jquery-i18next/js/jquery-i18next.min.js"></script>
 <script type="text/javascript" src="/js/common-pages.js"></script>
-<script type="text/javascript" src="/js/vanilla-material-notifications.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-noty/2.3.7/packaged/jquery.noty.packaged.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.4.0/animate.min.css">
+
 <script type="text/javascript" src="/js/custom/config.js"></script>
 <script type="text/javascript" src="/js/custom/login.js"></script>
 </body>

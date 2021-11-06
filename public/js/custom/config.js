@@ -11,12 +11,16 @@ var host = "http://fishpott.local";
 var admin_web_login_page_url = `${host}/admin/login`;
 var admin_api_login_url = `${host}/api/v1/admin/login`;
 
-//LOGOUT URL
+// LOGOUT URL
 var admin_api_logout_url = `${host}/api/v1/admin/logout`;
 
-//DASHBOARD URL
+// DASHBOARD URL
 var admin_web_dashboard_page_url = `${host}/admin/dashboard`;
 var admin_api_get_dashboard_data_url = `${host}/api/v1/admin/get-dashboard-data`;
+
+// ADD DRILL
+var admin_web_add_drill_page_url = `${host}/admin/drills/add`;
+var admin_api_add_drill_url = `${host}/api/v1/admin/add-drill`;
 
 // CHECKING IF USER HAS AN API TOKEN
 function user_has_api_token()
@@ -86,12 +90,18 @@ function show_notification(id, type, title, message)
     /*$('#'+id).html(
         '<div id="msg_div" class="' + type + '"><b>' + title +'</b> '+ message +'<a id="close-bar" onclick="hide_notification();">×</a></div>'
     );*/
-    snackbar({
-        type: type,
-        position: 'bottomRight',
-        message: message,
-        timeout: 5000
-      });
+
+    noty({
+        text: message,
+        type: type, 
+        layout: "topRight", timeout: 4000, 
+        animation: {
+            open: 'animated bounceInRight', // in order to use this you'll need animate.css
+            close: 'animated bounceOutRight',
+            easing: 'swing',
+            speed: 500
+        }
+    });
     //setTimeout(function(){ $('#close-bar').click(); }, 5000);
 }
 
