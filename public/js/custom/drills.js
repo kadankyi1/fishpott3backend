@@ -48,6 +48,7 @@ $(document).ready(function ()
 function successResponseFunction(response)
 {
     fade_out_loader_and_fade_in_form("loader", "form"); 
+    $('#form')[0].reset();
     show_notification("msg_holder", "success", "Success:", response.message);
 }
 

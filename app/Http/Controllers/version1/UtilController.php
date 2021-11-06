@@ -383,6 +383,14 @@ class UtilController extends Controller
             ];
         }
 
+        // CHECKING PIN
+        if (!Hash::check($request->administrator_pin, $admin->administrator_pin)) {
+            return [
+                "status" => "error", 
+                "message" => "Incorrect pin"
+            ];
+        }
+
         // MAKING SURE FRONTEND HAS THE RIGHT KEY
         if(strtoupper($request->frontend_key) == config('app.adminfrontendkey')){
             return [
