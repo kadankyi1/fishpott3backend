@@ -343,6 +343,7 @@ class AdministratorController extends Controller
         $validatedData = $request->validate([
             "administrator_phone_number" => "bail|required|regex:/^\+\d{10,15}$/|min:10|max:15",
             "administrator_sys_id" => "bail|required",
+            "administrator_pin" => "bail|required",
             "frontend_key" => "bail|required|in:2aLW4c7r9(2qf#y",
             // ADD ANY OTHER REQUIRED INPUTS FROM HERE
             "business_pottname" => "nullable|string|regex:/^[A-Za-z0-9_.]+$/|max:15",
