@@ -254,7 +254,7 @@
                           </div>
                           <div class="pcoded-navigation-label" data-i18n="nav.category.navigation">Overview</div>
                           <ul class="pcoded-item pcoded-left-item">
-                              <li class="active">
+                              <li class="<?php if(isset($active_page) && $active_page == 'Dashboard'){ echo 'active'; } ?>">
                                   <a href="index.html" class="waves-effect waves-dark">
                                       <span class="pcoded-micon"><i class="ti-home"></i><b>D</b></span>
                                       <span class="pcoded-mtext" data-i18n="nav.dash.main">Dashboard</span>
@@ -264,7 +264,7 @@
                           </ul>
                           <div class="pcoded-navigation-label" data-i18n="nav.category.forms">Drills & Suggestions</div>
                           <ul class="pcoded-item pcoded-left-item">
-                            <li class="pcoded-hasmenu">
+                            <li class="pcoded-hasmenu <?php if(isset($active_page) && $active_page == 'Drills'){ echo 'active'; } ?>">
                                 <a href="javascript:void(0)" class="waves-effect waves-dark">
                                     <span class="pcoded-micon"><i class="ti-layout-grid2-alt"></i></span>
                                     <span class="pcoded-mtext"  data-i18n="nav.basic-components.main">Drills</span>
@@ -272,16 +272,16 @@
                                 </a>
                                 <ul class="pcoded-submenu">
                                     <li class=" ">
-                                        <a href="/admin/drills/overview" class="waves-effect waves-dark">
+                                        <a href="/admin/drills/add" class="waves-effect waves-dark">
                                             <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                                            <span class="pcoded-mtext" data-i18n="nav.basic-components.alert">Drill Overview</span>
+                                            <span class="pcoded-mtext" data-i18n="nav.basic-components.breadcrumbs">Add Drill</span>
                                             <span class="pcoded-mcaret"></span>
                                         </a>
                                     </li>
                                     <li class=" ">
-                                        <a href="breadcrumb.html" class="waves-effect waves-dark">
+                                        <a href="/admin/drills/overview" class="waves-effect waves-dark">
                                             <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                                            <span class="pcoded-mtext" data-i18n="nav.basic-components.breadcrumbs">Add Drill</span>
+                                            <span class="pcoded-mtext" data-i18n="nav.basic-components.alert">Suggest Drill</span>
                                             <span class="pcoded-mcaret"></span>
                                         </a>
                                     </li>
@@ -424,9 +424,7 @@
                                   <div class="col-md-4">
                                       <ul class="breadcrumb-title">
                                           <li class="breadcrumb-item">
-                                              <a href="index.html"> <i class="fa fa-home"></i> </a>
-                                          </li>
-                                          <li class="breadcrumb-item"><a href="#!">Dashboard</a>
+                                              <a>FishPott : Your wealth creation Ai partner</a>
                                           </li>
                                       </ul>
                                   </div>

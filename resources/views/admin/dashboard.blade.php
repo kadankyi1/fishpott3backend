@@ -1,10 +1,10 @@
 <?php
-$active_page = "dashboard";
+$active_page = "Dashboard";
 $page_name = "Dashboard";
 $page_title = "Welcome FishPott Admin";
 ?>
 
-@extends('layouts.app')
+@extends('admin.layouts.app')
 
 <!-- SETTING THE CONTENT AS REQUIRED BY THE CORE STRUCTURE OF THE PAGE -->
                       @section('content')
@@ -241,6 +241,3 @@ $page_title = "Welcome FishPott Admin";
         <script type="text/javascript" src="/js/custom/config.js "></script>
         <script type="text/javascript" src="/js/custom/dashboard.js "></script>
     @endsection
-</body>
-
-</html>

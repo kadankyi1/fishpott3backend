@@ -22,15 +22,15 @@ Route::any('adminer', '\Aranyasen\LaravelAdminer\AdminerController@index');
 
 // LOGIN PAGE
 Route::get('/admin/login', function () {
-    return view('login');
+    return view('admin/login');
 });
 
 // DASHBOARD PAGE
 Route::get('/admin/dashboard', function () {
-    return view('dashboard');
+    return view('admin/dashboard');
 });
 
 // DRILLS OVERVIEW PAGE
-Route::get('/admin/drills/overview', function () {
-    return view('drills/overview');
+Route::get('/admin/drills/add', function () {
+    return view('admin/drills/add');
 });
