@@ -30,7 +30,12 @@ Route::get('/admin/dashboard', function () {
     return view('admin/dashboard');
 });
 
-// DRILLS OVERVIEW PAGE
-Route::get('/admin/drills/add', function () {
-    return view('admin/drills/add');
+// DRILLS ADD PAGE
+Route::get('/admin/drill/add', function () {
+    return view('admin/drill/add');
+});
+
+// BUSINESS ADD PAGE
+Route::get('/admin/business/add', function () {
+    return view('admin/business/add');
 });

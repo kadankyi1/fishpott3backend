@@ -1,7 +1,7 @@
 <?php
-$active_page = "Drills";
-$page_name = "Add Drill";
-$page_title = "Add a new question to be used as a drill";
+$active_page = "Business";
+$page_name = "Add Business";
+$page_title = "Add a new business to be used as a suggestion";
 ?>
 
 @extends('admin.layouts.app')
@@ -19,13 +19,13 @@ $page_title = "Add a new question to be used as a drill";
                         <div class="card">
                             <div class="card-header">
                                 <h5>Note </h5>
-                                <span>Make sure questions are <code>interesting, controversial and relevant </code> to FishPott Drills' <code>mission of getting to know</code> the user </span>
+                                <span>Make sure the business information is <code>accurate, appealing and follows </code> to FishPott Business' <code>mission creating mutually beneficial relationships between </code> business and investor </span>
                             </div>
                             <div class="loader-holder offset-md-5" id="loader" style="display: none"><br><br><br><br><br><br><div class="myloader"></div></div>
 
                             <div class="card-block">
                                 <form id="form">
-                                    <h4 class="sub-title">Basic Inputs</h4>
+                                    <h4 class="sub-title">Form</h4>
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">Drill Question</label>
                                         <div class="col-sm-10">
