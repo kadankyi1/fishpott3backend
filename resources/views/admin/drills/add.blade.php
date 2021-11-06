@@ -59,7 +59,7 @@ $page_title = "Add a new question to be used as a drill";
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">PIN</label>
                                         <div class="col-sm-10">
-                                            <input id="pin" name="pin" type="password" class="form-control" placeholder="PIN">
+                                            <input id="administrator_pin" name="administrator_pin" type="password" class="form-control" placeholder="PIN">
                                         </div>
                                     </div>
                                     <div class="row m-t-30">

@@ -26,6 +26,7 @@ $(document).ready(function ()
             'administrator_phone_number': localStorage.getItem("administrator_phone_number"),
             'administrator_sys_id': localStorage.getItem("administrator_sys_id"),
             'frontend_key': localStorage.getItem("frontend_key"),
+            'administrator_pin': $("#administrator_pin").val(),
             'drill_question': $("#drill_question").val(),
             'drill_answer_1': $("#drill_answer_1").val(),
             'drill_answer_2': $("#drill_answer_2").val(),
