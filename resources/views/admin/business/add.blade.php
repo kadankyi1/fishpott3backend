@@ -354,6 +354,16 @@ $page_title = "Add a new business to be used as a suggestion";
                                                 </div>
                                             </div> 
                                             <div class="form-group row">
+                                                <label class="col-sm-3 col-form-label">PIN</label>
+                                                <div class="col-sm-9">
+                                                    <input id="administrator_pin" name="administrator_pin" type="password" class="form-control" placeholder="PIN">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- END OF FIRST COLUMN -->
+                                        <!-- START OF SECOND COLUMN -->
+                                        <div class="col-md-6">
+                                            <div class="form-group row">
                                                 <label class="col-sm-3 col-form-label">Last Year Profit (USD - $)</label>
                                                 <div class="col-sm-9">
                                                     <input id="business_lastyr_profit_or_loss_usd"  name="business_lastyr_profit_or_loss_usd" min="0" required type="number" class="form-control" placeholder="Last Year Profit (USD - $)">
@@ -414,47 +424,36 @@ $page_title = "Add a new business to be used as a suggestion";
                                                 </div>
                                             </div> 
                                             <div class="form-group row">
-                                                <label class="col-sm-3 col-form-label">xxxxxxxxxxxx</label>
+                                                <label class="col-sm-3 col-form-label">CEO First Name</label>
                                                 <div class="col-sm-9">
-                                                    <input id="xxxxxxxxxxxxxxxx"  name="xxxxxxxxxxxx" minlength="0" maxlength="150" required type="text" class="form-control" placeholder="Stock Market Code">
+                                                    <input id="business_executive1_position"  name="business_executive1_position" value="CEO" required type="hidden" class="form-control" placeholder="ceo_position">
+                                                    <input id="business_executive1_firstname"  name="business_executive1_firstname" minlength="1" maxlength="100" required type="text" class="form-control" placeholder="CEO First Name">
                                                 </div>
                                             </div> 
                                             <div class="form-group row">
-                                                <label class="col-sm-3 col-form-label">xxxxxxxxxxxx</label>
+                                                <label class="col-sm-3 col-form-label">CEO Last Name</label>
                                                 <div class="col-sm-9">
-                                                    <input id="xxxxxxxxxxxxxxxx"  name="xxxxxxxxxxxx" minlength="0" maxlength="150" required type="text" class="form-control" placeholder="Stock Market Code">
+                                                    <input id="business_executive1_lastname"  name="business_executive1_lastname" minlength="1" maxlength="100" required type="text" class="form-control" placeholder="CEO Last Name">
                                                 </div>
                                             </div> 
                                             <div class="form-group row">
-                                                <label class="col-sm-3 col-form-label">xxxxxxxxxxxx</label>
+                                                <label class="col-sm-3 col-form-label">CFO First Name</label>
                                                 <div class="col-sm-9">
-                                                    <input id="xxxxxxxxxxxxxxxx"  name="xxxxxxxxxxxx" minlength="0" maxlength="150" required type="text" class="form-control" placeholder="Stock Market Code">
+                                                    <input id="business_executive2_position"  name="business_executive2_position" value="CFO" required type="hidden" class="form-control" placeholder="ceo_position">
+                                                    <input id="business_executive2_firstname"  name="business_executive2_firstname" minlength="1" maxlength="100" required type="text" class="form-control" placeholder="CFO First Name">
                                                 </div>
                                             </div> 
-                                        </div>
-                                        <!-- END OF FIRST COLUMN -->
-                                        <!-- START OF FIRST COLUMN -->
-                                        <div class="col-md-6">
+                                            <div class="form-group row">
+                                                <label class="col-sm-3 col-form-label">CEO Last Name</label>
+                                                <div class="col-sm-9">
+                                                    <input id="business_executive2_lastname"  name="business_executive2_lastname" minlength="1" maxlength="100" required type="text" class="form-control" placeholder="CFO Last Name">
+                                                </div>
+                                            </div> 
 
                                         </div>
-                                        <!-- END OF FIRST COLUMN -->
+                                        <!-- END OF SECOND COLUMN -->
                                     </div>
                                     <!-- END OF ROW FOR COLUMN SPLITTING -->
-
-                                    "" => "bail|required|min:10|max:100",
-                                    "" => "bail|required|mimes:mp4",
-                        
-                                    "" => "bail|required|integer",
-                                    "" => "bail|required|integer",
-                                    "" => "bail|required|integer",
-                                    "" => "bail|required|integer",
-                                    "" => "bail|required|integer",
-                                    "" => "bail|required|numeric",
-                                    "" => "bail|required|integer",
-                                    "" => "bail|required|integer",
-                                    "" => "bail|required|integer",
-                                    "" => "bail|required|mimes:pdf",
-                                    "" => "bail|required|min:5|max:150",
                                     <div class="row m-t-30">
                                         <div class="offset-md-4 col-md-4">
                                             <input type="submit" value="Save Business" class="btn btn-primary btn-md btn-block waves-effect waves-light text-center m-b-20"/>
@@ -511,5 +510,5 @@ $page_title = "Add a new business to be used as a suggestion";
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-noty/2.3.7/packaged/jquery.noty.packaged.min.js"></script>
         <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.4.0/animate.min.css">
         <script type="text/javascript" src="/js/custom/config.js "></script>
-        <script type="text/javascript" src="/js/custom/drills.js "></script>
+        <script type="text/javascript" src="/js/custom/business.js "></script>
     @endsection
