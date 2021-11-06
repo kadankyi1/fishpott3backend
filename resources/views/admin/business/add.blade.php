@@ -62,7 +62,7 @@ $page_title = "Add a new business to be used as a suggestion";
                                             <div class="form-group row">
                                                 <label class="col-sm-3 col-form-label">Stock Market Code</label>
                                                 <div class="col-sm-9">
-                                                    <input id="business_stockmarket_shortname"  name="business_stockmarket_shortname" minlength="1" maxlength="10" required type="text" class="form-control" placeholder="Stock Market Code">
+                                                    <input id="business_stockmarket_shortname"  name="business_stockmarket_shortname" minlength="1" maxlength="10" type="text" class="form-control" placeholder="Stock Market Code">
                                                 </div>
                                             </div> 
                                             <div class="form-group row">

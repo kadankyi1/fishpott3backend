@@ -22,6 +22,10 @@ var admin_api_get_dashboard_data_url = `${host}/api/v1/admin/get-dashboard-data`
 var admin_web_add_drill_page_url = `${host}/admin/drills/add`;
 var admin_api_add_drill_url = `${host}/api/v1/admin/add-drill`;
 
+// ADD BUSINESS
+var admin_web_add_business_page_url = `${host}/admin/business/add`;
+var admin_api_add_business_url = `${host}/api/v1/admin/add-business`;
+
 // CHECKING IF USER HAS AN API TOKEN
 function user_has_api_token()
 {
@@ -87,10 +91,6 @@ function hide_notification(){
 // SHOWING A NOTIFICATION ON THE SCREEN
 function show_notification(id, type, title, message)
 {
-    /*$('#'+id).html(
-        '<div id="msg_div" class="' + type + '"><b>' + title +'</b> '+ message +'<a id="close-bar" onclick="hide_notification();">×</a></div>'
-    );*/
-
     noty({
         text: message,
         type: type, 
@@ -102,7 +102,6 @@ function show_notification(id, type, title, message)
             speed: 500
         }
     });
-    //setTimeout(function(){ $('#close-bar').click(); }, 5000);
 }
 
 
