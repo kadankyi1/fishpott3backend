@@ -100,4 +100,4 @@ Route::middleware('auth:administrator-api')->post('/v1/admin/add-new-stock-value
 Route::middleware('auth:administrator-api')->post('/v1/admin/get-dashboard-data', [App\Http\Controllers\version1\AdministratorController::class, 'getDashboardData']);
 
 // GET BUSINESS LIST
-Route::middleware('auth:administrator-api')->post('/v1/admin/search-business', [App\Http\Controllers\version1\AdministratorController::class, 'searchModel']);
+Route::middleware('auth:administrator-api')->post('/v1/admin/search-model', [App\Http\Controllers\version1\AdministratorController::class, 'searchModel']);
