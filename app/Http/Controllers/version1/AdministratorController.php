@@ -653,7 +653,7 @@ class AdministratorController extends Controller
             // ADD ANY OTHER REQUIRED INPUTS FROM HERE
             "item_id" => "bail|required",
             "item_type" => "bail|required|integer",
-            "user_pottname" => "bail|required|string",
+            "user_pottname" => "nullable|string",
         ]);
 
         // MAKING SURE THE REQUEST AND USER IS VALIDATED
@@ -672,7 +672,7 @@ class AdministratorController extends Controller
         // INITIALIZING SUGGESTIONS DATA
         $suggestionData = array();
         
-        if($request->item_id == 1){
+        if($request->item_type == 1){
             // CHECKING IF THE BUSINESS EXISTS
             $drill = Drill::where('drill_sys_id', $request->item_id)->first();
             if($drill == null){
@@ -682,13 +682,13 @@ class AdministratorController extends Controller
                 ]);
             }
             // CREATING THE SUGGESTION VALUE DATA FOR BUSINESS
-            $suggestionData["suggestion_sys_id"] = "sug-" . $drill->drill_sys_id;
+            $suggestionData["suggestion_sys_id"] = "sug-" . $drill->drill_sys_id . date('YmdHis');
             $suggestionData["suggestion_item_reference_id"] = $drill->drill_sys_id;
             $suggestionData["suggestion_directed_at_user_investor_id"] = "";
             $suggestionData["suggestion_directed_at_user_business_find_code"] = "";
             $suggestionData["suggestion_suggestion_type_id"] = $request->item_type;
             $message = "Suggestion saved.";
-        } else if($request->item_id == 2){
+        } else if($request->item_type == 2){
             // CHECKING IF THE BUSINESS EXISTS
             $business = Business::where('business_sys_id', $request->item_id)->first();
             if($business == null){
@@ -708,7 +708,7 @@ class AdministratorController extends Controller
             }
 
             // CREATING THE SUGGESTION VALUE DATA FOR BUSINESS
-            $suggestionData["suggestion_sys_id"] = "sug-" . $business->business_sys_id;
+            $suggestionData["suggestion_sys_id"] = "sug-" . $business->business_sys_id . date('YmdHis');
             $suggestionData["suggestion_item_reference_id"] = $business->business_sys_id;
             $suggestionData["suggestion_directed_at_user_investor_id"] = $pott_user->investor_id;
             $suggestionData["suggestion_directed_at_user_business_find_code"] = $pott_user->user_pottname . date('YmdHis');
