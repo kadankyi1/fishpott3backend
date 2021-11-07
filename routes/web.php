@@ -39,3 +39,8 @@ Route::get('/admin/drill/add', function () {
 Route::get('/admin/business/add', function () {
     return view('admin/business/add');
 });
+
+// SUGGEST BUSINESS
+Route::get('/admin/suggestion/business', function () {
+    return view('admin/suggestion/suggest-business');
+});
