@@ -32,17 +32,17 @@ Route::get('/admin/dashboard', function () {
 
 // DRILLS ADD PAGE
 Route::get('/admin/drill/add', function () {
-    return view('admin/drill/add');
+    return view('admin/drill/add-drill');
 });
 
 // ADD BUSINESS 
 Route::get('/admin/business/add', function () {
-    return view('admin/business/add');
+    return view('admin/business/add-business');
 });
 
 // ADD STOCK VALUE 
 Route::get('/admin/business/add-stock-value', function () {
-    return view('admin/business/add-stock-value');
+    return view('admin/business/add-new-stock-value');
 });
 
 // SUGGEST DRILL

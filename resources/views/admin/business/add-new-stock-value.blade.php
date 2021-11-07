@@ -24,7 +24,7 @@ $page_title = "Based on factual information, add a business' new stock value";
                             <div class="loader-holder offset-md-5" id="loader" style="display: none"><br><br><br><br><br><br><div class="myloader"></div></div>
 
                             <div class="card-block">
-                                <form id="sform">
+                                <form id="form">
                                     <!-- START OF FIRST COLUMN -->
                                     <input id="administrator_phone_number"  name="administrator_phone_number" required type="hidden" class="form-control">
                                     <input id="administrator_sys_id"  name="administrator_sys_id" required type="hidden" class="form-control">
@@ -114,5 +114,5 @@ $page_title = "Based on factual information, add a business' new stock value";
             the_model = "business";
         </script>
         <script type="text/javascript" src="/js/custom/config.js "></script>
-        <script type="text/javascript" src="/js/custom/business.js "></script>
+        <script type="text/javascript" src="/js/custom/business/add-new-stock-value.js "></script>
     @endsection
