@@ -29,25 +29,19 @@ $page_title = "Suggest an exciting drill to a user";
                                     <input id="administrator_phone_number"  name="administrator_phone_number" required type="hidden" class="form-control">
                                     <input id="administrator_sys_id"  name="administrator_sys_id" required type="hidden" class="form-control">
                                     <input id="frontend_key"  name="frontend_key" required type="hidden" class="form-control">
-                                    <input id="item_type"  name="item_type" value="2" required type="hidden" class="form-control">
+                                    <input id="item_type"  name="item_type" value="1" required type="hidden" class="form-control">
 
                                     <h4 class="sub-title">Form</h4>
                                     <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label">Choose Drill Question</label>
+                                        <label class="col-sm-2 col-form-label">Drill Question</label>
                                         <div class="col-sm-10">
-                                            <input id="item_identifier" name="item_identifier" type="text"  required class="form-control" placeholder="Business Name">
+                                            <input id="item_identifier" name="item_identifier" type="text"  required class="form-control" placeholder="Drill Question">
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label">Business ID</label>
+                                        <label class="col-sm-2 col-form-label">Drill ID</label>
                                         <div class="col-sm-10">
-                                            <input id="item_id" name="item_id" type="text" readonly required class="form-control" placeholder="Business ID">
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label">User Pottname</label>
-                                        <div class="col-sm-10">
-                                            <input id="user_pottname" name="user_pottname" minlength="2" maxlength="100" type="text" required class="form-control" placeholder="User Pottname">
+                                            <input id="item_id" name="item_id" type="text" readonly required class="form-control" placeholder="Drill ID">
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -112,5 +106,8 @@ $page_title = "Suggest an exciting drill to a user";
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-noty/2.3.7/packaged/jquery.noty.packaged.min.js"></script>
         <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.4.0/animate.min.css">
         <script type="text/javascript" src="/js/custom/config.js "></script>
+        <script type="text/javascript">
+            the_model = "drill";
+        </script>
         <script type="text/javascript" src="/js/custom/suggestion.js "></script>
     @endsection

@@ -613,12 +613,19 @@ class AdministratorController extends Controller
             if($request->model == "business"){
                 $data = Business::select('business_full_name', 'business_sys_id')
                         ->orderBy('business_id', 'desc')->take(100)->get();
+            } else if($request->model == "drill"){
+                $data = Drill::select('drill_question', 'drill_sys_id')
+                        ->orderBy('drill_id', 'desc')->take(100)->get();
             }
         } else {
             if($request->model == "business"){
                 $data = Business::select('business_full_name', 'business_sys_id')
                         ->where('business_full_name', 'LIKE', "%{$request->keyword}%")
                         ->orderBy('business_id', 'desc')->take(100)->get();
+            } else if($request->model == "drill"){
+                $data = Business::select('drill_question', 'drill_sys_id')
+                        ->where('drill_question', 'LIKE', "%{$request->keyword}%")
+                        ->orderBy('drill_id', 'desc')->take(100)->get();
             }
         }
 

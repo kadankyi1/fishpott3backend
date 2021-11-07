@@ -11,7 +11,7 @@ if(!user_has_api_token()){
 $(document).ready(function () 
 {
 
-    getModelData();
+    getModelData(the_model);
 
     $("#administrator_phone_number").val(localStorage.getItem("administrator_phone_number"));
     $("#administrator_sys_id").val(localStorage.getItem("administrator_sys_id"));
@@ -58,7 +58,7 @@ function errorResponseFunction2(errorThrown)
 |--------------------------------------------------------------------------
 |
 */
-function getModelData()
+function getModelData(model)
 {
     console.log("getDashboardData STARTED");
     var bearer = "Bearer " + localStorage.getItem("admin_access_token"); 
@@ -68,7 +68,7 @@ function getModelData()
         'administrator_phone_number': localStorage.getItem("administrator_phone_number"),
         'administrator_sys_id': localStorage.getItem("administrator_sys_id"),
         'frontend_key': localStorage.getItem("frontend_key"),
-        'model': 'business'
+        'model': model
     };
     console.log(data);
     send_restapi_request_to_server_no_form("post", admin_api_add_search_model_url, bearer, data, "json", successResponseFunction, errorResponseFunction);
@@ -78,9 +78,15 @@ function getModelData()
 function successResponseFunction(response)
 {
     $.each(response.data, function(key,value) {
-      console.log(value.business_full_name);
-      models.push(value.business_full_name); 
-      model_ids.push(value.business_sys_id);  
+        if(the_model == "business"){
+            console.log(value.business_full_name);
+            models.push(value.business_full_name); 
+            model_ids.push(value.business_sys_id); 
+        } else if(the_model == "drill"){
+            console.log(value.drill_question);
+            models.push(value.drill_question); 
+            model_ids.push(value.drill_sys_id); 
+        } 
     }); 
 
     $(".theme-loader").animate({
