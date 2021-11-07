@@ -57,7 +57,7 @@ $page_title = "Based on factual information, add a business' new stock value";
                                     </div>
                                     <div class="row m-t-30">
                                         <div class="offset-md-4 col-md-4">
-                                            <input type="submit" value="Save Suggestion" class="btn btn-primary btn-md btn-block waves-effect waves-light text-center m-b-20"/>
+                                            <input type="submit" value="Save" class="btn btn-primary btn-md btn-block waves-effect waves-light text-center m-b-20"/>
                                         </div>
                                     </div>
                                 </form>

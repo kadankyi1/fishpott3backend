@@ -109,5 +109,5 @@ $page_title = "Suggest an exciting drill to a user";
         <script type="text/javascript">
             the_model = "drill";
         </script>
-        <script type="text/javascript" src="/js/custom/suggestion.js "></script>
+        <script type="text/javascript" src="/js/custom/suggestion/add-suggestion.js "></script>
     @endsection

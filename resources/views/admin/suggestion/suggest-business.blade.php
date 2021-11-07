@@ -115,5 +115,5 @@ $page_title = "Suggest a business to a user";
         <script type="text/javascript">
             the_model = "business";
         </script>
-        <script type="text/javascript" src="/js/custom/suggestion.js "></script>
+        <script type="text/javascript" src="/js/custom/suggestion/suggestion.js "></script>
     @endsection
