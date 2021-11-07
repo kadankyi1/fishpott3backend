@@ -761,8 +761,9 @@ class AdministratorController extends Controller
             "administrator_phone_number" => "bail|required|regex:/^\+\d{10,15}$/|min:10|max:15",
             "administrator_sys_id" => "bail|required",
             "frontend_key" => "bail|required|in:2aLW4c7r9(2qf#y",
+            "administrator_pin" => "bail|required",
             // ADD ANY OTHER REQUIRED INPUTS FROM HERE
-            "business_id" => "bail|required",
+            "item_id" => "bail|required",
             "new_value" => "bail|required|numeric",
         ]);
 
@@ -780,7 +781,7 @@ class AdministratorController extends Controller
         */
 
         // CHECKING IF THE BUSINESS EXISTS
-        $business = Business::where('business_sys_id', $request->business_id)->first();
+        $business = Business::where('business_sys_id', $request->item_id)->first();
         if($business == null){
             return response([
                 "status" => "error", 
@@ -789,7 +790,7 @@ class AdministratorController extends Controller
         }
 
         //CREATING THE STOCK VALUE DATA
-        $stockValueData["stockvalue_business_id"] = $request->business_id;
+        $stockValueData["stockvalue_business_id"] = $request->item_id;
         $stockValueData["stockvalue_value_per_stock_usd"] = floatval($request->new_value);
         $stockValueData["stockvalue_admin_adder_id"] = $admin->administrator_sys_id;
         StockValue::create($stockValueData);

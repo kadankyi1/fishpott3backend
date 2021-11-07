@@ -94,7 +94,7 @@ Route::middleware('auth:administrator-api')->post('/v1/admin/add-drill', [App\Ht
 Route::middleware('auth:administrator-api')->post('/v1/admin/add-business', [App\Http\Controllers\version1\AdministratorController::class, 'addBusiness']);
 
 // ADD BUSINESS
-Route::middleware('auth:administrator-api')->post('/v1/admin/add-new-stock-value', [App\Http\Controllers\version1\AdministratorController::class, 'getDashboardData']);
+Route::middleware('auth:administrator-api')->post('/v1/admin/add-new-stock-value', [App\Http\Controllers\version1\AdministratorController::class, 'addNewShareValue']);
 
 // GET DASHBOARD DATA
 Route::middleware('auth:administrator-api')->post('/v1/admin/get-dashboard-data', [App\Http\Controllers\version1\AdministratorController::class, 'getDashboardData']);

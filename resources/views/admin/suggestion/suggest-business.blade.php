@@ -35,7 +35,7 @@ $page_title = "Suggest a business to a user";
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">Choose Business</label>
                                         <div class="col-sm-10">
-                                            <input id="item_identifier" name="item_identifier" type="text"  required class="form-control" placeholder="Business Name">
+                                            <input id="item_identifier" autocomplete="off" name="item_identifier" type="text"  required class="form-control" placeholder="Business Name">
                                         </div>
                                     </div>
                                     <div class="form-group row">

@@ -32,6 +32,9 @@ var admin_api_add_search_model_url = `${host}/api/v1/admin/search-model`;
 // ADD SUGGESTION
 var admin_api_add_suggestion_url = `${host}/api/v1/admin/add-suggestion`;
 
+// ADD NEW STOCK VALUE
+var admin_api_add_new_stock_value_url = `${host}/api/v1/admin/add-new-stock-value`;
+
 
 // CHECKING IF USER HAS AN API TOKEN
 function user_has_api_token()
@@ -111,8 +114,63 @@ function show_notification(id, type, title, message)
     });
 }
 
-// MAKING AUTO COMPLETE SUGGESTIONS
+/*
+|--------------------------------------------------------------------------
+| FUNCTIONS FOR FETCHING MODEL DATA
+|--------------------------------------------------------------------------
+|--------------------------------------------------------------------------
+|
+*/
+function getModelData(model)
+{
+    console.log("getDashboardData STARTED");
+    var bearer = "Bearer " + localStorage.getItem("admin_access_token"); 
+    console.log("admin_api_get_dashboard_data_url: " + admin_api_get_dashboard_data_url);
+    console.log("Token: " + bearer);
+    var data = {
+        'administrator_phone_number': localStorage.getItem("administrator_phone_number"),
+        'administrator_sys_id': localStorage.getItem("administrator_sys_id"),
+        'frontend_key': localStorage.getItem("frontend_key"),
+        'model': model
+    };
+    console.log(data);
+    send_restapi_request_to_server_no_form("post", admin_api_add_search_model_url, bearer, data, "json", getModelDataSuccessResponseFunction, getModelDataErrorResponseFunction);
+}
 
+// RESENDING THE PASSCODE
+function getModelDataSuccessResponseFunction(response)
+{
+    $.each(response.data, function(key,value) {
+        if(the_model == "business"){
+            console.log(value.business_full_name);
+            models.push(value.business_full_name); 
+            model_ids.push(value.business_sys_id); 
+        } else if(the_model == "drill"){
+            console.log(value.drill_question);
+            models.push(value.drill_question); 
+            model_ids.push(value.drill_sys_id); 
+        } 
+    }); 
+
+    $(".theme-loader").animate({
+        opacity: "0"
+    },1000);
+    setTimeout(function() {
+        $(".theme-loader").remove();
+    }, 800);
+
+    show_notification("msg_holder", "success", "Success:", "Fetch Successful");
+}
+
+function getModelDataErrorResponseFunction(errorThrown)
+{
+    fade_out_loader_and_fade_in_form("loader", "form"); 
+    show_notification("msg_holder", "danger", "Error", errorThrown);
+}
+
+
+
+// MAKING AUTO COMPLETE SUGGESTIONS
 function autocomplete(inp, arr, item_id) {
     /*the autocomplete function takes two arguments,
     the text field element and an array of possible autocompleted values:*/

@@ -1,7 +1,7 @@
 <?php
-$active_page = "Suggestion";
-$page_name = "Suggest Drill";
-$page_title = "Suggest an exciting drill to a user";
+$active_page = "Business";
+$page_name = "Add Stock Value";
+$page_title = "Based on factual information, add a business' new stock value";
 ?>
 
 @extends('admin.layouts.app')
@@ -19,29 +19,34 @@ $page_title = "Suggest an exciting drill to a user";
                         <div class="card">
                             <div class="card-header">
                                 <h5>Note</h5>
-                                <span>Make sure there is no active suggested drill because <code>making a new suggestion will overwrite existing suggestion </code> so check <code>from the dashboard</code> first </span>
+                                <span>If you are suggesting a business this way, make sure FishPott Marketing Team <code>has met the user and discussed the shares with them</code> so that we do not violate <code>SEC rules</code>  given us</span>
                             </div>
                             <div class="loader-holder offset-md-5" id="loader" style="display: none"><br><br><br><br><br><br><div class="myloader"></div></div>
 
                             <div class="card-block">
-                                <form id="form">
+                                <form id="sform">
                                     <!-- START OF FIRST COLUMN -->
                                     <input id="administrator_phone_number"  name="administrator_phone_number" required type="hidden" class="form-control">
                                     <input id="administrator_sys_id"  name="administrator_sys_id" required type="hidden" class="form-control">
                                     <input id="frontend_key"  name="frontend_key" required type="hidden" class="form-control">
-                                    <input id="item_type"  name="item_type" value="1" required type="hidden" class="form-control">
 
                                     <h4 class="sub-title">Form</h4>
                                     <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label">Drill Question</label>
+                                        <label class="col-sm-2 col-form-label">Choose Business</label>
                                         <div class="col-sm-10">
-                                            <input id="item_identifier" autocomplete="off" name="item_identifier" type="text"  required class="form-control" placeholder="Drill Question">
+                                            <input id="item_identifier" autocomplete="off" name="item_identifier" type="text"  required class="form-control" placeholder="Business Name">
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label">Drill ID</label>
+                                        <label class="col-sm-2 col-form-label">Business ID</label>
                                         <div class="col-sm-10">
-                                            <input id="item_id" name="item_id" type="text" readonly required class="form-control" placeholder="Drill ID">
+                                            <input id="item_id" name="item_id" type="text" readonly required class="form-control" placeholder="Business ID">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label">New Value (USD - $)</label>
+                                        <div class="col-sm-10">
+                                            <input id="new_value" name="new_value" type="number" step="any" required class="form-control" placeholder="New Value In USD">
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -105,9 +110,9 @@ $page_title = "Suggest an exciting drill to a user";
         <script type="text/javascript" src="/js/script.js "></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-noty/2.3.7/packaged/jquery.noty.packaged.min.js"></script>
         <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.4.0/animate.min.css">
-        <script type="text/javascript" src="/js/custom/config.js "></script>
         <script type="text/javascript">
-            the_model = "drill";
+            the_model = "business";
         </script>
-        <script type="text/javascript" src="/js/custom/suggestion.js "></script>
+        <script type="text/javascript" src="/js/custom/config.js "></script>
+        <script type="text/javascript" src="/js/custom/business.js "></script>
     @endsection

@@ -110,7 +110,7 @@
                               </div>
                           </div>
                       </div>
-                      <a href="index.html">
+                      <a href="/admin/dashboard">
                           <img class="img-fluid" src="/images/logo.png" alt="Theme-Logo" />
                       </a>
                       <a class="mobile-options waves-effect waves-light">
@@ -255,7 +255,7 @@
                           <div class="pcoded-navigation-label" data-i18n="nav.category.navigation">Overview</div>
                           <ul class="pcoded-item pcoded-left-item">
                               <li class="<?php if(isset($active_page) && $active_page == 'Dashboard'){ echo 'active'; } ?>">
-                                  <a href="index.html" class="waves-effect waves-dark">
+                                  <a href="/admin/dashboard" class="waves-effect waves-dark">
                                       <span class="pcoded-micon"><i class="ti-home"></i><b>D</b></span>
                                       <span class="pcoded-mtext" data-i18n="nav.dash.main">Dashboard</span>
                                       <span class="pcoded-mcaret"></span>
@@ -275,13 +275,6 @@
                                         <a href="/admin/drill/add" class="waves-effect waves-dark">
                                             <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
                                             <span class="pcoded-mtext" data-i18n="nav.basic-components.breadcrumbs">Add Drill</span>
-                                            <span class="pcoded-mcaret"></span>
-                                        </a>
-                                    </li>
-                                    <li class=" ">
-                                        <a href="/admin/drills/overview" class="waves-effect waves-dark">
-                                            <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                                            <span class="pcoded-mtext" data-i18n="nav.basic-components.alert">Suggest Drill</span>
                                             <span class="pcoded-mcaret"></span>
                                         </a>
                                     </li>
@@ -313,9 +306,9 @@
                                           </a>
                                       </li>
                                       <li class="">
-                                          <a href="/admin/business/add" class="waves-effect waves-dark">
+                                          <a href="/admin/business/add-stock-value" class="waves-effect waves-dark">
                                               <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                                              <span class="pcoded-mtext" data-i18n="nav.menu-levels.menu-level-21">View Business</span>
+                                              <span class="pcoded-mtext" data-i18n="nav.menu-levels.menu-level-21">Add Stock Value</span>
                                               <span class="pcoded-mcaret"></span>
                                           </a>
                                       </li>
@@ -380,7 +373,7 @@
                                     <li class="">
                                         <a href="/admin/business/add" class="waves-effect waves-dark">
                                             <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                                            <span class="pcoded-mtext" data-i18n="nav.menu-levels.menu-level-21">View Users</span>
+                                            <span class="pcoded-mtext" data-i18n="nav.menu-levels.menu-level-21">Flag Users</span>
                                             <span class="pcoded-mcaret"></span>
                                         </a>
                                     </li>

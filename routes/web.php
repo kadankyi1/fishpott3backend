@@ -35,9 +35,14 @@ Route::get('/admin/drill/add', function () {
     return view('admin/drill/add');
 });
 
-// BUSINESS ADD PAGE
+// ADD BUSINESS 
 Route::get('/admin/business/add', function () {
     return view('admin/business/add');
+});
+
+// ADD STOCK VALUE 
+Route::get('/admin/business/add-stock-value', function () {
+    return view('admin/business/add-stock-value');
 });
 
 // SUGGEST DRILL
