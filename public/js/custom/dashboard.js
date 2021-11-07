@@ -30,7 +30,7 @@ function getDashboardData()
         'frontend_key': localStorage.getItem("frontend_key")
     };
     console.log(data);
-    send_restapi_request_to_server_from_form("post", admin_api_get_dashboard_data_url, bearer, data, "json", successResponseFunction, errorResponseFunction);
+    send_restapi_request_to_server_no_form("post", admin_api_get_dashboard_data_url, bearer, data, "json", successResponseFunction, errorResponseFunction);
 }
 
 // RESENDING THE PASSCODE

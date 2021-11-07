@@ -35,7 +35,12 @@ $page_title = "Suggest a business to a user";
                                         <label class="col-sm-2 col-form-label">Choose Business</label>
                                         <div class="col-sm-10">
                                             <input id="business_name" name="business_name" type="text" class="form-control" placeholder="Business Name">
-                                            <input id="business_id"  name="business_id" required type="hidden" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label">Business ID</label>
+                                        <div class="col-sm-10">
+                                            <input id="business_id" name="business_id" type="text" readonly class="form-control" placeholder="Business ID">
                                         </div>
                                     </div>
                                     <div class="form-group row">

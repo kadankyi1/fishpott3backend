@@ -26,6 +26,10 @@ var admin_api_add_drill_url = `${host}/api/v1/admin/add-drill`;
 var admin_web_add_business_page_url = `${host}/admin/business/add`;
 var admin_api_add_business_url = `${host}/api/v1/admin/add-business`;
 
+// SEARCH MODEL
+var admin_api_add_search_model_url = `${host}/api/v1/admin/search-model`;
+
+
 // CHECKING IF USER HAS AN API TOKEN
 function user_has_api_token()
 {
@@ -146,6 +150,40 @@ function send_request_to_server_from_form(method, url_to_server, form_data, data
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
             console.log(XMLHttpRequest.responseText);
+            error_response_function(XMLHttpRequest.responseText);
+        }
+    });
+}
+
+function send_restapi_request_to_server_no_form(method, url_to_server, authorization, form_data, data_type, success_response_function, error_response_function)
+{
+    $.ajax({
+        type: method,
+        url: url_to_server,
+        headers: {
+            'Authorization': authorization
+         },
+        data:  form_data,
+        dataType: data_type,
+        success: function(response){ 
+            console.log(response);
+
+            if(response == "Unauthorized"){
+                user_token_is_no_longer_valid();
+                return;
+            } 
+            if(response.status == 1){
+                success_response_function(response);
+            } else {
+                error_response_function(response.message);
+            }
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+            console.log(XMLHttpRequest.responseText);
+            if(errorThrown == "Unauthorized"){
+                user_token_is_no_longer_valid();
+                return;
+            }
             error_response_function(XMLHttpRequest.responseText);
         }
     });

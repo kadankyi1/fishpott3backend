@@ -1,3 +1,7 @@
+  /*An array containing all the country names in the world:*/
+  var models = [];
+  var model_ids = [];
+
 // CHECKING IF USER IS LOGGED IN
 if(!user_has_api_token()){
     redirect_to_next_page(admin_web_login_page_url, false);
@@ -7,12 +11,14 @@ if(!user_has_api_token()){
 $(document).ready(function () 
 {
 
-    getDashboardData();
+    getModelData();
 
     $("#administrator_phone_number").val(localStorage.getItem("administrator_phone_number"));
     $("#administrator_sys_id").val(localStorage.getItem("administrator_sys_id"));
     $("#frontend_key").val(localStorage.getItem("frontend_key"));
 
+    /*initiate the autocomplete function on the "business_name" element, and pass along the countries array as possible autocomplete values:*/
+    autocomplete(document.getElementById("business_name"), models);
 
     // SUBMITTING THE FORM TO GET API RESPONSE
     $("#form").submit(function (e) 
@@ -32,14 +38,14 @@ $(document).ready(function ()
 
 
 // RESENDING THE PASSCODE
-function successResponseFunction(response)
+function successResponseFunction2(response)
 {
     fade_out_loader_and_fade_in_form("loader", "form"); 
     $('#form')[0].reset();
     show_notification("msg_holder", "success", "Success:", response.message);
 }
 
-function errorResponseFunction(errorThrown)
+function errorResponseFunction2(errorThrown)
 {
     fade_out_loader_and_fade_in_form("loader", "form"); 
     show_notification("msg_holder", "danger", "Error", errorThrown);
@@ -52,7 +58,7 @@ function errorResponseFunction(errorThrown)
 |--------------------------------------------------------------------------
 |
 */
-function getDashboardData()
+function getModelData()
 {
     console.log("getDashboardData STARTED");
     var bearer = "Bearer " + localStorage.getItem("admin_access_token"); 
@@ -61,41 +67,23 @@ function getDashboardData()
     var data = {
         'administrator_phone_number': localStorage.getItem("administrator_phone_number"),
         'administrator_sys_id': localStorage.getItem("administrator_sys_id"),
-        'frontend_key': localStorage.getItem("frontend_key")
+        'frontend_key': localStorage.getItem("frontend_key"),
+        'model': 'business'
     };
     console.log(data);
-    send_restapi_request_to_server_from_form("post", admin_api_get_dashboard_data_url, bearer, data, "json", successResponseFunction, errorResponseFunction);
+    send_restapi_request_to_server_no_form("post", admin_api_add_search_model_url, bearer, data, "json", successResponseFunction, errorResponseFunction);
 }
 
 // RESENDING THE PASSCODE
 function successResponseFunction(response)
 {
-    $("#users_total_count").append(response.data.users_total_count);
-    $("#users_today_count").append(response.data.users_today_count);
-    $("#users_months_count").append(response.data.users_thirtydays_count);
-
-
-    $("#suggestions_active_total_count").append(response.data.suggestions_active);
-    $("#suggestions_active_drills_total_count").append(response.data.suggestions_active_drill);
-    $("#suggestions_active_businesses_total_count").append(response.data.suggestions_active_business);
-
-    $("#businesses_total_count").append(response.data.businesses_all);
-    $("#businesses_listed_total_count").append(response.data.businesses_not_listed);
-    $("#businesses_non_listed_total_count").append(response.data.businesses_not_listed);
-
-    $("#orders_pending_total_count").append(response.data.orders_paid_pending);
-    $("#orders_months_total_count").append(response.data.orders_paid_thirty_days);
-    $("#orders_months_profit_total_count").append(response.data.orders_unpaid_thirty_days);
-
-    $("#drillanswers_today_count").append(response.data.answers_today_count);
-    $("#drillanswers_months_count").append(response.data.answers_thirtydays_count);
-    $("#drillanswers_year_count").append(response.data.answers_oneyear_count);
-
-
-    $("#contact_email").append(response.data.contact_email);
-    $("#payment_gateway_provider_name").append(response.data.payment_gateway_name);
-    $("#payment_gateway_provider_url").append(response.data.payment_gateway_url);
-    $("#payment_gateway_provider_url").attr("href", response.data.payment_gateway_url);
+    console.log(response.data[0].business_full_name);
+    //var obj = jQuery.parseJSON(response);
+    $.each(response.data, function(key,value) {
+      console.log(value.business_full_name);
+      models.push(value.business_full_name);   // Adds "Kiwi"
+      model_ids.push(value.business_sys_id);   // Adds "Kiwi"
+    }); 
 
     $(".theme-loader").animate({
         opacity: "0"
@@ -105,7 +93,6 @@ function successResponseFunction(response)
     }, 800);
 
     show_notification("msg_holder", "success", "Success:", "Fetch Successful");
-    //fade_out_loader_and_fade_in_form("loader", "form"); 
 }
 
 function errorResponseFunction(errorThrown)
@@ -147,6 +134,8 @@ function autocomplete(inp, arr) {
             b.addEventListener("click", function(e) {
                 /*insert the value for the autocomplete text field:*/
                 inp.value = this.getElementsByTagName("input")[0].value;
+                console.log("array index: " + i);
+                document.getElementById("business_id").value = model_ids[i-1];
                 /*close the list of autocompleted values,
                 (or any other open lists of autocompleted values:*/
                 closeAllLists();
@@ -211,10 +200,4 @@ function autocomplete(inp, arr) {
         closeAllLists(e.target);
     });
   }
-
-  /*An array containing all the country names in the world:*/
-var countries = ["Anno","Albania","Algeria","Andorra","Angola","Anguilla","Antigua & Barbuda","Argentina","Armenia","Aruba","Australia","Austria","Azerbaijan","Bahamas","Bahrain","Bangladesh","Barbados","Belarus","Belgium","Belize","Benin","Bermuda","Bhutan","Bolivia","Bosnia & Herzegovina","Botswana","Brazil","British Virgin Islands","Brunei","Bulgaria","Burkina Faso","Burundi","Cambodia","Cameroon","Canada","Cape Verde","Cayman Islands","Central Arfrican Republic","Chad","Chile","China","Colombia","Congo","Cook Islands","Costa Rica","Cote D Ivoire","Croatia","Cuba","Curacao","Cyprus","Czech Republic","Denmark","Djibouti","Dominica","Dominican Republic","Ecuador","Egypt","El Salvador","Equatorial Guinea","Eritrea","Estonia","Ethiopia","Falkland Islands","Faroe Islands","Fiji","Finland","France","French Polynesia","French West Indies","Gabon","Gambia","Georgia","Germany","Ghana","Gibraltar","Greece","Greenland","Grenada","Guam","Guatemala","Guernsey","Guinea","Guinea Bissau","Guyana","Haiti","Honduras","Hong Kong","Hungary","Iceland","India","Indonesia","Iran","Iraq","Ireland","Isle of Man","Israel","Italy","Jamaica","Japan","Jersey","Jordan","Kazakhstan","Kenya","Kiribati","Kosovo","Kuwait","Kyrgyzstan","Laos","Latvia","Lebanon","Lesotho","Liberia","Libya","Liechtenstein","Lithuania","Luxembourg","Macau","Macedonia","Madagascar","Malawi","Malaysia","Maldives","Mali","Malta","Marshall Islands","Mauritania","Mauritius","Mexico","Micronesia","Moldova","Monaco","Mongolia","Montenegro","Montserrat","Morocco","Mozambique","Myanmar","Namibia","Nauro","Nepal","Netherlands","Netherlands Antilles","New Caledonia","New Zealand","Nicaragua","Niger","Nigeria","North Korea","Norway","Oman","Pakistan","Palau","Palestine","Panama","Papua New Guinea","Paraguay","Peru","Philippines","Poland","Portugal","Puerto Rico","Qatar","Reunion","Romania","Russia","Rwanda","Saint Pierre & Miquelon","Samoa","San Marino","Sao Tome and Principe","Saudi Arabia","Senegal","Serbia","Seychelles","Sierra Leone","Singapore","Slovakia","Slovenia","Solomon Islands","Somalia","South Africa","South Korea","South Sudan","Spain","Sri Lanka","St Kitts & Nevis","St Lucia","St Vincent","Sudan","Suriname","Swaziland","Sweden","Switzerland","Syria","Taiwan","Tajikistan","Tanzania","Thailand","Timor L'Este","Togo","Tonga","Trinidad & Tobago","Tunisia","Turkey","Turkmenistan","Turks & Caicos","Tuvalu","Uganda","Ukraine","United Arab Emirates","United Kingdom","United States of America","Uruguay","Uzbekistan","Vanuatu","Vatican City","Venezuela","Vietnam","Virgin Islands (US)","Yemen","Zambia","Zimbabwe"];
-
-/*initiate the autocomplete function on the "myInput" element, and pass along the countries array as possible autocomplete values:*/
-autocomplete(document.getElementById("myInput"), countries);
 
