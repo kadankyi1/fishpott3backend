@@ -54,3 +54,8 @@ Route::get('/admin/suggestion/suggest-drill', function () {
 Route::get('/admin/suggestion/suggest-business', function () {
     return view('admin/suggestion/suggest-business');
 });
+
+// VIEW ORDERS
+Route::get('/admin/orders/view-orders', function () {
+    return view('admin/orders/view-orders');
+});
