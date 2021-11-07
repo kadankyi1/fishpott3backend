@@ -632,6 +632,111 @@ class AdministratorController extends Controller
     /*
     |--------------------------------------------------------------------------
     |--------------------------------------------------------------------------
+    | THIS FUNCTION ADDS A SUGGESTION
+    |--------------------------------------------------------------------------
+    |--------------------------------------------------------------------------
+    */
+    
+    public function addSuggestion(Request $request)
+    {
+        /*
+        |**************************************************************************
+        | VALIDATION STARTS 
+        |**************************************************************************
+        */
+        // MAKING SURE THE INPUT HAS THE EXPECTED VALUES
+        $validatedData = $request->validate([
+            "administrator_phone_number" => "bail|required|regex:/^\+\d{10,15}$/|min:10|max:15",
+            "administrator_sys_id" => "bail|required",
+            "frontend_key" => "bail|required|in:2aLW4c7r9(2qf#y",
+            "administrator_pin" => "bail|required",
+            // ADD ANY OTHER REQUIRED INPUTS FROM HERE
+            "item_id" => "bail|required",
+            "item_type" => "bail|required|integer",
+            "user_pottname" => "bail|required|string",
+        ]);
+
+        // MAKING SURE THE REQUEST AND USER IS VALIDATED
+        $validation_response = UtilController::validateAdminWithAuthToken($request, auth()->guard('administrator-api')->user(), "add-drill");
+        if(!empty($validation_response["status"]) && trim($validation_response["status"]) == "error"){
+            return response($validation_response);
+        } else {
+            $admin = $validation_response;
+        }
+        /*
+        |**************************************************************************
+        | VALIDATION ENDED 
+        |**************************************************************************
+        */
+
+        // INITIALIZING SUGGESTIONS DATA
+        $suggestionData = array();
+        
+        if($request->item_id == 1){
+            // CHECKING IF THE BUSINESS EXISTS
+            $drill = Drill::where('drill_sys_id', $request->item_id)->first();
+            if($drill == null){
+                return response([
+                    "status" => 0, 
+                    "message" => "Drill not found"
+                ]);
+            }
+            // CREATING THE SUGGESTION VALUE DATA FOR BUSINESS
+            $suggestionData["suggestion_sys_id"] = "sug-" . $drill->drill_sys_id;
+            $suggestionData["suggestion_item_reference_id"] = $drill->drill_sys_id;
+            $suggestionData["suggestion_directed_at_user_investor_id"] = "";
+            $suggestionData["suggestion_directed_at_user_business_find_code"] = "";
+            $suggestionData["suggestion_suggestion_type_id"] = $request->item_type;
+            $message = "Suggestion saved.";
+        } else if($request->item_id == 2){
+            // CHECKING IF THE BUSINESS EXISTS
+            $business = Business::where('business_sys_id', $request->item_id)->first();
+            if($business == null){
+                return response([
+                    "status" => 0, 
+                    "message" => "Business not found"
+                ]);
+            }
+
+            // CHECKING IF USER EXISTS
+            $pott_user = User::where('user_pottname', $request->user_pottname)->first();
+            if($pott_user == null){
+                return response([
+                    "status" => 0, 
+                    "message" => "User not found"
+                ]);
+            }
+
+            // CREATING THE SUGGESTION VALUE DATA FOR BUSINESS
+            $suggestionData["suggestion_sys_id"] = "sug-" . $business->business_sys_id;
+            $suggestionData["suggestion_item_reference_id"] = $business->business_sys_id;
+            $suggestionData["suggestion_directed_at_user_investor_id"] = $pott_user->investor_id;
+            $suggestionData["suggestion_directed_at_user_business_find_code"] = $pott_user->user_pottname . date('YmdHis');
+            $suggestionData["suggestion_suggestion_type_id"] = $request->item_type;
+            $message = "Suggestion saved. Find code is : " . $suggestionData["suggestion_directed_at_user_business_find_code"];
+        } else {
+            return response([
+                "status" => 0, 
+                "message" => "Item type not found"
+            ]);
+        }
+
+
+        // CREATING THE SUGGESTION VALUE DATA FOR BUSINESS
+        $suggestionData["suggestion_passed_on_by_user"] = false;
+        $suggestionData["suggestion_flagged"] = false;
+        Suggestion::create($suggestionData);
+
+        return response([
+            "status" => 1, 
+            "message" => $message
+        ]);
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    |--------------------------------------------------------------------------
     | THIS FUNCTION ADDS A DRILL
     |--------------------------------------------------------------------------
     |--------------------------------------------------------------------------

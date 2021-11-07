@@ -29,6 +29,7 @@ $page_title = "Suggest a business to a user";
                                     <input id="administrator_phone_number"  name="administrator_phone_number" required type="hidden" class="form-control">
                                     <input id="administrator_sys_id"  name="administrator_sys_id" required type="hidden" class="form-control">
                                     <input id="frontend_key"  name="frontend_key" required type="hidden" class="form-control">
+                                    <input id="suggestion_suggestion_type"  name="suggestion_suggestion_type" value="2" required type="hidden" class="form-control">
 
                                     <h4 class="sub-title">Form</h4>
                                     <div class="form-group row">
