@@ -25,6 +25,11 @@ $page_title = "Add a new question to be used as a drill";
 
                             <div class="card-block">
                                 <form id="form">
+                                    <!-- START OF FIRST COLUMN -->
+                                    <input id="administrator_phone_number"  name="administrator_phone_number" required type="hidden" class="form-control">
+                                    <input id="administrator_sys_id"  name="administrator_sys_id" required type="hidden" class="form-control">
+                                    <input id="frontend_key"  name="frontend_key" required type="hidden" class="form-control">
+
                                     <h4 class="sub-title">Form</h4>
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">Drill Question</label>

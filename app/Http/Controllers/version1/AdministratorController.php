@@ -355,7 +355,7 @@ class AdministratorController extends Controller
             "business_stockmarket_shortname" => "nullable|max:10",
             "business_descriptive_bio" => "bail|required|max:150",
             "business_address" => "bail|required|min:5|max:150",
-            "business_country" => "bail|required|min:5|max:150",
+            "business_country" => "bail|required|integer",
             "business_start_date" => "bail|required|date|before:-1 years",
             "business_website" => "nullable|max:150",
 
@@ -421,7 +421,7 @@ class AdministratorController extends Controller
         */
 
         // GETTING COUNTRY ID
-        $country = Country::where('country_real_name', '=', $validatedData["business_country"])->first();
+        $country = Country::where('country_id', '=', $validatedData["business_country"])->first();
         if($country === null){
             return response([
                 "status" => "error", 
@@ -546,6 +546,18 @@ class AdministratorController extends Controller
         $validatedData["business_flagged_reason"] = "";
         $validatedData["business_investments_amount_received_usd"] = 0;
         $validatedData["business_find_code"] = date('Ymd-His');
+        if(empty($request->business_executive1_description)){
+            $validatedData["business_executive1_description"] = "";
+        }
+        if(empty($request->business_executive2_description)){
+            $validatedData["business_executive2_description"] = "";
+        }
+        if(empty($request->business_executive3_description)){
+            $validatedData["business_executive3_description"] = "";
+        }
+        if(empty($request->business_executive4_description)){
+            $validatedData["business_executive4_description"] = "";
+        }
 
         // REMOVING UN-NEEDED INFO
         unset($validatedData["business_country"]);

@@ -94,7 +94,7 @@ function show_notification(id, type, title, message)
     noty({
         text: message,
         type: type, 
-        layout: "topRight", timeout: 4000, 
+        layout: "topRight", timeout: 60000, 
         animation: {
             open: 'animated bounceInRight', // in order to use this you'll need animate.css
             close: 'animated bounceOutRight',
@@ -145,8 +145,8 @@ function send_request_to_server_from_form(method, url_to_server, form_data, data
             }
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
-            console.log(errorThrown);
-            error_response_function(errorThrown);
+            console.log(XMLHttpRequest.responseText);
+            error_response_function(XMLHttpRequest.responseText);
         }
     });
 }
@@ -160,7 +160,10 @@ function send_restapi_request_to_server_from_form(method, url_to_server, authori
             'Authorization': authorization
          },
         data:  form_data,
-        dataType: data_type,
+        contentType: false,
+        processData: false,
+        async: true,
+        cache: false,
         success: function(response){ 
             console.log(response);
 
@@ -175,12 +178,50 @@ function send_restapi_request_to_server_from_form(method, url_to_server, authori
             }
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
-            console.log(errorThrown);
+            console.log(XMLHttpRequest.responseText);
             if(errorThrown == "Unauthorized"){
                 user_token_is_no_longer_valid();
                 return;
             }
-            error_response_function(errorThrown);
+            error_response_function(XMLHttpRequest.responseText);
+        }
+    });
+}
+
+function send_file_upload_restapi_request_to_server_from_form(method, url_to_server, authorization, form_data, data_type, success_response_function, error_response_function)
+{
+    $.ajax({
+        type: method,
+        url: url_to_server,
+        headers: {
+            'Authorization': authorization
+         },
+        data:  form_data,
+        contentType: false,
+        processData: false,
+        async: true,
+        cache: false,
+        timeout: 600000,
+        success: function(response){ 
+            console.log(response);
+
+            if(response == "Unauthorized"){
+                user_token_is_no_longer_valid();
+                return;
+            } 
+            if(response.status == 1){
+                success_response_function(response);
+            } else {
+                error_response_function(response.message);
+            }
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+            console.log(XMLHttpRequest.responseText);
+            if(errorThrown == "Unauthorized"){
+                user_token_is_no_longer_valid();
+                return;
+            }
+            error_response_function(XMLHttpRequest.responseText);
         }
     });
 }

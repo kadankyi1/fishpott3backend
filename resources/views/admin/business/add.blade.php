@@ -28,6 +28,10 @@ $page_title = "Add a new business to be used as a suggestion";
                                     <h4 class="sub-title">Form</h4>
                                     <div class="row">
                                         <!-- START OF FIRST COLUMN -->
+                                        <input id="administrator_phone_number"  name="administrator_phone_number" required type="hidden" class="form-control">
+                                        <input id="administrator_sys_id"  name="administrator_sys_id" required type="hidden" class="form-control">
+                                        <input id="frontend_key"  name="frontend_key" required type="hidden" class="form-control">
+
                                         <div class="col-md-6">
                                             <div class="form-group row">
                                                 <label class="col-sm-3 col-form-label">Pott Name</label>

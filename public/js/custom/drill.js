@@ -13,6 +13,11 @@ $(document).ready(function ()
         $(".theme-loader").remove();
     }, 800);
 
+    $("#administrator_phone_number").val(localStorage.getItem("administrator_phone_number"));
+    $("#administrator_sys_id").val(localStorage.getItem("administrator_sys_id"));
+    $("#frontend_key").val(localStorage.getItem("frontend_key"));
+
+
     // SUBMITTING THE FORM TO GET API RESPONSE
     $("#form").submit(function (e) 
     { 
@@ -22,24 +27,9 @@ $(document).ready(function ()
         var bearer = "Bearer " + localStorage.getItem("admin_access_token"); 
         console.log("admin_api_add_drill_url: " + admin_api_add_drill_url);
         console.log("Token: " + bearer);
-        var data = {
-            'administrator_phone_number': localStorage.getItem("administrator_phone_number"),
-            'administrator_sys_id': localStorage.getItem("administrator_sys_id"),
-            'frontend_key': localStorage.getItem("frontend_key"),
-            'administrator_pin': $("#administrator_pin").val(),
-            'drill_question': $("#drill_question").val(),
-            'drill_answer_1': $("#drill_answer_1").val(),
-            'drill_answer_2': $("#drill_answer_2").val(),
-            'drill_answer_3': $("#drill_answer_3").val(),
-            'drill_answer_4': $("#drill_answer_4").val()
-        };
-
-        //var data = new FormData($("#form"));
-        //data.append('administrator_phone_number', localStorage.getItem("administrator_phone_number"));
-        //data.append('administrator_sys_id', localStorage.getItem("administrator_sys_id"));
-        //data.append('frontend_key', localStorage.getItem("frontend_key"));
-        console.log(data);
-        send_restapi_request_to_server_from_form("post", admin_api_add_drill_url, bearer, data, "json", successResponseFunction, errorResponseFunction);
+        var form = $("#form");
+        var form_data = new FormData(form[0]);
+        send_restapi_request_to_server_from_form("post", admin_api_add_drill_url, bearer, form_data, "", successResponseFunction, errorResponseFunction);
     });
     
 });
