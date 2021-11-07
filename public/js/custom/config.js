@@ -29,9 +29,8 @@ var admin_api_add_business_url = `${host}/api/v1/admin/add-business`;
 // SEARCH MODEL
 var admin_api_add_search_model_url = `${host}/api/v1/admin/search-model`;
 
-// ADD BUSINESS
-var admin_web_add_business_suggestion_page_url = `${host}/admin/suggestion/suggest-business`;
-var admin_api_add_business_suggestion_url = `${host}/api/v1/admin/add-business`;
+// ADD SUGGESTION
+var admin_api_add_suggestion_url = `${host}/api/v1/admin/add-suggestion`;
 
 
 // CHECKING IF USER HAS AN API TOKEN

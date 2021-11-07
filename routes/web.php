@@ -40,6 +40,11 @@ Route::get('/admin/business/add', function () {
     return view('admin/business/add');
 });
 
+// SUGGEST DRILL
+Route::get('/admin/suggestion/suggest-drill', function () {
+    return view('admin/suggestion/suggest-drill');
+});
+
 // SUGGEST BUSINESS
 Route::get('/admin/suggestion/suggest-business', function () {
     return view('admin/suggestion/suggest-business');

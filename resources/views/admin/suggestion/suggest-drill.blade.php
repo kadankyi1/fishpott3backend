@@ -1,7 +1,7 @@
 <?php
 $active_page = "Suggestion";
-$page_name = "Suggest Business";
-$page_title = "Suggest a business to a user";
+$page_name = "Suggest Drill";
+$page_title = "Suggest an exciting drill to a user";
 ?>
 
 @extends('admin.layouts.app')
@@ -19,7 +19,7 @@ $page_title = "Suggest a business to a user";
                         <div class="card">
                             <div class="card-header">
                                 <h5>Note</h5>
-                                <span>If you are suggesting a business this way, make sure FishPott Marketing Team <code>has met the user and discussed the shares with them</code> so that we do not violate <code>SEC rules</code>  given us</span>
+                                <span>Make sure there is no active suggested drill because <code>making a new suggestion will overwrite existing suggestion </code> so check <code>from the dashboard</code> first </span>
                             </div>
                             <div class="loader-holder offset-md-5" id="loader" style="display: none"><br><br><br><br><br><br><div class="myloader"></div></div>
 
@@ -33,7 +33,7 @@ $page_title = "Suggest a business to a user";
 
                                     <h4 class="sub-title">Form</h4>
                                     <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label">Choose Business</label>
+                                        <label class="col-sm-2 col-form-label">Choose Drill Question</label>
                                         <div class="col-sm-10">
                                             <input id="item_identifier" name="item_identifier" type="text"  required class="form-control" placeholder="Business Name">
                                         </div>
