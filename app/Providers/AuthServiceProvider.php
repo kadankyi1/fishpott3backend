@@ -37,6 +37,7 @@ class AuthServiceProvider extends ServiceProvider
             'withdraw-funds' => 'Withdraw funds',
             
             //ADMIN SCOPE
+            'get-info' => 'Get information',
             'add-admins' => 'Can add administrators Stocks',
             'add-drill' => 'Can add drill',
             'add-business' => 'Can add business',

@@ -384,7 +384,7 @@ class UtilController extends Controller
         }
 
         // CHECKING PIN
-        if (!Hash::check($request->administrator_pin, $admin->administrator_pin)) {
+        if ($actions != "get-info" && !Hash::check($request->administrator_pin, $admin->administrator_pin)) {
             return [
                 "status" => "error", 
                 "message" => "Incorrect pin"

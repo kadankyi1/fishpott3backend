@@ -180,7 +180,7 @@ class AdministratorController extends Controller
         ]);
 
         // MAKING SURE THE REQUEST AND USER IS VALIDATED
-        $validation_response = UtilController::validateAdminWithAuthToken($request, auth()->guard('administrator-api')->user(), "add-drill");
+        $validation_response = UtilController::validateAdminWithAuthToken($request, auth()->guard('administrator-api')->user(), "get-info");
         if(!empty($validation_response["status"]) && trim($validation_response["status"]) == "error"){
             return response($validation_response);
         } else {
@@ -593,12 +593,12 @@ class AdministratorController extends Controller
             "administrator_sys_id" => "bail|required",
             "frontend_key" => "bail|required|in:2aLW4c7r9(2qf#y",
             // ADD ANY OTHER REQUIRED INPUTS FROM HERE
+            "model" => "bail|required",
             "keyword" => "nullable",
-            "model" => "nullable",
         ]);
 
         // MAKING SURE THE REQUEST AND USER IS VALIDATED
-        $validation_response = UtilController::validateAdminWithAuthToken($request, auth()->guard('administrator-api')->user(), "add-drill");
+        $validation_response = UtilController::validateAdminWithAuthToken($request, auth()->guard('administrator-api')->user(), "get-info");
         if(!empty($validation_response["status"]) && trim($validation_response["status"]) == "error"){
             return response($validation_response);
         } else {
@@ -609,11 +609,16 @@ class AdministratorController extends Controller
         | VALIDATION ENDED 
         |**************************************************************************
         */
-
         if(empty($request->keyword)){
             if($request->model == "business"){
-                $data = Business::orderBy('business_id', 'desc')->take(10)->get();
-
+                $data = Business::select('business_full_name', 'business_sys_id')
+                        ->orderBy('business_id', 'desc')->take(100)->get();
+            }
+        } else {
+            if($request->model == "business"){
+                $data = Business::select('business_full_name', 'business_sys_id')
+                        ->where('business_full_name', 'LIKE', "%{$request->keyword}%")
+                        ->orderBy('business_id', 'desc')->take(100)->get();
             }
         }
 
