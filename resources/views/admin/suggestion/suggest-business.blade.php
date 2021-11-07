@@ -1,7 +1,7 @@
 <?php
-$active_page = "Drill";
-$page_name = "Add Drill";
-$page_title = "Add a new question to be used as a drill";
+$active_page = "Suggestion";
+$page_name = "Suggest Business";
+$page_title = "Suggest a business to a user";
 ?>
 
 @extends('admin.layouts.app')

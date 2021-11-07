@@ -41,6 +41,6 @@ Route::get('/admin/business/add', function () {
 });
 
 // SUGGEST BUSINESS
-Route::get('/admin/suggestion/business', function () {
+Route::get('/admin/suggestion/suggest-business', function () {
     return view('admin/suggestion/suggest-business');
 });

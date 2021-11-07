@@ -325,7 +325,7 @@
                           </ul>
                           <div class="pcoded-navigation-label" data-i18n="nav.category.other">Suggestions</div>
                           <ul class="pcoded-item pcoded-left-item">
-                              <li class="pcoded-hasmenu ">
+                              <li class="pcoded-hasmenu <?php if(isset($active_page) && $active_page == 'Drill'){ echo 'Suggestion'; } ?>">
                                   <a href="javascript:void(0)" class="waves-effect waves-dark">
                                       <span class="pcoded-micon"><i class="ti-direction-alt"></i><b>M</b></span>
                                       <span class="pcoded-mtext" data-i18n="nav.menu-levels.main">Suggestions</span>
