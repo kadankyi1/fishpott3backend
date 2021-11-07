@@ -44,21 +44,9 @@ $page_title = "Suggest a business to a user";
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label">Second Answer</label>
+                                        <label class="col-sm-2 col-form-label">User Pottname</label>
                                         <div class="col-sm-10">
-                                            <input id="drill_answer_2" minlength="2" maxlength="100"  name="drill_answer_2" type="text" class="form-control" placeholder="Second Answer">
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label">Third Answer</label>
-                                        <div class="col-sm-10">
-                                            <input id="drill_answer_3" minlength="2" maxlength="100"  name="drill_answer_3" type="text" class="form-control" placeholder="Third Answer">
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label">Fourth Answer</label>
-                                        <div class="col-sm-10">
-                                            <input id="drill_answer_4" minlength="2" maxlength="100"  name="drill_answer_4" type="text" class="form-control" placeholder="Fourth Answer">
+                                            <input id="user_pottname" name="user_pottname" minlength="2" maxlength="100" type="text" class="form-control" placeholder="User Pottname">
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -69,7 +57,7 @@ $page_title = "Suggest a business to a user";
                                     </div>
                                     <div class="row m-t-30">
                                         <div class="offset-md-4 col-md-4">
-                                            <input type="submit" value="Save Drill" class="btn btn-primary btn-md btn-block waves-effect waves-light text-center m-b-20"/>
+                                            <input type="submit" value="Save Suggestion" class="btn btn-primary btn-md btn-block waves-effect waves-light text-center m-b-20"/>
                                         </div>
                                     </div>
                                 </form>
