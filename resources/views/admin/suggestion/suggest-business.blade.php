@@ -32,15 +32,10 @@ $page_title = "Suggest a business to a user";
 
                                     <h4 class="sub-title">Form</h4>
                                     <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label">Drill Question</label>
+                                        <label class="col-sm-2 col-form-label">Choose Business</label>
                                         <div class="col-sm-10">
-                                            <textarea id="drill_question" maxlength="100" name="drill_question" rows="3" cols="5" class="form-control" placeholder="Drill Question"></textarea>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label">First Answer</label>
-                                        <div class="col-sm-10">
-                                            <input id="drill_answer_1" minlength="2" maxlength="100" name="drill_answer_1" type="text" class="form-control" placeholder="First Answer">
+                                            <input id="business_name" name="business_name" type="text" class="form-control" placeholder="Business Name">
+                                            <input id="business_id"  name="business_id" required type="hidden" class="form-control">
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -123,5 +118,5 @@ $page_title = "Suggest a business to a user";
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-noty/2.3.7/packaged/jquery.noty.packaged.min.js"></script>
         <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.4.0/animate.min.css">
         <script type="text/javascript" src="/js/custom/config.js "></script>
-        <script type="text/javascript" src="/js/custom/drill.js "></script>
+        <script type="text/javascript" src="/js/custom/suggestion.js "></script>
     @endsection

@@ -575,6 +575,58 @@ class AdministratorController extends Controller
     /*
     |--------------------------------------------------------------------------
     |--------------------------------------------------------------------------
+    | THIS FUNCTION SEARCHES FOR A BUSINESS
+    |--------------------------------------------------------------------------
+    |--------------------------------------------------------------------------
+    */
+
+    public function searchModel(Request $request)
+    {
+        /*
+        |**************************************************************************
+        | VALIDATION STARTS 
+        |**************************************************************************
+        */
+        // MAKING SURE THE INPUT HAS THE EXPECTED VALUES
+        $validatedData = $request->validate([
+            "administrator_phone_number" => "bail|required|regex:/^\+\d{10,15}$/|min:10|max:15",
+            "administrator_sys_id" => "bail|required",
+            "frontend_key" => "bail|required|in:2aLW4c7r9(2qf#y",
+            // ADD ANY OTHER REQUIRED INPUTS FROM HERE
+            "keyword" => "nullable",
+            "model" => "nullable",
+        ]);
+
+        // MAKING SURE THE REQUEST AND USER IS VALIDATED
+        $validation_response = UtilController::validateAdminWithAuthToken($request, auth()->guard('administrator-api')->user(), "add-drill");
+        if(!empty($validation_response["status"]) && trim($validation_response["status"]) == "error"){
+            return response($validation_response);
+        } else {
+            $admin = $validation_response;
+        }
+        /*
+        |**************************************************************************
+        | VALIDATION ENDED 
+        |**************************************************************************
+        */
+
+        if(empty($request->keyword)){
+            if($request->model == "business"){
+                $data = Business::orderBy('business_id', 'desc')->take(10)->get();
+
+            }
+        }
+
+        return response([
+            "status" => 1, 
+            "message" => "success",
+            "data" => $data
+        ]);
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    |--------------------------------------------------------------------------
     | THIS FUNCTION ADDS A DRILL
     |--------------------------------------------------------------------------
     |--------------------------------------------------------------------------
