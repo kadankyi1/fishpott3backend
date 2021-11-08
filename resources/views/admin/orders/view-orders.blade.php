@@ -15,7 +15,7 @@ $page_title = "View orders and take simple actions on them";
             <!-- Page-body start -->
             <div class="page-body">
                 <div class="row">
-                    <div class="col-sm-5">
+                    <div class="col-sm-4">
                         <div class="card">
                             <div class="card-header">
                                 <h5>Note</h5>
@@ -32,7 +32,7 @@ $page_title = "View orders and take simple actions on them";
 
                                     <h4 class="sub-title">Form</h4>
                                     <div class="form-group row">
-                                        <div class="col-sm-9">
+                                        <div class="col-sm-7">
                                             <input id="keyword" name="keyword" autocomplete="off" type="text"  required class="form-control" placeholder="Keyword">
                                         </div>
                                         <div class="col-sm-3">
@@ -47,11 +47,11 @@ $page_title = "View orders and take simple actions on them";
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-7">
+                    <div class="col-sm-8">
                         <div class="card">
                             <div class="card-header">
                                 <h5>Note</h5>
-                                <span>Simply the, <code>criteria, type keyword</code> and <code>search </code> to find an order</span>
+                                <span>Simply , <code>type your pin</code> and <code>enter update info </code> to make update on order</span>
                             </div>
                             <div class="loader-holder offset-md-5" id="loader2" style="display: none"><br><br><br><br><br><br><div class="myloader"></div></div>
 
@@ -71,8 +71,14 @@ $page_title = "View orders and take simple actions on them";
                                                 <option value="3">Flag</option>
                                             </select>
                                         </div>
-                                        <div class="col-sm-7">
+                                        <div class="col-sm-2">
+                                            <input id="order_count_id" name="order_count_id" autocomplete="off" type="text"  required class="form-control" placeholder="Order No.">
+                                        </div>
+                                        <div class="col-sm-3">
                                             <input id="action_info" name="action_info" autocomplete="off" type="text"  required class="form-control" placeholder="Action Info">
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <input id="administrator_pin2" name="administrator_pin" autocomplete="off" type="text"  required class="form-control" placeholder="PIN">
                                         </div>
                                         <div class="col-sm-2">
                                             <button class="btn btn-primary waves-effect waves-light">Save</button>

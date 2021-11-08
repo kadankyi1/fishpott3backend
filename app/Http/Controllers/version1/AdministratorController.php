@@ -678,7 +678,7 @@ class AdministratorController extends Controller
         if(empty($request->keyword)){
             $data = DB::table('stock_purchases')
             ->select(
-                'users.user_surname', 'users.user_firstname', 'users.user_phone_number', 'users.user_email',  
+                'stock_purchases.stockpurchase_id', 'users.user_surname', 'users.user_firstname', 'users.user_phone_number', 'users.user_email',  
                 'businesses.business_full_name',  'businesses.business_find_code', 'countries.country_nice_name',
                 'stock_purchases.stockpurchase_price_per_stock_usd',  'stock_purchases.stockpurchase_stocks_quantity', 'risk_insurance_types.risk_type_shortname',
                 'stock_purchases.stockpurchase_risk_insurance_fee_usd',  'stock_purchases.stockpurchase_processing_fee_usd', 'stock_purchases.stockpurchase_total_price_with_all_fees_usd',
@@ -694,7 +694,7 @@ class AdministratorController extends Controller
         } else {                
             $data = DB::table('stock_purchases')
             ->select(
-                'users.user_surname', 'users.user_firstname', 'users.user_phone_number', 'users.user_email',  
+                'stock_purchases.stockpurchase_id', 'users.user_surname', 'users.user_firstname', 'users.user_phone_number', 'users.user_email',  
                 'businesses.business_full_name',  'businesses.business_find_code', 'countries.country_nice_name',
                 'stock_purchases.stockpurchase_price_per_stock_usd',  'stock_purchases.stockpurchase_stocks_quantity', 'risk_insurance_types.risk_type_shortname',
                 'stock_purchases.stockpurchase_risk_insurance_fee_usd',  'stock_purchases.stockpurchase_processing_fee_usd', 'stock_purchases.stockpurchase_total_price_with_all_fees_usd',
@@ -879,6 +879,72 @@ class AdministratorController extends Controller
         return response([
             "status" => 1, 
             "message" => "New stock value saved"
+        ]);
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    |--------------------------------------------------------------------------
+    | THIS FUNCTION ADDS A DRILL
+    |--------------------------------------------------------------------------
+    |--------------------------------------------------------------------------
+    */
+
+    public function updateOrderProcessedOrFlaggedStatus(Request $request)
+    {
+        /*
+        |**************************************************************************
+        | VALIDATION STARTS 
+        |**************************************************************************
+        */
+        // MAKING SURE THE INPUT HAS THE EXPECTED VALUES
+        $validatedData = $request->validate([
+            "administrator_phone_number" => "bail|required|regex:/^\+\d{10,15}$/|min:10|max:15",
+            "administrator_sys_id" => "bail|required",
+            "administrator_pin" => "bail|required",
+            "frontend_key" => "bail|required|in:2aLW4c7r9(2qf#y",
+            // ADD ANY OTHER REQUIRED INPUTS FROM HERE
+            "drill_question" => "min:5|max:100",
+            "drill_answer_1" => "min:2|max:100",
+            "drill_answer_2" => "min:2|max:100",
+            "drill_answer_3" => "max:100",
+            "drill_answer_4" => "max:100",
+        ]);
+
+        // MAKING SURE THE REQUEST AND USER IS VALIDATED
+        $validation_response = UtilController::validateAdminWithAuthToken($request, auth()->guard('administrator-api')->user(), "add-drill");
+        if(!empty($validation_response["status"]) && trim($validation_response["status"]) == "error"){
+            return response($validation_response);
+        } else {
+            $admin = $validation_response;
+        }
+        /*
+        |**************************************************************************
+        | VALIDATION ENDED 
+        |**************************************************************************
+        */
+
+        //CREATING THE USER DATA TO ADD TO DB
+        $drillData["drill_sys_id"] = "drill-" . $admin->administrator_user_pottname . "-" . substr($validatedData["administrator_phone_number"] ,1,strlen($validatedData["administrator_phone_number"])) . date("Y-m-d-H-i-s") . UtilController::getRandomString(50);
+        $drillData["drill_question"] = $validatedData["drill_question"];
+        $drillData["drill_answer_1"] = $validatedData["drill_answer_1"];
+        $drillData["drill_answer_2"] = $validatedData["drill_answer_2"];
+        if(!empty($validatedData["drill_answer_3"])){
+            $drillData["drill_answer_3"] = $validatedData["drill_answer_3"];
+        }
+        if(!empty($validatedData["drill_answer_4"])){
+            $drillData["drill_answer_4"] = $validatedData["drill_answer_4"];
+        }
+        $drillData["drill_answer_implied_traits_1"] = "";
+        $drillData["drill_answer_implied_traits_2"] = "";
+        $drillData["drill_answer_implied_traits_3"] = "";
+        $drillData["drill_answer_implied_traits_4"] = "";
+        $drillData["drill_maker_investor_id"] = $admin->administrator_user_pott_investor_id;
+        Drill::create($drillData);
+
+        return response([
+            "status" => 1, 
+            "message" => "Drill saved"
         ]);
     }
 
