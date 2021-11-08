@@ -15,7 +15,7 @@ $page_title = "View orders and take simple actions on them";
             <!-- Page-body start -->
             <div class="page-body">
                 <div class="row">
-                    <div class="col-sm-12">
+                    <div class="col-sm-5">
                         <div class="card">
                             <div class="card-header">
                                 <h5>Note</h5>
@@ -29,20 +29,53 @@ $page_title = "View orders and take simple actions on them";
                                     <input id="administrator_phone_number"  name="administrator_phone_number" required type="hidden" class="form-control">
                                     <input id="administrator_sys_id"  name="administrator_sys_id" required type="hidden" class="form-control">
                                     <input id="frontend_key"  name="frontend_key" required type="hidden" class="form-control">
-                                    <input id="item_type"  name="item_type" value="2" required type="hidden" class="form-control">
+
+                                    <h4 class="sub-title">Form</h4>
+                                    <div class="form-group row">
+                                        <div class="col-sm-9">
+                                            <input id="keyword" name="keyword" autocomplete="off" type="text"  required class="form-control" placeholder="Keyword">
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <button class="btn btn-primary waves-effect waves-light">Search</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <!-- Main-body end -->
+                            <div id="styleSelector">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-7">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5>Note</h5>
+                                <span>Simply the, <code>criteria, type keyword</code> and <code>search </code> to find an order</span>
+                            </div>
+                            <div class="loader-holder offset-md-5" id="loader2" style="display: none"><br><br><br><br><br><br><div class="myloader"></div></div>
+
+                            <div class="card-block">
+                                <form id="formtwo">
+                                    <!-- START OF FIRST COLUMN -->
+                                    <input id="administrator_phone_number"  name="administrator_phone_number" required type="hidden" class="form-control">
+                                    <input id="administrator_sys_id"  name="administrator_sys_id" required type="hidden" class="form-control">
+                                    <input id="frontend_key"  name="frontend_key" required type="hidden" class="form-control">
 
                                     <h4 class="sub-title">Form</h4>
                                     <div class="form-group row">
                                         <div class="col-sm-3">
-                                            <select id="business_country" name="business_country" class="form-control">
-                                                <option value="1">Choose Criteria </option>
+                                            <select id="action_ty" name="business_country" class="form-control">
+                                                <option value="1">Choose Action</option>
+                                                <option value="2">Processing Complete</option>
+                                                <option value="3">Flag</option>
                                             </select>
                                         </div>
-                                        <div class="col-sm-6">
-                                            <input id="item_identifier" autocomplete="off" name="item_identifier" type="text"  required class="form-control" placeholder="Keyword">
+                                        <div class="col-sm-7">
+                                            <input id="action_info" name="action_info" autocomplete="off" type="text"  required class="form-control" placeholder="Action Info">
                                         </div>
-                                        <div class="col-sm-3">
-                                            <button class="btn btn-primary waves-effect waves-light">Search</button>
+                                        <div class="col-sm-2">
+                                            <button class="btn btn-primary waves-effect waves-light">Save</button>
                                         </div>
                                     </div>
                                 </form>

@@ -105,5 +105,8 @@ Route::middleware('auth:administrator-api')->post('/v1/admin/search-model', [App
 // GET ORDERS LIST
 Route::middleware('auth:administrator-api')->post('/v1/admin/search-orders', [App\Http\Controllers\version1\AdministratorController::class, 'searchOrders']);
 
+// GET ORDERS LIST
+Route::middleware('auth:administrator-api')->post('/v1/admin/update-order', [App\Http\Controllers\version1\AdministratorController::class, 'searchOrders']);
+
 // GET BUSINESS LIST
 Route::middleware('auth:administrator-api')->post('/v1/admin/add-suggestion', [App\Http\Controllers\version1\AdministratorController::class, 'addSuggestion']);

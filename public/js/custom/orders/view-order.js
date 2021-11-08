@@ -9,6 +9,32 @@ $(document).ready(function ()
     // GETTING THE DASHBOARD PAGE
     getOrders();
 
+    $("#administrator_phone_number").val(localStorage.getItem("administrator_phone_number"));
+    $("#administrator_sys_id").val(localStorage.getItem("administrator_sys_id"));
+    $("#frontend_key").val(localStorage.getItem("frontend_key"));
+
+    // SUBMITTING THE FORM TO GET API RESPONSE
+    $("#form").submit(function (e) 
+    { 
+        e.preventDefault(); 
+        fade_in_loader_and_fade_out_form("loader", "form"); 
+        var bearer = "Bearer " + localStorage.getItem("admin_access_token"); 
+        var form = $("#form");
+        var form_data = new FormData(form[0]);
+        send_restapi_request_to_server_from_form("post", admin_api_search_orders_url, bearer, form_data, "", getOrdersSuccessResponseFunction, getOrdersErrorResponseFunction);
+    });
+
+    // SUBMITTING THE FORM TO GET API RESPONSE
+    $("#formtwo").submit(function (e) 
+    { 
+        e.preventDefault(); 
+        fade_in_loader_and_fade_out_form("loader", "formtwo"); 
+        var bearer = "Bearer " + localStorage.getItem("admin_access_token"); 
+        var form = $("#formtwo");
+        var form_data = new FormData(form[0]);
+        send_restapi_request_to_server_from_form("post", admin_api_update_order_url, bearer, form_data, "", successResponseFunction2, errorResponseFunction2);
+    });
+    
 });
 
 /*
@@ -30,12 +56,13 @@ function getOrders()
         'frontend_key': localStorage.getItem("frontend_key")
     };
     console.log(data);
-    send_restapi_request_to_server_no_form("post", admin_api_search_orders_url, bearer, data, "json", getOrdersSuccessResponseFunction, getOrdersErrorResponseFunction);
+    send_restapi_request_to_server_no_form("post", admin_api_search_orders_url, bearer, data, "json", successResponseFunction2, getOrdersErrorResponseFunction);
 }
 
 // RESENDING THE PASSCODE
 function getOrdersSuccessResponseFunction(response)
 {
+    fade_out_loader_and_fade_in_form("loader", "form"); 
     $("#table_body").html('');
     $.each(response.data, function(key,value) {
         console.log(value.stockpurchase_payment_gateway_info);
@@ -86,6 +113,20 @@ function getOrdersSuccessResponseFunction(response)
 function getOrdersErrorResponseFunction(errorThrown)
 {
     fade_out_loader_and_fade_in_form("loader", "form"); 
+    show_notification("msg_holder", "danger", "Error", errorThrown);
+}
+
+// RESENDING THE PASSCODE
+function successResponseFunction2(response)
+{
+    fade_out_loader_and_fade_in_form("loader", "formtwo"); 
+    $('#formtwo')[0].reset();
+    show_notification("msg_holder", "success", "Success:", response.message);
+}
+
+function errorResponseFunction2(errorThrown)
+{
+    fade_out_loader_and_fade_in_form("loader", "formtwo"); 
     show_notification("msg_holder", "danger", "Error", errorThrown);
 }
 

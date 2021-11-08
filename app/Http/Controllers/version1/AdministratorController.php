@@ -667,7 +667,7 @@ class AdministratorController extends Controller
         } else {
             $admin = $validation_response;
         }
-        
+
         /*
         |**************************************************************************
         | VALIDATION ENDED 
@@ -688,6 +688,7 @@ class AdministratorController extends Controller
             ->join('businesses', 'businesses.business_sys_id', '=', 'stock_purchases.stockpurchase_business_id')
             ->join('risk_insurance_types', 'risk_insurance_types.risk_type_id', '=', 'stock_purchases.stockpurchase_risk_insurance_type_id')
             ->join('countries', 'businesses.business_country_id', '=', 'countries.country_id')
+            ->where('stockpurchase_payment_gateway_status', '!=', 0)
             ->take(100)
             ->get();
         } else {                
@@ -704,6 +705,7 @@ class AdministratorController extends Controller
             ->join('risk_insurance_types', 'risk_insurance_types.risk_type_id', '=', 'stock_purchases.stockpurchase_risk_insurance_type_id')
             ->join('countries', 'businesses.business_country_id', '=', 'countries.country_id')
             ->where('user_phone_number', 'LIKE', "%{$request->keyword}%")
+            ->where('stockpurchase_payment_gateway_status', '!=', 0)
             ->orderBy('stockpurchase_id', 'desc')->take(100)
             ->get();
         }
