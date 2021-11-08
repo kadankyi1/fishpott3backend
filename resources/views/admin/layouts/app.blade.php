@@ -181,6 +181,9 @@
                                   </li>
                               </ul>
                           </li>
+                          <li class="user-profile header-notification" id="logoutloader" style="display: none;">
+                            <div class="myloaderwhite"></div>
+                          </li>
                           <li class="user-profile header-notification">
                               <a href="#!" class="waves-effect waves-light">
                                   <img src="/images/fishpott_icon_circle.png" class="img-radius" alt="User-Profile-Image">
@@ -210,10 +213,9 @@
                                       </a>
                                   </li>
                                     -->
-                                  <li class="waves-effect waves-light">
-                                      <a onclick="sign_me_out();">
-                                        <span id="logoutspan"><i class="ti-layout-sidebar-left"></i> Logout </span>
-                                        <span id="logoutloader" style="display: none"><div class="myloader"></span>
+                                  <li class="waves-effect waves-light" onclick="sign_me_out();">
+                                      <a  id="logoutspan">
+                                        <i class="ti-layout-sidebar-left"></i> Logout
                                       </a>
                                   </li>
                               </ul>
@@ -232,7 +234,7 @@
                               <div class="main-menu-header">
                                   <img class="img-80 img-radius" src="/images/fishpott_icon_circle.png" alt="User-Profile-Image">
                                   <div class="user-details">
-                                      <span id="more-details"><span id="admin_name">John Doe</span><i class="fa fa-caret-down"></i></span>
+                                      <span id="more-details"><span id="admin_name">John Doe</span><!--<i class="fa fa-caret-down"></i>--></span>
                                   </div>
                               </div>
         
@@ -247,13 +249,15 @@
                               </div>
                           </div>
                           <div class="p-15 p-b-0">
-                              <form class="form-material">
+                              <!--
+                                <form class="form-material">
                                   <div class="form-group form-primary">
                                       <input type="text" name="footer-email" class="form-control" required="">
                                       <span class="form-bar"></span>
                                       <label class="float-label"><i class="fa fa-search m-r-10"></i>Search Friend</label>
                                   </div>
                               </form>
+                            -->
                           </div>
                           <div class="pcoded-navigation-label" data-i18n="nav.category.navigation">Overview</div>
                           <ul class="pcoded-item pcoded-left-item">

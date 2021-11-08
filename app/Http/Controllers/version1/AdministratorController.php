@@ -149,8 +149,11 @@ class AdministratorController extends Controller
     */
     public function logoutAsAdministrator(Request $request)
     {
-
-        $request->user()->token()->revoke();
+        $adminTokens = $request->user()->tokens;
+        foreach($adminTokens as $token) {
+            $token->revoke();   
+        }
+        
         return response([
             "status" => 1, 
             "message" => "Logged out"

@@ -16481,6 +16481,15 @@ body.dark {
   -webkit-animation: spin 2s linear infinite; /* Safari */
   animation: spin 2s linear infinite;
 }
+.myloaderwhite {
+  border: 2px solid #000000;
+  border-radius: 50%;
+  border-top: 2px solid #ffffff;
+  width: 35px;
+  height: 35px;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;
+}
 
 /* Safari */
 @-webkit-keyframes spin {

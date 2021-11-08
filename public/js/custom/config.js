@@ -102,8 +102,18 @@ function sign_out_error(errorThrown)
 function sign_me_out()
 {    
     fade_in_loader_and_fade_out_form("logoutloader", "logoutspan");     
+    console.log("getDashboardData STARTED");
     var bearer = "Bearer " + localStorage.getItem("admin_access_token"); 
-    send_restapi_request_to_server_from_form("get", admin_api_logout_url, bearer, "", "json", sign_out_success, sign_out_error);
+    console.log("admin_api_get_dashboard_data_url: " + admin_api_get_dashboard_data_url);
+    console.log("Token: " + bearer);
+    var data = {
+        'administrator_phone_number': localStorage.getItem("administrator_phone_number"),
+        'administrator_sys_id': localStorage.getItem("administrator_sys_id"),
+        'frontend_key': localStorage.getItem("frontend_key")
+    };
+    console.log(data);
+    send_restapi_request_to_server_no_form("post", admin_api_get_dashboard_data_url, bearer, data, "json", sign_out_success, sign_out_error);
+
 }
 
 function hide_notification(){
