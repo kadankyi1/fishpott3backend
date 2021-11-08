@@ -25,7 +25,7 @@ $(document).ready(function ()
         var bearer = "Bearer " + localStorage.getItem("admin_access_token"); 
         var form = $("#form");
         var form_data = new FormData(form[0]);
-        send_restapi_request_to_server_from_form("post", admin_api_search_orders_url, bearer, form_data, "", getOrdersSuccessResponseFunction, getOrdersErrorResponseFunction);
+        send_restapi_request_to_server_from_form("post", admin_api_search_users_url, bearer, form_data, "", getOrdersSuccessResponseFunction, getOrdersErrorResponseFunction);
     });
 
     // SUBMITTING THE FORM TO GET API RESPONSE
@@ -52,7 +52,7 @@ function getOrders()
 {
     console.log("getModelData STARTED");
     var bearer = "Bearer " + localStorage.getItem("admin_access_token"); 
-    console.log("admin_api_search_orders_url: " + admin_api_search_orders_url);
+    console.log("admin_api_search_users_url: " + admin_api_search_users_url);
     console.log("Token: " + bearer);
     var data = {
         'administrator_phone_number': localStorage.getItem("administrator_phone_number"),
@@ -60,7 +60,7 @@ function getOrders()
         'frontend_key': localStorage.getItem("frontend_key")
     };
     console.log(data);
-    send_restapi_request_to_server_no_form("post", admin_api_search_orders_url, bearer, data, "json", getOrdersSuccessResponseFunction, getOrdersErrorResponseFunction);
+    send_restapi_request_to_server_no_form("post", admin_api_search_users_url, bearer, data, "json", getOrdersSuccessResponseFunction, getOrdersErrorResponseFunction);
 }
 
 // RESENDING THE PASSCODE

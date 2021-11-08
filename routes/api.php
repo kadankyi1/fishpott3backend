@@ -105,6 +105,9 @@ Route::middleware('auth:administrator-api')->post('/v1/admin/search-model', [App
 // GET ORDERS LIST
 Route::middleware('auth:administrator-api')->post('/v1/admin/search-orders', [App\Http\Controllers\version1\AdministratorController::class, 'searchOrders']);
 
+// GET USERS LIST
+Route::middleware('auth:administrator-api')->post('/v1/admin/search-users', [App\Http\Controllers\version1\AdministratorController::class, 'searchUsers']);
+
 // GET ORDERS LIST
 Route::middleware('auth:administrator-api')->post('/v1/admin/update-order', [App\Http\Controllers\version1\AdministratorController::class, 'updateOrderProcessedOrFlaggedStatus']);
 

@@ -959,7 +959,7 @@ class AdministratorController extends Controller
         ]);
     }
 
-        /*
+    /*
     |--------------------------------------------------------------------------
     |--------------------------------------------------------------------------
     | THIS FUNCTION SEARCHES FOR A USER LIST
