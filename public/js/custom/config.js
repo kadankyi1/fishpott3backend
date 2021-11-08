@@ -5,7 +5,7 @@
 |*/
 
 var host = "http://144.202.111.61";
-var host = "http://fishpott.local";
+//var host = "http://fishpott.local";
 
 // LOGIN PAGE URLS
 var admin_web_login_page_url = `${host}/admin/login`;
