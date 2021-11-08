@@ -34,7 +34,7 @@ class CreateStockPurchasesTable extends Migration
         });
 
         Schema::table('stock_purchases', function (Blueprint $table) {
-            $table->unsignedBigInteger('stockpurchase_business_id');
+            $table->string('stockpurchase_business_id', 255);
             $table->foreign('stockpurchase_business_id')->references('business_sys_id')->on('businesses');
 
             $table->unsignedBigInteger('stockpurchase_currency_paid_in_id');
