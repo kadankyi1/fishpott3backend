@@ -188,7 +188,8 @@
                                   <i class="ti-angle-down"></i>
                               </a>
                               <ul class="show-notification profile-notification">
-                                  <li class="waves-effect waves-light">
+                                  <!--
+                                    <li class="waves-effect waves-light">
                                       <a href="#!">
                                           <i class="ti-settings"></i> Settings
                                       </a>
@@ -208,9 +209,11 @@
                                           <i class="ti-lock"></i> Lock Screen
                                       </a>
                                   </li>
+                                    -->
                                   <li class="waves-effect waves-light">
-                                      <a href="auth-normal-sign-in.html">
-                                          <i class="ti-layout-sidebar-left"></i> Logout
+                                      <a onclick="sign_me_out();">
+                                        <span id="logoutspan"><i class="ti-layout-sidebar-left"></i> Logout </span>
+                                        <span id="logoutloader" style="display: none"><div class="myloader"></span>
                                       </a>
                                   </li>
                               </ul>
