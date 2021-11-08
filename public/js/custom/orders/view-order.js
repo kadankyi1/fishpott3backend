@@ -13,6 +13,10 @@ $(document).ready(function ()
     $("#administrator_sys_id").val(localStorage.getItem("administrator_sys_id"));
     $("#frontend_key").val(localStorage.getItem("frontend_key"));
 
+    $("#administrator_phone_number2").val(localStorage.getItem("administrator_phone_number"));
+    $("#administrator_sys_id2").val(localStorage.getItem("administrator_sys_id"));
+    $("#frontend_key2").val(localStorage.getItem("frontend_key"));
+
     // SUBMITTING THE FORM TO GET API RESPONSE
     $("#form").submit(function (e) 
     { 
@@ -28,7 +32,7 @@ $(document).ready(function ()
     $("#formtwo").submit(function (e) 
     { 
         e.preventDefault(); 
-        fade_in_loader_and_fade_out_form("loader", "formtwo"); 
+        fade_in_loader_and_fade_out_form("loadertwo", "formtwo"); 
         var bearer = "Bearer " + localStorage.getItem("admin_access_token"); 
         var form = $("#formtwo");
         var form_data = new FormData(form[0]);
@@ -91,7 +95,7 @@ function getOrdersSuccessResponseFunction(response)
             flagged_status = "Flagged";
         } else if(value.stockpurchase_flagged === 0){
             flagged_status_class = "success";
-            flagged_status = "Available";
+            flagged_status = "No";
         } else {
             flagged_status_class = "warning";
             flagged_status = "unknown";
@@ -119,14 +123,14 @@ function getOrdersErrorResponseFunction(errorThrown)
 // RESENDING THE PASSCODE
 function successResponseFunction2(response)
 {
-    fade_out_loader_and_fade_in_form("loader", "formtwo"); 
+    fade_out_loader_and_fade_in_form("loadertwo", "formtwo"); 
     $('#formtwo')[0].reset();
     show_notification("msg_holder", "success", "Success:", response.message);
 }
 
 function errorResponseFunction2(errorThrown)
 {
-    fade_out_loader_and_fade_in_form("loader", "formtwo"); 
+    fade_out_loader_and_fade_in_form("loadertwo", "formtwo"); 
     show_notification("msg_holder", "danger", "Error", errorThrown);
 }
 

@@ -932,12 +932,26 @@ class AdministratorController extends Controller
         }
 
         if($request->action_type == "1"){
+            if($stockpurchase->stockpurchase_payment_gateway_status != 1){
+                return response([
+                    "status" => 0, 
+                    "message" => "You cannot process an unpaid order"
+                ]);
+            }
+            if($stockpurchase->stockpurchase_flagged == 1){
+                return response([
+                    "status" => 0, 
+                    "message" => "You cannot process a flagged order"
+                ]);
+            }
             $stockpurchase->stockpurchase_processed = 1;
             $stockpurchase->stockpurchase_processed_reason = $request->action_info;
         } else if($request->action_type == "2"){
             $stockpurchase->stockpurchase_flagged = 1;
             $stockpurchase->stockpurchase_flagged_reason = $request->action_info;
         }
+        // SAVING UPDATE
+        $stockpurchase->save();
 
         return response([
             "status" => 1, 

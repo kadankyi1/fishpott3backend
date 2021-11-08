@@ -51,16 +51,16 @@ $page_title = "View orders and take simple actions on them";
                         <div class="card">
                             <div class="card-header">
                                 <h5>Note</h5>
-                                <span>Simply , <code>type your pin</code> and <code>enter update info </code> to make update on order</span>
+                                <span>Before you action an order as completed, <code>run it by FinCap Securities</code> to make  <code>sure </code> it is truely completed</span>
                             </div>
-                            <div class="loader-holder offset-md-5" id="loader2" style="display: none"><br><br><br><br><br><br><div class="myloader"></div></div>
+                            <div class="loader-holder offset-md-5" id="loadertwo" style="display: none"><br><br><br><br><br><br><div class="myloader"></div></div>
 
                             <div class="card-block">
                                 <form id="formtwo">
                                     <!-- START OF FIRST COLUMN -->
-                                    <input id="administrator_phone_number"  name="administrator_phone_number" required type="hidden" class="form-control">
-                                    <input id="administrator_sys_id"  name="administrator_sys_id" required type="hidden" class="form-control">
-                                    <input id="frontend_key"  name="frontend_key" required type="hidden" class="form-control">
+                                    <input id="administrator_phone_number2"  name="administrator_phone_number" required type="hidden" class="form-control">
+                                    <input id="administrator_sys_id2"  name="administrator_sys_id" required type="hidden" class="form-control">
+                                    <input id="frontend_key2"  name="frontend_key" required type="hidden" class="form-control">
 
                                     <h4 class="sub-title">Form</h4>
                                     <div class="form-group row">
@@ -75,10 +75,10 @@ $page_title = "View orders and take simple actions on them";
                                             <input id="order_id" name="order_id" autocomplete="off" type="text"  required class="form-control" placeholder="Order No.">
                                         </div>
                                         <div class="col-sm-3">
-                                            <input id="action_info" name="action_info" autocomplete="off" type="text" class="form-control" placeholder="Action Info">
+                                            <input id="action_info" name="action_info" type="text" class="form-control" placeholder="Action Info">
                                         </div>
                                         <div class="col-sm-2">
-                                            <input id="administrator_pin2" name="administrator_pin" autocomplete="off" type="text"  required class="form-control" placeholder="PIN">
+                                            <input id="administrator_pin2" name="administrator_pin" autocomplete="off" type="password"  required class="form-control" placeholder="PIN">
                                         </div>
                                         <div class="col-sm-2">
                                             <button class="btn btn-primary waves-effect waves-light">Save</button>
