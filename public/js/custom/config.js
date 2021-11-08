@@ -35,6 +35,9 @@ var admin_api_search_orders_url = `${host}/api/v1/admin/search-orders`;
 // SEARCH ORDERS
 var admin_api_update_order_url = `${host}/api/v1/admin/update-order`;
 
+// SEARCH ORDERS
+var admin_api_update_user_url = `${host}/api/v1/admin/update-user`;
+
 // ADD SUGGESTION
 var admin_api_add_suggestion_url = `${host}/api/v1/admin/add-suggestion`;
 

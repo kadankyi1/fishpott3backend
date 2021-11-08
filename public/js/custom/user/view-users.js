@@ -36,7 +36,7 @@ $(document).ready(function ()
         var bearer = "Bearer " + localStorage.getItem("admin_access_token"); 
         var form = $("#formtwo");
         var form_data = new FormData(form[0]);
-        send_restapi_request_to_server_from_form("post", admin_api_update_order_url, bearer, form_data, "", successResponseFunction2, errorResponseFunction2);
+        send_restapi_request_to_server_from_form("post", admin_api_update_user_url, bearer, form_data, "", successResponseFunction2, errorResponseFunction2);
     });
     
 });

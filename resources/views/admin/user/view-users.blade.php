@@ -19,7 +19,7 @@ $page_title = "View users and take simple actions on them";
                         <div class="card">
                             <div class="card-header">
                                 <h5>Note</h5>
-                                <span>Simply the, <code>criteria, type keyword</code> and <code>search </code> to find an order</span>
+                                <span>Simply the, <code>criteria, type keyword</code> and <code>search </code> to find a user</span>
                             </div>
                             <div class="loader-holder offset-md-5" id="loader" style="display: none"><br><br><br><br><br><br><div class="myloader"></div></div>
 
@@ -51,7 +51,7 @@ $page_title = "View users and take simple actions on them";
                         <div class="card">
                             <div class="card-header">
                                 <h5>Note</h5>
-                                <span>Before you action an order as completed, <code>run it by FinCap Securities</code> to make  <code>sure </code> it is truely completed</span>
+                                <span>Before you action a user's profile, <code>make sure</code> it is  <code>absolutely warranted </code> first.</span>
                             </div>
                             <div class="loader-holder offset-md-5" id="loadertwo" style="display: none"><br><br><br><br><br><br><div class="myloader"></div></div>
 
@@ -234,8 +234,5 @@ $page_title = "View users and take simple actions on them";
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-noty/2.3.7/packaged/jquery.noty.packaged.min.js"></script>
         <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.4.0/animate.min.css">
         <script type="text/javascript" src="/js/custom/config.js "></script>
-        <script type="text/javascript">
-            the_model = "orders";
-        </script>
         <script type="text/javascript" src="/js/custom/user/view-users.js"></script>
     @endsection

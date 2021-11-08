@@ -959,14 +959,94 @@ class AdministratorController extends Controller
         ]);
     }
 
-    /*
+        /*
     |--------------------------------------------------------------------------
     |--------------------------------------------------------------------------
-    | THIS FUNCTION ADDS A DRILL
+    | THIS FUNCTION SEARCHES FOR A USER LIST
     |--------------------------------------------------------------------------
     |--------------------------------------------------------------------------
     */
 
+    public function searchUsers(Request $request)
+    {
+        /*
+        |**************************************************************************
+        | VALIDATION STARTS 
+        |**************************************************************************
+        */
+        // MAKING SURE THE INPUT HAS THE EXPECTED VALUES
+        $validatedData = $request->validate([
+            "administrator_phone_number" => "bail|required|regex:/^\+\d{10,15}$/|min:10|max:15",
+            "administrator_sys_id" => "bail|required",
+            "frontend_key" => "bail|required|in:2aLW4c7r9(2qf#y",
+            // ADD ANY OTHER REQUIRED INPUTS FROM HERE
+            "keyword" => "nullable",
+        ]);
+
+        // MAKING SURE THE REQUEST AND USER IS VALIDATED
+        $validation_response = UtilController::validateAdminWithAuthToken($request, auth()->guard('administrator-api')->user(), "get-info");
+        if(!empty($validation_response["status"]) && trim($validation_response["status"]) == "error"){
+            return response($validation_response);
+        } else {
+            $admin = $validation_response;
+        }
+
+        /*
+        |**************************************************************************
+        | VALIDATION ENDED 
+        |**************************************************************************
+        */
+        // 
+        //
+        if(empty($request->keyword)){
+            $data = DB::table('stock_purchases')
+            ->select(
+                'stock_purchases.stockpurchase_id', 'users.user_surname', 'users.user_firstname', 'users.user_phone_number', 'users.user_email',  
+                'businesses.business_full_name',  'businesses.business_find_code', 'countries.country_nice_name',
+                'stock_purchases.stockpurchase_price_per_stock_usd',  'stock_purchases.stockpurchase_stocks_quantity', 'risk_insurance_types.risk_type_shortname',
+                'stock_purchases.stockpurchase_risk_insurance_fee_usd',  'stock_purchases.stockpurchase_processing_fee_usd', 'stock_purchases.stockpurchase_total_price_with_all_fees_usd',
+                'stock_purchases.stockpurchase_rate_of_dollar_to_currency_paid_in',  'stock_purchases.stockpurchase_processed', 'stock_purchases.stockpurchase_processed_reason', 'stock_purchases.stockpurchase_flagged',
+                'stock_purchases.stockpurchase_flagged_reason',  'stock_purchases.stockpurchase_payment_gateway_status', 'stock_purchases.stockpurchase_payment_gateway_info' )
+            ->join('users', 'users.investor_id', '=', 'stock_purchases.stockpurchase_user_investor_id')
+            ->join('businesses', 'businesses.business_sys_id', '=', 'stock_purchases.stockpurchase_business_id')
+            ->join('risk_insurance_types', 'risk_insurance_types.risk_type_id', '=', 'stock_purchases.stockpurchase_risk_insurance_type_id')
+            ->join('countries', 'businesses.business_country_id', '=', 'countries.country_id')
+            ->where('stockpurchase_payment_gateway_status', '!=', 0)
+            ->take(100)
+            ->get();
+        } else {                
+            $data = DB::table('stock_purchases')
+            ->select(
+                'stock_purchases.stockpurchase_id', 'users.user_surname', 'users.user_firstname', 'users.user_phone_number', 'users.user_email',  
+                'businesses.business_full_name',  'businesses.business_find_code', 'countries.country_nice_name',
+                'stock_purchases.stockpurchase_price_per_stock_usd',  'stock_purchases.stockpurchase_stocks_quantity', 'risk_insurance_types.risk_type_shortname',
+                'stock_purchases.stockpurchase_risk_insurance_fee_usd',  'stock_purchases.stockpurchase_processing_fee_usd', 'stock_purchases.stockpurchase_total_price_with_all_fees_usd',
+                'stock_purchases.stockpurchase_rate_of_dollar_to_currency_paid_in',  'stock_purchases.stockpurchase_processed', 'stock_purchases.stockpurchase_processed_reason', 'stock_purchases.stockpurchase_flagged',
+                'stock_purchases.stockpurchase_flagged_reason',  'stock_purchases.stockpurchase_payment_gateway_status', 'stock_purchases.stockpurchase_payment_gateway_info' )
+            ->join('users', 'users.investor_id', '=', 'stock_purchases.stockpurchase_user_investor_id')
+            ->join('businesses', 'businesses.business_sys_id', '=', 'stock_purchases.stockpurchase_business_id')
+            ->join('risk_insurance_types', 'risk_insurance_types.risk_type_id', '=', 'stock_purchases.stockpurchase_risk_insurance_type_id')
+            ->join('countries', 'businesses.business_country_id', '=', 'countries.country_id')
+            ->where('user_phone_number', 'LIKE', "%{$request->keyword}%")
+            ->where('stockpurchase_payment_gateway_status', '!=', 0)
+            ->orderBy('stockpurchase_id', 'desc')->take(100)
+            ->get();
+        }
+
+        return response([
+            "status" => 1, 
+            "message" => "success",
+            "data" => $data
+        ]);
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    |--------------------------------------------------------------------------
+    | THIS FUNCTION UPDATES A USER
+    |--------------------------------------------------------------------------
+    |--------------------------------------------------------------------------
+    */
     public function updateUserFlaggedStatus(Request $request)
     {
         /*
