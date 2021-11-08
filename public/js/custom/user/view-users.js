@@ -7,7 +7,7 @@ if(!user_has_api_token()){
 $(document).ready(function () 
 {
     // GETTING THE DASHBOARD PAGE
-    getOrders();
+     getUsers();
 
     $("#administrator_phone_number").val(localStorage.getItem("administrator_phone_number"));
     $("#administrator_sys_id").val(localStorage.getItem("administrator_sys_id"));
@@ -25,7 +25,7 @@ $(document).ready(function ()
         var bearer = "Bearer " + localStorage.getItem("admin_access_token"); 
         var form = $("#form");
         var form_data = new FormData(form[0]);
-        send_restapi_request_to_server_from_form("post", admin_api_search_users_url, bearer, form_data, "", getOrdersSuccessResponseFunction, getOrdersErrorResponseFunction);
+        send_restapi_request_to_server_from_form("post", admin_api_search_users_url, bearer, form_data, "",  getUsersSuccessResponseFunction,  getUsersErrorResponseFunction);
     });
 
     // SUBMITTING THE FORM TO GET API RESPONSE
@@ -48,7 +48,7 @@ $(document).ready(function ()
 |--------------------------------------------------------------------------
 |
 */
-function getOrders()
+function  getUsers()
 {
     console.log("getModelData STARTED");
     var bearer = "Bearer " + localStorage.getItem("admin_access_token"); 
@@ -60,47 +60,32 @@ function getOrders()
         'frontend_key': localStorage.getItem("frontend_key")
     };
     console.log(data);
-    send_restapi_request_to_server_no_form("post", admin_api_search_users_url, bearer, data, "json", getOrdersSuccessResponseFunction, getOrdersErrorResponseFunction);
+    send_restapi_request_to_server_no_form("post", admin_api_search_users_url, bearer, data, "json",  getUsersSuccessResponseFunction,  getUsersErrorResponseFunction);
 }
 
 // RESENDING THE PASSCODE
-function getOrdersSuccessResponseFunction(response)
+function  getUsersSuccessResponseFunction(response)
 {
     fade_out_loader_and_fade_in_form("loader", "form"); 
     //$("#table_body").html('');
     $.each(response.data, function(key,value) {
-        console.log(value.stockpurchase_payment_gateway_info);
-        if(value.stockpurchase_payment_gateway_status === 1){
-            payment_status_class = "success";
-            payment_status = "paid";
-        } else if(value.stockpurchase_payment_gateway_status === 0){
-            payment_status_class = "danger";
-            payment_status = "unpaid";
-        } else {
-            payment_status_class = "warning";
-            payment_status = "unknown";
-        }
-        if(value.stockpurchase_processed === 1){
-            processing_status_class = "success";
-            processing_status = "completed";
-        } else if(value.stockpurchase_processed === 0){
-            processing_status_class = "warning";
-            processing_status = "pending";
-        } else {
-            processing_status_class = "danger";
-            processing_status = "denied";
-        }
-        if(value.stockpurchase_flagged === 1){
+        console.log(value.user_flagged);
+        if(value.user_flagged === 1){
             flagged_status_class = "danger";
             flagged_status = "Flagged";
-        } else if(value.stockpurchase_flagged === 0){
+        } else if(value.user_flagged === 0){
             flagged_status_class = "success";
             flagged_status = "No";
         } else {
             flagged_status_class = "warning";
             flagged_status = "unknown";
         }
-        $('#table_body').append('<tr><td><div class="chk-option"><div class="checkbox-fade fade-in-primary">' + value.stockpurchase_id + '</div></div><div class="d-inline-block align-middle"><img src="/images/avatar-4.jpg" alt="user image" class="img-radius img-40 align-top m-r-15"><div class="d-inline-block"><h6>' + value.user_surname + ' ' + value.user_firstname + '</h6><p class="text-muted m-b-0">' + value.user_phone_number + ' | ' + value.user_email + '</p></div></div></td><td><div class="d-inline-block align-middle"><div class="d-inline-block"><h6>' + value.business_full_name + '</h6><p class="text-muted m-b-0">' + value.business_find_code + '</p></div></div></td><td>$' + value.stockpurchase_price_per_stock_usd + '</td><td>' + value.stockpurchase_stocks_quantity + '</td><td>' + value.risk_type_shortname + '</td><td>$' + value.stockpurchase_risk_insurance_fee_usd + '</td><td>$' + value.stockpurchase_processing_fee_usd + '</td><td>$' + value.stockpurchase_total_price_with_all_fees_usd + '</td><td>' + value.stockpurchase_rate_of_dollar_to_currency_paid_in + '</td><td class="text-right">    <label class="label label-' + payment_status_class + '">' + payment_status + '</label></td><td class="text-right"><label class="label label-' + processing_status_class + '">' + processing_status + '</label></td><td class="text-right"><label class="label label-' + flagged_status_class + '">' + flagged_status + '</label><i class="fa fa-flag" aria-hidden="true" style="cursor: pointer"></i></td></tr>');
+        if(value.user_profile_picture === ""){
+            pott_pic = "/images/fishpott_icon_circle.png";
+        } else {
+            pott_pic = "/uploads/images/" + value.user_profile_picture;
+        }
+        $('#table_body').append('<tr><td><div class="chk-option"><div class="checkbox-fade fade-in-primary">' + value.user_id + '</div></div><div class="d-inline-block align-middle"><img src="' + pott_pic + '" alt="user image" class="img-radius img-40 align-top m-r-15"><div class="d-inline-block"><h6>' + value.user_surname + ' ' + value.user_firstname + '</h6><p class="text-muted m-b-0">@' + value.user_pottname + '</p></div></div></td><td><div class="d-inline-block align-middle"><div class="d-inline-block"><h6>' + value.user_phone_number + '</h6><p class="text-muted m-b-0">' + value.user_email + '</p></div></div></td><td>$' + value.user_net_worth_usd + '</td><td>' + value.user_pott_intelligence + '</td><td>' + value.user_pott_position + '</td><td>' + value.country_nice_name + '</td><td>' + value.user_dob + '</td><td>' + value.last_online + '</td><td>' + value.gender_name + '</td><td class="text-right"><label class="label label-' + flagged_status_class + '">' + flagged_status + '</label><i class="fa fa-flag" aria-hidden="true" style="cursor: pointer"></i></td></tr>');
         //models.push(value.business_full_name); 
     }); 
 
@@ -114,7 +99,7 @@ function getOrdersSuccessResponseFunction(response)
     show_notification("msg_holder", "success", "Success:", "Fetch Successful");
 }
 
-function getOrdersErrorResponseFunction(errorThrown)
+function  getUsersErrorResponseFunction(errorThrown)
 {
     fade_out_loader_and_fade_in_form("loader", "form"); 
     show_notification("msg_holder", "danger", "Error", errorThrown);

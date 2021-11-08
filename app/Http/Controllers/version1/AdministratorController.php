@@ -999,37 +999,29 @@ class AdministratorController extends Controller
         // 
         //
         if(empty($request->keyword)){
-            $data = DB::table('stock_purchases')
+            $data = DB::table('users')
             ->select(
-                'stock_purchases.stockpurchase_id', 'users.user_surname', 'users.user_firstname', 'users.user_phone_number', 'users.user_email',  
-                'businesses.business_full_name',  'businesses.business_find_code', 'countries.country_nice_name',
-                'stock_purchases.stockpurchase_price_per_stock_usd',  'stock_purchases.stockpurchase_stocks_quantity', 'risk_insurance_types.risk_type_shortname',
-                'stock_purchases.stockpurchase_risk_insurance_fee_usd',  'stock_purchases.stockpurchase_processing_fee_usd', 'stock_purchases.stockpurchase_total_price_with_all_fees_usd',
-                'stock_purchases.stockpurchase_rate_of_dollar_to_currency_paid_in',  'stock_purchases.stockpurchase_processed', 'stock_purchases.stockpurchase_processed_reason', 'stock_purchases.stockpurchase_flagged',
-                'stock_purchases.stockpurchase_flagged_reason',  'stock_purchases.stockpurchase_payment_gateway_status', 'stock_purchases.stockpurchase_payment_gateway_info' )
-            ->join('users', 'users.investor_id', '=', 'stock_purchases.stockpurchase_user_investor_id')
-            ->join('businesses', 'businesses.business_sys_id', '=', 'stock_purchases.stockpurchase_business_id')
-            ->join('risk_insurance_types', 'risk_insurance_types.risk_type_id', '=', 'stock_purchases.stockpurchase_risk_insurance_type_id')
-            ->join('countries', 'businesses.business_country_id', '=', 'countries.country_id')
-            ->where('stockpurchase_payment_gateway_status', '!=', 0)
+                'users.user_id', 'users.user_surname', 'users.user_firstname', 'users.user_phone_number', 'users.user_email',  
+                'users.user_net_worth_usd', 'users.user_pott_intelligence', 'users.user_pott_position', 'users.user_dob', 'users.user_pottname', 
+                'countries.country_nice_name', 'users.last_online', 'users.user_phone_number', 'users.user_email',  'genders.gender_name',  
+                'users.user_surname', 'users.user_firstname', 'users.user_phone_number', 'users.user_profile_picture', 'users.user_flagged'
+            )
+            ->join('countries', 'users.user_country_id', '=', 'countries.country_id')
+            ->join('genders', 'users.user_gender_id', '=', 'genders.gender_id')
             ->take(100)
             ->get();
-        } else {                
-            $data = DB::table('stock_purchases')
+        } else {    
+            $data = DB::table('users')
             ->select(
-                'stock_purchases.stockpurchase_id', 'users.user_surname', 'users.user_firstname', 'users.user_phone_number', 'users.user_email',  
-                'businesses.business_full_name',  'businesses.business_find_code', 'countries.country_nice_name',
-                'stock_purchases.stockpurchase_price_per_stock_usd',  'stock_purchases.stockpurchase_stocks_quantity', 'risk_insurance_types.risk_type_shortname',
-                'stock_purchases.stockpurchase_risk_insurance_fee_usd',  'stock_purchases.stockpurchase_processing_fee_usd', 'stock_purchases.stockpurchase_total_price_with_all_fees_usd',
-                'stock_purchases.stockpurchase_rate_of_dollar_to_currency_paid_in',  'stock_purchases.stockpurchase_processed', 'stock_purchases.stockpurchase_processed_reason', 'stock_purchases.stockpurchase_flagged',
-                'stock_purchases.stockpurchase_flagged_reason',  'stock_purchases.stockpurchase_payment_gateway_status', 'stock_purchases.stockpurchase_payment_gateway_info' )
-            ->join('users', 'users.investor_id', '=', 'stock_purchases.stockpurchase_user_investor_id')
-            ->join('businesses', 'businesses.business_sys_id', '=', 'stock_purchases.stockpurchase_business_id')
-            ->join('risk_insurance_types', 'risk_insurance_types.risk_type_id', '=', 'stock_purchases.stockpurchase_risk_insurance_type_id')
-            ->join('countries', 'businesses.business_country_id', '=', 'countries.country_id')
+                'users.user_id', 'users.user_surname', 'users.user_firstname', 'users.user_phone_number', 'users.user_email',  
+                'users.user_net_worth_usd', 'users.user_pott_intelligence', 'users.user_pott_position', 'users.user_dob',   'users.user_pottname',
+                'countries.country_nice_name', 'users.last_online', 'users.user_phone_number', 'users.user_email', 'genders.gender_name', 
+                'users.user_surname', 'users.user_firstname', 'users.user_phone_number', 'users.user_profile_picture', 'users.user_flagged'
+            )
+            ->join('countries', 'users.user_country_id', '=', 'countries.country_id')
+            ->join('genders', 'users.user_gender_id', '=', 'genders.gender_id')
             ->where('user_phone_number', 'LIKE', "%{$request->keyword}%")
-            ->where('stockpurchase_payment_gateway_status', '!=', 0)
-            ->orderBy('stockpurchase_id', 'desc')->take(100)
+            ->take(100)
             ->get();
         }
 

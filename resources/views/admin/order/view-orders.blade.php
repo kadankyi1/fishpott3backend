@@ -123,7 +123,8 @@ $page_title = "View orders and take simple actions on them";
                                                         </label>
                                                     </div>
                                                 </div>
-                                                User</th>
+                                                User
+                                            </th>
                                             <th>Stock</th>
                                             <th>Per Stock($)</th>
                                             <th>Qty</th>

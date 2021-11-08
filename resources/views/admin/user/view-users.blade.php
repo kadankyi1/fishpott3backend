@@ -125,22 +125,20 @@ $page_title = "View users and take simple actions on them";
                                                 </div>
                                                 Full Name
                                             </th>
-                                            <th></th>
-                                            <th>Per Stock($)</th>
-                                            <th>Qty</th>
-                                            <th>R-I</th>
-                                            <th>R-I Fee</th>
-                                            <th>Processing</th>
-                                            <th>Ttl($ | Local )</th>
-                                            <th>$ Rate</th>
-                                            <th class="text-right">Payment</th>
-                                            <th class="text-right">Processed</th>
+                                            <th>Contact</th>
+                                            <th>Pott Value($)</th>
+                                            <th>Pott-Ai</th>
+                                            <th>Pott Position</th>
+                                            <th>Country</th>
+                                            <th>DOB</th>
+                                            <th>Last Online</th>
+                                            <th>Gender</th>
                                             <th class="text-right">Flagged</th>
                                         </tr>
                                         </thead>
                                         <tbody id="table_body">
-                                        <!--
-                                            <tr>
+                                            <!--
+                                                <tr>
                                             <td>
                                                 <div class="chk-option">
                                                     <div class="checkbox-fade fade-in-primary">
@@ -148,17 +146,18 @@ $page_title = "View users and take simple actions on them";
                                                     </div>
                                                 </div>
                                                 <div class="d-inline-block align-middle">
+                                                    <img src="/images/avatar-4.jpg" alt="user image" class="img-radius img-40 align-top m-r-15">
                                                     <div class="d-inline-block">
-                                                        <h6>User Name</h6>
-                                                        <p class="text-muted m-b-0">phone|email</p>
+                                                        <h6>Full Name</h6>
+                                                        <p class="text-muted m-b-0">@pottname</p>
                                                     </div>
                                                 </div>
                                             </td>
                                             <td>
                                                 <div class="d-inline-block align-middle">
                                                     <div class="d-inline-block">
-                                                        <h6>Business name</h6>
-                                                        <p class="text-muted m-b-0">Find Code | Stock Code</p>
+                                                        <h6>Phone</h6>
+                                                        <p class="text-muted m-b-0">Email</p>
                                                     </div>
                                                 </div>
                                                 
@@ -170,10 +169,6 @@ $page_title = "View users and take simple actions on them";
                                             <td>$3</td>
                                             <td>$330</td>
                                             <td>$330</td>
-                                            <td class="text-right">
-                                                <label class="label label-success">processed</label>
-                                                <label class="label label-warning">pending</label>
-                                            </td>
                                             <td class="text-right">
                                                 <label class="label label-danger">Flagged</label>
                                                 <i class="fa fa-flag" aria-hidden="true" style="cursor: pointer"></i>
