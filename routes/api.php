@@ -108,5 +108,8 @@ Route::middleware('auth:administrator-api')->post('/v1/admin/search-orders', [Ap
 // GET ORDERS LIST
 Route::middleware('auth:administrator-api')->post('/v1/admin/update-order', [App\Http\Controllers\version1\AdministratorController::class, 'updateOrderProcessedOrFlaggedStatus']);
 
+// GET ORDERS LIST
+Route::middleware('auth:administrator-api')->post('/v1/admin/update-user', [App\Http\Controllers\version1\AdministratorController::class, 'updateUserFlaggedStatus']);
+
 // GET BUSINESS LIST
 Route::middleware('auth:administrator-api')->post('/v1/admin/add-suggestion', [App\Http\Controllers\version1\AdministratorController::class, 'addSuggestion']);

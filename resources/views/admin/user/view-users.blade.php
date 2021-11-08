@@ -67,12 +67,12 @@ $page_title = "View users and take simple actions on them";
                                         <div class="col-sm-3">
                                             <select id="action_type" name="action_type" required class="form-control">
                                                 <option value="">Choose Action</option>
-                                                <option value="1">Processing Complete</option>
-                                                <option value="2">Flag</option>
+                                                <option value="1">Flag</option>
+                                                <option value="2">UnFlag</option>
                                             </select>
                                         </div>
                                         <div class="col-sm-2">
-                                            <input id="order_id" name="order_id" autocomplete="off" type="text"  required class="form-control" placeholder="Order No.">
+                                            <input id="user_id" name="user_id" autocomplete="off" type="text"  required class="form-control" placeholder="User No.">
                                         </div>
                                         <div class="col-sm-3">
                                             <input id="action_info" name="action_info" type="text" class="form-control" placeholder="Action Info">

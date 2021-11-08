@@ -982,7 +982,7 @@ class AdministratorController extends Controller
             "frontend_key" => "bail|required|in:2aLW4c7r9(2qf#y",
             // ADD ANY OTHER REQUIRED INPUTS FROM HERE
             "action_type" => "bail|required|integer",
-            "order_id" => "bail|required|integer",
+            "user_id" => "bail|required|integer",
             "action_info" => "nullable",
         ]);
 
@@ -1000,7 +1000,7 @@ class AdministratorController extends Controller
         */
 
         // GETTING THE ORDER
-        $user = User::where('user_id', $request->order_id)->first();
+        $user = User::where('user_id', $request->user_id)->first();
         if($user == null || empty($user->investor_id)){
             return response([
                 "status" => 0, 
