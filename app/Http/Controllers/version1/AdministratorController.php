@@ -575,7 +575,7 @@ class AdministratorController extends Controller
     /*
     |--------------------------------------------------------------------------
     |--------------------------------------------------------------------------
-    | THIS FUNCTION SEARCHES FOR A BUSINESS
+    | THIS FUNCTION SEARCHES FOR A MODEL LIST
     |--------------------------------------------------------------------------
     |--------------------------------------------------------------------------
     */
@@ -627,6 +627,59 @@ class AdministratorController extends Controller
                         ->where('drill_question', 'LIKE', "%{$request->keyword}%")
                         ->orderBy('drill_id', 'desc')->take(100)->get();
             }
+        }
+
+        return response([
+            "status" => 1, 
+            "message" => "success",
+            "data" => $data
+        ]);
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    |--------------------------------------------------------------------------
+    | THIS FUNCTION SEARCHES FOR A MODEL LIST
+    |--------------------------------------------------------------------------
+    |--------------------------------------------------------------------------
+    */
+
+    public function searchOrders(Request $request)
+    {
+        /*
+        |**************************************************************************
+        | VALIDATION STARTS 
+        |**************************************************************************
+        */
+        // MAKING SURE THE INPUT HAS THE EXPECTED VALUES
+        $validatedData = $request->validate([
+            "administrator_phone_number" => "bail|required|regex:/^\+\d{10,15}$/|min:10|max:15",
+            "administrator_sys_id" => "bail|required",
+            "frontend_key" => "bail|required|in:2aLW4c7r9(2qf#y",
+            // ADD ANY OTHER REQUIRED INPUTS FROM HERE
+            "model" => "bail|required",
+            "keyword" => "nullable",
+        ]);
+
+        // MAKING SURE THE REQUEST AND USER IS VALIDATED
+        $validation_response = UtilController::validateAdminWithAuthToken($request, auth()->guard('administrator-api')->user(), "get-info");
+        if(!empty($validation_response["status"]) && trim($validation_response["status"]) == "error"){
+            return response($validation_response);
+        } else {
+            $admin = $validation_response;
+        }
+        /*
+        |**************************************************************************
+        | VALIDATION ENDED 
+        |**************************************************************************
+        */
+        if(empty($request->keyword)){
+            $data = Business::select('business_full_name', 'business_sys_id')
+                        ->orderBy('business_id', 'desc')->take(100)->get();
+        } else {                
+            $data = Business::select('business_full_name', 'business_sys_id')
+            ->where('business_full_name', 'LIKE', "%{$request->keyword}%")
+            ->orderBy('business_id', 'desc')->take(100)->get();
         }
 
         return response([
