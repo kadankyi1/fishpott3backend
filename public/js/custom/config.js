@@ -29,6 +29,9 @@ var admin_api_add_business_url = `${host}/api/v1/admin/add-business`;
 // SEARCH MODEL
 var admin_api_add_search_model_url = `${host}/api/v1/admin/search-model`;
 
+// SEARCH ORDERS
+var admin_api_search_orders_url = `${host}/api/v1/admin/search-orders`;
+
 // ADD SUGGESTION
 var admin_api_add_suggestion_url = `${host}/api/v1/admin/add-suggestion`;
 
@@ -123,7 +126,7 @@ function show_notification(id, type, title, message)
 */
 function getModelData(model)
 {
-    console.log("getDashboardData STARTED");
+    console.log("getModelData STARTED");
     var bearer = "Bearer " + localStorage.getItem("admin_access_token"); 
     console.log("admin_api_get_dashboard_data_url: " + admin_api_get_dashboard_data_url);
     console.log("Token: " + bearer);

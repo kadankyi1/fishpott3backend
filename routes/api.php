@@ -99,8 +99,11 @@ Route::middleware('auth:administrator-api')->post('/v1/admin/add-new-stock-value
 // GET DASHBOARD DATA
 Route::middleware('auth:administrator-api')->post('/v1/admin/get-dashboard-data', [App\Http\Controllers\version1\AdministratorController::class, 'getDashboardData']);
 
-// GET BUSINESS LIST
+// GET MODEL LIST
 Route::middleware('auth:administrator-api')->post('/v1/admin/search-model', [App\Http\Controllers\version1\AdministratorController::class, 'searchModel']);
+
+// GET ORDERS LIST
+Route::middleware('auth:administrator-api')->post('/v1/admin/search-orders', [App\Http\Controllers\version1\AdministratorController::class, 'searchOrders']);
 
 // GET BUSINESS LIST
 Route::middleware('auth:administrator-api')->post('/v1/admin/add-suggestion', [App\Http\Controllers\version1\AdministratorController::class, 'addSuggestion']);

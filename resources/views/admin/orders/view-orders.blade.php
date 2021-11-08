@@ -93,12 +93,14 @@ $page_title = "View orders and take simple actions on them";
                                             <th>Processing</th>
                                             <th>Ttl($ | Local )</th>
                                             <th>$ Rate</th>
+                                            <th class="text-right">Payment</th>
                                             <th class="text-right">Processed</th>
                                             <th class="text-right">Flagged</th>
                                         </tr>
                                         </thead>
-                                        <tbody>
-                                        <tr>
+                                        <tbody id="table_body">
+                                        <!--
+                                            <tr>
                                             <td>
                                                 <div class="chk-option">
                                                     <div class="checkbox-fade fade-in-primary">
@@ -137,6 +139,7 @@ $page_title = "View orders and take simple actions on them";
                                                 <i class="fa fa-flag" aria-hidden="true" style="cursor: pointer"></i>
                                             </td>
                                         </tr>
+                                        -->
                                         </tbody>
                                     </table>
                                     <div class="text-right m-r-20">
@@ -192,7 +195,7 @@ $page_title = "View orders and take simple actions on them";
         <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.4.0/animate.min.css">
         <script type="text/javascript" src="/js/custom/config.js "></script>
         <script type="text/javascript">
-            the_model = "business";
+            the_model = "orders";
         </script>
-        <script type="text/javascript" src="/js/custom/suggestion/add-suggestion.js "></script>
+        <script type="text/javascript" src="/js/custom/orders/view-order.js"></script>
     @endsection

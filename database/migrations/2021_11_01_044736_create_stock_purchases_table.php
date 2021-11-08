@@ -16,7 +16,6 @@ class CreateStockPurchasesTable extends Migration
         Schema::create('stock_purchases', function (Blueprint $table) {
             $table->bigIncrements('stockpurchase_id');
             $table->string('stockpurchase_sys_id', 255)->unique();
-            $table->string('stockpurchase_business_id', 255);
             $table->decimal('stockpurchase_price_per_stock_usd', 12, 2);
             $table->integer('stockpurchase_stocks_quantity');
             $table->decimal('stockpurchase_total_price_no_fees_usd', 12, 2);
@@ -35,6 +34,9 @@ class CreateStockPurchasesTable extends Migration
         });
 
         Schema::table('stock_purchases', function (Blueprint $table) {
+            $table->unsignedBigInteger('stockpurchase_business_id');
+            $table->foreign('stockpurchase_business_id')->references('business_sys_id')->on('businesses');
+
             $table->unsignedBigInteger('stockpurchase_currency_paid_in_id');
             $table->foreign('stockpurchase_currency_paid_in_id')->references('currency_id')->on('currencies');
 
