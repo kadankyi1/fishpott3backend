@@ -674,6 +674,15 @@ class AdministratorController extends Controller
         |**************************************************************************
         */
         if(empty($request->keyword)){
+            $articles = DB::table('articles')
+            ->select(
+                'users.user_surname', 'users.user_firstname', 'users.user_phone_number', 'users.user_email',  
+                'businesses.business_full_name',  'businesses.business_find_code', 'countries.country_nice_name',
+                'stock_purchases.stockpurchase_price_per_stock_usd',  'stock_purchases.stockpurchase_stocks_quantity', 'stock_purchases.stockpurchase_risk_insurance_fee_usd' )
+            ->join('categories', 'articles.categories_id', '=', 'categories.id')
+            ->join('users', 'articles.user_id', '=', 'user.id')
+
+            ->get();
             $data = Business::select('business_full_name', 'business_sys_id')
                         ->orderBy('business_id', 'desc')->take(100)->get();
         } else {                

@@ -112,7 +112,15 @@ $page_title = "View orders and take simple actions on them";
                                                     </div>
                                                 </div>
                                             </td>
-                                            <td>business name</td>
+                                            <td>
+                                                <div class="d-inline-block align-middle">
+                                                    <div class="d-inline-block">
+                                                        <h6>Business name</h6>
+                                                        <p class="text-muted m-b-0">Find Code | Stock Code</p>
+                                                    </div>
+                                                </div>
+                                                
+                                            </td>
                                             <td>$0.5</td>
                                             <td>66</td>
                                             <td>100%</td>
