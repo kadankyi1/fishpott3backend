@@ -57,5 +57,10 @@ Route::get('/admin/suggestion/suggest-business', function () {
 
 // VIEW ORDERS
 Route::get('/admin/orders/view-orders', function () {
-    return view('admin/orders/view-orders');
+    return view('admin/order/view-orders');
+});
+
+// VIEW USERS
+Route::get('/admin/users/view-users', function () {
+    return view('admin/user/view-users');
 });

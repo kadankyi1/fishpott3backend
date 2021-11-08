@@ -291,7 +291,7 @@
                           </ul>
                           <div class="pcoded-navigation-label" data-i18n="nav.category.other">Businesses</div>
                           <ul class="pcoded-item pcoded-left-item">
-                              <li class="pcoded-hasmenu ">
+                              <li class="pcoded-hasmenu <?php if(isset($active_page) && $active_page == 'Business'){ echo 'active'; } ?>">
                                   <a href="javascript:void(0)" class="waves-effect waves-dark">
                                       <span class="pcoded-micon"><i class="ti-direction-alt"></i><b>M</b></span>
                                       <span class="pcoded-mtext" data-i18n="nav.menu-levels.main">Businesses</span>
@@ -344,7 +344,7 @@
                           </ul>
                           <div class="pcoded-navigation-label" data-i18n="nav.category.forms">Orders</div>
                           <ul class="pcoded-item pcoded-left-item">
-                              <li class="pcoded-hasmenu ">
+                              <li class="pcoded-hasmenu <?php if(isset($active_page) && $active_page == 'Orders'){ echo 'active'; } ?>">
                                   <a href="javascript:void(0)" class="waves-effect waves-dark">
                                       <span class="pcoded-micon"><i class="ti-direction-alt"></i><b>M</b></span>
                                       <span class="pcoded-mtext" data-i18n="nav.menu-levels.main">Orders</span>
@@ -363,7 +363,7 @@
                           </ul>
                           <div class="pcoded-navigation-label" data-i18n="nav.category.forms">Users</div>
                           <ul class="pcoded-item pcoded-left-item">
-                              <li class="pcoded-hasmenu ">
+                              <li class="pcoded-hasmenu <?php if(isset($active_page) && $active_page == 'Users'){ echo 'active'; } ?>">
                                   <a href="javascript:void(0)" class="waves-effect waves-dark">
                                       <span class="pcoded-micon"><i class="ti-direction-alt"></i><b>M</b></span>
                                       <span class="pcoded-mtext" data-i18n="nav.menu-levels.main">Users</span>
@@ -371,9 +371,9 @@
                                   </a>
                                   <ul class="pcoded-submenu">
                                     <li class="">
-                                        <a href="/admin/business/add" class="waves-effect waves-dark">
+                                        <a href="/admin/users/view-users" class="waves-effect waves-dark">
                                             <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                                            <span class="pcoded-mtext" data-i18n="nav.menu-levels.menu-level-21">Flag Users</span>
+                                            <span class="pcoded-mtext" data-i18n="nav.menu-levels.menu-level-21">View Users</span>
                                             <span class="pcoded-mcaret"></span>
                                         </a>
                                     </li>

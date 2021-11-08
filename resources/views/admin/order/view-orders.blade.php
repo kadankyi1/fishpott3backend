@@ -236,5 +236,5 @@ $page_title = "View orders and take simple actions on them";
         <script type="text/javascript">
             the_model = "orders";
         </script>
-        <script type="text/javascript" src="/js/custom/orders/view-order.js"></script>
+        <script type="text/javascript" src="/js/custom/order/view-orders.js"></script>
     @endsection

@@ -959,4 +959,68 @@ class AdministratorController extends Controller
         ]);
     }
 
+    /*
+    |--------------------------------------------------------------------------
+    |--------------------------------------------------------------------------
+    | THIS FUNCTION ADDS A DRILL
+    |--------------------------------------------------------------------------
+    |--------------------------------------------------------------------------
+    */
+
+    public function updateUserFlaggedStatus(Request $request)
+    {
+        /*
+        |**************************************************************************
+        | VALIDATION STARTS 
+        |**************************************************************************
+        */
+        // MAKING SURE THE INPUT HAS THE EXPECTED VALUES
+        $validatedData = $request->validate([
+            "administrator_phone_number" => "bail|required|regex:/^\+\d{10,15}$/|min:10|max:15",
+            "administrator_sys_id" => "bail|required",
+            "administrator_pin" => "bail|required",
+            "frontend_key" => "bail|required|in:2aLW4c7r9(2qf#y",
+            // ADD ANY OTHER REQUIRED INPUTS FROM HERE
+            "action_type" => "bail|required|integer",
+            "order_id" => "bail|required|integer",
+            "action_info" => "nullable",
+        ]);
+
+        // MAKING SURE THE REQUEST AND USER IS VALIDATED
+        $validation_response = UtilController::validateAdminWithAuthToken($request, auth()->guard('administrator-api')->user(), "add-admins");
+        if(!empty($validation_response["status"]) && trim($validation_response["status"]) == "error"){
+            return response($validation_response);
+        } else {
+            $admin = $validation_response;
+        }
+        /*
+        |**************************************************************************
+        | VALIDATION ENDED 
+        |**************************************************************************
+        */
+
+        // GETTING THE ORDER
+        $user = User::where('user_id', $request->order_id)->first();
+        if($user == null || empty($user->investor_id)){
+            return response([
+                "status" => 0, 
+                "message" => "User not found"
+            ]);
+        }
+
+        if($request->action_type == "1"){
+            $user->user_flagged = 1;
+            $user->user_flagged_reason = $request->action_info;
+        } else if($request->action_type == "2"){
+            $user->user_flagged = 0;
+            $user->user_flagged_reason = "";
+        }
+        // SAVING UPDATE
+        $user->save();
+
+        return response([
+            "status" => 1, 
+            "message" => "User updated"
+        ]);
+    }
 }
