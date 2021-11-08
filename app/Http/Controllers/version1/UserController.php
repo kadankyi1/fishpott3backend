@@ -1244,7 +1244,7 @@ public function changePasswordWithResetCode(Request $request)
         |**************************************************************************
         */
 
-        // GETTING THE BUSINESS
+        // GETTING THE ORDER
         $stockpurchase = StockPurchase::where('stockpurchase_sys_id', $request->stockpurchase_sys_id)->first();
         if($stockpurchase == null || empty($stockpurchase->stockpurchase_sys_id)){
             return response([

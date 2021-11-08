@@ -904,15 +904,13 @@ class AdministratorController extends Controller
             "administrator_pin" => "bail|required",
             "frontend_key" => "bail|required|in:2aLW4c7r9(2qf#y",
             // ADD ANY OTHER REQUIRED INPUTS FROM HERE
-            "drill_question" => "min:5|max:100",
-            "drill_answer_1" => "min:2|max:100",
-            "drill_answer_2" => "min:2|max:100",
-            "drill_answer_3" => "max:100",
-            "drill_answer_4" => "max:100",
+            "action_type" => "bail|required|integer",
+            "order_id" => "bail|required|integer",
+            "action_info" => "nullable",
         ]);
 
         // MAKING SURE THE REQUEST AND USER IS VALIDATED
-        $validation_response = UtilController::validateAdminWithAuthToken($request, auth()->guard('administrator-api')->user(), "add-drill");
+        $validation_response = UtilController::validateAdminWithAuthToken($request, auth()->guard('administrator-api')->user(), "add-admins");
         if(!empty($validation_response["status"]) && trim($validation_response["status"]) == "error"){
             return response($validation_response);
         } else {
@@ -924,27 +922,26 @@ class AdministratorController extends Controller
         |**************************************************************************
         */
 
-        //CREATING THE USER DATA TO ADD TO DB
-        $drillData["drill_sys_id"] = "drill-" . $admin->administrator_user_pottname . "-" . substr($validatedData["administrator_phone_number"] ,1,strlen($validatedData["administrator_phone_number"])) . date("Y-m-d-H-i-s") . UtilController::getRandomString(50);
-        $drillData["drill_question"] = $validatedData["drill_question"];
-        $drillData["drill_answer_1"] = $validatedData["drill_answer_1"];
-        $drillData["drill_answer_2"] = $validatedData["drill_answer_2"];
-        if(!empty($validatedData["drill_answer_3"])){
-            $drillData["drill_answer_3"] = $validatedData["drill_answer_3"];
+        // GETTING THE ORDER
+        $stockpurchase = StockPurchase::where('stockpurchase_id', $request->order_id)->first();
+        if($stockpurchase == null || empty($stockpurchase->stockpurchase_sys_id)){
+            return response([
+                "status" => 0, 
+                "message" => "Order not found"
+            ]);
         }
-        if(!empty($validatedData["drill_answer_4"])){
-            $drillData["drill_answer_4"] = $validatedData["drill_answer_4"];
+
+        if($request->action_type == "1"){
+            $stockpurchase->stockpurchase_processed = 1;
+            $stockpurchase->stockpurchase_processed_reason = $request->action_info;
+        } else if($request->action_type == "2"){
+            $stockpurchase->stockpurchase_flagged = 1;
+            $stockpurchase->stockpurchase_flagged_reason = $request->action_info;
         }
-        $drillData["drill_answer_implied_traits_1"] = "";
-        $drillData["drill_answer_implied_traits_2"] = "";
-        $drillData["drill_answer_implied_traits_3"] = "";
-        $drillData["drill_answer_implied_traits_4"] = "";
-        $drillData["drill_maker_investor_id"] = $admin->administrator_user_pott_investor_id;
-        Drill::create($drillData);
 
         return response([
             "status" => 1, 
-            "message" => "Drill saved"
+            "message" => "Order updated"
         ]);
     }
 

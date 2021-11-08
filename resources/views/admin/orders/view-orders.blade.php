@@ -65,17 +65,17 @@ $page_title = "View orders and take simple actions on them";
                                     <h4 class="sub-title">Form</h4>
                                     <div class="form-group row">
                                         <div class="col-sm-3">
-                                            <select id="action_ty" name="business_country" class="form-control">
-                                                <option value="1">Choose Action</option>
-                                                <option value="2">Processing Complete</option>
-                                                <option value="3">Flag</option>
+                                            <select id="action_type" name="action_type" required class="form-control">
+                                                <option value="">Choose Action</option>
+                                                <option value="1">Processing Complete</option>
+                                                <option value="2">Flag</option>
                                             </select>
                                         </div>
                                         <div class="col-sm-2">
-                                            <input id="order_count_id" name="order_count_id" autocomplete="off" type="text"  required class="form-control" placeholder="Order No.">
+                                            <input id="order_id" name="order_id" autocomplete="off" type="text"  required class="form-control" placeholder="Order No.">
                                         </div>
                                         <div class="col-sm-3">
-                                            <input id="action_info" name="action_info" autocomplete="off" type="text"  required class="form-control" placeholder="Action Info">
+                                            <input id="action_info" name="action_info" autocomplete="off" type="text" class="form-control" placeholder="Action Info">
                                         </div>
                                         <div class="col-sm-2">
                                             <input id="administrator_pin2" name="administrator_pin" autocomplete="off" type="text"  required class="form-control" placeholder="PIN">
