@@ -222,8 +222,8 @@ class UtilController extends Controller
         if(count($receiver_keys_array) > 0){
 			$headers = array('Authorization:key=' . $server_key, 'Content-Type:application/json');
 			$fields = array(
-			  "registration_ids" => $receiver_keys_array,
-			  "priority" => $priority,
+			  'registration_ids' => $receiver_keys_array,
+			  'priority' => $priority,
 			  'data' => array(
 			    'not_type' => $type,
 			    'not_title' => $title,
