@@ -781,8 +781,21 @@ class AdministratorController extends Controller
             $message = "Suggestion saved.";
 
             // SENDING NOTIFICATION TO USERS
-            //UtilController::sendNotificationToUser(config('app.url'), config('app.url'), [$] "New Drill - FishPott", "Complete this drill to keep increase Pott Intelligence", $target, "FISHPOT_TIPS");
-
+            UtilController::sendNotificationToTopic(
+                config('app.firebase_notification_server_address_link'), 
+                config('app.firebase_notification_account_key'), 
+                "FISHPOT_TIPS",
+                "normal",
+                "business-suggestion",
+                "New Drill - FishPott",
+                "Train your FishPott and increase its intelligence with a new drill",
+                "", 
+                "", 
+                "", 
+                "", 
+                "",
+                date("F j, Y")
+            );
         } else if($request->item_type == 2){
             // CHECKING IF THE BUSINESS EXISTS
             $business = Business::where('business_sys_id', $request->item_id)->first();
@@ -811,13 +824,6 @@ class AdministratorController extends Controller
             $message = "Suggestion saved. Find code is : " . $suggestionData["suggestion_directed_at_user_business_find_code"];
 
             // SENDING NOTIFICATION TO THE USER
-            echo "\n firebase_notification_server_address_link: " . config('app.firebase_notification_server_address_link');
-            echo "\n firebase_notification_account_key: " . config('app.firebase_notification_account_key');
-            echo "\n user_fcm_token_android: " . $pott_user->user_fcm_token_android;
-            echo "\n user_fcm_token_web: " . $pott_user->user_fcm_token_web;
-            echo "\n user_fcm_token_ios: " . $pott_user->user_fcm_token_ios;
-
-
             UtilController::sendNotificationToUser(
                 config('app.firebase_notification_server_address_link'), 
                 config('app.firebase_notification_account_key'), 
