@@ -219,7 +219,7 @@ class UtilController extends Controller
             }
         }
         
-        if($receiver_keys_array[0] != "" || $receiver_keys_array[1] != "" || $receiver_keys_array[2] != ""){
+        if(count($receiver_keys_array) > 0){
 			$headers = array('Authorization:key=' . $server_key, 'Content-Type:application/json');
 			$fields = array(
 			  "registration_ids" => $receiver_keys_array,
