@@ -1785,7 +1785,7 @@ public function changePasswordWithResetCode(Request $request)
         } else {
             $user = $validation_response;
         }
-        var_dump($user); exit;
+        
         if(strtoupper($request->app_type) == "ANDROID" && !empty($request->fcm_token)){
             $user->user_fcm_token_android = $request->fcm_token;
             $user->save();
