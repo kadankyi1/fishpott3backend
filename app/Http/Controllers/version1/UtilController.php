@@ -221,7 +221,7 @@ class UtilController extends Controller
         }
         */
 
-        var_dump(array_filter($receiver_keys_array, fn($value) => !is_null($value) && $value !== '')); exit;
+        $receiver_keys_array = array_filter($receiver_keys_array, fn($value) => !is_null($value) && $value !== '');
 
         if(count($receiver_keys_array) > 0){
 			$headers = array('Authorization:key=' . $server_key, 'Content-Type:application/json');
