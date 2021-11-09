@@ -241,12 +241,12 @@ class UtilController extends Controller
 			curl_setopt($curl_session, CURLOPT_POSTFIELDS, $payload);
 			$curl_result = curl_exec($curl_session);
 
-			/*
-			echo "\n";
-			var_dump($receiver_keys);
-			echo "\n";
+			
+			echo "\n\n\n";
+			var_dump($receiver_keys_array);
+			echo "\n\n\n";
 			var_dump($curl_result);
-			*/
+			
 			
 
 			return true;
