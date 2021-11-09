@@ -477,7 +477,7 @@ class UserController extends Controller
         }
 
         // GENERATING USER ACCESS TOKEN
-        $accessToken = auth()->user()->createToken("authToken", ["get-info-on-apps get-business-suggestions answer-drills buy-business-stocks transfer-business-stocks withdraw-funds"])->accessToken;
+        $accessToken = auth()->user()->createToken("authToken", [$user->user_scope])->accessToken;
 
         // CHECKING IF PROFILE PICTURE EXISTS
         $img_url = config('app.url') . '/uploads/images/' . $user->user_profile_picture;
