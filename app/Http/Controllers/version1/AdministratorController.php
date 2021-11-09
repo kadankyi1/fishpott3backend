@@ -823,7 +823,8 @@ class AdministratorController extends Controller
                 "", 
                 "", 
                 "",
-                date("F j, Y"));
+                date("F j, Y")
+            );
         } else {
             return response([
                 "status" => 0, 
