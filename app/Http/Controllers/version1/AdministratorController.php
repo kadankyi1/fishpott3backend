@@ -821,7 +821,7 @@ class AdministratorController extends Controller
             UtilController::sendNotificationToUser(
                 config('app.firebase_notification_server_address_link'), 
                 config('app.firebase_notification_account_key'), 
-                array($pott_user->user_fcm_token_android, $pott_user->user_fcm_token_web, $pott_user->user_fcm_token_ios),
+                array($pott_user->user_fcm_token_android),
                 "normal",
                 "business-suggestion",
                 "Business Stock Suggestion - FishPott",
