@@ -213,11 +213,12 @@ class UtilController extends Controller
     |--------------------------------------------------------------------------
     */
 	public static function sendNotificationToUser($path_fcm, $server_key, $receiver_keys_array, $priority, $type, $title, $message, $text, $info1, $info2, $image, $video, $date){
-		foreach ($receiver_keys_array as $key => $receiver_key) {
-            if(!empty(trim($receiver_key))){
-                unset($receiver_keys_array[$key]);
+		for ($i=0; $i < count($receiver_keys_array); $i++) { 
+            if(!empty(trim($receiver_keys_array[$i]))){
+                unset($receiver_keys_array[$i]);
             }
         }
+        
         if($receiver_keys_array[0] != "" || $receiver_keys_array[1] != "" || $receiver_keys_array[2] != ""){
 			$headers = array('Authorization:key=' . $server_key, 'Content-Type:application/json');
 			$fields = array(
