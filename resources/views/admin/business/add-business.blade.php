@@ -36,7 +36,7 @@ $page_title = "Add a new business to be used as a suggestion";
                                             <div class="form-group row">
                                                 <label class="col-sm-3 col-form-label">Pott Name</label>
                                                 <div class="col-sm-9">
-                                                    <input id="business_pottname"  name="business_pottname" minlength="2" maxlength="15" required type="text" class="form-control" placeholder="Pott Name">
+                                                    <input id="business_pottname"  name="business_pottname" minlength="2" maxlength="15" type="text" class="form-control" placeholder="Pott Name">
                                                 </div>
                                             </div> 
                                             <div class="form-group row">
