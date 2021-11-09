@@ -817,7 +817,7 @@ public function changePasswordWithResetCode(Request $request)
 
         // MAKING SURE THE REQUEST AND USER IS VALIDATED
         $validation_response = UtilController::validateUserWithAuthToken($request, auth()->user(), "get-info-on-apps");
-        if(!empty($validation_response["status"]) && trim($validation_response["status"]) == "error"){
+        if(!empty($validation_response["status"])){
             return response($validation_response);
         } else {
             $user = $validation_response;
@@ -953,7 +953,7 @@ public function changePasswordWithResetCode(Request $request)
 
         // MAKING SURE THE REQUEST AND USER IS VALIDATED
         $validation_response = UtilController::validateUserWithAuthToken($request, auth()->user(), "answer-drills");
-        if(!empty($validation_response["status"]) && trim($validation_response["status"]) == "error"){
+        if(!empty($validation_response["status"])){
             return response($validation_response);
         } else {
             $user = $validation_response;
@@ -1232,7 +1232,7 @@ public function changePasswordWithResetCode(Request $request)
 
         // MAKING SURE THE REQUEST AND USER IS VALIDATED
         $validation_response = UtilController::validateUserWithAuthToken($request, auth()->user(), "get-info-on-apps");
-        if(!empty($validation_response["status"]) && trim($validation_response["status"]) == "error"){
+        if(!empty($validation_response["status"])){
             return response($validation_response);
         } else {
             $user = $validation_response;
@@ -1316,7 +1316,7 @@ public function changePasswordWithResetCode(Request $request)
 
         // MAKING SURE THE REQUEST AND USER IS VALIDATED
         $validation_response = UtilController::validateUserWithAuthToken($request, auth()->user(), "withdraw-funds");
-        if(!empty($validation_response["status"]) && trim($validation_response["status"]) == "error"){
+        if(!empty($validation_response["status"])){
             return response($validation_response);
         } else {
             $user = $validation_response;
@@ -1453,7 +1453,7 @@ public function changePasswordWithResetCode(Request $request)
 
         // MAKING SURE THE REQUEST AND USER IS VALIDATED
         $validation_response = UtilController::validateUserWithAuthToken($request, auth()->user(), "get-info-on-apps");
-        if(!empty($validation_response["status"]) && trim($validation_response["status"]) == "error"){
+        if(!empty($validation_response["status"])){
             return response($validation_response);
         } else {
             $user = $validation_response;
@@ -1573,7 +1573,7 @@ public function changePasswordWithResetCode(Request $request)
 
         // MAKING SURE THE REQUEST AND USER IS VALIDATED
         $validation_response = UtilController::validateUserWithAuthToken($request, auth()->user(), "get-info-on-apps");
-        if(!empty($validation_response["status"]) && trim($validation_response["status"]) == "error"){
+        if(!empty($validation_response["status"])){
             return response($validation_response);
         } else {
             $user = $validation_response;
@@ -1672,7 +1672,7 @@ public function changePasswordWithResetCode(Request $request)
 
         // MAKING SURE THE REQUEST AND USER IS VALIDATED
         $validation_response = UtilController::validateUserWithAuthToken($request, auth()->user(), "get-info-on-apps");
-        if(!empty($validation_response["status"]) && trim($validation_response["status"]) == "error"){
+        if(!empty($validation_response["status"])){
             return response($validation_response);
         } else {
             $user = $validation_response;
@@ -1780,7 +1780,7 @@ public function changePasswordWithResetCode(Request $request)
 
         // MAKING SURE THE REQUEST AND USER IS VALIDATED
         $validation_response = UtilController::validateUserWithAuthToken($request, auth()->user(), "get-info-in-background");
-        if(!empty($validation_response["status"]) && trim($validation_response["status"]) == "error"){
+        if(!empty($validation_response["status"])){
             return response($validation_response);
         } else {
             $user = $validation_response;
