@@ -764,7 +764,7 @@ class AdministratorController extends Controller
         $suggestionData = array();
         
         if($request->item_type == 1){
-            // CHECKING IF THE BUSINESS EXISTS
+            // CHECKING IF THE DRILL EXISTS
             $drill = Drill::where('drill_sys_id', $request->item_id)->first();
             if($drill == null){
                 return response([
@@ -772,13 +772,16 @@ class AdministratorController extends Controller
                     "message" => "Drill not found"
                 ]);
             }
-            // CREATING THE SUGGESTION VALUE DATA FOR BUSINESS
+            // CREATING THE SUGGESTION VALUE DATA FOR DRILL
             $suggestionData["suggestion_sys_id"] = "sug-" . $drill->drill_sys_id . date('YmdHis');
             $suggestionData["suggestion_item_reference_id"] = $drill->drill_sys_id;
             $suggestionData["suggestion_directed_at_user_investor_id"] = "";
             $suggestionData["suggestion_directed_at_user_business_find_code"] = "";
             $suggestionData["suggestion_suggestion_type_id"] = $request->item_type;
             $message = "Suggestion saved.";
+
+            // SENDING NOTIFICATION TO USERS
+            UtilController::sendFirebaseNotification("New Drill - FishPott", "Complete this drill to keep increase Pott Intelligence", $target, "FISHPOT_TIPS");
         } else if($request->item_type == 2){
             // CHECKING IF THE BUSINESS EXISTS
             $business = Business::where('business_sys_id', $request->item_id)->first();
@@ -805,6 +808,8 @@ class AdministratorController extends Controller
             $suggestionData["suggestion_directed_at_user_business_find_code"] = $pott_user->user_pottname . date('YmdHis');
             $suggestionData["suggestion_suggestion_type_id"] = $request->item_type;
             $message = "Suggestion saved. Find code is : " . $suggestionData["suggestion_directed_at_user_business_find_code"];
+            // SENDING NOTIFICATION TO THE USER
+            UtilController::formatNumberShort($suggestion->business_net_worth_usd);
         } else {
             return response([
                 "status" => 0, 

@@ -62,6 +62,10 @@ return [
     'payment_gateway_name' => env('PAYMENT_GATEWAY_NAME', "PaySwitch"), 
     'payment_gateway_login_url' => env('PAYMENT_GATEWAY_NAME', "https://dashboard.theteller.net/login"), 
 
+    // FIREBASE 
+    'firebase_notification_server_address_link' => env('FIREBASE_NOTIFICATION_SERVER_ADDRESS_LINK', "https://fcm.googleapis.com/fcm/send"), 
+    'firebase_notification_account_key' => env('FIREBASE_NOTIFICATION_ACCOUNT_SERVER_KEY', "AAAAyNozJtc:APA91bHf8IpIE_vM52ZhLTP7Vi1QDS-EK3urQwX_-0cj5aSlT7TaYU3eKftPv5-d4K3aOqFKqiFN6pTWGB7nhzqV5eF6sFqOmXX9rj5qCPdYp-I-IpbcybJuE5w4S4Zp4tVIuHb4qwDf"), 
+
     /*
     |-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|
     | |-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-| ADMINISTRATOR SECTION ADMINISTRATOR SECTION ADMINISTRATOR SECTION ADMINISTRATOR SECTION |-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|
