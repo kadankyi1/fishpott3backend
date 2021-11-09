@@ -171,7 +171,7 @@ class UserController extends Controller
         } else if($request->app_type == "IOS"){
             $userData["user_ios_app_version_code"] = $validatedData["app_version_code"];
         } 
-        $userData["user_scope"] = "get-info-on-apps get-business-suggestions answer-drills buy-business-stocks transfer-business-stocks withdraw-funds";
+        $userData["user_scope"] = "get-info-on-apps get-info-in-background get-business-suggestions answer-drills buy-business-stocks transfer-business-stocks withdraw-funds";
         $userData["user_phone_verification_requested"] = boolval(config('app.phoneverificationrequiredstatus'));
         $userData["user_id_verification_requested"] = boolval(config('app.idverificationrequiredstatus'));
         $userData["last_online"] = date("Y-m-d H:i:s");
@@ -181,7 +181,7 @@ class UserController extends Controller
         $user1 = User::create($userData);
         
         // GENERATING THE ACCESS TOKEN FOR THE REGISTERED USER
-        $accessToken = $user1->createToken("authToken", ["get-info-on-apps get-business-suggestions answer-drills buy-business-stocks transfer-business-stocks withdraw-funds"])->accessToken;
+        $accessToken = $user1->createToken("authToken", ["get-info-on-apps get-info-in-background get-business-suggestions answer-drills buy-business-stocks transfer-business-stocks withdraw-funds"])->accessToken;
 
 
         return response([
@@ -343,7 +343,7 @@ class UserController extends Controller
             $userData["user_ios_app_version_code"] = $validatedData["app_version_code"];
         } 
         $userData["user_app_version_code"] = $validatedData["app_version_code"];
-        $userData["user_scope"] = "get-info-on-apps get-business-suggestions answer-drills buy-business-stocks transfer-business-stocks withdraw-funds";
+        $userData["user_scope"] = "get-info-on-apps get-info-in-background get-business-suggestions answer-drills buy-business-stocks transfer-business-stocks withdraw-funds";
         $userData["user_phone_verification_requested"] = boolval(config('app.phoneverificationrequiredstatus'));
         $userData["user_id_verification_requested"] = boolval(config('app.idverificationrequiredstatus'));
         $userData["last_online"] = date("Y-m-d H:i:s");
@@ -352,7 +352,7 @@ class UserController extends Controller
         
         // GENERATING THE ACCESS TOKEN FOR THE REGISTERED USER
         //$accessToken = $user1->createToken("authToken")->accessToken;
-        $accessToken = $user1->createToken("authToken", ["get-info-on-apps get-business-suggestions answer-drills buy-business-stocks transfer-business-stocks withdraw-funds"])->accessToken;
+        $accessToken = $user1->createToken("authToken", ["get-info-on-apps get-info-in-background get-business-suggestions answer-drills buy-business-stocks transfer-business-stocks withdraw-funds"])->accessToken;
 
 
         return response([
