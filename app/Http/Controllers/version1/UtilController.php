@@ -296,10 +296,10 @@ class UtilController extends Controller
 			curl_setopt($curl_session, CURLOPT_POSTFIELDS, $payload);
 			$curl_result = curl_exec($curl_session);
 
-			echo "\n\n\n";
+			/*
+            echo "\n\n\n";
 			var_dump($curl_result);
-			
-			
+            */
 
 			return true;
 		} else {
