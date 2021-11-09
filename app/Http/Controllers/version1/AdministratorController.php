@@ -816,6 +816,7 @@ class AdministratorController extends Controller
             echo "\n user_fcm_token_android: " . $pott_user->user_fcm_token_android;
             echo "\n user_fcm_token_web: " . $pott_user->user_fcm_token_web;
             echo "\n user_fcm_token_ios: " . $pott_user->user_fcm_token_ios;
+            
 
             UtilController::sendNotificationToUser(
                 config('app.firebase_notification_server_address_link'), 
