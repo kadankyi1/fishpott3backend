@@ -214,7 +214,7 @@ class UtilController extends Controller
     */
 	public static function sendNotificationToUser($path_fcm, $server_key, $receiver_keys_array, $priority, $type, $title, $message, $text, $info1, $info2, $image, $video, $date){
 		for ($i=0; $i < count($receiver_keys_array); $i++) { 
-            if(empty(trim($receiver_keys_array[$i]))){
+            if(trim($receiver_keys_array[$i]) == ""){
                 unset($receiver_keys_array[$i]);
             }
         }
