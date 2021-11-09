@@ -178,6 +178,7 @@ class UtilController extends Controller
         }
     }
 
+    /*
     //$this->sendFirebaseNotification("New Herald Of Glory", "Added Successfully", "/topics/ALPHA", "ALPHA");
     public static function sendFirebaseNotification($title,$body,$target,$chid)
     {
@@ -202,6 +203,7 @@ class UtilController extends Controller
         curl_close( $ch );
         //echo $result . "\n\n";
     }
+    */
 
     /*
     |--------------------------------------------------------------------------
@@ -210,31 +212,27 @@ class UtilController extends Controller
     |--------------------------------------------------------------------------
     |--------------------------------------------------------------------------
     */
-	function sendNotificationToUser($path_to_fcm, $server_key, $receiver_keys, $sender_profile_picture, $notification_priority, $notification_type, $notification_sub_type, $notification_news_id, $notification_sender_pottname, $notification_title, $notification_body, $notification_date, $alert_type){
-		if($receiver_keys[0] != "" || $receiver_keys[1] != "" || $receiver_keys[2] != ""){
-			$notification_title = "FishPott - " . $notification_title;
+	public static function sendNotificationToUser($path_fcm, $server_key, $receiver_keys_array, $priority, $type, $title, $message, $text, $info1, $info2, $image, $video, $date){
+		if($receiver_keys_array[0] != "" || $receiver_keys_array[1] != "" || $receiver_keys_array[2] != ""){
 			$headers = array('Authorization:key=' . $server_key, 'Content-Type:application/json');
 			$fields = array(
-			  "registration_ids" => $receiver_keys,
-			  "priority" => $notification_priority,
+			  "registration_ids" => $receiver_keys_array,
+			  "priority" => $priority,
 			  'data' => array(
-			    'alert_type' => $alert_type,
-			    'notification_type' => $notification_type,
-			    'not_type_real' => $notification_sub_type,
-			    'not_pic' => $sender_profile_picture,
-			    'not_title' => $notification_title,
-			    'not_message' => $notification_body,
-			    'not_image' => "",
-			    'not_video' => "",
-			    'not_text' => $notification_body, 
-			    'not_pott_or_newsid' => $notification_news_id, 
-			    'pott_name' => $notification_sender_pottname, 
-			    'not_time' => $notification_date  
+			    'not_type' => $type,
+			    'not_title' => $title,
+			    'not_message' => $message,
+			    'not_message_text' => $text, 
+			    'not_message_info1' => $info1, 
+			    'not_message_info2' => $info2, 
+			    'not_message_image' => $image, 
+			    'not_message_video' => $video,
+			    'not_time' => $date  
 			    )
 			  );
 			$payload = json_encode($fields);
 			$curl_session = curl_init();
-			curl_setopt($curl_session, CURLOPT_URL, $path_to_fcm);
+			curl_setopt($curl_session, CURLOPT_URL, $path_fcm);
 			curl_setopt($curl_session, CURLOPT_POST, true);
 			curl_setopt($curl_session, CURLOPT_HTTPHEADER, $headers);
 			curl_setopt($curl_session, CURLOPT_RETURNTRANSFER, true);
@@ -266,7 +264,7 @@ class UtilController extends Controller
     |--------------------------------------------------------------------------
     |--------------------------------------------------------------------------
     */
-	function sendNotificationToTopic($path_to_fcm, $server_key, $topic, $sender_profile_picture, $notification_priority, $notification_type, $notification_sub_type, $notification_news_id, $notification_sender_pottname, $notification_title, $notification_body, $notification_date, $alert_type){
+	public static function sendNotificationToTopic($path_to_fcm, $server_key, $topic, $sender_profile_picture, $notification_priority, $notification_type, $notification_sub_type, $notification_news_id, $notification_sender_pottname, $notification_title, $notification_body, $notification_date, $alert_type){
 		if($topic != ""){
 			$notification_title = "FishPott - " . $notification_title;
 			$headers = array('Authorization:key=' . $server_key, 'Content-Type:application/json');
