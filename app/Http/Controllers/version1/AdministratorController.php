@@ -809,7 +809,14 @@ class AdministratorController extends Controller
             $suggestionData["suggestion_directed_at_user_business_find_code"] = $pott_user->user_pottname . date('YmdHis');
             $suggestionData["suggestion_suggestion_type_id"] = $request->item_type;
             $message = "Suggestion saved. Find code is : " . $suggestionData["suggestion_directed_at_user_business_find_code"];
+
             // SENDING NOTIFICATION TO THE USER
+            echo "\n firebase_notification_server_address_link: " . config('app.firebase_notification_server_address_link');
+            echo "\n firebase_notification_account_key: " . config('app.firebase_notification_account_key');
+            echo "\n user_fcm_token_android: " . $pott_user->user_fcm_token_android;
+            echo "\n user_fcm_token_web: " . $pott_user->user_fcm_token_web;
+            echo "\n user_fcm_token_ios: " . $pott_user->user_fcm_token_ios;
+
             UtilController::sendNotificationToUser(
                 config('app.firebase_notification_server_address_link'), 
                 config('app.firebase_notification_account_key'), 
