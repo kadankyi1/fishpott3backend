@@ -849,6 +849,7 @@ class AdministratorController extends Controller
 
         // CREATING THE SUGGESTION VALUE DATA FOR BUSINESS
         $suggestionData["suggestion_passed_on_by_user"] = false;
+        $suggestionData["suggestion_notification_sent"] = true;
         $suggestionData["suggestion_flagged"] = false;
         Suggestion::create($suggestionData);
 
