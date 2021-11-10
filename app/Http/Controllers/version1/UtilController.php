@@ -628,4 +628,9 @@ class UtilController extends Controller
         if ((string) $number === '1') $suffix = 'st';
             return $number.$suffix;
     }
+
+    public static function matchUsersToABusinesses()
+    {
+
+    }
 }

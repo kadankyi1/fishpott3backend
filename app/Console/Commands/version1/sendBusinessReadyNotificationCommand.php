@@ -11,14 +11,14 @@ class sendBusinessReadyNotificationCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'command:name';
+    protected $signature = 'business:sendreadynotification';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Match user with business stock and notification to the user that it is available';
 
     /**
      * Create a new command instance.
