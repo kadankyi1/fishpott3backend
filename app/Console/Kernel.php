@@ -24,11 +24,9 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
-
         // ADDING SCHDULE
+        $schedule->command('networthandposition:sendnetworthandpositionnotification')->everyTenMinutes(); //->hourly();
         $schedule->command('drill:sendreadynotification')->hourly(); //->hourly();
-        $schedule->command('networthandposition:sendnetworthandpositionnotification')->everyMinute(); //->hourly();
     }
 
     /**
