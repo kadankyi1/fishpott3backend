@@ -786,7 +786,7 @@ class AdministratorController extends Controller
                 config('app.firebase_notification_account_key'), 
                 "FISHPOT_TIPS",
                 "normal",
-                "business-suggestion",
+                "drill-suggestion",
                 "New Drill - FishPott",
                 "Train your FishPott and increase its intelligence with a new drill",
                 "", 
