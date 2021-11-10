@@ -3,6 +3,7 @@
 namespace App\Console\Commands\version1;
 
 use Illuminate\Console\Command;
+use App\Models\version1\Drill;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\version1\AlertMail;
@@ -42,33 +43,45 @@ class SendDrillReadyNotificationCommand extends Command
     public function handle()
     {
         //Log::info("Cron is working fine!");
-        // CREATING THE USER OBJECT AND CALLING THE SEND FCM METHOD
-        //$user_controller = new UserController();
-        //$user_controller->sendFirebaseNotification("New Herald Of Glory", "Added Successfully", "/topics/ALPHA", "ALPHA");
-        //Log::info('drill:sendreadynotification Command Run successfully!');
-
         $suggestion = UtilController::getLatestSuggestion();
 
-        // CHECKING IF A SUGGESTION EXISTS
-        if($suggestion !=  null && $suggestion != false ){
-            // CHECKING IF A SUGGESTION IS AVAILABLE TO BE NOTIFIED TO USERS
-            if($suggestion->suggestion_notification_sent == false && $suggestion->suggestion_suggestion_type_id == UtilController::getSuggestionType("suggestion_type_name", "Drill", 1)){
-                //
-            } else {
+        // CHECKING IF A SUGGESTION EXISTS AND IS AVAILABLE TO BE NOTIFIED TO USERS
+        if($suggestion !=  null && $suggestion != false && $suggestion->suggestion_notification_sent == false && $suggestion->suggestion_suggestion_type_id == UtilController::getSuggestionType("suggestion_type_name", "Drill", 1)){
+            // CHECKING IF A SUGGESTION 
+
+        } else {
+            $drill = Drill::where('drill_passed_as_suggestion', false)->order_by('created_at', 'desc')->first();
+            if($drill == null){
                 // NOTIFYING FISHPOTT ADMIN THAT NO DRILLS EXIST        
                 $email_data = array(
                     'event' => 'There is no new drill for users to answer. Set a new exciting drill.',
                     'time' => date("F j, Y, g:i a")
                 );
                 Mail::to(config('app.fishpott_email'))->send(new AlertMail($email_data));
+            } else {
+                $suggestionData["suggestion_sys_id"] = "sug-" . $drill->drill_sys_id . date('YmdHis');
+                $suggestionData["suggestion_item_reference_id"] = $drill->drill_sys_id;
+                $suggestionData["suggestion_directed_at_user_investor_id"] = "";
+                $suggestionData["suggestion_directed_at_user_business_find_code"] = "";
+                $suggestionData["suggestion_suggestion_type_id"] = 1;    
+                // SENDING NOTIFICATION TO USERS
+                UtilController::sendNotificationToTopic(
+                    config('app.firebase_notification_server_address_link'), 
+                    config('app.firebase_notification_account_key'), 
+                    "FISHPOT_TIPS",
+                    "normal",
+                    "business-suggestion",
+                    "New Drill - FishPott",
+                    "Train your FishPott and increase its intelligence with a new drill",
+                    "", 
+                    "", 
+                    "", 
+                    "", 
+                    "",
+                    date("F j, Y")
+                );
+    
             }
-        } else {
-            // NOTIFYING FISHPOTT ADMIN THAT NO DRILLS EXIST        
-            $email_data = array(
-                'event' => 'There is no new drill for users to answer. Set a new exciting drill.',
-                'time' => date("F j, Y, g:i a")
-            );
-            Mail::to(config('app.fishpott_email'))->send(new AlertMail($email_data));
         }
 
 
