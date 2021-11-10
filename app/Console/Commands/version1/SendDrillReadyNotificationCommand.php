@@ -69,7 +69,7 @@ class SendDrillReadyNotificationCommand extends Command
                 );
             }
         } else {
-            $drill = Drill::where('drill_passed_as_suggestion', false)->order_by('created_at', 'desc')->first();
+            $drill = Drill::where('drill_passed_as_suggestion', false)->orderBy('created_at', 'desc')->first();
             if($drill == null){
                 // NOTIFYING FISHPOTT ADMIN THAT NO DRILLS EXIST        
                 $email_data = array(
