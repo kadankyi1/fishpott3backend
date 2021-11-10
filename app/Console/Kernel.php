@@ -27,7 +27,8 @@ class Kernel extends ConsoleKernel
         // $schedule->command('inspire')->hourly();
 
         // ADDING SCHDULE
-        $schedule->command('drill:sendreadynotification')->everyTenMinutes(); //->hourly();
+        $schedule->command('drill:sendreadynotification')->hourly(); //->hourly();
+        $schedule->command('networthandposition:sendnetworthandpositionnotification')->everyMinute(); //->hourly();
     }
 
     /**

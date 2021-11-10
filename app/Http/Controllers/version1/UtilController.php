@@ -19,6 +19,8 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use App\Models\version1\StockValue;
+use App\Models\version1\StockOwnership;
 use App\Models\version1\Administrator;
 use App\Models\version1\SuggestionTypes;
 use App\Models\version1\Suggestion;
@@ -629,8 +631,86 @@ class UtilController extends Controller
             return $number.$suffix;
     }
 
+    /*
+    |--------------------------------------------------------------------------
+    |--------------------------------------------------------------------------
+    | THIS FUNCTION CALCULATES USERS NETWORTH AND POSITION
+    |--------------------------------------------------------------------------
+    |--------------------------------------------------------------------------
+    */
+    public static function calculateUsersNetworthAndSetPosition()
+    {
+        // GETTING ALL USERS
+        $users = User::orderBy('user_net_worth_usd', 'DESC')->get();
+        $user_position = 1;
+        foreach($users as $user){
+            $this_user_net_worth_usd = 0;
+            // SUMMING UP THE SHARES OWNED
+            $ownedstocks = StockOwnership::where("stockownership_user_investor_id", $user->investor_id)->get();
+
+            foreach($ownedstocks as $ownedstock){
+                //echo "stockbusiness_id: " . $ownedstock->stockownership_business_id . " -- ownedstock quantity: " . $ownedstock->stockownership_stocks_quantity;
+                //echo "\n here 1";
+                $stockvalue = StockValue::where("stockvalue_business_id", $ownedstock->stockownership_business_id)->first();
+                if($stockvalue == null){
+                //echo "\n here 2";
+                    $this_user_net_worth_usd = $this_user_net_worth_usd + $ownedstock->stockownership_total_cost_usd;
+                } else {
+                //echo "\n here 3";
+                    $this_user_net_worth_usd = $this_user_net_worth_usd + ($ownedstock->stockownership_stocks_quantity * $stockvalue->stockvalue_value_per_stock_usd);
+                }
+            }
+
+            // NOTIFYING USER OF NEW NET WORTH
+            if($user->user_net_worth_usd > $this_user_net_worth_usd){
+                // SENDING NOTIFICATION TO THE USER
+                UtilController::sendNotificationToUser(
+                    config('app.firebase_notification_server_address_link'), 
+                    config('app.firebase_notification_account_key'), 
+                    array($user->user_fcm_token_android, $user->user_fcm_token_web, $user->user_fcm_token_ios),
+                    "normal",
+                    "networth-info",
+                    "Net Worth - FishPott",
+                    "Net worth has climbed up. Stocks are doing well.",
+                    "", 
+                    "", 
+                    "", 
+                    "", 
+                    "",
+                    date("F j, Y")
+                );
+            } else if($user->user_net_worth_usd < $this_user_net_worth_usd){
+                // SENDING NOTIFICATION TO THE USER
+                UtilController::sendNotificationToUser(
+                    config('app.firebase_notification_server_address_link'), 
+                    config('app.firebase_notification_account_key'), 
+                    array($user->user_fcm_token_android, $user->user_fcm_token_web, $user->user_fcm_token_ios),
+                    "normal",
+                    "networth-info",
+                    "Net Worth - FishPott",
+                    "Net worth has fallen. Stocks are not doing well.",
+                    "", 
+                    "", 
+                    "", 
+                    "", 
+                    "",
+                    date("F j, Y")
+                );
+            }
+
+            //echo "\n user_pottname: " . $user->user_pottname . " -- user position: " . $user_position . " -- user_net_worth_usd: " . $user->user_net_worth_usd;
+            $user->user_net_worth_usd = $this_user_net_worth_usd + $user->user_wallet_usd;
+            $user->user_pott_position = $user_position;
+
+            $user->save();
+            $user_position++;
+        }
+    }
+
+
+
     public static function matchUsersToABusinesses()
     {
-
+        
     }
 }

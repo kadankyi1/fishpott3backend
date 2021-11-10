@@ -110,8 +110,5 @@ class SendDrillReadyNotificationCommand extends Command
                 );
             }
         }
-
-
-
     }
 }
