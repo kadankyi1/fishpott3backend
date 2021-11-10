@@ -82,6 +82,7 @@ class SendDrillReadyNotificationCommand extends Command
                 $suggestionData["suggestion_directed_at_user_business_find_code"] = "";
                 $suggestionData["suggestion_suggestion_type_id"] = 1;            
                 $suggestionData["suggestion_passed_on_by_user"] = false;
+                $suggestionData["suggestion_notification_sent"] = true;
                 $suggestionData["suggestion_flagged"] = false;
                 Suggestion::create($suggestionData);
         
