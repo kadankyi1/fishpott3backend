@@ -5,7 +5,7 @@ namespace App\Console\Commands\version1;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
-use App\Mail\version1\ResetCodeMail;
+use App\Mail\version1\AlertMail;
 use App\Http\Controllers\version1\UtilController;
 
 class SendDrillReadyNotificationCommand extends Command
@@ -55,28 +55,22 @@ class SendDrillReadyNotificationCommand extends Command
             if($suggestion->suggestion_notification_sent == false && $suggestion->suggestion_suggestion_type_id == UtilController::getSuggestionType("suggestion_type_name", "Drill", 1)){
                 //
             } else {
-                //
+                // NOTIFYING FISHPOTT ADMIN THAT NO DRILLS EXIST        
+                $email_data = array(
+                    'event' => 'There is no new drill for users to answer. Set a new exciting drill.',
+                    'time' => date("F j, Y, g:i a")
+                );
+                Mail::to(config('app.fishpott_email'))->send(new AlertMail($email_data));
             }
         } else {
-            // NOTIFYING FISHPOTT ADMIN THAT NO DRILLS EXIST
+            // NOTIFYING FISHPOTT ADMIN THAT NO DRILLS EXIST        
+            $email_data = array(
+                'event' => 'There is no new drill for users to answer. Set a new exciting drill.',
+                'time' => date("F j, Y, g:i a")
+            );
+            Mail::to(config('app.fishpott_email'))->send(new AlertMail($email_data));
         }
 
-        // CHECKING SUGGESTION TYPE TO GET IT'S INFO
-        //echo "getSuggestionType: " . UtilController::getSuggestionType("suggestion_type_name", "Business", 1);
-        //echo "suggestion->suggestion_item_reference_id: " . $suggestion->suggestion_item_reference_id; exit;
-        if($suggestion->suggestion_suggestion_type_id == UtilController::getSuggestionType("suggestion_type_name", "Drill", 1)){
-            $suggestion = Drill::where('drill_sys_id', $suggestion->suggestion_item_reference_id)->first();
-            $message = "drill";
-            $country_real_name = "";
-        }
-
-        $email_data = array(
-            'reset_code' => date('Y-m-d H:i:s'),
-            'time' => date("F j, Y, g:i a")
-        );
-
-        Mail::to(config('app.fishpott_email'))->send(new ResetcodeMail($email_data));
-        $this->info('Successfully sent drill notification.');
 
 
     }
