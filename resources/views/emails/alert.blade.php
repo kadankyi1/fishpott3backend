@@ -3,7 +3,7 @@
 
 
 Find below an event that needs your attention. 
-<br><h5 style="color: black;">{{ $data['reset_code'] }}</h5>
+<br><h5 style="color: black;">{{ $data['event'] }}</h5>
 
 
 
