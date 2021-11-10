@@ -50,6 +50,8 @@ class SendDrillReadyNotificationCommand extends Command
         if($suggestion !=  null && $suggestion != false && $suggestion->suggestion_suggestion_type_id == UtilController::getSuggestionType("suggestion_type_name", "Drill", 1)){
             // SENDING NOTIFICATION TO USERS
             if($suggestion->suggestion_notification_sent == false){
+                $suggestion->suggestion_notification_sent = true;
+                $suggestion->save();
                 UtilController::sendNotificationToTopic(
                     config('app.firebase_notification_server_address_link'), 
                     config('app.firebase_notification_account_key'), 
