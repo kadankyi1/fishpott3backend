@@ -652,7 +652,7 @@ class UtilController extends Controller
                 //echo "stockbusiness_id: " . $ownedstock->stockownership_business_id . " -- ownedstock quantity: " . $ownedstock->stockownership_stocks_quantity;
                 //echo "\n here 1";
                 $stockvalue = StockValue::where("stockvalue_business_id", $ownedstock->stockownership_business_id)->orderby('created_at', 'desc')->first();
-                echo "\n StockValue: $" . $stockvalue->stockvalue_value_per_stock_usd;
+                //echo "\n StockValue: $" . $stockvalue->stockvalue_value_per_stock_usd;
                 if($stockvalue == null){
                 //echo "\n here 2";
                     $this_user_net_worth_usd = $this_user_net_worth_usd + $ownedstock->stockownership_total_cost_usd;
@@ -672,7 +672,7 @@ class UtilController extends Controller
                     "normal",
                     "networth-info",
                     "Net Worth Up - FishPott",
-                    "Net worth has climbed up. Stocks are doing well.",
+                    "Your net worth has climbed up as your stocks are doing well.",
                     "", 
                     "", 
                     "", 
@@ -689,7 +689,7 @@ class UtilController extends Controller
                     "normal",
                     "networth-info",
                     "Net Worth Reduced - FishPott",
-                    "Net worth has fallen. Stocks are not doing well.",
+                    "Your net worth has fallen as your stocks are not doing well.",
                     "", 
                     "", 
                     "", 
