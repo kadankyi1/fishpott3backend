@@ -3,6 +3,7 @@
 namespace App\Console\Commands\version1;
 
 use Illuminate\Console\Command;
+use App\Http\Controllers\version1\UtilController;
 
 class sendBusinessReadyNotificationCommand extends Command
 {
@@ -37,6 +38,6 @@ class sendBusinessReadyNotificationCommand extends Command
      */
     public function handle()
     {
-        return 0;
+        UtilController::matchUsersToABusinesses();
     }
 }

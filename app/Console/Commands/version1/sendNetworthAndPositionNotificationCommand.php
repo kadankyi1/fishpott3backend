@@ -2,8 +2,8 @@
 
 namespace App\Console\Commands\version1;
 
-use App\Http\Controllers\version1\UtilController;
 use Illuminate\Console\Command;
+use App\Http\Controllers\version1\UtilController;
 
 class sendNetworthAndPositionNotificationCommand extends Command
 {
