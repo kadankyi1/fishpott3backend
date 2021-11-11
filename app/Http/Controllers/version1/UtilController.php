@@ -651,7 +651,7 @@ class UtilController extends Controller
             foreach($ownedstocks as $ownedstock){
                 //echo "stockbusiness_id: " . $ownedstock->stockownership_business_id . " -- ownedstock quantity: " . $ownedstock->stockownership_stocks_quantity;
                 //echo "\n here 1";
-                $stockvalue = StockValue::where("stockvalue_business_id", $ownedstock->stockownership_business_id)->first();
+                $stockvalue = StockValue::where("stockvalue_business_id", $ownedstock->stockownership_business_id)->orderby('created_at', 'desc')->first();
                 echo "\n StockValue: $" . $stockvalue->stockvalue_value_per_stock_usd;
                 if($stockvalue == null){
                 //echo "\n here 2";
