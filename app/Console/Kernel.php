@@ -25,7 +25,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // ADDING SCHDULE
-        $schedule->command('networthandposition:sendnetworthandpositionnotification')->everyMinute(); //->hourly();
+        $schedule->command('networthandposition:sendnetworthandpositionnotification')->everyTenMinutes(); //->hourly();
         $schedule->command('drill:sendreadynotification')->hourly(); //->hourly();
         $schedule->command('business:sendreadynotification')->weekly(); //->hourly();
     }
