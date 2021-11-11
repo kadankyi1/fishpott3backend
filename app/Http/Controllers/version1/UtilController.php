@@ -652,6 +652,7 @@ class UtilController extends Controller
                 //echo "stockbusiness_id: " . $ownedstock->stockownership_business_id . " -- ownedstock quantity: " . $ownedstock->stockownership_stocks_quantity;
                 //echo "\n here 1";
                 $stockvalue = StockValue::where("stockvalue_business_id", $ownedstock->stockownership_business_id)->first();
+                echo "\n StockValue: $" . $stockvalue->stockvalue_value_per_stock_usd;
                 if($stockvalue == null){
                 //echo "\n here 2";
                     $this_user_net_worth_usd = $this_user_net_worth_usd + $ownedstock->stockownership_total_cost_usd;
