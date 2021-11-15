@@ -51,7 +51,7 @@ class AdministratorController extends Controller
             "password" => "bail|required|min:8|max:30",
             "administrator_scope" => "bail|required",
             "added_by_administrator_id" => "bail|required",
-            "frontend_key" => "bail|required|in:2aLW4c7r9(2qf#y"
+            "frontend_key" => "bail|required"
         ]);
 
         $validatedData["administrator_pin"] = Hash::make($request->administrator_pin);
@@ -84,7 +84,7 @@ class AdministratorController extends Controller
             "password" => "bail|required",
             "administrator_user_pottname" => "bail|required|string|regex:/^[A-Za-z0-9_.]+$/|max:15",
             "administrator_pott_password" => "bail|required",
-            "frontend_key" => "bail|required|in:2aLW4c7r9(2qf#y"
+            "frontend_key" => "bail|required"
         ]);
 
         $loginData["administrator_phone_number"] = $validatedData["administrator_phone_number"];
@@ -178,7 +178,7 @@ class AdministratorController extends Controller
         $validatedData = $request->validate([
             "administrator_phone_number" => "bail|required|regex:/^\+\d{10,15}$/|min:10|max:15",
             "administrator_sys_id" => "bail|required",
-            "frontend_key" => "bail|required|in:2aLW4c7r9(2qf#y",
+            "frontend_key" => "bail|required",
             // ADD ANY OTHER REQUIRED INPUTS FROM HERE
         ]);
 
@@ -281,7 +281,7 @@ class AdministratorController extends Controller
             "administrator_phone_number" => "bail|required|regex:/^\+\d{10,15}$/|min:10|max:15",
             "administrator_sys_id" => "bail|required",
             "administrator_pin" => "bail|required",
-            "frontend_key" => "bail|required|in:2aLW4c7r9(2qf#y",
+            "frontend_key" => "bail|required",
             // ADD ANY OTHER REQUIRED INPUTS FROM HERE
             "drill_question" => "min:5|max:100",
             "drill_answer_1" => "min:2|max:100",
@@ -347,7 +347,7 @@ class AdministratorController extends Controller
             "administrator_phone_number" => "bail|required|regex:/^\+\d{10,15}$/|min:10|max:15",
             "administrator_sys_id" => "bail|required",
             "administrator_pin" => "bail|required",
-            "frontend_key" => "bail|required|in:2aLW4c7r9(2qf#y",
+            "frontend_key" => "bail|required",
             // ADD ANY OTHER REQUIRED INPUTS FROM HERE
             "business_pottname" => "nullable|string|regex:/^[A-Za-z0-9_.]+$/|max:15",
             "business_registration_number" => "bail|required|string|min:5|max:100",
@@ -594,7 +594,7 @@ class AdministratorController extends Controller
         $validatedData = $request->validate([
             "administrator_phone_number" => "bail|required|regex:/^\+\d{10,15}$/|min:10|max:15",
             "administrator_sys_id" => "bail|required",
-            "frontend_key" => "bail|required|in:2aLW4c7r9(2qf#y",
+            "frontend_key" => "bail|required",
             // ADD ANY OTHER REQUIRED INPUTS FROM HERE
             "model" => "bail|required",
             "keyword" => "nullable",
@@ -658,7 +658,7 @@ class AdministratorController extends Controller
         $validatedData = $request->validate([
             "administrator_phone_number" => "bail|required|regex:/^\+\d{10,15}$/|min:10|max:15",
             "administrator_sys_id" => "bail|required",
-            "frontend_key" => "bail|required|in:2aLW4c7r9(2qf#y",
+            "frontend_key" => "bail|required",
             // ADD ANY OTHER REQUIRED INPUTS FROM HERE
             "keyword" => "nullable",
         ]);
@@ -739,7 +739,7 @@ class AdministratorController extends Controller
         $validatedData = $request->validate([
             "administrator_phone_number" => "bail|required|regex:/^\+\d{10,15}$/|min:10|max:15",
             "administrator_sys_id" => "bail|required",
-            "frontend_key" => "bail|required|in:2aLW4c7r9(2qf#y",
+            "frontend_key" => "bail|required",
             "administrator_pin" => "bail|required",
             // ADD ANY OTHER REQUIRED INPUTS FROM HERE
             "item_id" => "bail|required",
@@ -879,7 +879,7 @@ class AdministratorController extends Controller
         $validatedData = $request->validate([
             "administrator_phone_number" => "bail|required|regex:/^\+\d{10,15}$/|min:10|max:15",
             "administrator_sys_id" => "bail|required",
-            "frontend_key" => "bail|required|in:2aLW4c7r9(2qf#y",
+            "frontend_key" => "bail|required",
             "administrator_pin" => "bail|required",
             // ADD ANY OTHER REQUIRED INPUTS FROM HERE
             "item_id" => "bail|required",
@@ -940,7 +940,7 @@ class AdministratorController extends Controller
             "administrator_phone_number" => "bail|required|regex:/^\+\d{10,15}$/|min:10|max:15",
             "administrator_sys_id" => "bail|required",
             "administrator_pin" => "bail|required",
-            "frontend_key" => "bail|required|in:2aLW4c7r9(2qf#y",
+            "frontend_key" => "bail|required",
             // ADD ANY OTHER REQUIRED INPUTS FROM HERE
             "action_type" => "bail|required|integer",
             "order_id" => "bail|required|integer",
@@ -1016,7 +1016,7 @@ class AdministratorController extends Controller
         $validatedData = $request->validate([
             "administrator_phone_number" => "bail|required|regex:/^\+\d{10,15}$/|min:10|max:15",
             "administrator_sys_id" => "bail|required",
-            "frontend_key" => "bail|required|in:2aLW4c7r9(2qf#y",
+            "frontend_key" => "bail|required",
             // ADD ANY OTHER REQUIRED INPUTS FROM HERE
             "keyword" => "nullable",
         ]);
@@ -1089,7 +1089,7 @@ class AdministratorController extends Controller
             "administrator_phone_number" => "bail|required|regex:/^\+\d{10,15}$/|min:10|max:15",
             "administrator_sys_id" => "bail|required",
             "administrator_pin" => "bail|required",
-            "frontend_key" => "bail|required|in:2aLW4c7r9(2qf#y",
+            "frontend_key" => "bail|required",
             // ADD ANY OTHER REQUIRED INPUTS FROM HERE
             "action_type" => "bail|required|integer",
             "user_id" => "bail|required|integer",
