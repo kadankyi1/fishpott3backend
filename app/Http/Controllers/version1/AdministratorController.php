@@ -1133,4 +1133,13 @@ class AdministratorController extends Controller
             "message" => "User updated"
         ]);
     }
+
+    public function testingAi(Request $request)
+    {
+        $validatedData = $request->validate([
+            "data" => "bail|required|string",
+        ]);
+        $the_data = explode(",", $request->data);
+        UtilController::normalizeStockValueDataSet($the_data);
+    }
 }

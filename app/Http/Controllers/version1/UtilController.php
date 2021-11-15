@@ -720,6 +720,7 @@ class UtilController extends Controller
     public static function normalizeStockValueDataSet($dataset_array)
     {
         $new_dataset_array = array();
+        $new_dataset_array_formatted_percentage = array();
         
         // GETTING MAXIMUM VALUE FROM DATASET
         $dataset_max_value = max($dataset_array);
@@ -737,8 +738,9 @@ class UtilController extends Controller
         foreach ($dataset_array as $key => $data) {
             $neuron_or_node = $neural_network_range_min_value + ($neural_network_range_max_value - $neural_network_range_min_value) * ($data-$dataset_min_value)/($dataset_max_value-$dataset_min_value);
             array_push($normalized_dataset_array, $neuron_or_node);
+            array_push($new_dataset_array_formatted_percentage, strval($neuron_or_node) . "%");
         }
 
-        return $normalized_dataset_array;
+        return $new_dataset_array_formatted_percentage;
     }
 }
