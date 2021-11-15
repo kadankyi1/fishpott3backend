@@ -709,9 +709,21 @@ class UtilController extends Controller
     }
 
 
+    /*
+    |--------------------------------------------------------------------------
+    |--------------------------------------------------------------------------
+    | THIS FUNCTION NORMALIZES ANY DATA TO BE FED TO THE AI SUB-SYSTEM
+    |--------------------------------------------------------------------------
+    |--------------------------------------------------------------------------
+    */
 
-    public static function matchUsersToABusinesses()
+    public static function normalizeDataSet($dataset_array)
     {
-        
+        $new_dataset_array = array();
+        foreach ($dataset_array as $key => $data) {
+            
+        }
+
+        return $new_dataset_array;
     }
 }
