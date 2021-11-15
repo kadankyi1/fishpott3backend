@@ -759,8 +759,6 @@ class AdministratorController extends Controller
         | VALIDATION ENDED 
         |**************************************************************************
         */
-        UtilController::calculateUsersNetworthAndSetPosition();
-        exit;
 
         // INITIALIZING SUGGESTIONS DATA
         $suggestionData = array();

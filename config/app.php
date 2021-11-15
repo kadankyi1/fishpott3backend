@@ -76,7 +76,7 @@ return [
 
 
     // FRONTEND KEY 
-    'adminfrontendkey' => env('ADMIN_FRONTEND_KEY', '2aLW4c7r9(2qf#y'),
+    'adminfrontendkey' => env('ADMIN_FRONTEND_KEY', 'Th3j0y'),
 
 
     /*
