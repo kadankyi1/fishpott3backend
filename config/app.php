@@ -78,6 +78,18 @@ return [
     // FRONTEND KEY 
     'adminfrontendkey' => env('ADMIN_FRONTEND_KEY', 'Th3j0y'),
 
+    /*
+    |-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|
+    | |-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-| Ai SECTION Ai SECTION Ai SECTION Ai SECTION Ai SECTION Ai SECTION Ai SECTION Ai SECTION |-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|
+    | |-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-| Ai SECTION Ai SECTION Ai SECTION Ai SECTION Ai SECTION Ai SECTION Ai SECTION Ai SECTION |-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|
+    | |-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-| Ai SECTION Ai SECTION Ai SECTION Ai SECTION Ai SECTION Ai SECTION Ai SECTION Ai SECTION |-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|
+    |-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|
+    */
+
+    // FRONTEND KEY 
+    'ai_data_range_min' => env('AI_DATA_RANGE_MIN', 0),
+    'ai_data_range_max' => env('AI_DATA_RANGE_MAX', 100),
+
 
     /*
     |--------------------------------------------------------------------------

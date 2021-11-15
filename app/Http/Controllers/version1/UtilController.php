@@ -720,8 +720,22 @@ class UtilController extends Controller
     public static function normalizeStockValueDataSet($dataset_array)
     {
         $new_dataset_array = array();
+        
+        // GETTING MAXIMUM VALUE FROM DATASET
+        $max_value = max($dataset_array);
+
+        // GETTING MINIMUM VALUE FROM DATASET
+        $min_value = min($dataset_array);
+
+        // GETTING CONSTANT MAXIMUM RANGE VALUE
+        $max_value = config('app.ai_data_range_max');
+
+        // GETTING CONSTANT MINIMUM RANGE VALUE
+        $min_value = config('app.ai_data_range_min');
+
+        
         foreach ($dataset_array as $key => $data) {
-            
+            $neuron_or_node = Imin + (Imax-Imin)*(D-Dmin)/(Dmax-Dmin)
         }
 
         return $new_dataset_array;
