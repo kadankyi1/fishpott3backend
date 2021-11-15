@@ -1140,6 +1140,10 @@ class AdministratorController extends Controller
             "data" => "bail|required|string",
         ]);
         $the_data = explode(",", $request->data);
-        UtilController::normalizeStockValueDataSet($the_data);
+        $response = UtilController::normalizeStockValueDataSet($the_data);
+
+        return response([
+            "response" => $response
+        ]);
     }
 }

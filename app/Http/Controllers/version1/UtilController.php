@@ -717,9 +717,9 @@ class UtilController extends Controller
     |--------------------------------------------------------------------------
     */
 
-    public static function normalizeStockValueDataSet($dataset_array)
+    public static function normalizeDataSet($dataset_array)
     {
-        $new_dataset_array = array();
+        $normalized_dataset_array = array();
         $new_dataset_array_formatted_percentage = array();
         
         // GETTING MAXIMUM VALUE FROM DATASET
