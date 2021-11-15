@@ -717,7 +717,7 @@ class UtilController extends Controller
     |--------------------------------------------------------------------------
     */
 
-    public static function normalizeDataSet($dataset_array)
+    public static function normalizeStockValueDataSet($dataset_array)
     {
         $new_dataset_array = array();
         foreach ($dataset_array as $key => $data) {
