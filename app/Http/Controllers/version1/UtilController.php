@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\version1;
+//require_once ("../ai/NeuralNetwork.php");
 
 use DB;
 use DateTime;
@@ -24,8 +25,9 @@ use App\Models\version1\StockOwnership;
 use App\Models\version1\Administrator;
 use App\Models\version1\SuggestionTypes;
 use App\Models\version1\Suggestion;
-use App\Http\Controllers\version1\LogController;
 use App\Models\version1\DrillAnswer;
+use App\Http\Controllers\ai\NeuralNetworkController;
+use App\Http\Controllers\version1\LogController;
 
 class UtilController extends Controller
 {
@@ -733,14 +735,121 @@ class UtilController extends Controller
 
         // GETTING CONSTANT MINIMUM RANGE VALUE
         $neural_network_range_min_value = config('app.ai_data_range_min');
-
         
         foreach ($dataset_array as $key => $data) {
             $neuron_or_node = $neural_network_range_min_value + ($neural_network_range_max_value - $neural_network_range_min_value) * ($data-$dataset_min_value)/($dataset_max_value-$dataset_min_value);
             array_push($normalized_dataset_array, $neuron_or_node);
-            array_push($new_dataset_array_formatted_percentage, strval($neuron_or_node) . "%");
+            //array_push($new_dataset_array_formatted_percentage, strval($neuron_or_node) . "%");
         }
 
-        return $new_dataset_array_formatted_percentage;
+        return $normalized_dataset_array;
     }
+
+    public static function trainNeuralNetworkForOpennessToExperience($raw_input, $raw_ouput)
+    {
+        //var_dump($dataset_array);
+        $raw_input_array = explode("|", $raw_input);
+        $raw_output_array = explode(",", $raw_ouput);
+        $normalized_data_array = array(); 
+        foreach ($raw_input_array as $key => $data) {
+            array_push($normalized_data_array, UtilController::normalizeDataSet(explode(",", $data)));
+        }
+        var_dump($normalized_data_array);
+        var_dump($raw_output_array); exit;
+
+        // Create a new neural network with 3 input neurons,
+        // 4 hidden neurons, and 1 output neuron
+        $n = new NeuralNetworkController(1, 2, 1);
+        $n->setVerbose(false);
+
+        // ADDING TEST DATA
+        foreach ($normalized_data_array as $key => $value) {
+            $n->addTestData($normalized_data_array, $raw_output_array($key));
+        }
+        
+        // we try training the network for at most $max times
+        $max = 3;
+        $i = 0;
+
+        echo "<h1>Learning the XOR function</h1>";
+        // train the network in max 1000 epochs, with a max squared error of 0.01
+        while (!($success = $n->train(1000, 0.01)) && ++$i<$max) {
+            echo "Round $i: No success...<br />";
+        }
+        
+        // print a message if the network was succesfully trained
+        if ($success) {
+            $epochs = $n->getEpoch();
+            echo "Success in $epochs training rounds!<br />";
+        }
+        
+        echo "<h2>Result</h2>";
+        echo "<div class='result'>";
+        // in any case, we print the output of the neural network
+        for ($i = 0; $i < count($n->trainInputs); $i ++) {
+            $output = $n->calculate($n->trainInputs[$i]);
+            echo "<div>Testset $i; ";
+            echo "expected output = (".implode(", ", $n->trainOutput[$i]).") ";
+            echo "output from neural network = (".implode(", ", $output).")\n</div>";   
+        }
+        echo "</div>";
+        echo "<h2>Internal network state</h2>";
+        $n->showWeights($force=true);
+        
+        // Now, play around with some of the network's parameters a bit, to see how it
+        // influences the result
+        $learningRates = array(0.1, 0.25, 0.5, 0.75, 1);
+        $momentum = array(0.2, 0.4, 0.6, 0.8, 1);
+        $rounds = array(100, 500, 1000, 2000);
+        $errors = array(0.1, 0.05, 0.01, 0.001);
+        
+        echo "<h1>Playing around...</h1>";
+        echo "<p>The following is to show how changing the momentum & learning rate,
+        in combination with the number of rounds and the maximum allowable error, can
+        lead to wildly differing results. To obtain the best results for your
+        situation, play around with these numbers until you find the one that works
+        best for you.</p>";
+        echo "<p>The values displayed here are chosen randomly, so you can reload
+        the page to see another set of values...</p>";
+        
+        for ($j=0; $j<10; $j++) {
+            // no time-outs
+            set_time_limit(0);
+        
+            $array_rand_learningRates = array_rand($learningRates);
+            echo "<br /><h2>array_rand-learningRates : " . $array_rand_learningRates . "</h2><br />";
+        
+            $lr = $learningRates[$array_rand_learningRates];
+            $m = $momentum[array_rand($momentum)];
+            $r = $rounds[array_rand($rounds)];
+            $e = $errors[array_rand($errors)];
+            echo "<h2>Learning rate $lr, momentum $m @ ($r rounds, max sq. error $e)</h2>";
+            $n->clear();
+            $n->setLearningRate($lr);
+            $n->setMomentum($m);
+            $i = 0;
+            while (!($success = $n->train($r, $e)) && ++$i<$max) {
+                echo "Round $i: No success...<br />";
+                flush();
+            }
+        
+            // print a message if the network was succesfully trained
+            if ($success) {
+                $epochs = $n->getEpoch();
+                echo "Success in $epochs training rounds!<br />";
+        
+                echo "<div class='result'>";
+                for ($i = 0; $i < count($n->trainInputs); $i ++) {
+                    $output = $n->calculate($n->trainInputs[$i]);
+                    //var_dump($n->trainInputs[$i]);
+                    echo "<div> ------- Testset $i; ";
+                    echo "expected output = (".implode(", ", $n->trainOutput[$i]).") ";
+                    echo "output from neural network = (".implode(", ", $output).")\n</div>";
+                }
+                echo "</div>";
+            }
+        }
+        
+    }
+
 }

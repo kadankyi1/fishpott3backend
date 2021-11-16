@@ -65,8 +65,11 @@
  * @version 1.1
  * @license http://opensource.org/licenses/bsd-license.php BSD License
  */
+namespace App\Http\Controllers\ai;
 
-class NeuralNetwork {
+use App\Http\Controllers\Controller;
+
+class NeuralNetworkController  extends Controller {
 	protected $nodeCount = array ();
 	protected $nodeValue = array ();
 	protected $nodeThreshold = array ();

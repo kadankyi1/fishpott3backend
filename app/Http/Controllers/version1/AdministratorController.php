@@ -1137,13 +1137,16 @@ class AdministratorController extends Controller
     public function testingAi(Request $request)
     {
         $validatedData = $request->validate([
-            "data" => "bail|required|string",
+            "input" => "bail|required|string",
+            "output" => "bail|required|string",
         ]);
-        $the_data = explode(",", $request->data);
-        $response = UtilController::normalizeStockValueDataSet($the_data);
 
+        $response = UtilController::trainNeuralNetwork($request->input, $request->output);
+
+        /*
         return response([
             "response" => $response
         ]);
+        */
     }
 }
