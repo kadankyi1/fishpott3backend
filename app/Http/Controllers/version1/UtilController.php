@@ -719,7 +719,7 @@ class UtilController extends Controller
     |--------------------------------------------------------------------------
     */
 
-    public static function normalizeDataSet($dataset_array)
+    public static function normalizeDataSet($dataset_array, $zero_division_infers_true)
     {
         $normalized_dataset_array = array();
         $new_dataset_array_formatted_percentage = array();
@@ -737,6 +737,15 @@ class UtilController extends Controller
         $neural_network_range_min_value = config('app.ai_data_range_min');
         
         foreach ($dataset_array as $key => $data) {
+            
+            if($dataset_max_value-$dataset_min_value == 0 && $zero_division_infers_true){
+                array_push($normalized_dataset_array, 1);
+                continue;
+            } else if($dataset_max_value-$dataset_min_value == 0 && !$zero_division_infers_true){
+                array_push($normalized_dataset_array, 0);
+                continue;
+            }
+            
             $neuron_or_node = $neural_network_range_min_value + ($neural_network_range_max_value - $neural_network_range_min_value) * ($data-$dataset_min_value)/($dataset_max_value-$dataset_min_value);
             array_push($normalized_dataset_array, $neuron_or_node);
             //array_push($new_dataset_array_formatted_percentage, strval($neuron_or_node) . "%");
@@ -750,21 +759,35 @@ class UtilController extends Controller
         //var_dump($dataset_array);
         $raw_input_array = explode("|", $raw_input);
         $raw_output_array = explode(",", $raw_ouput);
-        $normalized_data_array = array(); 
+        //var_dump($raw_input_array);
+        //var_dump($raw_output_array); exit;
+
+
+        $normalized_input_data_array = array(); 
         foreach ($raw_input_array as $key => $data) {
-            array_push($normalized_data_array, UtilController::normalizeDataSet(explode(",", $data)));
+            array_push($normalized_input_data_array, UtilController::normalizeDataSet(explode(",", $data), false));
         }
-        var_dump($normalized_data_array);
-        var_dump($raw_output_array); exit;
+
+        $formatted_output_data_array = array(); 
+        foreach ($raw_output_array as $key => $data) {
+            $this_output = array(0 => intval($data));
+            array_push($formatted_output_data_array, $this_output);
+        }
+        
+        //var_dump($normalized_input_data_array);
+        //var_dump($formatted_output_data_array); exit;
 
         // Create a new neural network with 3 input neurons,
         // 4 hidden neurons, and 1 output neuron
-        $n = new NeuralNetworkController(1, 2, 1);
+        $n = new NeuralNetworkController(7, 8, 1);
         $n->setVerbose(false);
 
         // ADDING TEST DATA
-        foreach ($normalized_data_array as $key => $value) {
-            $n->addTestData($normalized_data_array, $raw_output_array($key));
+        foreach ($normalized_input_data_array as $key => $value) {
+            //echo "key: " . $key;
+            //var_dump($formatted_output_data_array[$key]);
+            //var_dump($value);
+            $n->addTestData($value, $formatted_output_data_array[$key]);
         }
         
         // we try training the network for at most $max times
@@ -782,7 +805,10 @@ class UtilController extends Controller
             $epochs = $n->getEpoch();
             echo "Success in $epochs training rounds!<br />";
         }
+
+        $n->save(public_path() . "/uploads/ai/nn.ini");
         
+        /*
         echo "<h2>Result</h2>";
         echo "<div class='result'>";
         // in any case, we print the output of the neural network
@@ -794,7 +820,7 @@ class UtilController extends Controller
         }
         echo "</div>";
         echo "<h2>Internal network state</h2>";
-        $n->showWeights($force=true);
+        //$n->showWeights($force=true);
         
         // Now, play around with some of the network's parameters a bit, to see how it
         // influences the result
@@ -815,11 +841,8 @@ class UtilController extends Controller
         for ($j=0; $j<10; $j++) {
             // no time-outs
             set_time_limit(0);
-        
-            $array_rand_learningRates = array_rand($learningRates);
-            echo "<br /><h2>array_rand-learningRates : " . $array_rand_learningRates . "</h2><br />";
-        
-            $lr = $learningRates[$array_rand_learningRates];
+                
+            $lr = $learningRates[array_rand($learningRates)];
             $m = $momentum[array_rand($momentum)];
             $r = $rounds[array_rand($rounds)];
             $e = $errors[array_rand($errors)];
@@ -841,15 +864,19 @@ class UtilController extends Controller
                 echo "<div class='result'>";
                 for ($i = 0; $i < count($n->trainInputs); $i ++) {
                     $output = $n->calculate($n->trainInputs[$i]);
-                    //var_dump($n->trainInputs[$i]);
-                    echo "<div> ------- Testset $i; ";
+                    echo "<div>Testset $i; ";
                     echo "expected output = (".implode(", ", $n->trainOutput[$i]).") ";
                     echo "output from neural network = (".implode(", ", $output).")\n</div>";
                 }
-                echo "</div>";
+        
+                //$output = $n->calculate(array(0.001, 0.0015, 0.019, 0.031, 0.011, 0.012, 0.014));
+                //echo "<div>Testset input : 0.21, 0.15, 0.19, 0.31, 0.11, 0.12, 0.14";
+                //echo " -- expected output = (-1) ";
+                //echo "expected output = (".implode(", ", $n->trainOutput[$i]).") ";
+                //echo "output from neural network = (".implode(", ", $output).")\n</div>";
             }
         }
-        
+        */
     }
 
 }

@@ -1141,7 +1141,7 @@ class AdministratorController extends Controller
             "output" => "bail|required|string",
         ]);
 
-        $response = UtilController::trainNeuralNetwork($request->input, $request->output);
+        $response = UtilController::trainNeuralNetworkForOpennessToExperience($request->input, $request->output);
 
         /*
         return response([
