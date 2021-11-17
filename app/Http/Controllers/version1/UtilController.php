@@ -803,9 +803,13 @@ class UtilController extends Controller
         }
 
         if(!empty($epochs)){
-            if($training_type == 1){ // openness to experience - O // Feed in weekly (day 1 - 7) values of stock value changes
+            if($training_type == 1){ // openness to experience - O 
+                // Feed in weekly (day 1 - 7) values of stock value changes 
+                // where those with high changes are 1 and 0 for vice versa
                 $n->save(public_path() . "/uploads/ai/nn-o.ini");
-            } else if($training_type == 2){ // conscientiousness - C // Feed in weekly (day 1 - 7) values of stock value changes
+            } else if($training_type == 2){ // conscientiousness - C 
+                // Feed in weekly (day 1 - 7) values of stock value changes 
+                // where those with high changes are 0 and 1 for vice versa
                 $n->save(public_path() . "/uploads/ai/nn-c.ini");
             } else if($training_type == 3){ // extraversion - E // Feed in weekly (day 1 - 7) values of stock value changes
                 $n->save(public_path() . "/uploads/ai/nn-e.ini");

@@ -1142,7 +1142,7 @@ class AdministratorController extends Controller
             "train_type" => "bail|required|string",
         ]);
 
-        $response = UtilController::trainNeuralNetworkForStockOpennessToExperience($request->input, $request->output, intval($request->train_type));
+        $response = UtilController::trainNeuralNetwork($request->input, $request->output, intval($request->train_type));
 
         /*
         return response([
