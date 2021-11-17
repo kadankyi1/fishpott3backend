@@ -712,11 +712,11 @@ class UtilController extends Controller
 
 
     /*
-    |--------------------------------------------------------------------------
-    |--------------------------------------------------------------------------
-    | THIS FUNCTION NORMALIZES ANY DATA TO BE FED TO THE AI SUB-SYSTEM
-    |--------------------------------------------------------------------------
-    |--------------------------------------------------------------------------
+    |--------------------------------------------------------------------------------------
+    |--------------------------------------------------------------------------------------
+    | THIS FUNCTION NORMALIZES ANY DATA TO RANGE FROM 0 - 100 TO BE FED TO THE AI SUB-SYSTEM
+    |--------------------------------------------------------------------------------------
+    |--------------------------------------------------------------------------------------
     */
 
     public static function normalizeDataSet($dataset_array, $zero_division_infers_true)
@@ -754,7 +754,15 @@ class UtilController extends Controller
         return $normalized_dataset_array;
     }
 
-    public static function trainNeuralNetworkForStockOpennessToExperience($raw_input, $raw_ouput)
+
+    /*
+    |---------------------------------------------------------------------------------------------------
+    |---------------------------------------------------------------------------------------------------
+    | THIS FUNCTION TRAINS FOR OPENNESS-TO-EXPERIENCE. FEED IN STOCK-CHANGE-VALUES ONLY AND EXPECTED INPUT
+    |---------------------------------------------------------------------------------------------------
+    |---------------------------------------------------------------------------------------------------
+    */
+    public static function trainNeuralNetworkForStockOpennessToExperience($raw_input, $raw_ouput, $training_type)
     {
         // PREPPING THE DATA
         $raw_input_array = explode("|", $raw_input);
@@ -795,7 +803,17 @@ class UtilController extends Controller
         }
 
         if(!empty($epochs)){
-            $n->save(public_path() . "/uploads/ai/nn.ini");
+            if($training_type == 1){ // openness to experience - O
+                $n->save(public_path() . "/uploads/ai/nn-o.ini");
+            } else if($training_type == 1){ // conscientiousness - C
+                $n->save(public_path() . "/uploads/ai/nn-c.ini");
+            } else if($training_type == 1){ // extraversion - E
+                $n->save(public_path() . "/uploads/ai/nn-e.ini");
+            } else if($training_type == 1){ // agreeableness - A
+                $n->save(public_path() . "/uploads/ai/nn-a.ini");
+            } else if($training_type == 1){ // neuroticism - N
+                $n->save(public_path() . "/uploads/ai/nn-n.ini");
+            }
         }
         
         /*
@@ -869,10 +887,45 @@ class UtilController extends Controller
         */
     }
 
-
-    public static function getStockOpennessToExperience($raw_input)
+    /*
+    |---------------------------------------------------------------------------------------------------
+    |---------------------------------------------------------------------------------------------------
+    | THIS FUNCTION OUTPUTS OPENESS-TO-EXPERIENCE
+    |---------------------------------------------------------------------------------------------------
+    |---------------------------------------------------------------------------------------------------
+    */
+    public static function testNeuralNetworkgetStockOpennessToExperience($raw_input, $show_as_percentage)
     {
-        array_push($normalized_input_data_array, UtilController::normalizeDataSet(explode(",", $data), false));
+
+        // LOADING THE NEURAL NETWORK
+        // Create a new neural network with 3 input neurons, 4 hidden neurons, and 1 output neuron
+        $n = new NeuralNetworkController(7, 8, 1);
+        $n->setVerbose(false);
+
+        $n->load(public_path() . "/uploads/ai/nn.ini");
+
+
+        // NORMALIZING THE DATA
+        $raw_input_array = explode("#", $raw_input);
+        $normalized_input_data_array = UtilController::normalizeDataSet($raw_input_array, false); 
+
+        // CALCULATING THE CRITERIA
+        $output = $n->calculate($normalized_input_data_array);
+        /*
+        echo "<div>Testset : " . join(',', $raw_input_array) . "<br>Testset Normalized : " . join(',', $normalized_input_data_array);
+        echo "<br>expected output = (-1) ";
+        echo "output from neural network = (".implode(", ", $output).")\n</div>";
+        */
+        if(is_numeric($output[0])){
+            if($show_as_percentage){
+                $output = floatval($output[0]) * 100;
+            }
+        } else {
+            $output = null;
+        }
+
+        return $output;
+
     }
 
 }
