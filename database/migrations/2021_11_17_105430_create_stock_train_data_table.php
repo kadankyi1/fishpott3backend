@@ -18,7 +18,11 @@ class CreateStockTrainDataTable extends Migration
             $table->string('stocktraindata_value_per_stock_usd_seven_inputs', 255);
             $table->string('stocktraindata_value_change_seven_inputs', 255);
             $table->string('stocktraindata_volume_seven_inputs', 255);
-            $table->integer('stocktraindata_expected_output');
+            $table->integer('stocktraindata_expected_output_o');
+            $table->integer('stocktraindata_expected_output_c');
+            $table->integer('stocktraindata_expected_output_e');
+            $table->integer('stocktraindata_expected_output_a');
+            $table->integer('stocktraindata_expected_output_n');
             $table->timestamps();
         });
 

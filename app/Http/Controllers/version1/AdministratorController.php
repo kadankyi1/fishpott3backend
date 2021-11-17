@@ -18,6 +18,7 @@ use App\Models\version1\Business;
 use App\Models\version1\Drill;
 use App\Models\version1\DrillAnswer;
 use App\Models\version1\StockPurchase;
+use App\Models\version1\StockTrainData;
 use App\Models\version1\StockValue;
 use App\Models\version1\Suggestion;
 use App\Models\version1\Suggesto;
@@ -923,6 +924,91 @@ class AdministratorController extends Controller
             "message" => "New stock value saved"
         ]);
     }
+
+        /*
+    |--------------------------------------------------------------------------
+    |--------------------------------------------------------------------------
+    | THIS FUNCTION ADDS A DRILL
+    |--------------------------------------------------------------------------
+    |--------------------------------------------------------------------------
+    */
+    
+    public function addTrainDataStockValuesAndOutput(Request $request)
+    {
+        /*
+        |**************************************************************************
+        | VALIDATION STARTS 
+        |**************************************************************************
+        */
+        // MAKING SURE THE INPUT HAS THE EXPECTED VALUES
+        $validatedData = $request->validate([
+            "administrator_phone_number" => "bail|required|regex:/^\+\d{10,15}$/|min:10|max:15",
+            "administrator_sys_id" => "bail|required",
+            "frontend_key" => "bail|required",
+            "administrator_pin" => "bail|required",
+            // ADD ANY OTHER REQUIRED INPUTS FROM HERE
+            "value_per_stock_usd_seven_inputs" => "bail|required",
+            "value_change_seven_inputs" => "bail|required",
+            "volume_seven_inputs" => "bail|required",
+            "expected_output_o" => "bail|required|numeric",
+            "expected_output_c" => "bail|required|numeric",
+            "expected_output_e" => "bail|required|numeric",
+            "expected_output_a" => "bail|required|numeric",
+            "expected_output_n" => "bail|required|numeric",
+        ]);
+
+        // MAKING SURE THE REQUEST AND USER IS VALIDATED
+        $validation_response = UtilController::validateAdminWithAuthToken($request, auth()->guard('administrator-api')->user(), "add-drill");
+        if(!empty($validation_response["status"]) && trim($validation_response["status"]) == "error"){
+            return response($validation_response);
+        } else {
+            $admin = $validation_response;
+        }
+        /*
+        |**************************************************************************
+        | VALIDATION ENDED 
+        |**************************************************************************
+        */
+
+        if(count(explode($request->value_per_stock_usd_seven_inputs, "#")) < 7){
+            return response([
+                "status" => 0, 
+                "message" => "The stock values must be a string of 7 values separates by #"
+            ]);
+        }
+
+        if(count(explode($request->value_change_seven_inputs, "#")) < 7){
+            return response([
+                "status" => 0, 
+                "message" => "The stock CHANGE values must be a string of 7 values separates by #"
+            ]);
+        }
+
+        if(count(explode($request->volume_seven_inputs, "#")) < 7){
+            return response([
+                "status" => 0, 
+                "message" => "The stock VOLUME values must be a string of 7 values separates by #"
+            ]);
+        }
+
+        //CREATING THE STOCK VALUE DATA
+        $StockTrainData["stocktraindata_value_per_stock_usd_seven_inputs"] = $request->value_per_stock_usd_seven_inputs;
+        $StockTrainData["stocktraindata_value_change_seven_inputs"] = $request->value_change_seven_inputs;
+        $StockTrainData["stocktraindata_volume_seven_inputs"] = $request->volume_seven_inputs;
+        $StockTrainData["stocktraindata_expected_output_o"] = $request->expected_output_o;
+        $StockTrainData["stocktraindata_expected_output_c"] = $request->expected_output_c;
+        $StockTrainData["stocktraindata_expected_output_e"] = $request->expected_output_e;
+        $StockTrainData["stocktraindata_expected_output_a"] = $request->expected_output_a;
+        $StockTrainData["stocktraindata_expected_output_n"] = $request->expected_output_n;
+        $StockTrainData["stockvalue_admin_adder_id"] = $admin->administrator_sys_id;
+        StockTrainData::create($StockTrainData);
+
+        return response([
+            "status" => 1, 
+            "message" => "New stock train data saved"
+        ]);
+    }
+
 
     /*
     |--------------------------------------------------------------------------
