@@ -970,21 +970,21 @@ class AdministratorController extends Controller
         |**************************************************************************
         */
 
-        if(count(explode("#", $request->value_per_stock_usd_seven_inputs)) < 7){
+        if(count(explode("#", $request->value_per_stock_usd_seven_inputs)) != 7){
             return response([
                 "status" => 0, 
                 "message" => "The stock values must be a string of 7 values separates by #"
             ]);
         }
 
-        if(count(explode("#", $request->value_change_seven_inputs)) < 7){
+        if(count(explode("#", $request->value_change_seven_inputs)) != 7){
             return response([
                 "status" => 0, 
                 "message" => "The stock CHANGE values must be a string of 7 values separates by #"
             ]);
         }
 
-        if(count(explode("#", $request->volume_seven_inputs)) < 7){
+        if(count(explode("#", $request->volume_seven_inputs)) != 7){
             return response([
                 "status" => 0, 
                 "message" => "The stock VOLUME values must be a string of 7 values separates by #"
@@ -1011,20 +1011,28 @@ class AdministratorController extends Controller
         $stocktraindata = StockTrainData::select('stocktraindata_value_change_seven_inputs', 'stocktraindata_expected_output_o')
         ->orderBy('stocktraindata_id', 'desc')->get();
 
-        $train_input_data_array = array();
-        $train_onput_data_array = array();
-        foreach($stocktraindata as $thisstocktraindata){
-            array_push($train_input_data_array, $thisstocktraindata->stocktraindata_value_change_seven_inputs);
-            array_push($train_onput_data_array, $thisstocktraindata->stocktraindata_expected_output_o);
-        }
-        var_dump($train_onput_data_array);
-        var_dump($train_input_data_array);
-        
+        $raw_train_input_data = "";
+        $raw_train_output_data = "";
 
-        return response([
-            "status" => 1, 
-            "message" => "New train data saved. Neural Network re-trained"
-        ]);
+        foreach($stocktraindata as $key => $thisstocktraindata){
+            if($key == 0){
+                $add_input =  "" ;
+                $add_output = "" ;
+            } else {
+                $add_input =  " | " ;
+                $add_output = " # " ;
+            }
+            $raw_train_input_data = $raw_train_input_data   . $add_input .  $thisstocktraindata->stocktraindata_value_change_seven_inputs;
+            $raw_train_output_data = $raw_train_output_data . $add_output . $thisstocktraindata->stocktraindata_expected_output_o;
+        }
+        echo "\n\nraw_train_input_data - " . $raw_train_input_data;
+        echo "\n\nraw_train_output_data - " . $raw_train_output_data;
+        
+        $response = UtilController::trainNeuralNetwork($raw_train_input_data, $raw_train_output_data, 1);
+        
+        //return response([
+        //    "response" => $response . "%"
+        //]);
     }
 
 
