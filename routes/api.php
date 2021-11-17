@@ -16,7 +16,8 @@ use App\Http\Controllers\version1\UserController;
 */
 
 // THESE ROUTES MUST BE DELETED --------------- START
-Route::post('/v1/admin/ai-test',[App\Http\Controllers\version1\AdministratorController::class, 'testingAi']);
+Route::post('/v1/admin/ai-training-test',[App\Http\Controllers\version1\AdministratorController::class, 'testingAi']);
+Route::post('/v1/admin/ai-testing-test',[App\Http\Controllers\version1\AdministratorController::class, 'testingAi']);
 // THESE ROUTES MUST BE DELETED --------------- END
 
 

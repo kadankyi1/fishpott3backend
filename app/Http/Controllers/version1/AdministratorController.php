@@ -1134,6 +1134,21 @@ class AdministratorController extends Controller
         ]);
     }
 
+    public function trainingAi(Request $request)
+    {
+        $validatedData = $request->validate([
+            "input" => "bail|required|string",
+            "output" => "bail|required|string",
+        ]);
+
+        $response = UtilController::trainNeuralNetworkForStockOpennessToExperience($request->input, $request->output);
+
+        /*
+        return response([
+            "response" => $response
+        ]);
+        */
+    }
     public function testingAi(Request $request)
     {
         $validatedData = $request->validate([
@@ -1141,7 +1156,7 @@ class AdministratorController extends Controller
             "output" => "bail|required|string",
         ]);
 
-        $response = UtilController::trainNeuralNetworkForOpennessToExperience($request->input, $request->output);
+        $response = UtilController::trainNeuralNetworkForStockOpennessToExperience($request->input, $request->output);
 
         /*
         return response([

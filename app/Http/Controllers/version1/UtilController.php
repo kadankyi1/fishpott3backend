@@ -754,18 +754,15 @@ class UtilController extends Controller
         return $normalized_dataset_array;
     }
 
-    public static function trainNeuralNetworkForOpennessToExperience($raw_input, $raw_ouput)
+    public static function trainNeuralNetworkForStockOpennessToExperience($raw_input, $raw_ouput)
     {
-        //var_dump($dataset_array);
+        // PREPPING THE DATA
         $raw_input_array = explode("|", $raw_input);
-        $raw_output_array = explode(",", $raw_ouput);
-        //var_dump($raw_input_array);
-        //var_dump($raw_output_array); exit;
-
+        $raw_output_array = explode("#", $raw_ouput);
 
         $normalized_input_data_array = array(); 
         foreach ($raw_input_array as $key => $data) {
-            array_push($normalized_input_data_array, UtilController::normalizeDataSet(explode(",", $data), false));
+            array_push($normalized_input_data_array, UtilController::normalizeDataSet(explode("#", $data), false));
         }
 
         $formatted_output_data_array = array(); 
@@ -773,40 +770,33 @@ class UtilController extends Controller
             $this_output = array(0 => intval($data));
             array_push($formatted_output_data_array, $this_output);
         }
-        
-        //var_dump($normalized_input_data_array);
-        //var_dump($formatted_output_data_array); exit;
 
-        // Create a new neural network with 3 input neurons,
-        // 4 hidden neurons, and 1 output neuron
+        // Create a new neural network with 3 input neurons, 4 hidden neurons, and 1 output neuron
         $n = new NeuralNetworkController(7, 8, 1);
         $n->setVerbose(false);
 
         // ADDING TEST DATA
         foreach ($normalized_input_data_array as $key => $value) {
-            //echo "key: " . $key;
-            //var_dump($formatted_output_data_array[$key]);
-            //var_dump($value);
             $n->addTestData($value, $formatted_output_data_array[$key]);
         }
         
         // we try training the network for at most $max times
         $max = 3;
         $i = 0;
-
         echo "<h1>Learning the XOR function</h1>";
         // train the network in max 1000 epochs, with a max squared error of 0.01
         while (!($success = $n->train(1000, 0.01)) && ++$i<$max) {
             echo "Round $i: No success...<br />";
         }
-        
         // print a message if the network was succesfully trained
         if ($success) {
             $epochs = $n->getEpoch();
             echo "Success in $epochs training rounds!<br />";
         }
 
-        $n->save(public_path() . "/uploads/ai/nn.ini");
+        if(!empty($epochs)){
+            $n->save(public_path() . "/uploads/ai/nn.ini");
+        }
         
         /*
         echo "<h2>Result</h2>";
@@ -877,6 +867,12 @@ class UtilController extends Controller
             }
         }
         */
+    }
+
+
+    public static function getStockOpennessToExperience($raw_input)
+    {
+        array_push($normalized_input_data_array, UtilController::normalizeDataSet(explode(",", $data), false));
     }
 
 }
