@@ -1139,9 +1139,10 @@ class AdministratorController extends Controller
         $validatedData = $request->validate([
             "input" => "bail|required|string",
             "output" => "bail|required|string",
+            "train_type" => "bail|required|string",
         ]);
 
-        $response = UtilController::trainNeuralNetworkForStockOpennessToExperience($request->input, $request->output);
+        $response = UtilController::trainNeuralNetworkForStockOpennessToExperience($request->input, $request->output, intval($request->train_type));
 
         /*
         return response([
@@ -1153,9 +1154,10 @@ class AdministratorController extends Controller
     {
         $validatedData = $request->validate([
             "input" => "bail|required|string",
+            "test_type" => "bail|required|string",
         ]);
 
-        $response = UtilController::testNeuralNetworkgetStockOpennessToExperience($request->input, true);
+        $response = UtilController::testNeuralNetworkToGetStockOpennessToExperience($request->input, true, intval($request->test_type));
         
         return response([
             "response" => $response . "%"

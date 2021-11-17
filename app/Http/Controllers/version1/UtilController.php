@@ -756,13 +756,13 @@ class UtilController extends Controller
 
 
     /*
-    |---------------------------------------------------------------------------------------------------
-    |---------------------------------------------------------------------------------------------------
-    | THIS FUNCTION TRAINS FOR OPENNESS-TO-EXPERIENCE. FEED IN STOCK-CHANGE-VALUES ONLY AND EXPECTED INPUT
-    |---------------------------------------------------------------------------------------------------
-    |---------------------------------------------------------------------------------------------------
+    |--------------------------------------------------
+    |--------------------------------------------------
+    | THIS FUNCTION TRAINS FOR THE NEURAL NETWORK
+    |--------------------------------------------------
+    |--------------------------------------------------
     */
-    public static function trainNeuralNetworkForStockOpennessToExperience($raw_input, $raw_ouput, $training_type)
+    public static function trainNeuralNetwork($raw_input, $raw_ouput, $training_type)
     {
         // PREPPING THE DATA
         $raw_input_array = explode("|", $raw_input);
@@ -803,15 +803,15 @@ class UtilController extends Controller
         }
 
         if(!empty($epochs)){
-            if($training_type == 1){ // openness to experience - O
+            if($training_type == 1){ // openness to experience - O // Feed in weekly (day 1 - 7) values of stock value changes
                 $n->save(public_path() . "/uploads/ai/nn-o.ini");
-            } else if($training_type == 1){ // conscientiousness - C
+            } else if($training_type == 2){ // conscientiousness - C // Feed in weekly (day 1 - 7) values of stock value changes
                 $n->save(public_path() . "/uploads/ai/nn-c.ini");
-            } else if($training_type == 1){ // extraversion - E
+            } else if($training_type == 3){ // extraversion - E // Feed in weekly (day 1 - 7) values of stock value changes
                 $n->save(public_path() . "/uploads/ai/nn-e.ini");
-            } else if($training_type == 1){ // agreeableness - A
+            } else if($training_type == 4){ // agreeableness - A // Feed in weekly (day 1 - 7) values of stock value changes
                 $n->save(public_path() . "/uploads/ai/nn-a.ini");
-            } else if($training_type == 1){ // neuroticism - N
+            } else if($training_type == 5){ // neuroticism - N // Feed in weekly (day 1 - 7) values of stock value changes
                 $n->save(public_path() . "/uploads/ai/nn-n.ini");
             }
         }
@@ -894,7 +894,7 @@ class UtilController extends Controller
     |---------------------------------------------------------------------------------------------------
     |---------------------------------------------------------------------------------------------------
     */
-    public static function testNeuralNetworkgetStockOpennessToExperience($raw_input, $show_as_percentage)
+    public static function testNeuralNetworkToGetStockOpennessToExperience($raw_input, $show_as_percentage, $test_type)
     {
 
         // LOADING THE NEURAL NETWORK
@@ -902,8 +902,17 @@ class UtilController extends Controller
         $n = new NeuralNetworkController(7, 8, 1);
         $n->setVerbose(false);
 
-        $n->load(public_path() . "/uploads/ai/nn.ini");
-
+        if($test_type == 1){ // openness to experience - O // Feed in a week's (day 1 - 7) values of stock value changes
+            $n->load(public_path() . "/uploads/ai/nn-o.ini");
+        } else if($test_type == 2){ // conscientiousness - C // Feed in a week's (day 1 - 7) values of stock value changes
+            $n->load(public_path() . "/uploads/ai/nn-c.ini");
+        } else if($test_type == 3){ // extraversion - E // Feed in a week's (day 1 - 7) values of stock value changes
+            $n->load(public_path() . "/uploads/ai/nn-e.ini");
+        } else if($test_type == 4){ // agreeableness - A // Feed in a week's (day 1 - 7) values of stock value changes
+            $n->load(public_path() . "/uploads/ai/nn-a.ini");
+        } else if($test_type == 5){ // neuroticism - N // Feed in a week's (day 1 - 7)) values of stock value changes
+            $n->load(public_path() . "/uploads/ai/nn-n.ini");
+        }
 
         // NORMALIZING THE DATA
         $raw_input_array = explode("#", $raw_input);
