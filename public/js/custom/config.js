@@ -4,8 +4,8 @@
 |--------------------------------------------------------------------------
 |*/
 
-var host = "http://144.202.111.61";
-//var host = "http://fishpott.local";
+//var host = "http://144.202.111.61";
+var host = "http://fishpott.local";
 
 // LOGIN PAGE URLS
 var admin_web_login_page_url = `${host}/admin/login`;
@@ -46,6 +46,9 @@ var admin_api_add_suggestion_url = `${host}/api/v1/admin/add-suggestion`;
 
 // ADD NEW STOCK VALUE
 var admin_api_add_new_stock_value_url = `${host}/api/v1/admin/add-new-stock-value`;
+
+// ADD NEW STOCK TRAIN DATA
+var admin_api_add_new_stock_train_data_url = `${host}/api/v1/admin/add-stock-train-data`;
 
 
 // CHECKING IF USER HAS AN API TOKEN

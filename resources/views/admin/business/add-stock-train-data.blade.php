@@ -1,7 +1,7 @@
 <?php
 $active_page = "Business";
-$page_name = "Add Stock Value";
-$page_title = "Based on factual information, add a business' new stock value";
+$page_name = "Add Stock Train Data";
+$page_title = "Based on factual information, add a new stock training data";
 ?>
 
 @extends('admin.layouts.app')
@@ -19,7 +19,7 @@ $page_title = "Based on factual information, add a business' new stock value";
                         <div class="card">
                             <div class="card-header">
                                 <h5>Note</h5>
-                                <span>If you are suggesting a business this way, make sure FishPott Marketing Team <code>has met the user and discussed the shares with them</code> so that we do not violate <code>SEC rules</code>  given us</span>
+                                <span>Make sure the  <code>data is certified correct</code> before  <code>entering to the AI</code>  sub-system</span>
                             </div>
                             <div class="loader-holder offset-md-5" id="loader" style="display: none"><br><br><br><br><br><br><div class="myloader"></div></div>
 
@@ -32,21 +32,51 @@ $page_title = "Based on factual information, add a business' new stock value";
 
                                     <h4 class="sub-title">Form</h4>
                                     <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label">Choose Business</label>
+                                        <label class="col-sm-2 col-form-label">7 Stock Values Separated By #</label>
                                         <div class="col-sm-10">
-                                            <input id="item_identifier" autocomplete="off" name="item_identifier" type="text"  required class="form-control" placeholder="Business Name">
+                                            <input id="value_per_stock_usd_seven_inputs" name="value_per_stock_usd_seven_inputs" type="text" required class="form-control" placeholder="7 Stock Values Separated By ">
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label">Business ID</label>
+                                        <label class="col-sm-2 col-form-label">7 Stock Changes Separated By #</label>
                                         <div class="col-sm-10">
-                                            <input id="item_id" name="item_id" type="text" readonly required class="form-control" placeholder="Business ID">
+                                            <input id="value_change_seven_inputs" name="value_change_seven_inputs" type="text" required class="form-control" placeholder="7 Stock Changes Separated By #">
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label">New Value (USD - $)</label>
+                                        <label class="col-sm-2 col-form-label">7 Stock Volume Separated By #</label>
                                         <div class="col-sm-10">
-                                            <input id="new_value" name="new_value" type="number" step="any" required class="form-control" placeholder="New Value In USD">
+                                            <input id="volume_seven_inputs" name="volume_seven_inputs" type="text" required class="form-control" placeholder="7 Stock Volume Separated By #">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label">Output for Openness to experience</label>
+                                        <div class="col-sm-10">
+                                            <input id="expected_output_o" name="expected_output_o" type="number" min="-1" max="1"  required class="form-control" placeholder="1 or -1">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label">Output for Conscientiousness</label>
+                                        <div class="col-sm-10">
+                                            <input id="expected_output_c" name="expected_output_c" type="number" min="-1" max="1"  required class="form-control" placeholder="1 or -1">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label">Output for Extraversion</label>
+                                        <div class="col-sm-10">
+                                            <input id="expected_output_e" name="expected_output_e" type="number" min="-1" max="1"  required class="form-control" placeholder="1 or -1">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label">Output for Agreeableness</label>
+                                        <div class="col-sm-10">
+                                            <input id="expected_output_a" name="expected_output_a" type="number" min="-1" max="1" required class="form-control" placeholder="1 or -1">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label">Output for Neuroticism</label>
+                                        <div class="col-sm-10">
+                                            <input id="expected_output_n" name="expected_output_n" type="number" min="-1" max="1"  required class="form-control" placeholder="1 or -1">
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -114,5 +144,5 @@ $page_title = "Based on factual information, add a business' new stock value";
             the_model = "business";
         </script>
         <script type="text/javascript" src="/js/custom/config.js "></script>
-        <script type="text/javascript" src="/js/custom/business/add-new-stock-value.js "></script>
+        <script type="text/javascript" src="/js/custom/business/add-stock-train-data.js "></script>
     @endsection

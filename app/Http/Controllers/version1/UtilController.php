@@ -954,43 +954,6 @@ class UtilController extends Controller
 
     }
 
-    /*
-    |---------------------------------------------------------------------------------------------------
-    |---------------------------------------------------------------------------------------------------
-    | THIS FUNCTION GETS TEST DATA
-    |---------------------------------------------------------------------------------------------------
-    |---------------------------------------------------------------------------------------------------
-    */
-    public static function getTrainDataForNeuralNetworkAi($stock_business_id, $big_five_type, $randomize)
-    {
-        if($big_five_type == config('app.openness_to_experience')){ // openness to experience - O // Feed in a week's (day 1 - 7) values of stock value changes
-            // Feed in weekly (day 1 - 7) values of stock value changes 
-            // where those with high changes are 1 and 0 for vice versa
-            // here even the higher changes (0.1+) should record as 1
-            
-            // GETTING THE 7 VALUES OF THE STOCK
-            $businesses = StockValue::select('stockvalue_value_change')
-            ->where('stockvalue_business_id', '=', $stock_business_id)
-            ->orderBy('stockvalue_id', 'desc')->take(7)->get();
-
-            $output_data_array = array();
-            foreach($businesses as $business){
-                array_push($output_data_array, $business->stockvalue_value_change);
-            }
-            return $output_data_array;
-
-        } else if($big_five_type == config('app.conscientiousness')){ // conscientiousness - C // Feed in a week's (day 1 - 7) values of stock value changes
-
-        } else if($big_five_type == config('app.extraversion')){ // extraversion - E // Feed in a week's (day 1 - 7) values of stock value changes
-
-        } else if($big_five_type == config('app.agreeableness')){ // agreeableness - A // Feed in a week's (day 1 - 7) values of stock value changes
-
-        } else if($big_five_type == config('app.neuroticism')){ // neuroticism - N // Feed in a week's (day 1 - 7)) values of stock value changes
-
-        } else {
-            return null;
-        }
-    }
 
     /*
     |---------------------------------------------------------------------------------------------------

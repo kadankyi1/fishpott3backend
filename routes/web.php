@@ -45,6 +45,11 @@ Route::get('/admin/business/add-stock-value', function () {
     return view('admin/business/add-new-stock-value');
 });
 
+// ADD STOCK VALUE 
+Route::get('/admin/business/add-stock-training-data', function () {
+    return view('admin/business/add-stock-train-data');
+});
+
 // SUGGEST DRILL
 Route::get('/admin/suggestion/suggest-drill', function () {
     return view('admin/suggestion/suggest-drill');

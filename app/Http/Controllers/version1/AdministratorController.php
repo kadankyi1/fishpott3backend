@@ -959,7 +959,7 @@ class AdministratorController extends Controller
 
         // MAKING SURE THE REQUEST AND USER IS VALIDATED
         $validation_response = UtilController::validateAdminWithAuthToken($request, auth()->guard('administrator-api')->user(), "add-drill");
-        if(!empty($validation_response["status"]) && trim($validation_response["status"]) == "error"){
+        if(!empty($validation_response["status"])){
             return response($validation_response);
         } else {
             $admin = $validation_response;
@@ -970,21 +970,21 @@ class AdministratorController extends Controller
         |**************************************************************************
         */
 
-        if(count(explode($request->value_per_stock_usd_seven_inputs, "#")) < 7){
+        if(count(explode("#", $request->value_per_stock_usd_seven_inputs)) < 7){
             return response([
                 "status" => 0, 
                 "message" => "The stock values must be a string of 7 values separates by #"
             ]);
         }
 
-        if(count(explode($request->value_change_seven_inputs, "#")) < 7){
+        if(count(explode("#", $request->value_change_seven_inputs)) < 7){
             return response([
                 "status" => 0, 
                 "message" => "The stock CHANGE values must be a string of 7 values separates by #"
             ]);
         }
 
-        if(count(explode($request->volume_seven_inputs, "#")) < 7){
+        if(count(explode("#", $request->volume_seven_inputs)) < 7){
             return response([
                 "status" => 0, 
                 "message" => "The stock VOLUME values must be a string of 7 values separates by #"
@@ -1000,12 +1000,28 @@ class AdministratorController extends Controller
         $StockTrainData["stocktraindata_expected_output_e"] = $request->expected_output_e;
         $StockTrainData["stocktraindata_expected_output_a"] = $request->expected_output_a;
         $StockTrainData["stocktraindata_expected_output_n"] = $request->expected_output_n;
-        $StockTrainData["stockvalue_admin_adder_id"] = $admin->administrator_sys_id;
+        $StockTrainData["stocktraindata_admin_adder_id"] = $admin->administrator_sys_id;
         StockTrainData::create($StockTrainData);
+
+        //|--------------------------------------------------------------------------
+        //| TRAINING NEURAL NETWORK FOR -- O ---
+        //|--------------------------------------------------------------------------
+    
+        // GETTING THE DATA
+        $businesses = StockValue::select('stockvalue_value_change')
+        ->where('stockvalue_business_id', '=', $stock_business_id)
+        ->orderBy('stockvalue_id', 'desc')->take(7)->get();
+
+        $output_data_array = array();
+        foreach($businesses as $business){
+            array_push($output_data_array, $business->stockvalue_value_change);
+        }
+        return $output_data_array;
+        
 
         return response([
             "status" => 1, 
-            "message" => "New stock train data saved"
+            "message" => "New train data saved. Neural Network re-trained"
         ]);
     }
 
