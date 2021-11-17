@@ -1028,8 +1028,121 @@ class AdministratorController extends Controller
         echo "\n\nraw_train_input_data - " . $raw_train_input_data;
         echo "\n\nraw_train_output_data - " . $raw_train_output_data;
         
-        $response = UtilController::trainNeuralNetwork($raw_train_input_data, $raw_train_output_data, 1);
+        // TRAINING
+        UtilController::trainNeuralNetwork($raw_train_input_data, $raw_train_output_data, config('app.openness_to_experience'));
         
+        //|--------------------------------------------------------------------------
+        //| TRAINING NEURAL NETWORK FOR -- C ---
+        //|--------------------------------------------------------------------------
+    
+        // GETTING THE DATA
+        $stocktraindata = StockTrainData::select('stocktraindata_value_change_seven_inputs', 'stocktraindata_expected_output_o')
+        ->orderBy('stocktraindata_id', 'desc')->get();
+
+        $raw_train_input_data = "";
+        $raw_train_output_data = "";
+
+        foreach($stocktraindata as $key => $thisstocktraindata){
+            if($key == 0){
+                $add_input =  "" ;
+                $add_output = "" ;
+            } else {
+                $add_input =  " | " ;
+                $add_output = " # " ;
+            }
+            $raw_train_input_data = $raw_train_input_data   . $add_input .  $thisstocktraindata->stocktraindata_value_change_seven_inputs;
+            $raw_train_output_data = $raw_train_output_data . $add_output . $thisstocktraindata->stocktraindata_expected_output_o;
+        }
+        echo "\n\nraw_train_input_data - " . $raw_train_input_data;
+        echo "\n\nraw_train_output_data - " . $raw_train_output_data;
+        
+        // TRAINING
+        UtilController::trainNeuralNetwork($raw_train_input_data, $raw_train_output_data, config('app.conscientiousness'));
+
+        //|--------------------------------------------------------------------------
+        //| TRAINING NEURAL NETWORK FOR -- E ---
+        //|--------------------------------------------------------------------------
+    
+        // GETTING THE DATA
+        $stocktraindata = StockTrainData::select('stocktraindata_value_change_seven_inputs', 'stocktraindata_expected_output_o')
+        ->orderBy('stocktraindata_id', 'desc')->get();
+
+        $raw_train_input_data = "";
+        $raw_train_output_data = "";
+
+        foreach($stocktraindata as $key => $thisstocktraindata){
+            if($key == 0){
+                $add_input =  "" ;
+                $add_output = "" ;
+            } else {
+                $add_input =  " | " ;
+                $add_output = " # " ;
+            }
+            $raw_train_input_data = $raw_train_input_data   . $add_input .  $thisstocktraindata->stocktraindata_value_change_seven_inputs;
+            $raw_train_output_data = $raw_train_output_data . $add_output . $thisstocktraindata->stocktraindata_expected_output_o;
+        }
+        echo "\n\nraw_train_input_data - " . $raw_train_input_data;
+        echo "\n\nraw_train_output_data - " . $raw_train_output_data;
+        
+        // TRAINING
+        UtilController::trainNeuralNetwork($raw_train_input_data, $raw_train_output_data, config('app.extraversion'));
+
+        //|--------------------------------------------------------------------------
+        //| TRAINING NEURAL NETWORK FOR -- A ---
+        //|--------------------------------------------------------------------------
+    
+        // GETTING THE DATA
+        $stocktraindata = StockTrainData::select('stocktraindata_value_change_seven_inputs', 'stocktraindata_expected_output_o')
+        ->orderBy('stocktraindata_id', 'desc')->get();
+
+        $raw_train_input_data = "";
+        $raw_train_output_data = "";
+
+        foreach($stocktraindata as $key => $thisstocktraindata){
+            if($key == 0){
+                $add_input =  "" ;
+                $add_output = "" ;
+            } else {
+                $add_input =  " | " ;
+                $add_output = " # " ;
+            }
+            $raw_train_input_data = $raw_train_input_data   . $add_input .  $thisstocktraindata->stocktraindata_value_change_seven_inputs;
+            $raw_train_output_data = $raw_train_output_data . $add_output . $thisstocktraindata->stocktraindata_expected_output_o;
+        }
+        echo "\n\nraw_train_input_data - " . $raw_train_input_data;
+        echo "\n\nraw_train_output_data - " . $raw_train_output_data;
+        
+        // TRAINING
+        UtilController::trainNeuralNetwork($raw_train_input_data, $raw_train_output_data, config('app.agreeableness'));
+
+        //|--------------------------------------------------------------------------
+        //| TRAINING NEURAL NETWORK FOR -- N ---
+        //|--------------------------------------------------------------------------
+    
+        // GETTING THE DATA
+        $stocktraindata = StockTrainData::select('stocktraindata_value_change_seven_inputs', 'stocktraindata_expected_output_o')
+        ->orderBy('stocktraindata_id', 'desc')->get();
+
+        $raw_train_input_data = "";
+        $raw_train_output_data = "";
+
+        foreach($stocktraindata as $key => $thisstocktraindata){
+            if($key == 0){
+                $add_input =  "" ;
+                $add_output = "" ;
+            } else {
+                $add_input =  " | " ;
+                $add_output = " # " ;
+            }
+            $raw_train_input_data = $raw_train_input_data   . $add_input .  $thisstocktraindata->stocktraindata_value_change_seven_inputs;
+            $raw_train_output_data = $raw_train_output_data . $add_output . $thisstocktraindata->stocktraindata_expected_output_o;
+        }
+        echo "\n\nraw_train_input_data - " . $raw_train_input_data;
+        echo "\n\nraw_train_output_data - " . $raw_train_output_data;
+        
+        // TRAINING
+        UtilController::trainNeuralNetwork($raw_train_input_data, $raw_train_output_data, config('app.neuroticism'));
+
         //return response([
         //    "response" => $response . "%"
         //]);

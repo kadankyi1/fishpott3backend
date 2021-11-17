@@ -799,7 +799,9 @@ class UtilController extends Controller
         // print a message if the network was succesfully trained
         if ($success) {
             $epochs = $n->getEpoch();
-            echo "Success in $epochs training rounds!<br />";
+            echo "Type $training_type : Success in $epochs training rounds!<br />";
+        } else {
+            echo "Type $training_type : Failed in training rounds!<br />";
         }
 
         if(!empty($epochs)){
