@@ -958,7 +958,7 @@ class AdministratorController extends Controller
         ]);
 
         // MAKING SURE THE REQUEST AND USER IS VALIDATED
-        $validation_response = UtilController::validateAdminWithAuthToken($request, auth()->guard('administrator-api')->user(), "add-drill");
+        $validation_response = UtilController::validateAdminWithAuthToken($request, auth()->guard('administrator-api')->user(), "work-ai");
         if(!empty($validation_response["status"])){
             return response($validation_response);
         } else {

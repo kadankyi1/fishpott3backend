@@ -38,6 +38,7 @@ class AuthServiceProvider extends ServiceProvider
             
             //ADMIN SCOPE
             'get-info' => 'Get information',
+            'work-ai' => 'Perform Ai related functions',
             'add-admins' => 'Can add administrators Stocks',
             'add-drill' => 'Can add drill',
             'add-business' => 'Can add business',
