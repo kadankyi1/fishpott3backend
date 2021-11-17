@@ -23,9 +23,9 @@ class StockTrainData extends Model
      */
     protected $fillable = [
         'stocktraindata_id', 
-        'stocktraindata_value_per_stock_usd',
-        'stocktraindata_value_change',
-        'stocktraindata_value_volume',
+        'stocktraindata_value_per_stock_usd_seven_inputs',
+        'stocktraindata_value_change_seven_inputs',
+        'stocktraindata_volume_seven_inputs',
         'stocktraindata_expected_output',
         'stocktraindata_admin_adder_id',
         'created_at',

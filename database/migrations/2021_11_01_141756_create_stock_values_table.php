@@ -17,7 +17,7 @@ class CreateStockValuesTable extends Migration
             $table->bigIncrements('stockvalue_id');
             $table->decimal('stockvalue_value_per_stock_usd', 12, 2);
             $table->decimal('stockvalue_value_change', 12, 2);
-            $table->integer('stockvalue_value_volume');
+            $table->integer('stockvalue_volume');
             $table->timestamps();
         });
 

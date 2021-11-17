@@ -14,8 +14,17 @@ class CreateStockTrainDataTable extends Migration
     public function up()
     {
         Schema::create('stock_train_data', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('stocktraindata_id');
+            $table->string('stocktraindata_value_per_stock_usd_seven_inputs', 255);
+            $table->string('stocktraindata_value_change_seven_inputs', 255);
+            $table->string('stocktraindata_volume_seven_inputs', 255);
+            $table->integer('stocktraindata_expected_output');
             $table->timestamps();
+        });
+
+        Schema::table('stock_train_data', function (Blueprint $table) {
+            $table->string('stocktraindata_admin_adder_id', 255);
+            $table->foreign('stocktraindata_admin_adder_id')->references('administrator_sys_id')->on('administrators');
         });
     }
 
