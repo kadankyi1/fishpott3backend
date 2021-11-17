@@ -884,6 +884,8 @@ class AdministratorController extends Controller
             // ADD ANY OTHER REQUIRED INPUTS FROM HERE
             "item_id" => "bail|required",
             "new_value" => "bail|required|numeric",
+            "new_change" => "bail|required|numeric",
+            "new_volume" => "bail|required|numeric",
         ]);
 
         // MAKING SURE THE REQUEST AND USER IS VALIDATED
@@ -911,6 +913,8 @@ class AdministratorController extends Controller
         //CREATING THE STOCK VALUE DATA
         $stockValueData["stockvalue_business_id"] = $request->item_id;
         $stockValueData["stockvalue_value_per_stock_usd"] = floatval($request->new_value);
+        $stockValueData["stockvalue_value_change"] = floatval($request->new_change);
+        $stockValueData["stockvalue_value_volume"] = intval($request->new_volume);
         $stockValueData["stockvalue_admin_adder_id"] = $admin->administrator_sys_id;
         StockValue::create($stockValueData);
 
@@ -1161,6 +1165,21 @@ class AdministratorController extends Controller
         
         return response([
             "response" => $response . "%"
+        ]);
+        
+    }
+
+    public function getData(Request $request)
+    {
+        $validatedData = $request->validate([
+            "input" => "bail|required|string",
+            "test_type" => "bail|required|string",
+        ]);
+
+        $response = UtilController::getDataForNeuralNetworkAi($request->input, intval($request->test_type), true);
+        
+        return response([
+            "response" => $response
         ]);
         
     }

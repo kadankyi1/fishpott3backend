@@ -90,6 +90,13 @@ return [
     'ai_data_range_min' => env('AI_DATA_RANGE_MIN', 0),
     'ai_data_range_max' => env('AI_DATA_RANGE_MAX', 100),
 
+    // BIG FIVE ASPECTS TYPE CONSTANTS
+    'openness_to_experience' => env('OPENNESS_TO_EXPERIENCE', 1),
+    'conscientiousness' => env('CONSCIENTIOUSNESS', 2),
+    'extraversion' => env('EXTRAVERSION', 3),
+    'agreeableness' => env('AGREEABLENESS', 4),
+    'neuroticism' => env('NEUROTICISM', 5),
+
 
     /*
     |--------------------------------------------------------------------------

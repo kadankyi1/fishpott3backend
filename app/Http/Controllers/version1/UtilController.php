@@ -803,27 +803,27 @@ class UtilController extends Controller
         }
 
         if(!empty($epochs)){
-            if($training_type == 1){ // openness to experience - O 
+            if($training_type == config('app.openness_to_experience')){ // openness to experience - O 
                 // Feed in weekly (day 1 - 7) values of stock value changes 
                 // where those with high changes are 1 and 0 for vice versa
                 // here even the higher changes (0.1+) should record as 1
                 $n->save(public_path() . "/uploads/ai/nn-o.ini");
-            } else if($training_type == 2){ // conscientiousness - C 
+            } else if($training_type == config('app.conscientiousness')){ // conscientiousness - C 
                 // Feed in weekly (day 1 - 7) values of the standard deviation of the stock value changes to the overall change of all hosted stocks 
                 // where those with high changes are 0 and 1 for vice versa
                 // here changes less than 20% should record as 0
                 $n->save(public_path() . "/uploads/ai/nn-c.ini");
-            } else if($training_type == 3){ // extraversion - E 
+            } else if($training_type == config('app.extraversion')){ // extraversion - E 
                 // Feed in weekly (day 1 - 7) values of the standard deviation of the stock value changes to the overall change of all hosted stocks 
                 // where those with high changes are 0 and 1 for vice versa
                 // here changes less than 25% should record as 1
                 $n->save(public_path() . "/uploads/ai/nn-e.ini");
-            } else if($training_type == 4){ // agreeableness - A 
+            } else if($training_type == config('app.agreeableness')){ // agreeableness - A 
                 // Feed in weekly (day 1 - 7) values of the standard deviation of the stock value changes to the overall change of all hosted stocks 
                 // where those with high changes are 0 and 1 for vice versa
                 // here changes less than 10% should record as 1
                 $n->save(public_path() . "/uploads/ai/nn-a.ini");
-            } else if($training_type == 5){ // neuroticism - N 
+            } else if($training_type == config('app.neuroticism')){ // neuroticism - N 
                 // Feed in weekly (day 1 - 7) values of stock value changes 
                 // where those with high changes are 0 and 1 for vice versa
                 // here even the tiniest changes (0.01+) should record as 1
@@ -917,16 +917,18 @@ class UtilController extends Controller
         $n = new NeuralNetworkController(7, 8, 1);
         $n->setVerbose(false);
 
-        if($test_type == 1){ // openness to experience - O // Feed in a week's (day 1 - 7) values of stock value changes
+        if($test_type == config('app.openness_to_experience')){ // openness to experience - O // Feed in a week's (day 1 - 7) values of stock value changes
             $n->load(public_path() . "/uploads/ai/nn-o.ini");
-        } else if($test_type == 2){ // conscientiousness - C // Feed in a week's (day 1 - 7) values of stock value changes
+        } else if($test_type == config('app.conscientiousness')){ // conscientiousness - C // Feed in a week's (day 1 - 7) values of stock value changes
             $n->load(public_path() . "/uploads/ai/nn-c.ini");
-        } else if($test_type == 3){ // extraversion - E // Feed in a week's (day 1 - 7) values of stock value changes
+        } else if($test_type == config('app.extraversion')){ // extraversion - E // Feed in a week's (day 1 - 7) values of stock value changes
             $n->load(public_path() . "/uploads/ai/nn-e.ini");
-        } else if($test_type == 4){ // agreeableness - A // Feed in a week's (day 1 - 7) values of stock value changes
+        } else if($test_type == config('app.agreeableness')){ // agreeableness - A // Feed in a week's (day 1 - 7) values of stock value changes
             $n->load(public_path() . "/uploads/ai/nn-a.ini");
-        } else if($test_type == 5){ // neuroticism - N // Feed in a week's (day 1 - 7)) values of stock value changes
+        } else if($test_type == config('app.neuroticism')){ // neuroticism - N // Feed in a week's (day 1 - 7)) values of stock value changes
             $n->load(public_path() . "/uploads/ai/nn-n.ini");
+        } else {
+            return null;
         }
 
         // NORMALIZING THE DATA
@@ -952,4 +954,79 @@ class UtilController extends Controller
 
     }
 
+    /*
+    |---------------------------------------------------------------------------------------------------
+    |---------------------------------------------------------------------------------------------------
+    | THIS FUNCTION GETS TEST DATA
+    |---------------------------------------------------------------------------------------------------
+    |---------------------------------------------------------------------------------------------------
+    */
+    public static function getTrainDataForNeuralNetworkAi($stock_business_id, $big_five_type, $randomize)
+    {
+        if($big_five_type == config('app.openness_to_experience')){ // openness to experience - O // Feed in a week's (day 1 - 7) values of stock value changes
+            // Feed in weekly (day 1 - 7) values of stock value changes 
+            // where those with high changes are 1 and 0 for vice versa
+            // here even the higher changes (0.1+) should record as 1
+            
+            // GETTING THE 7 VALUES OF THE STOCK
+            $businesses = StockValue::select('stockvalue_value_change')
+            ->where('stockvalue_business_id', '=', $stock_business_id)
+            ->orderBy('stockvalue_id', 'desc')->take(7)->get();
+
+            $output_data_array = array();
+            foreach($businesses as $business){
+                array_push($output_data_array, $business->stockvalue_value_change);
+            }
+            return $output_data_array;
+
+        } else if($big_five_type == config('app.conscientiousness')){ // conscientiousness - C // Feed in a week's (day 1 - 7) values of stock value changes
+
+        } else if($big_five_type == config('app.extraversion')){ // extraversion - E // Feed in a week's (day 1 - 7) values of stock value changes
+
+        } else if($big_five_type == config('app.agreeableness')){ // agreeableness - A // Feed in a week's (day 1 - 7) values of stock value changes
+
+        } else if($big_five_type == config('app.neuroticism')){ // neuroticism - N // Feed in a week's (day 1 - 7)) values of stock value changes
+
+        } else {
+            return null;
+        }
+    }
+
+    /*
+    |---------------------------------------------------------------------------------------------------
+    |---------------------------------------------------------------------------------------------------
+    | THIS FUNCTION GETS TEST DATA
+    |---------------------------------------------------------------------------------------------------
+    |---------------------------------------------------------------------------------------------------
+    */
+    public static function getTestDataForNeuralNetworkAi($stock_business_id, $big_five_type, $randomize)
+    {
+        if($big_five_type == config('app.openness_to_experience')){ // openness to experience - O // Feed in a week's (day 1 - 7) values of stock value changes
+            // Feed in weekly (day 1 - 7) values of stock value changes 
+            // where those with high changes are 1 and 0 for vice versa
+            // here even the higher changes (0.1+) should record as 1
+            
+            // GETTING THE 7 VALUES OF THE STOCK
+            $businesses = StockValue::select('stockvalue_value_change')
+            ->where('stockvalue_business_id', '=', $stock_business_id)
+            ->orderBy('stockvalue_id', 'desc')->take(7)->get();
+
+            $output_data_array = array();
+            foreach($businesses as $business){
+                array_push($output_data_array, $business->stockvalue_value_change);
+            }
+            return $output_data_array;
+
+        } else if($big_five_type == config('app.conscientiousness')){ // conscientiousness - C // Feed in a week's (day 1 - 7) values of stock value changes
+
+        } else if($big_five_type == config('app.extraversion')){ // extraversion - E // Feed in a week's (day 1 - 7) values of stock value changes
+
+        } else if($big_five_type == config('app.agreeableness')){ // agreeableness - A // Feed in a week's (day 1 - 7) values of stock value changes
+
+        } else if($big_five_type == config('app.neuroticism')){ // neuroticism - N // Feed in a week's (day 1 - 7)) values of stock value changes
+
+        } else {
+            return null;
+        }
+    }
 }
