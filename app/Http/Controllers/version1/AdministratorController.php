@@ -1008,14 +1008,17 @@ class AdministratorController extends Controller
         //|--------------------------------------------------------------------------
     
         // GETTING THE DATA
-        $stocktraindata = StockTrainData::select('stocktraindata_value_change_seven_inputs')
+        $stocktraindata = StockTrainData::select('stocktraindata_value_change_seven_inputs', 'stocktraindata_expected_output_o')
         ->orderBy('stocktraindata_id', 'desc')->get();
 
-        $output_data_array = array();
+        $train_input_data_array = array();
+        $train_onput_data_array = array();
         foreach($stocktraindata as $thisstocktraindata){
-            array_push($output_data_array, $thisstocktraindata->stocktraindata_value_change_seven_inputs);
+            array_push($train_input_data_array, $thisstocktraindata->stocktraindata_value_change_seven_inputs);
+            array_push($train_onput_data_array, $thisstocktraindata->stocktraindata_expected_output_o);
         }
-        var_dump($output_data_array);
+        var_dump($train_onput_data_array);
+        var_dump($train_input_data_array);
         
 
         return response([
