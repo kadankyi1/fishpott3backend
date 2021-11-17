@@ -1008,15 +1008,14 @@ class AdministratorController extends Controller
         //|--------------------------------------------------------------------------
     
         // GETTING THE DATA
-        $businesses = StockValue::select('stockvalue_value_change')
-        ->where('stockvalue_business_id', '=', $stock_business_id)
-        ->orderBy('stockvalue_id', 'desc')->take(7)->get();
+        $stocktraindata = StockTrainData::select('stocktraindata_value_change_seven_inputs')
+        ->orderBy('stocktraindata_id', 'desc')->get();
 
         $output_data_array = array();
-        foreach($businesses as $business){
-            array_push($output_data_array, $business->stockvalue_value_change);
+        foreach($stocktraindata as $thisstocktraindata){
+            array_push($output_data_array, $thisstocktraindata->stocktraindata_value_change_seven_inputs);
         }
-        return $output_data_array;
+        var_dump($output_data_array);
         
 
         return response([
