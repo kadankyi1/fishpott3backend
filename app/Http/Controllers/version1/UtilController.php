@@ -811,11 +811,17 @@ class UtilController extends Controller
                 // Feed in weekly (day 1 - 7) values of stock value changes 
                 // where those with high changes are 0 and 1 for vice versa
                 $n->save(public_path() . "/uploads/ai/nn-c.ini");
-            } else if($training_type == 3){ // extraversion - E // Feed in weekly (day 1 - 7) values of stock value changes
+            } else if($training_type == 3){ // extraversion - E 
+                // Feed in weekly (day 1 - 7) values of stock value changes 
+                // where those with high changes are 0 and 1 for vice versa
                 $n->save(public_path() . "/uploads/ai/nn-e.ini");
-            } else if($training_type == 4){ // agreeableness - A // Feed in weekly (day 1 - 7) values of stock value changes
+            } else if($training_type == 4){ // agreeableness - A 
+                // Feed in weekly (day 1 - 7) values of stock value changes 
+                // where those with high changes are 0 and 1 for vice versa
                 $n->save(public_path() . "/uploads/ai/nn-a.ini");
-            } else if($training_type == 5){ // neuroticism - N // Feed in weekly (day 1 - 7) values of stock value changes
+            } else if($training_type == 5){ // neuroticism - N 
+                // Feed in weekly (day 1 - 7) values of stock value changes 
+                // where those with high changes are 0 and 1 for vice versa
                 $n->save(public_path() . "/uploads/ai/nn-n.ini");
             }
         }
