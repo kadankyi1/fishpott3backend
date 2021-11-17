@@ -25,6 +25,7 @@ class AiStockPersona extends Model
     
     protected $fillable = [
         'aistockpersona_id', 
+        'aistockpersona_stock_business_id', 
         'aistockpersona_openness_to_experience',
         'aistockpersona_conscientiousness',
         'aistockpersona_extraversion',

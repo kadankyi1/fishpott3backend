@@ -806,22 +806,27 @@ class UtilController extends Controller
             if($training_type == 1){ // openness to experience - O 
                 // Feed in weekly (day 1 - 7) values of stock value changes 
                 // where those with high changes are 1 and 0 for vice versa
+                // here even the higher changes (0.1+) should record as 1
                 $n->save(public_path() . "/uploads/ai/nn-o.ini");
             } else if($training_type == 2){ // conscientiousness - C 
-                // Feed in weekly (day 1 - 7) values of stock value changes 
+                // Feed in weekly (day 1 - 7) values of the standard deviation of the stock value changes to the overall change of all hosted stocks 
                 // where those with high changes are 0 and 1 for vice versa
+                // here changes less than 20% should record as 0
                 $n->save(public_path() . "/uploads/ai/nn-c.ini");
             } else if($training_type == 3){ // extraversion - E 
-                // Feed in weekly (day 1 - 7) values of stock value changes 
+                // Feed in weekly (day 1 - 7) values of the standard deviation of the stock value changes to the overall change of all hosted stocks 
                 // where those with high changes are 0 and 1 for vice versa
+                // here changes less than 25% should record as 1
                 $n->save(public_path() . "/uploads/ai/nn-e.ini");
             } else if($training_type == 4){ // agreeableness - A 
-                // Feed in weekly (day 1 - 7) values of stock value changes 
+                // Feed in weekly (day 1 - 7) values of the standard deviation of the stock value changes to the overall change of all hosted stocks 
                 // where those with high changes are 0 and 1 for vice versa
+                // here changes less than 10% should record as 1
                 $n->save(public_path() . "/uploads/ai/nn-a.ini");
             } else if($training_type == 5){ // neuroticism - N 
                 // Feed in weekly (day 1 - 7) values of stock value changes 
                 // where those with high changes are 0 and 1 for vice versa
+                // here even the tiniest changes (0.01+) should record as 1
                 $n->save(public_path() . "/uploads/ai/nn-n.ini");
             }
         }
