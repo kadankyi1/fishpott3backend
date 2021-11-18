@@ -28,6 +28,7 @@ use App\Models\version1\Suggestion;
 use App\Models\version1\DrillAnswer;
 use App\Http\Controllers\ai\NeuralNetworkController;
 use App\Http\Controllers\version1\LogController;
+use App\Models\version1\AiStockPersona;
 
 class UtilController extends Controller
 {
@@ -1020,16 +1021,16 @@ class UtilController extends Controller
         foreach($answers as $answer){
             $this_drill = Drill::where('drill_sys_id', '=', $answer->drill_answer_drill_sys_id)->first();
             if($answer->drill_answer_number == 1){
-                echo "\n\ndrill answer 1: " . $this_drill->drill_answer_1;
+                echo "\n\ndrill answer 1: " . $this_drill->drill_answer_1_ocean;
                 $this_raw_ocean_array = explode("#", $this_drill->drill_answer_1_ocean);
             } else if($answer->drill_answer_number == 2){
-                echo "\n\ndrill answer 2: " . $this_drill->drill_answer_2;
+                echo "\n\ndrill answer 2: " . $this_drill->drill_answer_2_ocean;
                 $this_raw_ocean_array = explode("#", $this_drill->drill_answer_2_ocean);
             } else if($answer->drill_answer_number == 3){
-                echo "\n\ndrill answer 3: " . $this_drill->drill_answer_3;
+                echo "\n\ndrill answer 3: " . $this_drill->drill_answer_3_ocean;
                 $this_raw_ocean_array = explode("#", $this_drill->drill_answer_3_ocean);
             } else if($answer->drill_answer_number == 4){
-                echo "\n\ndrill answer 4: " . $this_drill->drill_answer_4;
+                echo "\n\ndrill answer 4: " . $this_drill->drill_answer_4_ocean;
                 $this_raw_ocean_array = explode("#", $this_drill->drill_answer_4_ocean);
             } else {
                 continue;
@@ -1046,7 +1047,34 @@ class UtilController extends Controller
             $output_data_array["n"] = $output_data_array["n"] + $this_raw_ocean_array[4];
             $count_answers++;
         }
-        var_dump($output_data_array);
+
+        //echo "\n\n count_answers : " . $count_answers . "\n\n"; 
+        //var_dump($output_data_array);
+
+        if($count_answers >= 7){
+            $o = $output_data_array["o"]/$count_answers;
+            $c = $output_data_array["c"]/$count_answers;
+            $e = $output_data_array["e"]/$count_answers;
+            $a = $output_data_array["a"]/$count_answers;
+            $n = $output_data_array["n"]/$count_answers;
+
+            /*
+            echo "\n\n o : " . $o . "%\n\n"; 
+            echo "\n\n c : " . $c . "%\n\n"; 
+            echo "\n\n e : " . $e . "%\n\n"; 
+            echo "\n\n a : " . $a . "%\n\n"; 
+            echo "\n\n n : " . $n . "%\n\n"; 
+            */
+
+            // FINDING A BUSINESS THAT IS 5% CLOSER IN PERSONALITY
+            $answers = AiStockPersona::select('drill_answer_drill_sys_id', 'drill_answer_number')
+            ->where('drill_answer_user_investor_id', '=', $user->investor_id)
+            ->orderBy('drill_answer_id', 'desc')->take(30)->get();
+    
+
+        } else {
+            return false;
+        }
 
     }
 
