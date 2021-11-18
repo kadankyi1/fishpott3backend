@@ -1099,6 +1099,7 @@ class UtilController extends Controller
             $suggestionData["suggestion_item_reference_id"] = $business->business_sys_id;
             $suggestionData["suggestion_directed_at_user_investor_id"] = $user->investor_id;
             $suggestionData["suggestion_directed_at_user_business_find_code"] = $user->user_pottname . date('YmdHis');
+            $suggestionData["suggestion_reason"] = "Your positive personality and how the stock of this business behaves align";
             $suggestionData["suggestion_suggestion_type_id"] = 2;
             $suggestionData["suggestion_passed_on_by_user"] = false;
             $suggestionData["suggestion_notification_sent"] = true;
