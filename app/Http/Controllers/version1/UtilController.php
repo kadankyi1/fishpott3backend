@@ -1002,7 +1002,7 @@ class UtilController extends Controller
     |--------------------------------------------------------------------------
     |--------------------------------------------------------------------------
     */
-    public static function getUserBusinessSuggestion($user)
+    public static function getUserBusinessSuggestion($user, $send_notification)
     {
 
         // GETTING DRILL ANSWERS
@@ -1080,7 +1080,51 @@ class UtilController extends Controller
             ->orderBy('ai_stock_personas.created_at', 'desc')
             ->take(1)
             ->get();
-            echo "\n\n business_id : " . $business_id[0]->aistockpersona_stock_business_id . "\n\n"; 
+            //echo "\n\n business_id : " . $business_id[0]->aistockpersona_stock_business_id . "\n\n"; 
+
+            // CHECKING IF THE BUSINESS EXISTS
+            $business = Business::where('business_sys_id', $business_id[0]->aistockpersona_stock_business_id)->first();
+            if($business == null){
+                return 1;
+            }
+
+            // CHECKING IF USER EXISTS
+            $pott_user = User::where('user_pottname', $user->user_pottname)->first();
+            if($pott_user == null){
+                return 1;
+            }
+
+            // CREATING THE SUGGESTION VALUE DATA FOR BUSINESS
+            $suggestionData["suggestion_sys_id"] = "sug-" . $business->business_sys_id . date('YmdHis');
+            $suggestionData["suggestion_item_reference_id"] = $business->business_sys_id;
+            $suggestionData["suggestion_directed_at_user_investor_id"] = $user->investor_id;
+            $suggestionData["suggestion_directed_at_user_business_find_code"] = $user->user_pottname . date('YmdHis');
+            $suggestionData["suggestion_suggestion_type_id"] = 2;
+            $suggestionData["suggestion_passed_on_by_user"] = false;
+            $suggestionData["suggestion_notification_sent"] = true;
+            $suggestionData["suggestion_flagged"] = false;
+            Suggestion::create($suggestionData);
+            if($send_notification){
+                UtilController::sendNotificationToUser(
+                    config('app.firebase_notification_server_address_link'), 
+                    config('app.firebase_notification_account_key'), 
+                    array($user->user_fcm_token_android, $user->user_fcm_token_web, $user->user_fcm_token_ios),
+                    "normal",
+                    "business-suggestion",
+                    "Stock Suggestion - FishPott",
+                    "You have a new business you can invest in",
+                    "", 
+                    "", 
+                    "", 
+                    "", 
+                    "",
+                    date("F j, Y")
+                );
+            }
+            
+            //echo "\n\n business_id : " . $business_id[0]->aistockpersona_stock_business_id . "\n\n"; 
+
+            return $suggestionData;
         } else {
             return 1;
         }
@@ -1106,38 +1150,15 @@ class UtilController extends Controller
             // user->user_net_worth_usd
             // user's list of persona traits from drill answers
 
-            $suggestion_given = UtilController::getUserBusinessSuggestion($user);
-
-            // SAVING SUGGESTION
-            //$user->user_net_worth_usd = $this_user_net_worth_usd + $user->user_wallet_usd;
-            //$user->user_pott_position = $user_position;
-            //$user->save();
+            $suggestion_given = UtilController::getUserBusinessSuggestion($user, true);
             
             // NOTIFYING USER OF NEW NET WORTH
-            if($suggestion_given){
+            if($suggestion_given != 1){
                 // SENDING NOTIFICATION TO THE USER
-                echo "here 1";
-                /*
-                UtilController::sendNotificationToUser(
-                    config('app.firebase_notification_server_address_link'), 
-                    config('app.firebase_notification_account_key'), 
-                    array($user->user_fcm_token_android, $user->user_fcm_token_web, $user->user_fcm_token_ios),
-                    "normal",
-                    "suggestion-info",
-                    "Business Suggestion - FishPott",
-                    "You have a business you can invest in. Check it out.",
-                    "", 
-                    "", 
-                    "", 
-                    "", 
-                    "",
-                    date("F j, Y")
-                );
-                */
+                //echo "here 1";
             } else {
                 // SENDING NOTIFICATION TO THE USER
-                echo "here 2";
-                /*
+                //echo "here 2";
                 UtilController::sendNotificationToUser(
                     config('app.firebase_notification_server_address_link'), 
                     config('app.firebase_notification_account_key'), 
@@ -1153,7 +1174,6 @@ class UtilController extends Controller
                     "",
                     date("F j, Y")
                 );
-                */
             }
         }
     }
