@@ -14,6 +14,7 @@ use App\Mail\version1\ResetCodeMail;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\version1\LogController;
 use App\Models\version1\Administrator;
+use App\Models\version1\AiStockPersona;
 use App\Models\version1\Business;
 use App\Models\version1\Drill;
 use App\Models\version1\DrillAnswer;
@@ -915,12 +916,14 @@ class AdministratorController extends Controller
         $stockValueData["stockvalue_business_id"] = $request->item_id;
         $stockValueData["stockvalue_value_per_stock_usd"] = floatval($request->new_value);
         $stockValueData["stockvalue_value_change"] = floatval($request->new_change);
-        $stockValueData["stockvalue_value_volume"] = intval($request->new_volume);
+        $stockValueData["stockvalue_volume"] = intval($request->new_volume);
         $stockValueData["stockvalue_admin_adder_id"] = $admin->administrator_sys_id;
         StockValue::create($stockValueData);
 
         // CALCULATING STOCK PERSONA WITH NEW VALUE
         $stocktraindata = StockValue::select('stockvalue_value_change')
+        ->where('stockvalue_business_id', "=" , $request->item_id)
+        ->take(7)
         ->orderBy('stockvalue_id', 'desc')->get();
 
         $raw_train_input_data = "";
@@ -930,20 +933,49 @@ class AdministratorController extends Controller
             } else {
                 $add_input = " # " ;
             }
-            $raw_train_input_data = $raw_train_input_data   . $add_input .  $thisstocktraindata->stocktraindata_value_change_seven_inputs;
+            $raw_train_input_data = $raw_train_input_data   . $add_input .  $thisstocktraindata->stockvalue_value_change;
         }
-        echo "\n\nraw_train_input_data - " . $raw_train_input_data; exit;
+        echo "\n\nraw_train_input_data - " . $raw_train_input_data; 
+        //exit;
 
 
-        $response = UtilController::testNeuralNetworkToGetStockOpennessToExperience($request->input, true, intval($request->test_type));
+        $openness_to_experience = UtilController::testNeuralNetworkToGetStockOpennessToExperience($raw_train_input_data, true, config("app.openness_to_experience"));
+        $conscientiousness = UtilController::testNeuralNetworkToGetStockOpennessToExperience($raw_train_input_data, true, config("app.conscientiousness"));
+        $extraversion = UtilController::testNeuralNetworkToGetStockOpennessToExperience($raw_train_input_data, true, config("app.extraversion"));
+        $agreeableness = UtilController::testNeuralNetworkToGetStockOpennessToExperience($raw_train_input_data, true, config("app.agreeableness"));
+        $neuroticism = UtilController::testNeuralNetworkToGetStockOpennessToExperience($raw_train_input_data, true, config("app.neuroticism"));
+
+        /*
+        echo "\n\openness_to_experience - " . $openness_to_experience; 
+        echo "\n\conscientiousness - " . $conscientiousness; 
+        echo "\n\extraversion - " . $extraversion; 
+        echo "\n\agreeableness - " . $agreeableness; 
+        echo "\n\neuroticism - " . $neuroticism; 
+        exit;
+        */
+
+        // CREATING THE STOCK PERSONA
+        $AiStockPersonaData["aistockpersona_openness_to_experience"] = $openness_to_experience;
+        $AiStockPersonaData["aistockpersona_conscientiousness"] = floatval($conscientiousness);
+        $AiStockPersonaData["aistockpersona_extraversion"] = floatval($extraversion);
+        $AiStockPersonaData["aistockpersona_agreeableness"] = floatval($agreeableness);
+        $AiStockPersonaData["aistockpersona_neuroticism"] = floatval($neuroticism);
+        $AiStockPersonaData["aistockpersona_stock_business_id"] = $request->item_id;
+        AiStockPersona::create($AiStockPersonaData);
+        
+        $new_persona = "Openness_to_experience - " . round($openness_to_experience, 2)
+        . "<br>conscientiousness - " . round($conscientiousness, 2)
+        . "<br>extraversion - " . round($extraversion, 2)
+        . "<br>agreeableness - " . round($agreeableness, 2)
+        . "<br>euroticism - " . round($neuroticism, 2); 
 
         return response([
             "status" => 1, 
-            "message" => "New stock value saved"
+            "message" => "New stock value saved. $new_persona"
         ]);
     }
 
-        /*
+    /*
     |--------------------------------------------------------------------------
     |--------------------------------------------------------------------------
     | THIS FUNCTION ADDS A DRILL
