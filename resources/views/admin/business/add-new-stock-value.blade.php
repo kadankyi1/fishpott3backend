@@ -50,6 +50,18 @@ $page_title = "Based on factual information, add a business' new stock value";
                                         </div>
                                     </div>
                                     <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label">New Change</label>
+                                        <div class="col-sm-10">
+                                            <input id="new_change" name="new_change" type="number" step="any" required class="form-control" placeholder="New Change">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label">New Volume</label>
+                                        <div class="col-sm-10">
+                                            <input id="new_volume" name="new_volume" type="number"  required class="form-control" placeholder="New Volume">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">PIN</label>
                                         <div class="col-sm-10">
                                             <input id="administrator_pin" name="administrator_pin" type="password" required class="form-control" placeholder="PIN">

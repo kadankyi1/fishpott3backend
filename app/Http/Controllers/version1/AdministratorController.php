@@ -285,11 +285,15 @@ class AdministratorController extends Controller
             "administrator_pin" => "bail|required",
             "frontend_key" => "bail|required",
             // ADD ANY OTHER REQUIRED INPUTS FROM HERE
-            "drill_question" => "min:5|max:100",
-            "drill_answer_1" => "min:2|max:100",
-            "drill_answer_2" => "min:2|max:100",
-            "drill_answer_3" => "max:100",
-            "drill_answer_4" => "max:100",
+            "drill_question" => "bail|required|min:5|max:100",
+            "drill_answer_1" => "bail|required|min:2|max:100",
+            "drill_answer_2" => "bail|required|min:2|max:100",
+            "drill_answer_3" => "bail|required|max:100",
+            "drill_answer_4" => "bail|required|max:100",
+            "drill_answer_1_ocean" => "bail|required|max:100",
+            "drill_answer_2_ocean" => "bail|required|max:100",
+            "drill_answer_3_ocean" => "bail|required|max:100",
+            "drill_answer_4_ocean" => "bail|required|max:100",
         ]);
 
         // MAKING SURE THE REQUEST AND USER IS VALIDATED
@@ -305,6 +309,18 @@ class AdministratorController extends Controller
         |**************************************************************************
         */
 
+        if(
+            count(explode("#", $request->drill_answer_1_ocean)) != 5 
+            || count(explode("#", $request->drill_answer_2_ocean)) != 5
+            || count(explode("#", $request->drill_answer_3_ocean)) != 5
+            || count(explode("#", $request->drill_answer_4_ocean)) != 5
+            ){
+            return response([
+                "status" => 0, 
+                "message" => "The Ocean values for the answers have to be 5 percentage values seperated by #. Do not include the % sign"
+            ]);
+        }
+
         //CREATING THE USER DATA TO ADD TO DB
         $drillData["drill_sys_id"] = "drill-" . $admin->administrator_user_pottname . "-" . substr($validatedData["administrator_phone_number"] ,1,strlen($validatedData["administrator_phone_number"])) . date("Y-m-d-H-i-s") . UtilController::getRandomString(50);
         $drillData["drill_question"] = $validatedData["drill_question"];
@@ -316,10 +332,11 @@ class AdministratorController extends Controller
         if(!empty($validatedData["drill_answer_4"])){
             $drillData["drill_answer_4"] = $validatedData["drill_answer_4"];
         }
-        $drillData["drill_answer_implied_traits_1"] = "";
-        $drillData["drill_answer_implied_traits_2"] = "";
-        $drillData["drill_answer_implied_traits_3"] = "";
-        $drillData["drill_answer_implied_traits_4"] = "";
+        
+        $drillData["drill_answer_1_ocean"] = $validatedData["drill_answer_1_ocean"];
+        $drillData["drill_answer_2_ocean"] = $validatedData["drill_answer_2_ocean"];
+        $drillData["drill_answer_3_ocean"] = $validatedData["drill_answer_3_ocean"];
+        $drillData["drill_answer_4_ocean"] = $validatedData["drill_answer_4_ocean"];
         $drillData["drill_maker_investor_id"] = $admin->administrator_user_pott_investor_id;
         Drill::create($drillData);
 
@@ -891,7 +908,7 @@ class AdministratorController extends Controller
         ]);
 
         // MAKING SURE THE REQUEST AND USER IS VALIDATED
-        $validation_response = UtilController::validateAdminWithAuthToken($request, auth()->guard('administrator-api')->user(), "add-drill");
+        $validation_response = UtilController::validateAdminWithAuthToken($request, auth()->guard('administrator-api')->user(), "work-ai");
         if(!empty($validation_response["status"]) && trim($validation_response["status"]) == "error"){
             return response($validation_response);
         } else {
@@ -935,7 +952,7 @@ class AdministratorController extends Controller
             }
             $raw_train_input_data = $raw_train_input_data   . $add_input .  $thisstocktraindata->stockvalue_value_change;
         }
-        echo "\n\nraw_train_input_data - " . $raw_train_input_data; 
+        //echo "\n\nraw_train_input_data - " . $raw_train_input_data; 
         //exit;
 
 
