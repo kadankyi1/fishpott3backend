@@ -1011,7 +1011,7 @@ class UtilController extends Controller
         ->orderBy('drill_answer_id', 'desc')->take(30)->get();
 
         if(count($answers) < 7){
-            return false;
+            return 1;
         }
 
         // INITIALIZING ARRAY
@@ -1021,16 +1021,16 @@ class UtilController extends Controller
         foreach($answers as $answer){
             $this_drill = Drill::where('drill_sys_id', '=', $answer->drill_answer_drill_sys_id)->first();
             if($answer->drill_answer_number == 1){
-                echo "\n\ndrill answer 1: " . $this_drill->drill_answer_1_ocean;
+                //echo "\n\ndrill answer 1: " . $this_drill->drill_answer_1_ocean;
                 $this_raw_ocean_array = explode("#", $this_drill->drill_answer_1_ocean);
             } else if($answer->drill_answer_number == 2){
-                echo "\n\ndrill answer 2: " . $this_drill->drill_answer_2_ocean;
+                //echo "\n\ndrill answer 2: " . $this_drill->drill_answer_2_ocean;
                 $this_raw_ocean_array = explode("#", $this_drill->drill_answer_2_ocean);
             } else if($answer->drill_answer_number == 3){
-                echo "\n\ndrill answer 3: " . $this_drill->drill_answer_3_ocean;
+                //echo "\n\ndrill answer 3: " . $this_drill->drill_answer_3_ocean;
                 $this_raw_ocean_array = explode("#", $this_drill->drill_answer_3_ocean);
             } else if($answer->drill_answer_number == 4){
-                echo "\n\ndrill answer 4: " . $this_drill->drill_answer_4_ocean;
+                //echo "\n\ndrill answer 4: " . $this_drill->drill_answer_4_ocean;
                 $this_raw_ocean_array = explode("#", $this_drill->drill_answer_4_ocean);
             } else {
                 continue;
@@ -1063,17 +1063,26 @@ class UtilController extends Controller
             echo "\n\n c : " . $c . "%\n\n"; 
             echo "\n\n e : " . $e . "%\n\n"; 
             echo "\n\n a : " . $a . "%\n\n"; 
-            echo "\n\n n : " . $n . "%\n\n"; 
+            echo "\n\n n : " . $n . "%\n\n";
             */
+            
 
             // FINDING A BUSINESS THAT IS 5% CLOSER IN PERSONALITY
-            $answers = AiStockPersona::select('drill_answer_drill_sys_id', 'drill_answer_number')
-            ->where('drill_answer_user_investor_id', '=', $user->investor_id)
-            ->orderBy('drill_answer_id', 'desc')->take(30)->get();
-    
 
+            $business_id = DB::table('ai_stock_personas')
+            ->select('ai_stock_personas.aistockpersona_stock_business_id')
+            ->join('businesses', 'ai_stock_personas.aistockpersona_stock_business_id', '=', 'businesses.business_sys_id')
+            ->whereBetween('aistockpersona_openness_to_experience', [$o-5, $o+5])
+            ->whereBetween('aistockpersona_conscientiousness', [$c-5, $c+5])
+            ->whereBetween('aistockpersona_extraversion', [$e-5, $e+5])
+            ->whereBetween('aistockpersona_agreeableness', [$a-5, $a+5])
+            ->whereBetween('aistockpersona_neuroticism', [$n-5, $n+5])
+            ->orderBy('ai_stock_personas.created_at', 'desc')
+            ->take(1)
+            ->get();
+            echo "\n\n business_id : " . $business_id[0]->aistockpersona_stock_business_id . "\n\n"; 
         } else {
-            return false;
+            return 1;
         }
 
     }
