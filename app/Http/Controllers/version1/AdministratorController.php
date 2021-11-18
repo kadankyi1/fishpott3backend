@@ -919,6 +919,24 @@ class AdministratorController extends Controller
         $stockValueData["stockvalue_admin_adder_id"] = $admin->administrator_sys_id;
         StockValue::create($stockValueData);
 
+        // CALCULATING STOCK PERSONA WITH NEW VALUE
+        $stocktraindata = StockValue::select('stockvalue_value_change')
+        ->orderBy('stockvalue_id', 'desc')->get();
+
+        $raw_train_input_data = "";
+        foreach($stocktraindata as $key => $thisstocktraindata){
+            if($key == 0){
+                $add_input =  "" ;
+            } else {
+                $add_input = " # " ;
+            }
+            $raw_train_input_data = $raw_train_input_data   . $add_input .  $thisstocktraindata->stocktraindata_value_change_seven_inputs;
+        }
+        echo "\n\nraw_train_input_data - " . $raw_train_input_data; exit;
+
+
+        $response = UtilController::testNeuralNetworkToGetStockOpennessToExperience($request->input, true, intval($request->test_type));
+
         return response([
             "status" => 1, 
             "message" => "New stock value saved"
