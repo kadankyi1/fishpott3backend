@@ -51,6 +51,12 @@ $page_title = "Suggest a business to a user";
                                         </div>
                                     </div>
                                     <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label">Suggestion Reason(The user will see this)</label>
+                                        <div class="col-sm-10">
+                                            <input id="suggestion_reason" name="suggestion_reason" maxlength="100" type="text" required class="form-control" placeholder="Suggestion Reason">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">PIN</label>
                                         <div class="col-sm-10">
                                             <input id="administrator_pin" name="administrator_pin" type="password" required class="form-control" placeholder="PIN">

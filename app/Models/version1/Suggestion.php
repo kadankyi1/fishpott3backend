@@ -28,6 +28,7 @@ class Suggestion extends Model
         'suggestion_item_reference_id',
         'suggestion_directed_at_user_investor_id',
         'suggestion_directed_at_user_business_find_code',
+        'suggestion_reason',
         'suggestion_notification_sent',
         'suggestion_passed_on_by_user',
         'suggestion_flagged',

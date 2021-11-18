@@ -19,6 +19,7 @@ class CreateSuggestionsTable extends Migration
             $table->string('suggestion_item_reference_id', 255);
             $table->string('suggestion_directed_at_user_investor_id', 255);
             $table->string('suggestion_directed_at_user_business_find_code', 255);
+            $table->string('suggestion_reason', 255)->default('');
             $table->boolean('suggestion_notification_sent')->default(false);
             $table->boolean('suggestion_passed_on_by_user')->default(false);
             $table->boolean('suggestion_flagged')->default(false);

@@ -764,6 +764,7 @@ class AdministratorController extends Controller
             "item_id" => "bail|required",
             "item_type" => "bail|required|integer",
             "user_pottname" => "nullable|string",
+            "suggestion_reason" => "nullable|string",
         ]);
 
         // MAKING SURE THE REQUEST AND USER IS VALIDATED
@@ -840,6 +841,7 @@ class AdministratorController extends Controller
             $suggestionData["suggestion_directed_at_user_investor_id"] = $pott_user->investor_id;
             $suggestionData["suggestion_directed_at_user_business_find_code"] = $pott_user->user_pottname . date('YmdHis');
             $suggestionData["suggestion_suggestion_type_id"] = $request->item_type;
+            $suggestionData["suggestion_reason"] = $request->suggestion_reason;
             $message = "Suggestion saved. Find code is : " . $suggestionData["suggestion_directed_at_user_business_find_code"];
 
             // SENDING NOTIFICATION TO THE USER
