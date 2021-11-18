@@ -44,9 +44,21 @@ $page_title = "Add a new question to be used as a drill";
                                         </div>
                                     </div>
                                     <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label">First Answer OCEAN</label>
+                                        <div class="col-sm-10">
+                                            <input id="drill_answer_1_ocean" minlength="2" maxlength="100" name="drill_answer_1_ocean" type="text" class="form-control" placeholder="First Answer OCEAN  (Eg: 98 # 82 # 21 # 43 # 11 )">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">Second Answer</label>
                                         <div class="col-sm-10">
                                             <input id="drill_answer_2" minlength="2" maxlength="100"  name="drill_answer_2" type="text" class="form-control" placeholder="Second Answer">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label">Second Answer OCEAN</label>
+                                        <div class="col-sm-10">
+                                            <input id="drill_answer_2_ocean" minlength="2" maxlength="100" name="drill_answer_2_ocean" type="text" class="form-control" placeholder="Second Answer OCEAN  (Eg: 98 # 82 # 21 # 43 # 11 )">
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -56,9 +68,21 @@ $page_title = "Add a new question to be used as a drill";
                                         </div>
                                     </div>
                                     <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label">Third Answer OCEAN</label>
+                                        <div class="col-sm-10">
+                                            <input id="drill_answer_3_ocean" minlength="2" maxlength="100" name="drill_answer_3_ocean" type="text" class="form-control" placeholder="Third Answer OCEAN  (Eg: 98 # 82 # 21 # 43 # 11 )">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">Fourth Answer</label>
                                         <div class="col-sm-10">
                                             <input id="drill_answer_4" minlength="2" maxlength="100"  name="drill_answer_4" type="text" class="form-control" placeholder="Fourth Answer">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label">Fourth Answer OCEAN</label>
+                                        <div class="col-sm-10">
+                                            <input id="drill_answer_4_ocean" minlength="2" maxlength="100" name="drill_answer_4_ocean" type="text" class="form-control" placeholder="Fourth Answer OCEAN  (Eg: 98 # 82 # 21 # 43 # 11 )">
                                         </div>
                                     </div>
                                     <div class="form-group row">

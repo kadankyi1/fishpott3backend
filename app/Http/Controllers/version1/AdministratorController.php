@@ -1468,11 +1468,11 @@ class AdministratorController extends Controller
             "test_type" => "bail|required|string",
         ]);
 
-        $response = UtilController::getDataForNeuralNetworkAi($request->input, intval($request->test_type), true);
+        $response = UtilController::matchUsersToABusinesses();
         
-        return response([
-            "response" => $response
-        ]);
+        //return response([
+        //    "response" => $response
+        //]);
         
     }
 }

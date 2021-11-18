@@ -994,4 +994,131 @@ class UtilController extends Controller
             return null;
         }
     }
+    /*
+    |--------------------------------------------------------------------------
+    |--------------------------------------------------------------------------
+    | THIS FUNCTION CALCULATES USERS NETWORTH AND POSITION
+    |--------------------------------------------------------------------------
+    |--------------------------------------------------------------------------
+    */
+    public static function getUserBusinessSuggestion($user)
+    {
+
+        // GETTING DRILL ANSWERS
+        $answers = DrillAnswer::select('drill_answer_drill_sys_id', 'drill_answer_number')
+        ->where('drill_answer_user_investor_id', '=', $user->investor_id)
+        ->orderBy('drill_answer_id', 'desc')->take(30)->get();
+
+        if(count($answers) < 7){
+            return false;
+        }
+
+        // INITIALIZING ARRAY
+        $output_data_array = array('o' => 0,'c' => 0,'e' => 0,'a' => 0,'n' => 0);
+
+        $count_answers = 0;
+        foreach($answers as $answer){
+            $this_drill = Drill::where('drill_sys_id', '=', $answer->drill_answer_drill_sys_id)->first();
+            if($answer->drill_answer_number == 1){
+                echo "\n\ndrill answer 1: " . $this_drill->drill_answer_1;
+                $this_raw_ocean_array = explode("#", $this_drill->drill_answer_1_ocean);
+            } else if($answer->drill_answer_number == 2){
+                echo "\n\ndrill answer 2: " . $this_drill->drill_answer_2;
+                $this_raw_ocean_array = explode("#", $this_drill->drill_answer_2_ocean);
+            } else if($answer->drill_answer_number == 3){
+                echo "\n\ndrill answer 3: " . $this_drill->drill_answer_3;
+                $this_raw_ocean_array = explode("#", $this_drill->drill_answer_3_ocean);
+            } else if($answer->drill_answer_number == 4){
+                echo "\n\ndrill answer 4: " . $this_drill->drill_answer_4;
+                $this_raw_ocean_array = explode("#", $this_drill->drill_answer_4_ocean);
+            } else {
+                continue;
+            }
+
+            if(count($this_raw_ocean_array) != 5){
+                continue;
+            }
+            
+            $output_data_array["o"] = $output_data_array["o"] + $this_raw_ocean_array[0];
+            $output_data_array["c"] = $output_data_array["c"] + $this_raw_ocean_array[1];
+            $output_data_array["e"] = $output_data_array["e"] + $this_raw_ocean_array[2];
+            $output_data_array["a"] = $output_data_array["a"] + $this_raw_ocean_array[3];
+            $output_data_array["n"] = $output_data_array["n"] + $this_raw_ocean_array[4];
+            $count_answers++;
+        }
+        var_dump($output_data_array);
+
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    |--------------------------------------------------------------------------
+    | THIS FUNCTION CALCULATES USERS NETWORTH AND POSITION
+    |--------------------------------------------------------------------------
+    |--------------------------------------------------------------------------
+    */
+    public static function matchUsersToABusinesses()
+    {
+        // GETTING ALL USERS
+        $users = User::orderBy('last_online', 'DESC')->get();
+        foreach($users as $user){
+            $suggestion_given = false;
+
+            // suggestion_given
+            // user->user_net_worth_usd
+            // user's list of persona traits from drill answers
+
+            $suggestion_given = UtilController::getUserBusinessSuggestion($user);
+
+            // SAVING SUGGESTION
+            //$user->user_net_worth_usd = $this_user_net_worth_usd + $user->user_wallet_usd;
+            //$user->user_pott_position = $user_position;
+            //$user->save();
+            
+            // NOTIFYING USER OF NEW NET WORTH
+            if($suggestion_given){
+                // SENDING NOTIFICATION TO THE USER
+                echo "here 1";
+                /*
+                UtilController::sendNotificationToUser(
+                    config('app.firebase_notification_server_address_link'), 
+                    config('app.firebase_notification_account_key'), 
+                    array($user->user_fcm_token_android, $user->user_fcm_token_web, $user->user_fcm_token_ios),
+                    "normal",
+                    "suggestion-info",
+                    "Business Suggestion - FishPott",
+                    "You have a business you can invest in. Check it out.",
+                    "", 
+                    "", 
+                    "", 
+                    "", 
+                    "",
+                    date("F j, Y")
+                );
+                */
+            } else {
+                // SENDING NOTIFICATION TO THE USER
+                echo "here 2";
+                /*
+                UtilController::sendNotificationToUser(
+                    config('app.firebase_notification_server_address_link'), 
+                    config('app.firebase_notification_account_key'), 
+                    array($user->user_fcm_token_android, $user->user_fcm_token_web, $user->user_fcm_token_ios),
+                    "normal",
+                    "suggestion-info",
+                    "Pott Failed - FishPott",
+                    "No business suggestion. Your pott is not smart enough.",
+                    "", 
+                    "", 
+                    "", 
+                    "", 
+                    "",
+                    date("F j, Y")
+                );
+                */
+            }
+        }
+    }
+
 }
