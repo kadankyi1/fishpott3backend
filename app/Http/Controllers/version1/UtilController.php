@@ -1061,13 +1061,13 @@ class UtilController extends Controller
             $a = $output_data_array["a"]/$count_answers;
             $n = $output_data_array["n"]/$count_answers;
 
-            /*
+            
             echo "\n\n o : " . $o . "%\n\n"; 
             echo "\n\n c : " . $c . "%\n\n"; 
             echo "\n\n e : " . $e . "%\n\n"; 
             echo "\n\n a : " . $a . "%\n\n"; 
             echo "\n\n n : " . $n . "%\n\n";
-            */
+            
             
 
             // FINDING A BUSINESS THAT IS 5% CLOSER IN PERSONALITY
@@ -1086,6 +1086,9 @@ class UtilController extends Controller
             //echo "\n\n business_id : " . $business_id[0]->aistockpersona_stock_business_id . "\n\n"; 
 
             // CHECKING IF THE BUSINESS EXISTS
+            if(empty($business_id[0])){
+                return 1;
+            }
             $business = Business::where('business_sys_id', $business_id[0]->aistockpersona_stock_business_id)->first();
             if($business == null){
                 return 1;
