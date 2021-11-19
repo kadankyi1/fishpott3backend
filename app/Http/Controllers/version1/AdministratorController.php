@@ -988,7 +988,7 @@ class AdministratorController extends Controller
         . "<br>conscientiousness - " . round($conscientiousness, 2)
         . "<br>extraversion - " . round($extraversion, 2)
         . "<br>agreeableness - " . round($agreeableness, 2)
-        . "<br>euroticism - " . round($neuroticism, 2); 
+        . "<br>neuroticism - " . round($neuroticism, 2); 
 
         return response([
             "status" => 1, 
