@@ -1212,9 +1212,10 @@ class AdministratorController extends Controller
         // TRAINING
         UtilController::trainNeuralNetwork($raw_train_input_data, $raw_train_output_data, config('app.neuroticism'));
 
-        //return response([
-        //    "response" => $response . "%"
-        //]);
+        return response([
+            "status" => 1, 
+            "message" => "Train data added and neural network trained"
+        ]);
     }
 
 
