@@ -974,13 +974,15 @@ class AdministratorController extends Controller
         */
 
         // CREATING THE STOCK PERSONA
-        $AiStockPersonaData["aistockpersona_openness_to_experience"] = $openness_to_experience;
-        $AiStockPersonaData["aistockpersona_conscientiousness"] = floatval($conscientiousness);
-        $AiStockPersonaData["aistockpersona_extraversion"] = floatval($extraversion);
-        $AiStockPersonaData["aistockpersona_agreeableness"] = floatval($agreeableness);
-        $AiStockPersonaData["aistockpersona_neuroticism"] = floatval($neuroticism);
-        $AiStockPersonaData["aistockpersona_stock_business_id"] = $request->item_id;
-        AiStockPersona::create($AiStockPersonaData);
+        if($openness_to_experience != null){
+            $AiStockPersonaData["aistockpersona_openness_to_experience"] = $openness_to_experience;
+            $AiStockPersonaData["aistockpersona_conscientiousness"] = floatval($conscientiousness);
+            $AiStockPersonaData["aistockpersona_extraversion"] = floatval($extraversion);
+            $AiStockPersonaData["aistockpersona_agreeableness"] = floatval($agreeableness);
+            $AiStockPersonaData["aistockpersona_neuroticism"] = floatval($neuroticism);
+            $AiStockPersonaData["aistockpersona_stock_business_id"] = $request->item_id;
+            AiStockPersona::create($AiStockPersonaData);
+        }
         
         $new_persona = "Openness_to_experience - " . round($openness_to_experience, 2)
         . "<br>conscientiousness - " . round($conscientiousness, 2)
