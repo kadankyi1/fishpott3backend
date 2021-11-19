@@ -938,6 +938,9 @@ class UtilController extends Controller
         $raw_input_array = explode("#", $raw_input);
         $normalized_input_data_array = UtilController::normalizeDataSet($raw_input_array, false); 
 
+        if(count($raw_input_array) != 7){
+            return null;
+        }
         // CALCULATING THE CRITERIA
         $output = $n->calculate($normalized_input_data_array);
         /*
