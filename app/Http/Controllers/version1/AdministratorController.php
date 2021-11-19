@@ -1442,6 +1442,10 @@ class AdministratorController extends Controller
 
         $response = UtilController::trainNeuralNetwork($request->input, $request->output, intval($request->train_type));
 
+        return response([
+            "status" => 1, 
+            "message" => "Train done"
+        ]);
         /*
         return response([
             "response" => $response
