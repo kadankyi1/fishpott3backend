@@ -830,7 +830,7 @@ public function changePasswordWithResetCode(Request $request)
 
         // CHECKING IF USER HAS A SUGGESTION IS BROADCASTING THAT IS NOT MORE THAN 1 HOURS OR NOT MARKED AS PASS ON
         $suggestion = UtilController::getSuggestionMadeToUser($user->investor_id);
-        //echo "suggestion->suggestion_item_reference_id: " . $suggestion->suggestion_item_reference_id; exit;
+        echo "suggestion->suggestion_item_reference_id: " . $suggestion->suggestion_item_reference_id; exit;
         //echo " intval(config('app.timedurationinhoursforsuggestions')): " . intval(config('app.timedurationinhoursforsuggestions')); 
         //echo "\n hours passed: " . UtilController::getDateDiff($suggestion->created_at, date('Y-m-d H:i:s'), "hours"); exit;
 
@@ -892,7 +892,7 @@ public function changePasswordWithResetCode(Request $request)
             $suggestion = Drill::where('drill_sys_id', $suggestion->suggestion_item_reference_id)->first();
             $message = "drill";
             $country_real_name = "";
-        }else if($suggestion->suggestion_type == SuggestionTypes::where('suggestion_type_name', 'Business')){
+        } else if($suggestion->suggestion_type == SuggestionTypes::where('suggestion_type_name', 'Business')){
             $suggestion = Business::where('business_sys_id', $suggestion->suggestion_item_reference_id)->first();
             $message = "business";
             $country = Country::where('country_id', '=', $suggestion->business_country_id)->first();
