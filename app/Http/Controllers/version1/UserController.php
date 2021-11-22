@@ -830,11 +830,12 @@ public function changePasswordWithResetCode(Request $request)
 
         // CHECKING IF USER HAS A SUGGESTION IS BROADCASTING THAT IS NOT MORE THAN 1 HOURS OR NOT MARKED AS PASS ON
         $suggestion = UtilController::getSuggestionMadeToUser($user->investor_id);
-        echo "suggestion->suggestion_item_reference_id: " . $suggestion->suggestion_item_reference_id; exit;
+        //echo "suggestion->suggestion_item_reference_id: " . $suggestion->suggestion_item_reference_id; exit;
         //echo " intval(config('app.timedurationinhoursforsuggestions')): " . intval(config('app.timedurationinhoursforsuggestions')); 
         //echo "\n hours passed: " . UtilController::getDateDiff($suggestion->created_at, date('Y-m-d H:i:s'), "hours"); exit;
 
         if ($suggestion != null && UtilController::getDateDiff($suggestion->created_at, date('Y-m-d H:i:s'), "hours") < intval(config('app.timedurationinhoursforsuggestions'))) {
+            echo "here 1"; exit;
             $suggestion = Business::where('business_sys_id', $suggestion->suggestion_item_reference_id)->first();
             $message = "business";
             $country = Country::where('country_id', '=', $suggestion->business_country_id)->first();
@@ -870,6 +871,8 @@ public function changePasswordWithResetCode(Request $request)
             ]);
         }
 
+        echo "here 2"; exit;
+
         // CHECKING FOR A NEW DRILL SUGGESTION IF NO BUSINESS SUGGESTION IS BROADCASTING AND IF THE OLD SUGGESTION HAS BEEN EXPIRED IF IT'S A QUESTION.
         $suggestion = UtilController::getLatestSuggestion();
 
@@ -889,10 +892,14 @@ public function changePasswordWithResetCode(Request $request)
         //echo "getSuggestionType: " . UtilController::getSuggestionType("suggestion_type_name", "Business", 1);
         //echo "suggestion->suggestion_item_reference_id: " . $suggestion->suggestion_item_reference_id; exit;
         if($suggestion->suggestion_suggestion_type_id == UtilController::getSuggestionType("suggestion_type_name", "Drill", 1)){
+            echo "here 3"; exit;
+
             $suggestion = Drill::where('drill_sys_id', $suggestion->suggestion_item_reference_id)->first();
             $message = "drill";
             $country_real_name = "";
         } else if($suggestion->suggestion_type == SuggestionTypes::where('suggestion_type_name', 'Business')){
+            echo "here 4"; exit;
+
             $suggestion = Business::where('business_sys_id', $suggestion->suggestion_item_reference_id)->first();
             $message = "business";
             $country = Country::where('country_id', '=', $suggestion->business_country_id)->first();
