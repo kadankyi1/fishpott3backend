@@ -871,7 +871,7 @@ public function changePasswordWithResetCode(Request $request)
             ]);
         }
 
-        echo "here 2"; exit;
+        //echo "here 2"; exit;
 
         // CHECKING FOR A NEW DRILL SUGGESTION IF NO BUSINESS SUGGESTION IS BROADCASTING AND IF THE OLD SUGGESTION HAS BEEN EXPIRED IF IT'S A QUESTION.
         $suggestion = UtilController::getLatestSuggestion();
