@@ -835,6 +835,7 @@ public function changePasswordWithResetCode(Request $request)
         //echo "\n hours passed: " . UtilController::getDateDiff($suggestion->created_at, date('Y-m-d H:i:s'), "hours"); exit;
 
         if ($suggestion != null && UtilController::getDateDiff($suggestion->created_at, date('Y-m-d H:i:s'), "hours") < intval(config('app.timedurationinhoursforsuggestions'))) {
+            echo "\n\n<br><br>here 1";
             $suggestion = Business::where('business_sys_id', $suggestion->suggestion_item_reference_id)->first();
             $message = "business";
             $country = Country::where('country_id', '=', $suggestion->business_country_id)->first();
@@ -889,6 +890,7 @@ public function changePasswordWithResetCode(Request $request)
         //echo "getSuggestionType: " . UtilController::getSuggestionType("suggestion_type_name", "Business", 1);
         //echo "suggestion->suggestion_item_reference_id: " . $suggestion->suggestion_item_reference_id; exit;
         if($suggestion->suggestion_suggestion_type_id == UtilController::getSuggestionType("suggestion_type_name", "Drill", 1)){
+            echo "\n\n<br><br>here 1";
             $suggestion = Drill::where('drill_sys_id', $suggestion->suggestion_item_reference_id)->first();
             $message = "drill";
             $country_real_name = "";
