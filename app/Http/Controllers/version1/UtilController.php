@@ -1061,12 +1061,13 @@ class UtilController extends Controller
             $a = $output_data_array["a"]/$count_answers;
             $n = $output_data_array["n"]/$count_answers;
 
-            
+            /*
             echo "\n\n o : " . $o . "%\n\n"; 
             echo "\n\n c : " . $c . "%\n\n"; 
             echo "\n\n e : " . $e . "%\n\n"; 
             echo "\n\n a : " . $a . "%\n\n"; 
             echo "\n\n n : " . $n . "%\n\n";
+            */
             
             
 
