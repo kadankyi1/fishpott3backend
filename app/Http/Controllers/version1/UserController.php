@@ -890,14 +890,11 @@ public function changePasswordWithResetCode(Request $request)
         //echo "getSuggestionType: " . UtilController::getSuggestionType("suggestion_type_name", "Business", 1);
         //echo "suggestion->suggestion_item_reference_id: " . $suggestion->suggestion_item_reference_id; exit;
         if($suggestion->suggestion_suggestion_type_id == UtilController::getSuggestionType("suggestion_type_name", "Drill", 1)){
-            echo "\n\n<br><br>here 1";
+            echo "\n\n<br><br>here 2";
             $suggestion = Drill::where('drill_sys_id', $suggestion->suggestion_item_reference_id)->first();
             $message = "drill";
             $country_real_name = "";
-        }
-        
-        /*
-        else if($suggestion->suggestion_type == SuggestionTypes::where('suggestion_type_name', 'Business')){
+        } else if($suggestion->suggestion_type == SuggestionTypes::where('suggestion_type_name', 'Business')){
             $suggestion = Business::where('business_sys_id', $suggestion->suggestion_item_reference_id)->first();
             $message = "business";
             $country = Country::where('country_id', '=', $suggestion->business_country_id)->first();
@@ -907,11 +904,19 @@ public function changePasswordWithResetCode(Request $request)
                     "message" => "Country validation error."
                 ]);
             }
+
+            // REFORMATTING NEEDED VALUES
             $suggestion->business_country = $country->country_real_name;
             $suggestion->business_logo = config('app.url') . '/uploads/logos/' . $suggestion->business_logo;
+            $suggestion->business_pitch_video = config('app.url') . '/uploads/pitchvideos/' . $suggestion->business_pitch_video;
             $suggestion->business_full_financial_report_pdf_url = config('app.url') . '/uploads/financedata/' . $suggestion->business_full_financial_report_pdf_url;
+            $suggestion->business_net_worth_usd = "$" . UtilController::formatNumberShort($suggestion->business_net_worth_usd);
+            $suggestion->business_lastyr_revenue_usd = "$" . UtilController::formatNumberShort($suggestion->business_lastyr_revenue_usd);
+            $suggestion->business_lastyr_profit_or_loss_usd = "$" . UtilController::formatNumberShort($suggestion->business_lastyr_profit_or_loss_usd);
+            $suggestion->business_debt_usd = "$" . UtilController::formatNumberShort($suggestion->business_debt_usd);
+            $suggestion->business_cash_on_hand_usd = "$" . UtilController::formatNumberShort($suggestion->business_cash_on_hand_usd);
+            $suggestion->business_investments_amount_needed_usd = "$" . UtilController::formatNumberShort($suggestion->business_investments_amount_needed_usd);
         }
-        */
 
         return response([
             "status" => 1, 
