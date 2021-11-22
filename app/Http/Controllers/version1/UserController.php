@@ -887,8 +887,8 @@ public function changePasswordWithResetCode(Request $request)
         }
 
         // CHECKING SUGGESTION TYPE TO GET IT'S INFO
-        //echo "getSuggestionType: " . UtilController::getSuggestionType("suggestion_type_name", "Business", 1);
-        //echo "suggestion->suggestion_item_reference_id: " . $suggestion->suggestion_item_reference_id; exit;
+        echo "\n\n<br><br>getSuggestionType: " . UtilController::getSuggestionType("suggestion_type_name", "Business", 1);
+        echo "\n\n<br><br>suggestion->suggestion_item_reference_id: " . $suggestion->suggestion_item_reference_id; exit;
         if($suggestion->suggestion_suggestion_type_id == UtilController::getSuggestionType("suggestion_type_name", "Drill", 1)){
             echo "\n\n<br><br>here 2";
             $suggestion = Drill::where('drill_sys_id', $suggestion->suggestion_item_reference_id)->first();
