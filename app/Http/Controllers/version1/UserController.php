@@ -835,7 +835,7 @@ public function changePasswordWithResetCode(Request $request)
         //echo "\n hours passed: " . UtilController::getDateDiff($suggestion->created_at, date('Y-m-d H:i:s'), "hours"); exit;
 
         if ($suggestion != null && UtilController::getDateDiff($suggestion->created_at, date('Y-m-d H:i:s'), "hours") < intval(config('app.timedurationinhoursforsuggestions'))) {
-            echo "\n\n<br><br>here 1";
+            //echo "\n\n<br><br>here 1";
             $suggestion = Business::where('business_sys_id', $suggestion->suggestion_item_reference_id)->first();
             $message = "business";
             $country = Country::where('country_id', '=', $suggestion->business_country_id)->first();
@@ -887,17 +887,16 @@ public function changePasswordWithResetCode(Request $request)
         }
 
         // CHECKING SUGGESTION TYPE TO GET IT'S INFO
-        echo "\n\n<br><br>getSuggestionType: " . UtilController::getSuggestionType("suggestion_type_name", "Business", 1);
-        echo "\n\n<br><br>suggestion->suggestion_suggestion_type_id: " . $suggestion->suggestion_suggestion_type_id;
-        echo "\n\n<br><br>suggestion->suggestion_item_reference_id: " . $suggestion->suggestion_item_reference_id;
+        //echo "\n\n<br><br>getSuggestionType: " . UtilController::getSuggestionType("suggestion_type_name", "Business", 1);
+        //echo "\n\n<br><br>suggestion->suggestion_suggestion_type_id: " . $suggestion->suggestion_suggestion_type_id;
+        //echo "\n\n<br><br>suggestion->suggestion_item_reference_id: " . $suggestion->suggestion_item_reference_id;
         if($suggestion->suggestion_suggestion_type_id == UtilController::getSuggestionType("suggestion_type_name", "Drill", 1)){
-            echo "\n\n<br><br>here 2";
+            //echo "\n\n<br><br>here 2";
             $suggestion = Drill::where('drill_sys_id', $suggestion->suggestion_item_reference_id)->first();
             $message = "drill";
             $country_real_name = "";
         } else if($suggestion->suggestion_suggestion_type_id == UtilController::getSuggestionType("suggestion_type_name", "Business", 1)){
-            echo "\n\n<br><br>here 3";
-
+            //echo "\n\n<br><br>here 3";
             $suggestion = Business::where('business_sys_id', $suggestion->suggestion_item_reference_id)->first();
             $message = "business";
             $country = Country::where('country_id', '=', $suggestion->business_country_id)->first();
