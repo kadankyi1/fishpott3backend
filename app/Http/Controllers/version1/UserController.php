@@ -931,7 +931,7 @@ public function changePasswordWithResetCode(Request $request)
 
         return response([
             "status" => 1, 
-            "message" => $message,
+            "message" => "business",
             "data" => $suggestion,
             "government_verification_is_on" => false,
             "media_allowed" => intval(config('app.canpostpicsandvids')),
