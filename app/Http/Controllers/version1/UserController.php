@@ -895,7 +895,7 @@ public function changePasswordWithResetCode(Request $request)
             $suggestion = Drill::where('drill_sys_id', $suggestion->suggestion_item_reference_id)->first();
             $message = "drill";
             $country_real_name = "";
-        } else if($suggestion->suggestion_type == UtilController::getSuggestionType("suggestion_type_name", "Business", 1)){
+        } else if($suggestion->suggestion_suggestion_type_id == UtilController::getSuggestionType("suggestion_type_name", "Business", 1)){
             echo "\n\n<br><br>here 3";
 
             $suggestion = Business::where('business_sys_id', $suggestion->suggestion_item_reference_id)->first();
