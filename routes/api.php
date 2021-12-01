@@ -16,9 +16,9 @@ use App\Http\Controllers\version1\UserController;
 */
 
 // THESE ROUTES MUST BE DELETED --------------- START
-Route::post('/v1/admin/ai-training-test',[App\Http\Controllers\version1\AdministratorController::class, 'trainingAi']);
-Route::post('/v1/admin/ai-testing-test',[App\Http\Controllers\version1\AdministratorController::class, 'testingAi']);
-Route::post('/v1/admin/ai-data-fetch',[App\Http\Controllers\version1\AdministratorController::class, 'getData']);
+//Route::post('/v1/admin/ai-training-test',[App\Http\Controllers\version1\AdministratorController::class, 'trainingAi']);
+//Route::post('/v1/admin/ai-testing-test',[App\Http\Controllers\version1\AdministratorController::class, 'testingAi']);
+//Route::post('/v1/admin/ai-data-fetch',[App\Http\Controllers\version1\AdministratorController::class, 'getData']);
 // THESE ROUTES MUST BE DELETED --------------- END
 
 
