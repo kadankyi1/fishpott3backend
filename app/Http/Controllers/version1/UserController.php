@@ -520,6 +520,7 @@ class UserController extends Controller
             "id_verification_is_on" => boolval($user->user_id_verification_requested),
             "media_allowed" => intval(config('app.canpostpicsandvids')),
             "user_android_app_max_vc" => intval(config('app.androidmaxvc')),
+            "user_min_allowed_version" => intval(config('app.iosminvc')),
             "user_android_app_force_update" => boolval(config('app.androidforceupdatetomaxvc')),
             "phone_verification_is_on" => boolval(config('app.phoneverificationrequiredstatus')),
             "mtn_momo_number" => config('app.mtnghanamomonum'), // MTN-GHANA MOBILE MONEY NUMBER
