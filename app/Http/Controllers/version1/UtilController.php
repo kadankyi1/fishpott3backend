@@ -426,11 +426,27 @@ class UtilController extends Controller
         // MAKING SURE VERSION CODE IS ALLOWED
         if(
             strtoupper($request->app_type) == "ANDROID" && 
-            (intval($request->app_version_code) < intval(config('app.androidminvc')) || $request->app_version_code > intval(config('app.androidmaxvc')))
+            intval($request->app_version_code) < intval(config('app.androidminvc'))
         ){
             return [
                 "status" => 2, 
                 "message" => "Please update your app from the Google Play Store.",
+                "government_verification_is_on" => false,
+                "media_allowed" => intval(config('app.canpostpicsandvids')),
+                "user_android_app_max_vc" => intval(config('app.androidmaxvc')),
+                "user_android_app_force_update" => boolval(config('app.androidforceupdatetomaxvc')),
+                "phone_verification_is_on" => boolval(config('app.phoneverificationrequiredstatus'))
+            ]; 
+        }
+
+        // MAKING SURE VERSION CODE IS ALLOWED
+        if(
+            strtoupper($request->app_type) == "IOS" && 
+            intval($request->app_version_code) < intval(config('app.iosminvc'))
+        ){
+            return [
+                "status" => 2, 
+                "message" => "Please update your app from the App Store.",
                 "government_verification_is_on" => false,
                 "media_allowed" => intval(config('app.canpostpicsandvids')),
                 "user_android_app_max_vc" => intval(config('app.androidmaxvc')),
