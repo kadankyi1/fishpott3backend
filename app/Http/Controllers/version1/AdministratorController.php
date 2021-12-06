@@ -290,10 +290,10 @@ class AdministratorController extends Controller
             "drill_answer_2" => "bail|required|min:2|max:100",
             "drill_answer_3" => "bail|required|max:100",
             "drill_answer_4" => "bail|required|max:100",
-            "drill_answer_1_ocean" => "bail|required|max:100",
-            "drill_answer_2_ocean" => "bail|required|max:100",
-            "drill_answer_3_ocean" => "bail|required|max:100",
-            "drill_answer_4_ocean" => "bail|required|max:100",
+            "drill_answer_1_ocean" => "bail|max:100",
+            "drill_answer_2_ocean" => "bail|max:100",
+            "drill_answer_3_ocean" => "bail|max:100",
+            "drill_answer_4_ocean" => "bail|max:100",
         ]);
 
         // MAKING SURE THE REQUEST AND USER IS VALIDATED
@@ -309,16 +309,23 @@ class AdministratorController extends Controller
         |**************************************************************************
         */
 
-        if(
-            count(explode("#", $request->drill_answer_1_ocean)) != 5 
-            || count(explode("#", $request->drill_answer_2_ocean)) != 5
-            || count(explode("#", $request->drill_answer_3_ocean)) != 5
-            || count(explode("#", $request->drill_answer_4_ocean)) != 5
-            ){
-            return response([
-                "status" => 0, 
-                "message" => "The Ocean values for the answers have to be 5 percentage values seperated by #. Do not include the % sign"
-            ]);
+        if(trim($request->drill_answer_1_ocean) != ""){
+            if(
+                count(explode("#", $request->drill_answer_1_ocean)) != 5 
+                || count(explode("#", $request->drill_answer_2_ocean)) != 5
+                || count(explode("#", $request->drill_answer_3_ocean)) != 5
+                || count(explode("#", $request->drill_answer_4_ocean)) != 5
+                ){
+                return response([
+                    "status" => 0, 
+                    "message" => "The Ocean values for the answers have to be 5 percentage values seperated by #. Do not include the % sign"
+                ]);
+            }
+        } else {
+            $validatedData["drill_answer_1_ocean"] = "";
+            $validatedData["drill_answer_2_ocean"] = "";
+            $validatedData["drill_answer_3_ocean"] = "";
+            $validatedData["drill_answer_4_ocean"] = "";
         }
 
         //CREATING THE USER DATA TO ADD TO DB
