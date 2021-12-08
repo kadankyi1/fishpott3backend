@@ -1008,7 +1008,7 @@ public function changePasswordWithResetCode(Request $request)
         $drillAnswerData["drill_answer_user_investor_id"] = $user->investor_id;
 
         // CHECKING IF AN ANSWER IS RECORDED AND CREATING THE DRILL ANSWER
-        $drillAnswer = DrillAnswer::where('drill_answer_sys_id', $drillAnswerData["drill_answer_sys_id"])->first();
+        $drillAnswer = DrillAnswer::where('drill_answer_sys_id', $drillAnswerData["drill_answer_sys_id"])->where('drill_answer_user_investor_id', $user->investor_id)->first();
         if($drillAnswer == null || empty($drillAnswer->drill_answer_sys_id)){
             DrillAnswer::create($drillAnswerData);
         } else {
