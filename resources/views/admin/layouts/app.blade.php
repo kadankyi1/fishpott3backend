@@ -367,7 +367,21 @@
                                     <li class="">
                                         <a href="/admin/orders/view-orders" class="waves-effect waves-dark">
                                             <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                                            <span class="pcoded-mtext" data-i18n="nav.menu-levels.menu-level-21">View Orders</span>
+                                            <span class="pcoded-mtext" data-i18n="nav.menu-levels.menu-level-21">Buy Orders</span>
+                                            <span class="pcoded-mcaret"></span>
+                                        </a>
+                                    </li>
+                                    <li class="">
+                                        <a href="/admin/orders/view-orders" class="waves-effect waves-dark">
+                                            <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                            <span class="pcoded-mtext" data-i18n="nav.menu-levels.menu-level-21">Transfer Orders</span>
+                                            <span class="pcoded-mcaret"></span>
+                                        </a>
+                                    </li>
+                                    <li class="">
+                                        <a href="/admin/orders/view-orders" class="waves-effect waves-dark">
+                                            <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                            <span class="pcoded-mtext" data-i18n="nav.menu-levels.menu-level-21">SellBack Orders</span>
                                             <span class="pcoded-mcaret"></span>
                                         </a>
                                     </li>
