@@ -55,11 +55,14 @@ return [
     'fifty_risk_insurance' => env('FIFTY_RISK_INSURANCE', 0.05), // you will be given a payment of 50% what you paid if the shares fails to zero 
     'hundred_risk_insurance' => env('HUNDRED_RISK_INSURANCE', 0.1), // you will be given a payment of 100% what you paid if the shares fails to zero
     
-    // PROCESSING FEE
+    // BUY PROCESSING FEE
     'processing_fee' => env('PROCESSING_FEE', 0.01), 
 
+    // TRANSFER PROCESSING FEE
+    'transfer_processing_fee_usd' => env('TRANSFER_PROCESSING_FEE', 0.01), 
+
     // CONVERSION RATES
-    'to_cedi' => env('PROCESSING_FEE', 6), 
+    'to_cedi' => env('USD_TO_CEDI', 6), 
 
     // SYSTEM CONTACT EMAIL
     'fishpott_email' => env('FISHPOTT_EMAIL', "fishpottcompany@gmail.com"), 

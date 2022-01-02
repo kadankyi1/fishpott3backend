@@ -19,6 +19,7 @@ use App\Models\version1\Drill;
 use App\Models\version1\DrillAnswer;
 use App\Models\version1\StockOwnership;
 use App\Models\version1\StockPurchase;
+use App\Models\version1\StockTransfer;
 use App\Models\version1\StockValue;
 use App\Models\version1\Suggestion;
 use App\Models\version1\SuggestionTypes;
@@ -1308,6 +1309,160 @@ public function changePasswordWithResetCode(Request $request)
         ]);
     }
 
+    public function sendStockTransfer(Request $request)
+    {
+        /*
+        |**************************************************************************
+        | VALIDATION STARTS 
+        |**************************************************************************
+        */
+        // MAKING SURE THE INPUT HAS THE EXPECTED VALUES
+        $validatedData = $request->validate([
+            "user_phone_number" => "bail|required|regex:/^\+\d{10,15}$/|min:10|max:15",
+            "user_pottname" => "bail|required|string|regex:/^[A-Za-z0-9_.]+$/|max:15",
+            "investor_id" => "bail|required",
+            "user_language" => "bail|required|max:3",
+            "app_type" => "bail|required|max:8",
+            "app_version_code" => "bail|required|integer",
+            // ADD ANY OTHER REQUIRED INPUTS FROM HERE
+            "stockownership_id" => "bail|required|string",
+            "transfer_quantity" => "bail|required|integer",
+            "receiver_pottname" => "bail|required|string|regex:/^[A-Za-z0-9_.]+$/|max:15",
+        ]);
+
+        // MAKING SURE THE REQUEST AND USER IS VALIDATED
+        $validation_response = UtilController::validateUserWithAuthToken($request, auth()->user(), "get-info-on-apps");
+        if(!empty($validation_response["status"])){
+            return response($validation_response);
+        } else {
+            $user = $validation_response;
+        }
+
+        /*
+        |**************************************************************************
+        | VALIDATION ENDED 
+        |**************************************************************************
+        */
+
+        // GETTING THE STOCK OWNERSHIP
+        $stockownership = StockOwnership::where("stockownership_user_investor_id", $user->investor_id)->where('stockownership_sys_id', $request->stockownership_id)->first();
+        if($stockownership == null || empty($stockownership->stockownership_business_id)){
+            return response([
+                "status" => 3, 
+                "message" => "Ownership not verified",
+                "government_verification_is_on" => false,
+                "media_allowed" => intval(config('app.canpostpicsandvids')),
+                "user_android_app_max_vc" => intval(config('app.androidmaxvc')),
+                "user_android_app_force_update" => boolval(config('app.androidforceupdatetomaxvc')),
+                "phone_verification_is_on" => boolval(config('app.phoneverificationrequiredstatus'))
+            ]);
+        }
+
+        $business = Business::where('business_sys_id', $stockownership->stockownership_business_id)->first();
+        if($business == null || empty($business->business_registration_number)){
+            return response([
+                "status" => 3, 
+                "message" => "Business not found",
+                "government_verification_is_on" => false,
+                "media_allowed" => intval(config('app.canpostpicsandvids')),
+                "user_android_app_max_vc" => intval(config('app.androidmaxvc')),
+                "user_android_app_force_update" => boolval(config('app.androidforceupdatetomaxvc')),
+                "phone_verification_is_on" => boolval(config('app.phoneverificationrequiredstatus'))
+            ]);
+        }
+
+
+        if($stockownership->stockownership_flagged){
+            return response([
+                "status" => 3, 
+                "message" => "Your stock is flagged.",
+                "government_verification_is_on" => false,
+                "media_allowed" => intval(config('app.canpostpicsandvids')),
+                "user_android_app_max_vc" => intval(config('app.androidmaxvc')),
+                "user_android_app_force_update" => boolval(config('app.androidforceupdatetomaxvc')),
+                "phone_verification_is_on" => boolval(config('app.phoneverificationrequiredstatus'))
+            ]);
+        }
+        // CHECKING IF THE QUANTITY OF STOCKS TO BE SENT EXISTS
+        if($stockownership->stockownership_stocks_quantity < intval($request->transfer_quantity)){
+            return response([
+                "status" => 3, 
+                "message" => "Insufficient stocks quantity",
+                "government_verification_is_on" => false,
+                "media_allowed" => intval(config('app.canpostpicsandvids')),
+                "user_android_app_max_vc" => intval(config('app.androidmaxvc')),
+                "user_android_app_force_update" => boolval(config('app.androidforceupdatetomaxvc')),
+                "phone_verification_is_on" => boolval(config('app.phoneverificationrequiredstatus'))
+            ]);
+        }
+        
+
+        // CHECKING THE RECEIVER EXISTS
+        if(empty($request->receiver_pottname) || UtilController::pottnameIsAvailable($request->receiver_pottname)){
+            return response([
+                "status" => 3, 
+                "message" => "Receiver not found",
+                "government_verification_is_on" => false,
+                "media_allowed" => intval(config('app.canpostpicsandvids')),
+                "user_android_app_max_vc" => intval(config('app.androidmaxvc')),
+                "user_android_app_force_update" => boolval(config('app.androidforceupdatetomaxvc')),
+                "phone_verification_is_on" => boolval(config('app.phoneverificationrequiredstatus'))
+            ]);
+        }
+
+
+
+        // RECORDING THE TRANSFER
+        $stockTransferData["stocktransfer_sys_id"] = "stocktransfer-sender-" . $user->user_pottname . "-receiver-" . $request->receiver_pottname . "-" . date("Y-m-d-H-i-s") . "-" . UtilController::getRandomString(91);
+        $stockTransferData["stocktransfer_stocks_quantity"] = intval($request->transfer_quantity);
+        $stockTransferData["stocktransfer_receiver_pottname"] = $request->receiver_pottname;
+        $stockTransferData["stocktransfer_sender_investor_id"] = $user->investor_id;
+        $stockTransferData["stocktransfer_business_id"] = $stockownership->stockownership_business_id;
+        $stockTransferData["stocktransfer_flagged"] = false;
+        $stockTransferData["stocktransfer_flagged_reason"] = "";
+        $stockPurchaseData["stocktransfer_payment_gateway_status"] = 0;
+        $stockPurchaseData["stocktransfer_payment_gateway_info"] = "";
+        StockTransfer::create($stockTransferData);
+        
+        $info_1 = "You are transfering " . $request->transfer_quantity . " stocks of " . $business->business_full_name;
+        
+        // CALCULATING PROCESSING FEE
+        $processing_fee_usd = floatval(config('app.transfer_processing_fee_usd'));
+        $currency_local = Currency::where("currency_country_id", '=', $user->user_country_id)->first();
+
+        if($user->user_country_id == 81){ // GHANA
+            $processing_fee_local = ($processing_fee_usd * floatval(config('app.to_cedi')));
+            $processing_fee_local_with_currency_sign = "Gh¢" . ($processing_fee_usd * floatval(config('app.to_cedi')));
+            $rate = "$1 = " . "Gh¢" . floatval(config('app.to_cedi'));
+            $rate_no_sign = floatval(config('app.to_cedi'));
+        } else {
+            $processing_fee_local = $processing_fee_usd;
+            $processing_fee_local_with_currency_sign = "$" . $processing_fee_usd;
+            $rate = "$1 = " . "$1";
+            $rate_no_sign = 1;
+        }
+
+
+        $data = array(
+            "info_1" => $info_1,
+            "processing_fee_local_with_currency_sign" => $processing_fee_local_with_currency_sign,
+            "processing_fee_local" => $processing_fee_local,
+            "rate" => $rate,
+            "rate_no_sign" => $rate
+        );
+
+
+        return response([
+            "status" => 1, 
+            "message" => "success",
+            "data" => $data,
+            "government_verification_is_on" => false,
+            "media_allowed" => intval(config('app.canpostpicsandvids')),
+            "user_android_app_max_vc" => intval(config('app.androidmaxvc')),
+            "user_android_app_force_update" => boolval(config('app.androidforceupdatetomaxvc')),
+            "phone_verification_is_on" => boolval(config('app.phoneverificationrequiredstatus'))
+        ]);
+    }
 
     public function sendWithdrawalRequest(Request $request)
     {
