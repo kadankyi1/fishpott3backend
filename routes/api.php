@@ -67,6 +67,9 @@ Route::middleware('auth:api')->post('/v1/user/find-business', [App\Http\Controll
 // UPDATE AND GET RECENT USER INFO
 Route::middleware('auth:api')->post('/v1/user/get-user-info', [App\Http\Controllers\version1\UserController::class, 'updateAndGetRecentUserInfo']);
 
+// SEND STOCK TRANSFER 
+Route::middleware('auth:api')->post('/v1/user/send-stock-transfer', [App\Http\Controllers\version1\UserController::class, 'sendStockTransfer']);
+
 // DEFAULT FALLBACK ROUTE
 Route::fallback(function(){
     return response()->json([
