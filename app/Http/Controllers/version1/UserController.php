@@ -1325,6 +1325,7 @@ public function changePasswordWithResetCode(Request $request)
             "app_type" => "bail|required|max:8",
             "app_version_code" => "bail|required|integer",
             // ADD ANY OTHER REQUIRED INPUTS FROM HERE
+            "user_password" => "bail|required|string",
             "stockownership_id" => "bail|required|string",
             "transfer_quantity" => "bail|required|integer",
             "receiver_pottname" => "bail|required|string|regex:/^[A-Za-z0-9_.]+$/|max:15",
@@ -1338,6 +1339,16 @@ public function changePasswordWithResetCode(Request $request)
             $user = $validation_response;
         }
 
+        $loginData["user_phone_number"] = $validatedData["user_phone_number"];
+        $loginData["password"] = $validatedData["user_password"];
+        if (!auth()->attempt($loginData)) {
+            return response([
+                "status" => "error", 
+                "message" => "Invalid Password"
+            ]);
+        }
+
+        
         /*
         |**************************************************************************
         | VALIDATION ENDED 
