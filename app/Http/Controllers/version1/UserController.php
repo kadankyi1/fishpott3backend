@@ -1805,6 +1805,7 @@ public function changePasswordWithResetCode(Request $request)
             }
 
             $this_item = array(
+                'stock_id' => $stockownership->stockownership_sys_id,
                 'business_id' => $business->business_sys_id,
                 'business_name' => $business->business_full_name . " Stock",
                 'cost_per_share_usd' => "$" . $this_cost_per_share_usd,
