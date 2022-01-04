@@ -1836,7 +1836,7 @@ public function changePasswordWithResetCode(Request $request)
         return response([
             "status" => 1, 
             "message" => "success",
-            "transfer_fee_usd" => $processing_fee_local_with_currency_sign,
+            "transfer_fee_local_with_sign" => $processing_fee_local_with_currency_sign,
             "transfer_fee_local" => $processing_fee_local,
             "rate" => $rate,
             "rate_no_sign" => $rate,
