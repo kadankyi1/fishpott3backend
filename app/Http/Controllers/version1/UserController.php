@@ -1817,9 +1817,29 @@ public function changePasswordWithResetCode(Request $request)
             array_push($data, $this_item);
         }
         
+        // CALCULATING PROCESSING FEE
+        $processing_fee_usd = floatval(config('app.transfer_processing_fee_usd'));
+        $currency_local = Currency::where("currency_country_id", '=', $user->user_country_id)->first();
+
+        if($user->user_country_id == 81){ // GHANA
+            $processing_fee_local = ($processing_fee_usd * floatval(config('app.to_cedi')));
+            $processing_fee_local_with_currency_sign = "Gh¢" . ($processing_fee_usd * floatval(config('app.to_cedi')));
+            $rate = "$1 = " . "Gh¢" . floatval(config('app.to_cedi'));
+            $rate_no_sign = floatval(config('app.to_cedi'));
+        } else {
+            $processing_fee_local = $processing_fee_usd;
+            $processing_fee_local_with_currency_sign = "$" . $processing_fee_usd;
+            $rate = "$1 = " . "$1";
+            $rate_no_sign = 1;
+        }
+
         return response([
             "status" => 1, 
             "message" => "success",
+            "transfer_fee_usd" => $processing_fee_local_with_currency_sign,
+            "transfer_fee_local" => $processing_fee_local,
+            "rate" => $rate,
+            "rate_no_sign" => $rate,
             "data" => $data,
             "government_verification_is_on" => false,
             "media_allowed" => intval(config('app.canpostpicsandvids')),

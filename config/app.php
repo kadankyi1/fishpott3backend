@@ -59,7 +59,7 @@ return [
     'processing_fee' => env('PROCESSING_FEE', 0.01), 
 
     // TRANSFER PROCESSING FEE
-    'transfer_processing_fee_usd' => env('TRANSFER_PROCESSING_FEE', 0.01), 
+    'transfer_processing_fee_usd' => env('TRANSFER_PROCESSING_FEE', 10), 
 
     // CONVERSION RATES
     'to_cedi' => env('USD_TO_CEDI', 6), 
