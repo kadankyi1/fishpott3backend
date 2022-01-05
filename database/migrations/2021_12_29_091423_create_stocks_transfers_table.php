@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateStockTransferTable extends Migration
+class CreateStocksTransfersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateStockTransferTable extends Migration
      */
     public function up()
     {
-        Schema::create('stock_transfers', function (Blueprint $table) {
+        Schema::create('stocks_transfers', function (Blueprint $table) {
             $table->bigIncrements('stocktransfer_id');
             $table->string('stocktransfer_sys_id', 255)->unique();
             $table->integer('stocktransfer_stocks_quantity');
@@ -25,7 +25,7 @@ class CreateStockTransferTable extends Migration
             $table->timestamps();
         });
 
-        Schema::table('stock_transfers', function (Blueprint $table) {
+        Schema::table('stocks_transfers', function (Blueprint $table) {
             $table->string('stocktransfer_business_id', 255);
             $table->foreign('stocktransfer_business_id')->references('business_sys_id')->on('businesses');
 
@@ -41,6 +41,6 @@ class CreateStockTransferTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('stock_transfers');
+        Schema::dropIfExists('stocks_transfers');
     }
 }
