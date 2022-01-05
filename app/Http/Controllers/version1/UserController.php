@@ -1407,7 +1407,7 @@ public function changePasswordWithResetCode(Request $request)
         
 
         // CHECKING THE RECEIVER EXISTS
-        if(empty($request->receiver_pottname) || UtilController::pottnameIsAvailable($request->receiver_pottname)){
+        if(empty($request->receiver_pottname) || !UtilController::pottnameIsTaken($request->receiver_pottname)){
             return response([
                 "status" => 3, 
                 "message" => "Receiver not found",
