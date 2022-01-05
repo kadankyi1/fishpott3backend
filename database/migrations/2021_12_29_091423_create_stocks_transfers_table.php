@@ -21,7 +21,7 @@ class CreateStocksTransfersTable extends Migration
             $table->boolean('stocktransfer_flagged')->default(false);
             $table->string('stocktransfer_flagged_reason', 255)->default("");
             $table->integer('stocktransfer_payment_gateway_status')->default(0);
-            $table->text('stocktransfer_payment_gateway_info');
+            $table->string('stocktransfer_payment_gateway_info', 255)->default("");
             $table->timestamps();
         });
 
