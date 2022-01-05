@@ -1339,9 +1339,7 @@ public function changePasswordWithResetCode(Request $request)
             $user = $validation_response;
         }
 
-        $loginData["user_phone_number"] = $validatedData["user_phone_number"];
-        $loginData["password"] = $validatedData["user_password"];
-        if (!auth()->attempt($loginData)) {
+        if (!Hash::check($request->user_password, $user->password)) {
             return response([
                 "status" => "error", 
                 "message" => "Invalid Password"
