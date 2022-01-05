@@ -15,6 +15,7 @@ class StockTransfer extends Model
      */
     protected $primaryKey = 'stocktransfer_sys_id';
 
+    protected $table = 'stocks_transfers';
 
     /**
      * The attributes that are mass assignable.
