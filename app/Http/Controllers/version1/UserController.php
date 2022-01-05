@@ -1178,7 +1178,7 @@ public function changePasswordWithResetCode(Request $request)
         }
 
         // RECORDING THE POSSIBLE ORDER
-        $stockPurchaseData["stockpurchase_sys_id"] = "stockpurchase-" . $user->user_pottname . substr($user->user_phone_number ,1,strlen($user->user_phone_number)) . "-" . date("Y-m-d-H-i-s") . "-" . UtilController::getRandomString(91);
+        $stockPurchaseData["stockpurchase_sys_id"] = "sp" . substr($user->user_phone_number ,1,strlen($user->user_phone_number)) . date("YmdHis");
         $stockPurchaseData["stockpurchase_business_id"] = $business->business_sys_id;
         $stockPurchaseData["stockpurchase_price_per_stock_usd"] = $business->business_price_per_stock_usd;
         $stockPurchaseData["stockpurchase_stocks_quantity"] = $item_quantity;
@@ -1382,7 +1382,6 @@ public function changePasswordWithResetCode(Request $request)
             ]);
         }
 
-
         if($stockownership->stockownership_flagged){
             return response([
                 "status" => 3, 
@@ -1394,6 +1393,7 @@ public function changePasswordWithResetCode(Request $request)
                 "phone_verification_is_on" => boolval(config('app.phoneverificationrequiredstatus'))
             ]);
         }
+
         // CHECKING IF THE QUANTITY OF STOCKS TO BE SENT EXISTS
         if($stockownership->stockownership_stocks_quantity < intval($request->transfer_quantity)){
             return response([
@@ -1424,13 +1424,13 @@ public function changePasswordWithResetCode(Request $request)
 
 
         // RECORDING THE TRANSFER
-        $stockTransferData["stocktransfer_sys_id"] = "stocktransfer-sender-" . $user->user_pottname . "-receiver-" . $request->receiver_pottname . "-" . date("Y-m-d-H-i-s") . "-" . UtilController::getRandomString(91);
+        $stockTransferData["stocktransfer_sys_id"] = "stS" . $user->user_pottname . "R" . $request->receiver_pottname . date("YmdHis");
         $stockTransferData["stocktransfer_stocks_quantity"] = intval($request->transfer_quantity);
         $stockTransferData["stocktransfer_receiver_pottname"] = $request->receiver_pottname;
         $stockTransferData["stocktransfer_sender_investor_id"] = $user->investor_id;
         $stockTransferData["stocktransfer_business_id"] = $stockownership->stockownership_business_id;
-        $stockTransferData["stocktransfer_flagged"] = false;
-        $stockTransferData["stocktransfer_flagged_reason"] = "";
+        $stockTransferData["stocktransfer_flagged"] = true;
+        $stockTransferData["stocktransfer_flagged_reason"] = "unpaid";
         $stockPurchaseData["stocktransfer_payment_gateway_status"] = 0;
         $stockPurchaseData["stocktransfer_payment_gateway_info"] = "";
         StockTransfer::create($stockTransferData);
@@ -1441,23 +1441,24 @@ public function changePasswordWithResetCode(Request $request)
         $processing_fee_usd = floatval(config('app.transfer_processing_fee_usd'));
         $currency_local = Currency::where("currency_country_id", '=', $user->user_country_id)->first();
 
-        if($user->user_country_id == 81){ // GHANA
+        //if($user->user_country_id == 81){ // GHANA
             $processing_fee_local = ($processing_fee_usd * floatval(config('app.to_cedi')));
             $processing_fee_local_with_currency_sign = "Gh¢" . ($processing_fee_usd * floatval(config('app.to_cedi')));
             $rate = "$1 = " . "Gh¢" . floatval(config('app.to_cedi'));
             $rate_no_sign = floatval(config('app.to_cedi'));
-        } else {
-            $processing_fee_local = $processing_fee_usd;
-            $processing_fee_local_with_currency_sign = "$" . $processing_fee_usd;
-            $rate = "$1 = " . "$1";
-            $rate_no_sign = 1;
-        }
+        //} else {
+            //$processing_fee_local = $processing_fee_usd;
+            //$processing_fee_local_with_currency_sign = "$" . $processing_fee_usd;
+            //$rate = "$1 = " . "$1";
+            //$rate_no_sign = 1;
+        //}
 
 
         $data = array(
             "info_1" => $info_1,
-            "processing_fee_local_with_currency_sign" => $processing_fee_local_with_currency_sign,
-            "processing_fee_local" => $processing_fee_local,
+            "transanction_id" => $stockTransferData['stocktransfer_sys_id'],
+            "transfer_fee_cedis_no_sign" => $processing_fee_local,
+            "transfer_fee_cedis_with_sign" => $processing_fee_local_with_currency_sign,
             "rate" => $rate,
             "rate_no_sign" => $rate
         );
