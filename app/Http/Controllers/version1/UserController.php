@@ -1393,7 +1393,7 @@ public function changePasswordWithResetCode(Request $request)
         }
 
         // CHECKING IF THE QUANTITY OF STOCKS TO BE SENT EXISTS
-        if($stockownership->stockownership_stocks_quantity < intval($request->transfer_quantity) || $stockownership->stockownership_stocks_quantity < 1){
+        if($stockownership->stockownership_stocks_quantity < intval($request->transfer_quantity) || $request->transfer_quantity < 1){
             return response([
                 "status" => 3, 
                 "message" => "Insufficient stocks quantity",
