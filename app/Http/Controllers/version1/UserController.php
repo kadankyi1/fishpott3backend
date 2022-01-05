@@ -1429,7 +1429,7 @@ public function changePasswordWithResetCode(Request $request)
         $stockTransferData["stocktransfer_business_id"] = $stockownership->stockownership_business_id;
         $stockTransferData["stocktransfer_flagged"] = true;
         $stockTransferData["stocktransfer_flagged_reason"] = "unpaid";
-        $stockPurchaseData["stocktransfer_payment_gateway_status"] = 0;
+        $stockPurchaseData["stocktransfer_payment_gateway_status"] = false;
         $stockPurchaseData["stocktransfer_payment_gateway_info"] = "unpaid";
         StockTransfer::create($stockTransferData);
         
