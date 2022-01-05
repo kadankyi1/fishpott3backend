@@ -1341,7 +1341,7 @@ public function changePasswordWithResetCode(Request $request)
 
         if (!Hash::check($request->user_password, $user->password)) {
             return response([
-                "status" => "error", 
+                "status" => 3, 
                 "message" => "Invalid Password"
             ]);
         }
