@@ -17,7 +17,7 @@ class CreateStocksTransfersTable extends Migration
             $table->bigIncrements('stocktransfer_id');
             $table->string('stocktransfer_sys_id', 255)->unique();
             $table->integer('stocktransfer_stocks_quantity');
-            $table->string('stocktransfer_receiver_pottname', 255)->unique();
+            $table->string('stocktransfer_receiver_pottname', 255);
             $table->boolean('stocktransfer_flagged')->default(false);
             $table->string('stocktransfer_flagged_reason', 255)->default("");
             $table->integer('stocktransfer_payment_gateway_status')->default(0);
