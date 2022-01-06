@@ -1289,7 +1289,7 @@ public function changePasswordWithResetCode(Request $request)
             if($stocktransfer == null || empty($stocktransfer->stocktransfer_sys_id)){
                 return response([
                     "status" => 3, 
-                    "message" => "Order not found",
+                    "message" => "Order not found.",
                     "government_verification_is_on" => false,
                     "media_allowed" => intval(config('app.canpostpicsandvids')),
                     "user_android_app_max_vc" => intval(config('app.androidmaxvc')),
