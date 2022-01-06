@@ -125,8 +125,9 @@ $page_title = "View orders and take simple actions on them";
                                                 </div>
                                                 User
                                             </th>
+                                            <th>Type</th>
                                             <th>Stock</th>
-                                            <th>Per Stock($)</th>
+                                            <th>Per Stock($)/Receiver</th>
                                             <th>Qty</th>
                                             <th>R-I</th>
                                             <th>R-I Fee</th>
