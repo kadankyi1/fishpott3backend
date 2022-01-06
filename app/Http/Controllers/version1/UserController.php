@@ -1309,11 +1309,11 @@ public function changePasswordWithResetCode(Request $request)
         }
 
         // SAVING IT AS A TRANSACTION
-        $transaction = Transaction::where('transaction_referenced_item_id', $request->stockpurchase_sys_id)->first();
+        $transaction = Transaction::where('transaction_referenced_item_id', $request->item_id)->first();
         if($transaction == null){
             $transactionData["transaction_sys_id"] =  "SP-" . $user->user_pottname . "-" . date("YmdHis") . UtilController::getRandomString(4);
             $transactionData["transaction_transaction_type_id"] = 4;
-            $transactionData["transaction_referenced_item_id"] = $stockpurchase->stockpurchase_sys_id;
+            $transactionData["transaction_referenced_item_id"] = $stockpurchase->item_id;
             $transactionData["transaction_user_investor_id"] = $user->investor_id;
             $transaction = Transaction::create($transactionData);
         } 
