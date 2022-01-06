@@ -1286,6 +1286,9 @@ public function changePasswordWithResetCode(Request $request)
         } else {
             //else if($request->update_type) {
             $stocktransfer = StockTransfer::where('stocktransfer_id', 10)->first();
+            echo "stocktransfer: " . $stocktransfer->stocktransfer_sys_id;
+            var_dump($stocktransfer);
+            
             if($stocktransfer == null || empty($stocktransfer->stocktransfer_sys_id)){
                 return response([
                     "status" => 3, 
