@@ -112,6 +112,7 @@ $page_title = "View orders and take simple actions on them";
                                     <table class="table table-hover">
                                         <thead>
                                         <tr>
+                                            <th>Type</th>
                                             <th>
                                                 <div class="chk-option">
                                                     <div class="checkbox-fade fade-in-primary">
@@ -125,7 +126,6 @@ $page_title = "View orders and take simple actions on them";
                                                 </div>
                                                 User
                                             </th>
-                                            <th>Type</th>
                                             <th>Stock</th>
                                             <th>Per Stock($)/Receiver</th>
                                             <th>Qty</th>
