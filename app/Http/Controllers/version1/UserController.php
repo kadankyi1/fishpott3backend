@@ -1245,9 +1245,10 @@ public function changePasswordWithResetCode(Request $request)
             "app_type" => "bail|required|max:8",
             "app_version_code" => "bail|required|integer",
             // ADD ANY OTHER REQUIRED INPUTS FROM HERE
-            "stockpurchase_sys_id" => "bail|required|string",
-            "stockpurchase_payment_gateway_status" => "bail|required|string",
-            "paymenstockpurchase_payment_gateway_info" => "bail|required|string",
+            "item_type" => "bail|required|string",
+            "item_id" => "bail|required|string",
+            "payment_gateway_status" => "bail|required|string",
+            "payment_gateway_info" => "bail|required|string",
         ]);
 
         // MAKING SURE THE REQUEST AND USER IS VALIDATED
@@ -1265,23 +1266,43 @@ public function changePasswordWithResetCode(Request $request)
         */
 
         // GETTING THE ORDER
-        $stockpurchase = StockPurchase::where('stockpurchase_sys_id', $request->stockpurchase_sys_id)->first();
-        if($stockpurchase == null || empty($stockpurchase->stockpurchase_sys_id)){
-            return response([
-                "status" => 3, 
-                "message" => "Order not found",
-                "government_verification_is_on" => false,
-                "media_allowed" => intval(config('app.canpostpicsandvids')),
-                "user_android_app_max_vc" => intval(config('app.androidmaxvc')),
-                "user_android_app_force_update" => boolval(config('app.androidforceupdatetomaxvc')),
-                "phone_verification_is_on" => boolval(config('app.phoneverificationrequiredstatus'))
-            ]);
+        if($request->item_type == "stockpurchase"){
+            $stockpurchase = StockPurchase::where('stockpurchase_sys_id', $request->item_id)->first();
+            if($stockpurchase == null || empty($stockpurchase->stockpurchase_sys_id)){
+                return response([
+                    "status" => 3, 
+                    "message" => "Order not found",
+                    "government_verification_is_on" => false,
+                    "media_allowed" => intval(config('app.canpostpicsandvids')),
+                    "user_android_app_max_vc" => intval(config('app.androidmaxvc')),
+                    "user_android_app_force_update" => boolval(config('app.androidforceupdatetomaxvc')),
+                    "phone_verification_is_on" => boolval(config('app.phoneverificationrequiredstatus'))
+                ]);
+            }
+            // UPDATING THE ORDER
+            $stockpurchase->stockpurchase_payment_gateway_status = $request->payment_gateway_status;
+            $stockpurchase->stockpurchase_payment_gateway_info = $request->payment_gateway_info;
+            $stockpurchase->save();
+        } else {
+            //else if($request->update_type) {
+            $stocktransfer = StockTransfer::where('stocktransfer_sys_id', $request->item_id)->first();
+            if($stocktransfer == null || empty($stocktransfer->stocktransfer_sys_id)){
+                return response([
+                    "status" => 3, 
+                    "message" => "Order not found",
+                    "government_verification_is_on" => false,
+                    "media_allowed" => intval(config('app.canpostpicsandvids')),
+                    "user_android_app_max_vc" => intval(config('app.androidmaxvc')),
+                    "user_android_app_force_update" => boolval(config('app.androidforceupdatetomaxvc')),
+                    "phone_verification_is_on" => boolval(config('app.phoneverificationrequiredstatus'))
+                ]);
+            }
+    
+            // UPDATING THE ORDER
+            $stocktransfer->stocktransfer_payment_gateway_status = $request->payment_gateway_status;
+            $stocktransfer->stocktransfer_payment_gateway_info = $request->payment_gateway_info;
+            $stocktransfer->save();
         }
-
-        // UPDATING THE ORDER
-        $stockpurchase->stockpurchase_payment_gateway_status = $request->stockpurchase_payment_gateway_status;
-        $stockpurchase->stockpurchase_payment_gateway_info = $request->paymenstockpurchase_payment_gateway_info;
-        $stockpurchase->save();
 
         // SAVING IT AS A TRANSACTION
         $transaction = Transaction::where('transaction_referenced_item_id', $request->stockpurchase_sys_id)->first();
