@@ -1285,12 +1285,12 @@ public function changePasswordWithResetCode(Request $request)
             $stockpurchase->save();
         } else {
             //else if($request->update_type) {
-            echo "item_id: " . $request->item_id;
+            //echo "item_id: " . $request->item_id;
             $stocktransfer = StockTransfer::where('stocktransfer_sys_id', $request->item_id)->first();
             echo "stocktransfer: " . $stocktransfer->stocktransfer_receiver_pottname;
-            var_dump($stocktransfer);
+            //var_dump($stocktransfer);
             
-            if($stocktransfer == null || empty($stocktransfer->stocktransfer_sys_id)){
+            if($stocktransfer == null || empty($stocktransfer->stocktransfer_receiver_pottname)){
                 return response([
                     "status" => 3, 
                     "message" => "Order not found.",
