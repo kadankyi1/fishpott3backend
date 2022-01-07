@@ -70,6 +70,9 @@ Route::middleware('auth:api')->post('/v1/user/get-user-info', [App\Http\Controll
 // SEND STOCK TRANSFER 
 Route::middleware('auth:api')->post('/v1/user/send-stock-transfer', [App\Http\Controllers\version1\UserController::class, 'sendStockTransfer']);
 
+// SELL BACK STOCK 
+Route::middleware('auth:api')->post('/v1/user/sellback-stock', [App\Http\Controllers\version1\UserController::class, 'sellBackStocks']);
+
 // DEFAULT FALLBACK ROUTE
 Route::fallback(function(){
     return response()->json([
