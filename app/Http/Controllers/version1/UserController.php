@@ -1620,7 +1620,6 @@ public function changePasswordWithResetCode(Request $request)
         
         $sellback_payout = $business->buyback_offer_usd * $rate_no_sign * intval($request->transfer_quantity);
 
-
         // RECORDING THE TRANSFER
         $stockSellbackData["stocksellback_sys_id"] = "sbS" . $user->user_pottname . date("YmdHis");
         $stockSellbackData["stocksellback_stocks_quantity"] = intval($request->transfer_quantity);
@@ -1628,6 +1627,10 @@ public function changePasswordWithResetCode(Request $request)
         $stockSellbackData["stocksellback_rate_dollar_to_local_with_no_signs"] = $rate_no_sign;
         $stockSellbackData["stocksellback_processing_fee_usd"] = $processing_fee_usd;
         $stockSellbackData["stocksellback_local_currency_paid_in_id"] = $currency_local->currency_id;
+        $stockSellbackData["stocksellback_receiving_bank_or_momo_name"] = $request->bank_or_network_name;
+        $stockSellbackData["stocksellback_receiving_bank_routing_number"] = $request->routing_number;
+        $stockSellbackData["stocksellback_receiving_bank_or_momo_account_name"] = $request->acc_name;
+        $stockSellbackData["stocksellback_receiving_bank_or_momo_account_number"] = $request->acc_number;
         $stockSellbackData["stocksellback_seller_investor_id"] = $user->investor_id;
         $stockSellbackData["stocksellback_business_id"] = $stockownership->stockownership_business_id;
         $stockSellbackData["stocksellback_flagged"] = false;
