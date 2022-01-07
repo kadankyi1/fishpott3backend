@@ -1546,6 +1546,10 @@ public function changePasswordWithResetCode(Request $request)
         */
 
 
+        // CALCULATING PROCESSING FEE
+        $processing_fee_usd = floatval(config('app.transfer_processing_fee_usd'));
+        $currency_local = Currency::where("currency_country_id", '=', $user->user_country_id)->first();
+
         if($user->user_country_id == 81){ // GHANA
             $processing_fee_local = ($processing_fee_usd * floatval(config('app.to_cedi')));
             $processing_fee_local_with_currency_sign = "Gh¢" . ($processing_fee_usd * floatval(config('app.to_cedi')));
@@ -1559,10 +1563,6 @@ public function changePasswordWithResetCode(Request $request)
             $rate_no_sign = 1;
             $local_currency = "$";
         }
-        
-        // CALCULATING PROCESSING FEE
-        $processing_fee_usd = floatval(config('app.transfer_processing_fee_usd'));
-        $currency_local = Currency::where("currency_country_id", '=', $user->user_country_id)->first();
         
         // GETTING THE STOCK OWNERSHIP
         $stockownership = StockOwnership::where("stockownership_user_investor_id", $user->investor_id)->where('stockownership_sys_id', $request->stockownership_id)->first();
@@ -1616,20 +1616,8 @@ public function changePasswordWithResetCode(Request $request)
             ]);
         }
         
-
-        // CHECKING THE RECEIVER EXISTS
-        if(empty($request->receiver_pottname) || !UtilController::pottnameIsTaken($request->receiver_pottname)){
-            return response([
-                "status" => 3, 
-                "message" => "Receiver not found",
-                "government_verification_is_on" => false,
-                "media_allowed" => intval(config('app.canpostpicsandvids')),
-                "user_android_app_max_vc" => intval(config('app.androidmaxvc')),
-                "user_android_app_force_update" => boolval(config('app.androidforceupdatetomaxvc')),
-                "phone_verification_is_on" => boolval(config('app.phoneverificationrequiredstatus'))
-            ]);
-        }
-
+        
+        $sellback_payout = $business->buyback_offer_usd * $rate_no_sign * intval($request->transfer_quantity);
 
 
         // RECORDING THE TRANSFER
