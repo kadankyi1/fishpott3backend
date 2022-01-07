@@ -1647,7 +1647,7 @@ public function changePasswordWithResetCode(Request $request)
         return response([
             "status" => 1, 
             "message" => "success",
-            "transaction_id" => $stockSellbackData['stocktransfer_sys_id'],
+            "transaction_id" => $stockSellbackData['stocksellback_sys_id'],
             "government_verification_is_on" => false,
             "media_allowed" => intval(config('app.canpostpicsandvids')),
             "user_android_app_max_vc" => intval(config('app.androidmaxvc')),
