@@ -355,30 +355,30 @@
                                   </ul>
                               </li>
                           </ul>
-                          <div class="pcoded-navigation-label" data-i18n="nav.category.forms">Orders</div>
+                          <div class="pcoded-navigation-label" data-i18n="nav.category.forms">Payments</div>
                           <ul class="pcoded-item pcoded-left-item">
                               <li class="pcoded-hasmenu <?php if(isset($active_page) && $active_page == 'Orders'){ echo 'active'; } ?>">
                                   <a href="javascript:void(0)" class="waves-effect waves-dark">
                                       <span class="pcoded-micon"><i class="ti-direction-alt"></i><b>M</b></span>
-                                      <span class="pcoded-mtext" data-i18n="nav.menu-levels.main">Orders</span>
+                                      <span class="pcoded-mtext" data-i18n="nav.menu-levels.main">Payments</span>
                                       <span class="pcoded-mcaret"></span>
                                   </a>
                                   <ul class="pcoded-submenu">
                                     <li class="">
                                         <a href="/admin/orders/view-orders" class="waves-effect waves-dark">
                                             <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                                            <span class="pcoded-mtext" data-i18n="nav.menu-levels.menu-level-21">Orders</span>
+                                            <span class="pcoded-mtext" data-i18n="nav.menu-levels.menu-level-21">Stock Orders</span>
+                                            <span class="pcoded-mcaret"></span>
+                                        </a>
+                                    </li>
+                                    <li class="">
+                                        <a href="/admin/orders/view-orders" class="waves-effect waves-dark">
+                                            <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                            <span class="pcoded-mtext" data-i18n="nav.menu-levels.menu-level-21">Subscriptions</span>
                                             <span class="pcoded-mcaret"></span>
                                         </a>
                                     </li>
                                     <!--
-                                        <li class="">
-                                        <a href="/admin/orders/view-orders" class="waves-effect waves-dark">
-                                            <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                                            <span class="pcoded-mtext" data-i18n="nav.menu-levels.menu-level-21">Transfer Orders</span>
-                                            <span class="pcoded-mcaret"></span>
-                                        </a>
-                                    </li>
                                     <li class="">
                                         <a href="/admin/orders/view-orders" class="waves-effect waves-dark">
                                             <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
