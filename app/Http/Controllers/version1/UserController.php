@@ -1618,6 +1618,9 @@ public function changePasswordWithResetCode(Request $request)
         }
         
         // REMOVING SHARES
+        $cost_per_stock = $stockownership->stockownership_total_cost_usd/$stockownership->stockownership_stocks_quantity;
+
+        $stockownership->stockownership_total_cost_usd = $cost_per_stock * ($stockownership->stockownership_stocks_quantity - intval($request->transfer_quantity));
         $stockownership->stockownership_stocks_quantity = $stockownership->stockownership_stocks_quantity - intval($request->transfer_quantity);
         $stockownership->save();
         
