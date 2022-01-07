@@ -1523,7 +1523,7 @@ public function changePasswordWithResetCode(Request $request)
             "bank_or_network_name" => "bail|required|string",
             "acc_name" => "bail|required|string",
             "acc_number" => "bail|required|string",
-            "routing_number" => "bail|required|string",
+            "routing_number" => "string",
         ]);
 
         // MAKING SURE THE REQUEST AND USER IS VALIDATED
@@ -1617,6 +1617,9 @@ public function changePasswordWithResetCode(Request $request)
             ]);
         }
         
+        // REMOVING SHARES
+        $stockownership->stockownership_stocks_quantity = $stockownership->stockownership_stocks_quantity - intval($request->transfer_quantity);
+        $stockownership->save();
         
         $sellback_payout = $business->buyback_offer_usd * $rate_no_sign * intval($request->transfer_quantity);
 
