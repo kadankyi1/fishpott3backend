@@ -1850,11 +1850,13 @@ public function changePasswordWithResetCode(Request $request)
             $processing_fee_local_with_currency_sign = "Gh¢" . ($processing_fee_usd * floatval(config('app.to_cedi')));
             $rate = "$1 = " . "Gh¢" . floatval(config('app.to_cedi'));
             $rate_no_sign = floatval(config('app.to_cedi'));
+            $local_currency = "Gh¢";
         } else {
             $processing_fee_local = $processing_fee_usd;
             $processing_fee_local_with_currency_sign = "$" . $processing_fee_usd;
             $rate = "$1 = " . "$1";
             $rate_no_sign = 1;
+            $local_currency = "$";
         }
 
         return response([
@@ -1863,7 +1865,8 @@ public function changePasswordWithResetCode(Request $request)
             "transfer_fee_local_with_sign" => $processing_fee_local_with_currency_sign,
             "transfer_fee_local" => $processing_fee_local,
             "rate" => $rate,
-            "rate_no_sign" => $rate,
+            "rate_no_sign" => $rate_no_sign,
+            "local_currency" => $local_currency,
             "data" => $data,
             "government_verification_is_on" => false,
             "media_allowed" => intval(config('app.canpostpicsandvids')),
