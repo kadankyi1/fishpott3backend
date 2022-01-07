@@ -18,6 +18,7 @@ class CreateStockSellBacksTable extends Migration
             $table->string('stocksellback_sys_id', 255)->unique();
             $table->integer('stocksellback_stocks_quantity');
             $table->decimal('stocksellback_buyback_offer_per_stock_usd', 12, 2);
+            $table->decimal('stocksellback_payout_amt_local_currency_paid_in', 12, 2);
             $table->decimal('stocksellback_rate_dollar_to_local_with_no_signs', 12, 2);
             $table->decimal('stocksellback_processing_fee_usd', 12, 2);
             $table->boolean('stocksellback_flagged')->default(false);
