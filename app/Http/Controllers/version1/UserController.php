@@ -19,6 +19,7 @@ use App\Models\version1\Drill;
 use App\Models\version1\DrillAnswer;
 use App\Models\version1\StockOwnership;
 use App\Models\version1\StockPurchase;
+use App\Models\version1\StockSellBack;
 use App\Models\version1\StockTransfer;
 use App\Models\version1\StockValue;
 use App\Models\version1\Suggestion;
@@ -1454,8 +1455,8 @@ public function changePasswordWithResetCode(Request $request)
         $stockTransferData["stocktransfer_business_id"] = $stockownership->stockownership_business_id;
         $stockTransferData["stocktransfer_flagged"] = true;
         $stockTransferData["stocktransfer_flagged_reason"] = "unpaid";
-        $stockPurchaseData["stocktransfer_payment_gateway_status"] = false;
-        $stockPurchaseData["stocktransfer_payment_gateway_info"] = "unpaid";
+        $stockTransferData["stocktransfer_payment_gateway_status"] = false;
+        $stockTransferData["stocktransfer_payment_gateway_info"] = "unpaid";
         StockTransfer::create($stockTransferData);
         
         $info_1 = "You are transfering " . $request->transfer_quantity . " stocks of " . $business->business_full_name;
@@ -1621,50 +1622,25 @@ public function changePasswordWithResetCode(Request $request)
 
 
         // RECORDING THE TRANSFER
-        $stockTransferData["stocktransfer_sys_id"] = "stS" . $user->user_pottname . "R" . $request->receiver_pottname . date("YmdHis");
-        $stockTransferData["stocktransfer_stocks_quantity"] = intval($request->transfer_quantity);
-        $stockTransferData["stocktransfer_receiver_pottname"] = $request->receiver_pottname;
-        $stockTransferData["stocktransfer_sender_investor_id"] = $user->investor_id;
-        $stockTransferData["stocktransfer_business_id"] = $stockownership->stockownership_business_id;
-        $stockTransferData["stocktransfer_flagged"] = true;
-        $stockTransferData["stocktransfer_flagged_reason"] = "unpaid";
-        $stockPurchaseData["stocktransfer_payment_gateway_status"] = false;
-        $stockPurchaseData["stocktransfer_payment_gateway_info"] = "unpaid";
-        StockTransfer::create($stockTransferData);
+        $stockSellbackData["stocksellback_sys_id"] = "sbS" . $user->user_pottname . date("YmdHis");
+        $stockSellbackData["stocksellback_stocks_quantity"] = intval($request->transfer_quantity);
+        $stockSellbackData["stocksellback_buyback_offer_per_stock_usd"] = $business->buyback_offer_usd;
+        $stockSellbackData["stocksellback_rate_dollar_to_local_with_no_signs"] = $rate_no_sign;
+        $stockSellbackData["stocksellback_processing_fee_usd"] = $processing_fee_usd;
+        $stockSellbackData["stocksellback_local_currency_paid_in_id"] = $currency_local->currency_id;
+        $stockSellbackData["stocksellback_seller_investor_id"] = $user->investor_id;
+        $stockSellbackData["stocksellback_business_id"] = $stockownership->stockownership_business_id;
+        $stockSellbackData["stocksellback_flagged"] = false;
+        $stockSellbackData["stocktransfer_flagged_reason"] = "";
+        $stockSellbackData["stocksellback_processed"] = false;
+        $stockSellbackData["stocksellback_processed_reason"] = "unpaid";
+        StockSellBack::create($stockSellbackData);
         
-        $info_1 = "You are transfering " . $request->transfer_quantity . " stocks of " . $business->business_full_name;
-        
-        // CALCULATING PROCESSING FEE
-        $processing_fee_usd = floatval(config('app.transfer_processing_fee_usd'));
-        $currency_local = Currency::where("currency_country_id", '=', $user->user_country_id)->first();
-
-        //if($user->user_country_id == 81){ // GHANA
-            $processing_fee_local = ($processing_fee_usd * floatval(config('app.to_cedi')));
-            $processing_fee_local_with_currency_sign = "Gh¢" . ($processing_fee_usd * floatval(config('app.to_cedi')));
-            $rate = "$1 = " . "Gh¢" . floatval(config('app.to_cedi'));
-            $rate_no_sign = floatval(config('app.to_cedi'));
-        //} else {
-            //$processing_fee_local = $processing_fee_usd;
-            //$processing_fee_local_with_currency_sign = "$" . $processing_fee_usd;
-            //$rate = "$1 = " . "$1";
-            //$rate_no_sign = 1;
-        //}
-
-
-        $data = array(
-            "info_1" => $info_1,
-            "transanction_id" => $stockTransferData['stocktransfer_sys_id'],
-            "transfer_fee_cedis_no_sign" => $processing_fee_local,
-            "transfer_fee_cedis_with_sign" => $processing_fee_local_with_currency_sign,
-            "rate" => $rate,
-            "rate_no_sign" => $rate
-        );
-
 
         return response([
             "status" => 1, 
             "message" => "success",
-            "data" => $data,
+            "transaction_id" => $stockSellbackData['stocktransfer_sys_id'],
             "government_verification_is_on" => false,
             "media_allowed" => intval(config('app.canpostpicsandvids')),
             "user_android_app_max_vc" => intval(config('app.androidmaxvc')),

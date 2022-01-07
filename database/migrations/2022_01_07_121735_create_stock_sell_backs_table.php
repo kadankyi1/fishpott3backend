@@ -19,6 +19,10 @@ class CreateStockSellBacksTable extends Migration
             $table->integer('stocksellback_stocks_quantity');
             $table->decimal('stocksellback_buyback_offer_per_stock_usd', 12, 2);
             $table->decimal('stocksellback_payout_amt_local_currency_paid_in', 12, 2);
+            $table->string('stocksellback_receiving_bank_or_momo_account_name', 255)->default("");
+            $table->string('stocksellback_receiving_bank_or_momo_account_number', 255)->default("");
+            $table->string('stocksellback_receiving_bank_or_momo_name', 255)->default("");
+            $table->string('stocksellback_receiving_bank_routing_number', 255)->default("");
             $table->decimal('stocksellback_rate_dollar_to_local_with_no_signs', 12, 2);
             $table->decimal('stocksellback_processing_fee_usd', 12, 2);
             $table->boolean('stocksellback_flagged')->default(false);
