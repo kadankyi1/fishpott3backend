@@ -1628,6 +1628,7 @@ public function changePasswordWithResetCode(Request $request)
         $stockSellbackData["stocksellback_stocks_quantity"] = intval($request->transfer_quantity);
         $stockSellbackData["stocksellback_buyback_offer_per_stock_usd"] = $business->buyback_offer_usd;
         $stockSellbackData["stocksellback_rate_dollar_to_local_with_no_signs"] = $rate_no_sign;
+        $stockSellbackData["stocksellback_payout_amt_local_currency_paid_in"] = $sellback_payout;
         $stockSellbackData["stocksellback_processing_fee_usd"] = $processing_fee_usd;
         $stockSellbackData["stocksellback_local_currency_paid_in_id"] = $currency_local->currency_id;
         $stockSellbackData["stocksellback_receiving_bank_or_momo_name"] = $request->bank_or_network_name;
