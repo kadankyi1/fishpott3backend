@@ -1792,6 +1792,25 @@ public function changePasswordWithResetCode(Request $request)
         | VALIDATION ENDED 
         |**************************************************************************
         */
+
+        // CALCULATING PROCESSING FEE
+        $processing_fee_usd = floatval(config('app.transfer_processing_fee_usd'));
+        $currency_local = Currency::where("currency_country_id", '=', $user->user_country_id)->first();
+
+        if($user->user_country_id == 81){ // GHANA
+            $processing_fee_local = ($processing_fee_usd * floatval(config('app.to_cedi')));
+            $processing_fee_local_with_currency_sign = "Gh¢" . ($processing_fee_usd * floatval(config('app.to_cedi')));
+            $rate = "$1 = " . "Gh¢" . floatval(config('app.to_cedi'));
+            $rate_no_sign = floatval(config('app.to_cedi'));
+            $local_currency = "Gh¢";
+        } else {
+            $processing_fee_local = $processing_fee_usd;
+            $processing_fee_local_with_currency_sign = "$" . $processing_fee_usd;
+            $rate = "$1 = " . "$1";
+            $rate_no_sign = 1;
+            $local_currency = "$";
+        }
+
         $data = array();
         $result = StockOwnership::where("stockownership_user_investor_id", $user->investor_id)->get();
 
@@ -1832,6 +1851,8 @@ public function changePasswordWithResetCode(Request $request)
                 'stock_id' => $stockownership->stockownership_sys_id,
                 'business_id' => $business->business_sys_id,
                 'business_name' => $business->business_full_name . " Stock",
+                'buyback_usd' => $business->this_cost_per_share_usd,
+                'buyback_local' => $business->this_cost_per_share_usd * $rate_no_sign,
                 'cost_per_share_usd' => "$" . $this_cost_per_share_usd,
                 'value_per_share_usd' => $the_stockvalue,
                 'quantity_of_stocks' => $stockownership->stockownership_stocks_quantity,
@@ -1841,23 +1862,6 @@ public function changePasswordWithResetCode(Request $request)
             array_push($data, $this_item);
         }
         
-        // CALCULATING PROCESSING FEE
-        $processing_fee_usd = floatval(config('app.transfer_processing_fee_usd'));
-        $currency_local = Currency::where("currency_country_id", '=', $user->user_country_id)->first();
-
-        if($user->user_country_id == 81){ // GHANA
-            $processing_fee_local = ($processing_fee_usd * floatval(config('app.to_cedi')));
-            $processing_fee_local_with_currency_sign = "Gh¢" . ($processing_fee_usd * floatval(config('app.to_cedi')));
-            $rate = "$1 = " . "Gh¢" . floatval(config('app.to_cedi'));
-            $rate_no_sign = floatval(config('app.to_cedi'));
-            $local_currency = "Gh¢";
-        } else {
-            $processing_fee_local = $processing_fee_usd;
-            $processing_fee_local_with_currency_sign = "$" . $processing_fee_usd;
-            $rate = "$1 = " . "$1";
-            $rate_no_sign = 1;
-            $local_currency = "$";
-        }
 
         return response([
             "status" => 1, 
