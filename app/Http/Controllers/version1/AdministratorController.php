@@ -1513,7 +1513,7 @@ class AdministratorController extends Controller
             "frontend_key" => "bail|required",
             // ADD ANY OTHER REQUIRED INPUTS FROM HERE
             "notification_type" => "bail|required|integer",
-            "short_message" => "bail|required|string",
+            "title" => "bail|required|string",
             "full_message" => "bail|required|string",
         ]);
 
@@ -1538,7 +1538,7 @@ class AdministratorController extends Controller
                 "normal",
                 "information",
                 "FishPott - Info",
-                $request->short_message,
+                $request->title,
                 $request->full_message,
                 "", 
                 "", 
@@ -1561,7 +1561,7 @@ class AdministratorController extends Controller
                 "normal",
                 "information",
                 "FishPott - Info",
-                $request->short_message,
+                $request->title,
                 $request->full_message,
                 "", 
                 "", 
