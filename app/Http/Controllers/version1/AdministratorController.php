@@ -1513,8 +1513,9 @@ class AdministratorController extends Controller
             "frontend_key" => "bail|required",
             // ADD ANY OTHER REQUIRED INPUTS FROM HERE
             "notification_type" => "bail|required|integer",
-            "user_id" => "bail|required|integer",
-            "action_info" => "nullable",
+            "title" => "bail|required|integer",
+            "short_message" => "bail|required|string",
+            "full_message" => "bail|required|string",
         ]);
 
         // MAKING SURE THE REQUEST AND USER IS VALIDATED
@@ -1537,9 +1538,9 @@ class AdministratorController extends Controller
                 "FISHPOT_TIPS",
                 "normal",
                 "information",
-                "New Drill - FishPott",
-                "Train your FishPott and increase its intelligence with a new drill",
-                "This is the long text", 
+                $request->title,
+                $request->short_message,
+                $request->full_message,
                 "", 
                 "", 
                 "", 
@@ -1560,9 +1561,9 @@ class AdministratorController extends Controller
                 array($user->user_fcm_token_android, $user->user_fcm_token_web, $user->user_fcm_token_ios),
                 "normal",
                 "information",
-                "Stock Suggestion - FishPott",
-                "You have a new business you can invest in",
-                "This is the long text", 
+                $request->title,
+                $request->short_message,
+                $request->full_message,
                 "", 
                 "", 
                 "", 
