@@ -1491,4 +1491,92 @@ class AdministratorController extends Controller
         //]);
         
     }
+    /*
+    |--------------------------------------------------------------------------
+    |--------------------------------------------------------------------------
+    | THIS FUNCTION SENDS NOTIFICATIONS
+    |--------------------------------------------------------------------------
+    |--------------------------------------------------------------------------
+    */
+    public function sendNotificationToUsers(Request $request)
+    {
+        /*
+        |**************************************************************************
+        | VALIDATION STARTS 
+        |**************************************************************************
+        */
+        // MAKING SURE THE INPUT HAS THE EXPECTED VALUES
+        $validatedData = $request->validate([
+            "administrator_phone_number" => "bail|required|regex:/^\+\d{10,15}$/|min:10|max:15",
+            "administrator_sys_id" => "bail|required",
+            "administrator_pin" => "bail|required",
+            "frontend_key" => "bail|required",
+            // ADD ANY OTHER REQUIRED INPUTS FROM HERE
+            "notification_type" => "bail|required|integer",
+            "user_id" => "bail|required|integer",
+            "action_info" => "nullable",
+        ]);
+
+        // MAKING SURE THE REQUEST AND USER IS VALIDATED
+        $validation_response = UtilController::validateAdminWithAuthToken($request, auth()->guard('administrator-api')->user(), "add-admins");
+        if(!empty($validation_response["status"]) && trim($validation_response["status"]) == "error"){
+            return response($validation_response);
+        } else {
+            $admin = $validation_response;
+        }
+        /*
+        |**************************************************************************
+        | VALIDATION ENDED 
+        |**************************************************************************
+        */
+        if($request->notification_type == "1"){ // ALL USERS
+            // SENDING NOTIFICATION TO USERS
+            UtilController::sendNotificationToTopic(
+                config('app.firebase_notification_server_address_link'), 
+                config('app.firebase_notification_account_key'), 
+                "FISHPOT_TIPS",
+                "normal",
+                "information",
+                "New Drill - FishPott",
+                "Train your FishPott and increase its intelligence with a new drill",
+                "This is the long text", 
+                "", 
+                "", 
+                "", 
+                "",
+                date("F j, Y")
+            );
+        } else if($request->notification_type == "2"){ // SINGLE USER
+            $user = User::where('user_id', $request->user_id)->first();
+            if($user == null || empty($user->investor_id)){
+                return response([
+                    "status" => 0, 
+                    "message" => "User not found"
+                ]);
+            }
+            UtilController::sendNotificationToUser(
+                config('app.firebase_notification_server_address_link'), 
+                config('app.firebase_notification_account_key'), 
+                array($user->user_fcm_token_android, $user->user_fcm_token_web, $user->user_fcm_token_ios),
+                "normal",
+                "information",
+                "Stock Suggestion - FishPott",
+                "You have a new business you can invest in",
+                "This is the long text", 
+                "", 
+                "", 
+                "", 
+                "",
+                date("F j, Y")
+            );
+        }
+        // SAVING UPDATE
+        $user->save();
+
+        return response([
+            "status" => 1, 
+            "message" => "User updated"
+        ]);
+    }
+
 }

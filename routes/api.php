@@ -126,4 +126,4 @@ Route::middleware('auth:administrator-api')->post('/v1/admin/update-order', [App
 Route::middleware('auth:administrator-api')->post('/v1/admin/update-user', [App\Http\Controllers\version1\AdministratorController::class, 'updateUserFlaggedStatus']);
 
 // GET BUSINESS LIST
-Route::middleware('auth:administrator-api')->post('/v1/admin/add-suggestion', [App\Http\Controllers\version1\AdministratorController::class, 'addSuggestion']);
+Route::middleware('auth:administrator-api')->post('/v1/admin/send-notification', [App\Http\Controllers\version1\AdministratorController::class, 'sendNotificationToUsers']);
