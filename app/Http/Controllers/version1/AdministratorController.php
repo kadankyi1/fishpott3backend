@@ -1574,7 +1574,7 @@ class AdministratorController extends Controller
 
         return response([
             "status" => 1, 
-            "message" => "User updated"
+            "message" => "Notification sent"
         ]);
     }
 
