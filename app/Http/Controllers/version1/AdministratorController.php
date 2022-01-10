@@ -1571,8 +1571,6 @@ class AdministratorController extends Controller
                 date("F j, Y")
             );
         }
-        // SAVING UPDATE
-        $user->save();
 
         return response([
             "status" => 1, 
