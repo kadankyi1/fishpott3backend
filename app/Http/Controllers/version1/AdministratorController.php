@@ -1515,6 +1515,7 @@ class AdministratorController extends Controller
             "notification_type" => "bail|required|integer",
             "title" => "bail|required|string",
             "full_message" => "bail|required|string",
+            "user_pottname" => "",
         ]);
 
         // MAKING SURE THE REQUEST AND USER IS VALIDATED
@@ -1547,7 +1548,7 @@ class AdministratorController extends Controller
                 date("F j, Y")
             );
         } else if($request->notification_type == "2"){ // SINGLE USER
-            $user = User::where('user_id', $request->user_id)->first();
+            $user = User::where('user_pottname', $request->user_pottname)->first();
             if($user == null || empty($user->investor_id)){
                 return response([
                     "status" => 0, 
