@@ -101,6 +101,9 @@ Route::middleware('auth:administrator-api')->post('/v1/admin/add-drill', [App\Ht
 // ADD BUSINESS
 Route::middleware('auth:administrator-api')->post('/v1/admin/add-business', [App\Http\Controllers\version1\AdministratorController::class, 'addBusiness']);
 
+// ADD BUSINESS
+Route::middleware('auth:administrator-api')->post('/v1/admin/add-suggestion', [App\Http\Controllers\version1\AdministratorController::class, 'addSuggestion']);
+
 // ADD BUSINESS STOCK VALUE
 Route::middleware('auth:administrator-api')->post('/v1/admin/add-new-stock-value', [App\Http\Controllers\version1\AdministratorController::class, 'addNewShareValue']);
 
