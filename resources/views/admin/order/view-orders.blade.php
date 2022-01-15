@@ -137,7 +137,6 @@ $page_title = "View orders and take simple actions on them";
                                             <th>Bank</th>
                                             <th>Account</th>
                                             <th>Date</th>
-                                            <th>Payout Account</th>
                                             <th class="text-right">Payment</th>
                                             <th class="text-right">Processed</th>
                                             <th class="text-right">Flagged</th>
