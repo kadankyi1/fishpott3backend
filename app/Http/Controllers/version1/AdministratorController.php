@@ -708,7 +708,7 @@ class AdministratorController extends Controller
         if(empty($request->keyword)){
             $data_stock_purchases = DB::table('stock_purchases')
             ->select(
-                'stock_purchases.stockpurchase_id', 'stock_purchases.created_at', 'users.user_surname', 'users.user_firstname', 'users.user_phone_number', 'users.user_email',  
+                'stock_purchases.stockpurchase_sys_id', 'stock_purchases.created_at', 'users.user_surname', 'users.user_firstname', 'users.user_phone_number', 'users.user_email',  
                 'businesses.business_full_name',  'businesses.business_find_code', 'countries.country_nice_name', 
                 'stock_purchases.stockpurchase_price_per_stock_usd',  'stock_purchases.stockpurchase_stocks_quantity', 'risk_insurance_types.risk_type_shortname',
                 'stock_purchases.stockpurchase_risk_insurance_fee_usd',  'stock_purchases.stockpurchase_processing_fee_usd', 'stock_purchases.stockpurchase_total_price_with_all_fees_usd',
@@ -724,7 +724,7 @@ class AdministratorController extends Controller
         } else {                
             $data_stock_purchases = DB::table('stock_purchases')
             ->select(
-                'stock_purchases.stockpurchase_id', 'stock_purchases.created_at', 'users.user_surname', 'users.user_firstname', 'users.user_phone_number', 'users.user_email',  
+                'stock_purchases.stockpurchase_sys_id', 'stock_purchases.created_at', 'users.user_surname', 'users.user_firstname', 'users.user_phone_number', 'users.user_email',  
                 'businesses.business_full_name',  'businesses.business_find_code', 'countries.country_nice_name',
                 'stock_purchases.stockpurchase_price_per_stock_usd',  'stock_purchases.stockpurchase_stocks_quantity', 'risk_insurance_types.risk_type_shortname',
                 'stock_purchases.stockpurchase_risk_insurance_fee_usd',  'stock_purchases.stockpurchase_processing_fee_usd', 'stock_purchases.stockpurchase_total_price_with_all_fees_usd',
@@ -736,7 +736,8 @@ class AdministratorController extends Controller
             ->join('countries', 'businesses.business_country_id', '=', 'countries.country_id')
             ->where('user_phone_number', 'LIKE', "%{$request->keyword}%")
             //->where('stockpurchase_payment_gateway_status', '!=', 0)
-            ->orderBy('stockpurchase_id', 'desc')->take(100)
+            ->orderBy('stockpurchase_id', 'desc')
+            ->take(100)
             ->get();
         }
         
@@ -776,6 +777,7 @@ class AdministratorController extends Controller
             ->where('user_phone_number', 'LIKE', "%{$request->keyword}%")
             //->where('stockstransfers_processed', '=', 0)
             //->where('stocktransfer_payment_gateway_status', '!=', 0)
+            ->orderBy('stocktransfer_id', 'desc')->take(100)
             ->take(100)
             ->get();
         }
@@ -816,13 +818,13 @@ class AdministratorController extends Controller
             ->join('countries', 'businesses.business_country_id', '=', 'countries.country_id')
             ->where('user_phone_number', 'LIKE', "%{$request->keyword}%")
             //->where('stocksellback_processing_fee_usd', '=', 0)
+            ->orderBy('stocksellback_id', 'desc')
+            ->take(100)
             ->take(100)
             ->get();
         }
 
         $all_data = array();
-
-
         
         // FORMATTING TRANSACTION
         foreach($data_stock_purchases as $stockpurchase){
