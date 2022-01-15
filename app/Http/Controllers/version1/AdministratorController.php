@@ -713,7 +713,8 @@ class AdministratorController extends Controller
                 'businesses.business_full_name',  'businesses.business_find_code', 'countries.country_nice_name', 
                 'stock_purchases.stockpurchase_price_per_stock_usd',  'stock_purchases.stockpurchase_stocks_quantity', 'risk_insurance_types.risk_type_shortname',
                 'stock_purchases.stockpurchase_risk_insurance_fee_usd',  'stock_purchases.stockpurchase_processing_fee_usd', 'stock_purchases.stockpurchase_total_price_with_all_fees_usd',
-                'stock_purchases.stockpurchase_rate_of_dollar_to_currency_paid_in',  'stock_purchases.stockpurchase_processed', 'stock_purchases.stockpurchase_processed_reason', 'stock_purchases.stockpurchase_flagged',
+                'stock_purchases.stockpurchase_rate_of_dollar_to_currency_paid_in',  'stock_purchases.stockpurchase_processed', 
+                'stock_purchases.stockpurchase_processed_reason', 'stock_purchases.stockpurchase_flagged', 'stock_purchases.stockpurchase_total_all_fees_in_currency_paid_in',
                 'stock_purchases.stockpurchase_flagged_reason',  'stock_purchases.stockpurchase_payment_gateway_status', 'stock_purchases.stockpurchase_payment_gateway_info', 'currencies.currency_symbol')
             ->join('users', 'users.investor_id', '=', 'stock_purchases.stockpurchase_user_investor_id')
             ->join('currencies', 'currencies.currency_id', '=', 'stock_purchases.stockpurchase_currency_paid_in_id')
@@ -730,7 +731,8 @@ class AdministratorController extends Controller
                 'businesses.business_full_name',  'businesses.business_find_code', 'countries.country_nice_name',
                 'stock_purchases.stockpurchase_price_per_stock_usd',  'stock_purchases.stockpurchase_stocks_quantity', 'risk_insurance_types.risk_type_shortname',
                 'stock_purchases.stockpurchase_risk_insurance_fee_usd',  'stock_purchases.stockpurchase_processing_fee_usd', 'stock_purchases.stockpurchase_total_price_with_all_fees_usd',
-                'stock_purchases.stockpurchase_rate_of_dollar_to_currency_paid_in',  'stock_purchases.stockpurchase_processed', 'stock_purchases.stockpurchase_processed_reason', 'stock_purchases.stockpurchase_flagged',
+                'stock_purchases.stockpurchase_rate_of_dollar_to_currency_paid_in',  'stock_purchases.stockpurchase_processed', 'stock_purchases.stockpurchase_processed_reason', 
+                'stock_purchases.stockpurchase_flagged', 'stock_purchases.stockpurchase_total_all_fees_in_currency_paid_in',
                 'stock_purchases.stockpurchase_flagged_reason',  'stock_purchases.stockpurchase_payment_gateway_status', 'stock_purchases.stockpurchase_payment_gateway_info', 'currencies.currency_symbol')
             ->join('users', 'users.investor_id', '=', 'stock_purchases.stockpurchase_user_investor_id')
             ->join('currencies', 'currencies.currency_id', '=', 'stock_purchases.stockpurchase_currency_paid_in_id')
