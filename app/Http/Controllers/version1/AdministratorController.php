@@ -799,6 +799,7 @@ class AdministratorController extends Controller
                 'stock_sell_backs.stocksellback_receiving_bank_or_momo_account_number', 'stock_sell_backs.stocksellback_receiving_bank_or_momo_name', 
                 'stock_sell_backs.stocksellback_receiving_bank_routing_number', 'stock_sell_backs.stocksellback_rate_dollar_to_local_with_no_signs', 
                 'stock_sell_backs.stocksellback_processing_fee_usd', 'stock_sell_backs.stocksellback_flagged', 'stock_sell_backs.stocksellback_flagged_reason',
+                'stock_sell_backs.stocksellback_receiver_pottname',
                 'stock_sell_backs.stocksellback_processed', 'stock_sell_backs.stocksellback_processed_reason', 'currencies.currency_symbol')
             ->join('users', 'users.investor_id', '=', 'stock_sell_backs.stocksellback_seller_investor_id')
             ->join('currencies', 'currencies.currency_id', '=', 'stock_sell_backs.stocksellback_local_currency_paid_in_id')
@@ -818,6 +819,7 @@ class AdministratorController extends Controller
                 'stock_sell_backs.stocksellback_receiving_bank_or_momo_account_number', 'stock_sell_backs.stocksellback_receiving_bank_or_momo_name', 
                 'stock_sell_backs.stocksellback_receiving_bank_routing_number', 'stock_sell_backs.stocksellback_rate_dollar_to_local_with_no_signs', 
                 'stock_sell_backs.stocksellback_processing_fee_usd', 'stock_sell_backs.stocksellback_flagged', 'stock_sell_backs.stocksellback_flagged_reason',
+                'stock_sell_backs.stocksellback_receiver_pottname',
                 'stock_sell_backs.stocksellback_processed', 'stock_sell_backs.stocksellback_processed_reason', 'currencies.currency_symbol')
             ->join('currencies', 'currencies.currency_id', '=', 'stock_sell_backs.stocksellback_local_currency_paid_in_id')
             ->join('users', 'users.investor_id', '=', 'stock_sell_backs.stocksellback_seller_investor_id')
