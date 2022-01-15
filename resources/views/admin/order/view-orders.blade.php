@@ -172,8 +172,10 @@ $page_title = "View orders and take simple actions on them";
                                             <td>$330</td>
                                             <td>$330</td>
                                             <td class="text-right">
-                                                <label class="label label-success">processed</label>
-                                                <label class="label label-warning">pending</label>
+                                                <label class="label label-success">paid</label>
+                                            </td>
+                                            <td class="text-right">
+                                                <label class="label label-success">pending</label>
                                             </td>
                                             <td class="text-right">
                                                 <label class="label label-danger">Flagged</label>
