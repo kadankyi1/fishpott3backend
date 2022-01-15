@@ -940,6 +940,10 @@ class AdministratorController extends Controller
             array_push($all_data, $this_output);
         }
 
+        usort($all_data, function($a, $b) {
+            return $a['transaction_id'] <=> $b['transaction_id'];
+        });
+
         return response([
             "status" => 1, 
             "message" => "success",
