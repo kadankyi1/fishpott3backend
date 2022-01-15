@@ -822,18 +822,77 @@ class AdministratorController extends Controller
         $all_data = array();
 
 
+        /*
         // FORMATTING TRANSACTION
+        foreach($data_stock_purchases as $stockpurchase){
+            $this_output = [
+                "transaction_type" => "BUY",
+                "user_fullname" => $stockpurchase->stockpurchase_sys_id,
+                "user_phone" => $stockpurchase->stockpurchase_sys_id,
+                "user_email" => $stockpurchase->stockpurchase_sys_id,
+                "stock_name" => $stockpurchase->stockpurchase_sys_id,
+                "stock_price_usd_or_receiver_pottname" => $stockpurchase->stockpurchase_sys_id,
+                "stocks_quantity" => $stockpurchase->stockpurchase_sys_id,
+                "risk_insurance" => $stockpurchase->stockpurchase_sys_id,
+                "risk_insurance_fee" => $stockpurchase->stockpurchase_sys_id,
+                "total_fees_usd" => $stockpurchase->stockpurchase_sys_id,
+                "total_fees_local" => $stockpurchase->stockpurchase_sys_id,
+                "rate_usd_to_local" => $stockpurchase->stockpurchase_sys_id,
+                "processing_status" => $stockpurchase->stockpurchase_sys_id,
+                "flagged_status" => $stockpurchase->stockpurchase_sys_id,
+                "payment_status" => $stockpurchase->stockpurchase_sys_id,
+                "created_at" => $stockpurchase->stockpurchase_sys_id
+            ];
+            array_push($all_data, $this_output);
+        }
+
         foreach($data_stock_sellbacks as $stocksellback){
             echo "\n" . $stocksellback->stocksellback_sys_id;
-            //array_push($formatted_output_data_array, $this_output);
+
+            $this_output = [
+                "transaction_type" => $ssssssss,
+                "stock_name" => $ssssssss,
+                "ssss" => $ssssssss,
+                "ssss" => $ssssssss,
+                "ssss" => $ssssssss,
+                "ssss" => $ssssssss,
+                "ssss" => $ssssssss,
+                "ssss" => $ssssssss,
+                "ssss" => $ssssssss,
+                "ssss" => $ssssssss
+            ];
+            array_push($all_data, $this_output);
         }
-        exit;
+
+        
+        foreach($data_stock_sellbacks as $stocksellback){
+            $this_output = [
+                "transaction_type" => $stocksellback->stocksellback_sys_id,
+                "user_fullname" => $stocksellback->stocksellback_sys_id,
+                "user_phone" => $stocksellback->stocksellback_sys_id,
+                "user_email" => $stocksellback->stocksellback_sys_id,
+                "stock_name" => $stocksellback->stocksellback_sys_id,
+                "stock_price_usd_or_receiver_pottname" => $stocksellback->stocksellback_sys_id,
+                "stocks_quantity" => $stocksellback->stocksellback_sys_id,
+                "risk_insurance" => $stocksellback->stocksellback_sys_id,
+                "risk_insurance_fee" => $stocksellback->stocksellback_sys_id,
+                "total_fees_usd" => $stocksellback->stocksellback_sys_id,
+                "total_fees_local" => $stocksellback->stocksellback_sys_id,
+                "rate_usd_to_local" => $stocksellback->stocksellback_sys_id,
+                "processing_status" => $stocksellback->stocksellback_sys_id,
+                "flagged_status" => $stocksellback->stocksellback_sys_id,
+                "payment_status" => $stocksellback->stocksellback_sys_id,
+                "created_at" => $stocksellback->stocksellback_sys_id
+            ];
+            array_push($all_data, $this_output);
+        }
+        */
         
         
         return response([
             "status" => 1, 
             "message" => "success",
-            "data" => $data_stock_sellbacks
+            "data" => $data_stock_purchases
         ]);
     }
 
