@@ -818,6 +818,17 @@ class AdministratorController extends Controller
             ->take(100)
             ->get();
         }
+
+        $all_data = array();
+
+
+        // FORMATTING TRANSACTION
+        foreach($data_stock_sellbacks as $stocksellback){
+            echo "\n" . $stocksellback->stocksellback_sys_id;
+            //array_push($formatted_output_data_array, $this_output);
+        }
+        exit;
+        
         
         return response([
             "status" => 1, 
