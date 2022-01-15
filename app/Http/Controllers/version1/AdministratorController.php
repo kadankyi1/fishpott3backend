@@ -713,7 +713,7 @@ class AdministratorController extends Controller
                 'stock_purchases.stockpurchase_risk_insurance_fee_usd',  'stock_purchases.stockpurchase_processing_fee_usd', 'stock_purchases.stockpurchase_total_price_with_all_fees_usd',
                 'stock_purchases.stockpurchase_rate_of_dollar_to_currency_paid_in',  'stock_purchases.stockpurchase_processed', 'stock_purchases.stockpurchase_processed_reason', 'stock_purchases.stockpurchase_flagged',
                 'stock_purchases.stockpurchase_flagged_reason',  'stock_purchases.stockpurchase_payment_gateway_status', 'stock_purchases.stockpurchase_payment_gateway_info', 'transactions.transaction_id')
-            ->join('transactions', 'transactions.transaction_referenced_item_id', '=', 'transactions.transaction_transaction_type_id')
+            ->join('transactions', 'transactions.transaction_referenced_item_id', '=', 'stock_purchases.stockpurchase_id')
             ->join('users', 'users.investor_id', '=', 'stock_purchases.stockpurchase_user_investor_id')
             ->join('businesses', 'businesses.business_sys_id', '=', 'stock_purchases.stockpurchase_business_id')
             ->join('risk_insurance_types', 'risk_insurance_types.risk_type_id', '=', 'stock_purchases.stockpurchase_risk_insurance_type_id')
@@ -730,7 +730,7 @@ class AdministratorController extends Controller
                 'stock_purchases.stockpurchase_risk_insurance_fee_usd',  'stock_purchases.stockpurchase_processing_fee_usd', 'stock_purchases.stockpurchase_total_price_with_all_fees_usd',
                 'stock_purchases.stockpurchase_rate_of_dollar_to_currency_paid_in',  'stock_purchases.stockpurchase_processed', 'stock_purchases.stockpurchase_processed_reason', 'stock_purchases.stockpurchase_flagged',
                 'stock_purchases.stockpurchase_flagged_reason',  'stock_purchases.stockpurchase_payment_gateway_status', 'stock_purchases.stockpurchase_payment_gateway_info', 'transactions.transaction_id')
-            ->join('transactions', 'transactions.transaction_referenced_item_id', '=', 'transactions.transaction_transaction_type_id')
+            ->join('transactions', 'transactions.transaction_referenced_item_id', '=', 'stock_purchases.stockpurchase_id')
             ->join('users', 'users.investor_id', '=', 'stock_purchases.stockpurchase_user_investor_id')
             ->join('businesses', 'businesses.business_sys_id', '=', 'stock_purchases.stockpurchase_business_id')
             ->join('risk_insurance_types', 'risk_insurance_types.risk_type_id', '=', 'stock_purchases.stockpurchase_risk_insurance_type_id')
