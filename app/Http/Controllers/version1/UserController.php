@@ -2212,12 +2212,12 @@ public function changePasswordWithResetCode(Request $request)
         if($request->app_type == "ios"){
             $all_users = User::count() + 1000;   
             $user_net_worth_usd = "$" . strval(UtilController::formatNumberShort($user->user_net_worth_usd));
-            $user_pott_intelligence = $user->user_pott_intelligence;
+            $user_pott_intelligence = $user->user_pott_intelligence . "%";
             $user_pott_position = UtilController::formatNumberWithPositionAffix($user->user_pott_position);
         } else {
             $all_users = User::count() + 1000;   
             $user_net_worth_usd = "$" . strval(UtilController::formatNumberShort($user->user_net_worth_usd)) . " -- Pott Net Worth";
-            $user_pott_intelligence = $user->user_pott_intelligence . " -- Pott Intelligence";
+            $user_pott_intelligence = $user->user_pott_intelligence . "% -- Pott Intelligence";
             $user_pott_position = UtilController::formatNumberWithPositionAffix($user->user_pott_position) . " - Your FishPott ranks at this position currently out of " . strval($all_users) . " FishPotts";
         }
         
