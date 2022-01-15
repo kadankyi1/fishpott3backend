@@ -795,7 +795,7 @@ class AdministratorController extends Controller
             ->join('users', 'users.investor_id', '=', 'stock_sell_backs.stocksellback_seller_investor_id')
             ->join('businesses', 'businesses.business_sys_id', '=', 'stock_sell_backs.stocksellback_business_id')
             ->join('countries', 'businesses.business_country_id', '=', 'countries.country_id')
-            ->where('stocksellback_processing_fee_usd', '=', 0)
+            ->where('stocksellback_processed', '=', 0)
             ->take(100)
             ->get();
         } else {              
