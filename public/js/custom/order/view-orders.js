@@ -68,9 +68,8 @@ function getOrdersSuccessResponseFunction(response)
 {
 
     fade_out_loader_and_fade_in_form("loader", "form"); 
-    $("#table_body").html('');
-    console.log(response);
     /*
+    $("#table_body").html('');
     $.each(response.data, function(key,value) {
         console.log(value.stockpurchase_payment_gateway_info);
         if(value.stockpurchase_payment_gateway_status === 1){
