@@ -1472,6 +1472,14 @@ public function changePasswordWithResetCode(Request $request)
         $stockTransferData["stocktransfer_payment_gateway_info"] = "unpaid";
         StockTransfer::create($stockTransferData);
         
+        // SAVING IT AS A TRANSACTION
+        $transactionData["transaction_sys_id"] =  "T-" . $stockTransferData["stocktransfer_sys_id"];
+        $transactionData["transaction_transaction_type_id"] = 5;
+        $transactionData["transaction_referenced_item_id"] = $stockTransferData["stocktransfer_sys_id"];
+        $transactionData["transaction_user_investor_id"] = $user->investor_id;
+        Transaction::create($transactionData);
+
+
         $info_1 = "You are transfering " . $request->transfer_quantity . " stocks of " . $business->business_full_name;
         
         // CALCULATING PROCESSING FEE
@@ -1659,6 +1667,13 @@ public function changePasswordWithResetCode(Request $request)
         $stockSellbackData["stocksellback_processed_reason"] = "unpaid";
         StockSellBack::create($stockSellbackData);
         
+
+        // SAVING IT AS A TRANSACTION
+        $transactionData["transaction_sys_id"] =  "T-" . $stockSellbackData["stocksellback_sys_id"];
+        $transactionData["transaction_transaction_type_id"] = 6;
+        $transactionData["transaction_referenced_item_id"] = $stockSellbackData["stocksellback_sys_id"];
+        $transactionData["transaction_user_investor_id"] = $user->investor_id;
+        Transaction::create($transactionData);
 
         return response([
             "status" => 1, 
