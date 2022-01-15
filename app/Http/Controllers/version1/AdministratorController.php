@@ -714,8 +714,9 @@ class AdministratorController extends Controller
                 'stock_purchases.stockpurchase_price_per_stock_usd',  'stock_purchases.stockpurchase_stocks_quantity', 'risk_insurance_types.risk_type_shortname',
                 'stock_purchases.stockpurchase_risk_insurance_fee_usd',  'stock_purchases.stockpurchase_processing_fee_usd', 'stock_purchases.stockpurchase_total_price_with_all_fees_usd',
                 'stock_purchases.stockpurchase_rate_of_dollar_to_currency_paid_in',  'stock_purchases.stockpurchase_processed', 'stock_purchases.stockpurchase_processed_reason', 'stock_purchases.stockpurchase_flagged',
-                'stock_purchases.stockpurchase_flagged_reason',  'stock_purchases.stockpurchase_payment_gateway_status', 'stock_purchases.stockpurchase_payment_gateway_info')
+                'stock_purchases.stockpurchase_flagged_reason',  'stock_purchases.stockpurchase_payment_gateway_status', 'stock_purchases.stockpurchase_payment_gateway_info', 'currencies.currency_symbol')
             ->join('users', 'users.investor_id', '=', 'stock_purchases.stockpurchase_user_investor_id')
+            ->join('currencies', 'currencies.currency_id', '=', 'stock_purchases.stockpurchase_currency_paid_in_id')
             ->join('businesses', 'businesses.business_sys_id', '=', 'stock_purchases.stockpurchase_business_id')
             ->join('risk_insurance_types', 'risk_insurance_types.risk_type_id', '=', 'stock_purchases.stockpurchase_risk_insurance_type_id')
             ->join('countries', 'businesses.business_country_id', '=', 'countries.country_id')
@@ -730,8 +731,9 @@ class AdministratorController extends Controller
                 'stock_purchases.stockpurchase_price_per_stock_usd',  'stock_purchases.stockpurchase_stocks_quantity', 'risk_insurance_types.risk_type_shortname',
                 'stock_purchases.stockpurchase_risk_insurance_fee_usd',  'stock_purchases.stockpurchase_processing_fee_usd', 'stock_purchases.stockpurchase_total_price_with_all_fees_usd',
                 'stock_purchases.stockpurchase_rate_of_dollar_to_currency_paid_in',  'stock_purchases.stockpurchase_processed', 'stock_purchases.stockpurchase_processed_reason', 'stock_purchases.stockpurchase_flagged',
-                'stock_purchases.stockpurchase_flagged_reason',  'stock_purchases.stockpurchase_payment_gateway_status', 'stock_purchases.stockpurchase_payment_gateway_info')
+                'stock_purchases.stockpurchase_flagged_reason',  'stock_purchases.stockpurchase_payment_gateway_status', 'stock_purchases.stockpurchase_payment_gateway_info', 'currencies.currency_symbol')
             ->join('users', 'users.investor_id', '=', 'stock_purchases.stockpurchase_user_investor_id')
+            ->join('currencies', 'currencies.currency_id', '=', 'stock_purchases.stockpurchase_currency_paid_in_id')
             ->join('businesses', 'businesses.business_sys_id', '=', 'stock_purchases.stockpurchase_business_id')
             ->join('risk_insurance_types', 'risk_insurance_types.risk_type_id', '=', 'stock_purchases.stockpurchase_risk_insurance_type_id')
             ->join('countries', 'businesses.business_country_id', '=', 'countries.country_id')
@@ -795,8 +797,9 @@ class AdministratorController extends Controller
                 'stock_sell_backs.stocksellback_receiving_bank_or_momo_account_number', 'stock_sell_backs.stocksellback_receiving_bank_or_momo_name', 
                 'stock_sell_backs.stocksellback_receiving_bank_routing_number', 'stock_sell_backs.stocksellback_rate_dollar_to_local_with_no_signs', 
                 'stock_sell_backs.stocksellback_processing_fee_usd', 'stock_sell_backs.stocksellback_flagged', 'stock_sell_backs.stocksellback_flagged_reason',
-                'stock_sell_backs.stocksellback_processed', 'stock_sell_backs.stocksellback_processed_reason')
+                'stock_sell_backs.stocksellback_processed', 'stock_sell_backs.stocksellback_processed_reason', 'currencies.currency_symbol')
             ->join('users', 'users.investor_id', '=', 'stock_sell_backs.stocksellback_seller_investor_id')
+            ->join('currencies', 'currencies.currency_id', '=', 'stock_sell_backs.stocksellback_local_currency_paid_in_id')
             ->join('businesses', 'businesses.business_sys_id', '=', 'stock_sell_backs.stocksellback_business_id')
             ->join('countries', 'businesses.business_country_id', '=', 'countries.country_id')
             ->where('stocksellback_processed', '=', 0)
@@ -813,7 +816,8 @@ class AdministratorController extends Controller
                 'stock_sell_backs.stocksellback_receiving_bank_or_momo_account_number', 'stock_sell_backs.stocksellback_receiving_bank_or_momo_name', 
                 'stock_sell_backs.stocksellback_receiving_bank_routing_number', 'stock_sell_backs.stocksellback_rate_dollar_to_local_with_no_signs', 
                 'stock_sell_backs.stocksellback_processing_fee_usd', 'stock_sell_backs.stocksellback_flagged', 'stock_sell_backs.stocksellback_flagged_reason',
-                'stock_sell_backs.stocksellback_processed', 'stock_sell_backs.stocksellback_processed_reason')
+                'stock_sell_backs.stocksellback_processed', 'stock_sell_backs.stocksellback_processed_reason', 'currencies.currency_symbol')
+            ->join('currencies', 'currencies.currency_id', '=', 'stock_sell_backs.stocksellback_local_currency_paid_in_id')
             ->join('users', 'users.investor_id', '=', 'stock_sell_backs.stocksellback_seller_investor_id')
             ->join('businesses', 'businesses.business_sys_id', '=', 'stock_sell_backs.stocksellback_business_id')
             ->join('countries', 'businesses.business_country_id', '=', 'countries.country_id')
@@ -850,8 +854,10 @@ class AdministratorController extends Controller
                 "rate_usd_to_local" => $stockpurchase->stockpurchase_rate_of_dollar_to_currency_paid_in,
                 "processing_status" => $stockpurchase->stockpurchase_processed,
                 "flagged_status" => $stockpurchase->stockpurchase_flagged,
-                "payment_status" => $stockpurchase->stockpurchase_payment_gateway_status,
-                "payment_status_text" => $stockpurchase->stockpurchase_payment_gateway_info,
+                "payment_status_or_networkname" => $stockpurchase->stockpurchase_payment_gateway_status,
+                "payment_status_text_or_routing_no" => $stockpurchase->stockpurchase_payment_gateway_info,
+                "account_no" => "NA",
+                "total_fee_local_or_total_payout_local" => $stockpurchase->currency_symbol . $stocksellback->stocksellback_payout_amt_local_currency_paid_in,
                 "created_at" => $stockpurchase->created_at
             ];
             array_push($all_data, $this_output);
@@ -879,14 +885,47 @@ class AdministratorController extends Controller
                 "rate_usd_to_local" => config('app.to_cedi'),
                 "processing_status" => $stocktransfer->stockstransfers_processed,
                 "flagged_status" => $stocktransfer->stocktransfer_flagged,
-                "payment_status" => $stocktransfer->stocktransfer_payment_gateway_status,
-                "payment_status_text" => $stocktransfer->stocktransfer_payment_gateway_info,
+                "payment_status_or_networkname" => $stocktransfer->stocktransfer_payment_gateway_status,
+                "payment_status_text_or_routing_no" => $stocktransfer->stocktransfer_payment_gateway_info,
+                "account_no" => "NA",
+                "total_fee_local_or_total_payout_local" => "NA",
                 "created_at" => $stocktransfer->created_at
             ];
             array_push($all_data, $this_output);
         }
         
-        
+
+        foreach($data_stock_sellbacks as $stocksellback){
+            $this_transaction = Transaction::where('transaction_referenced_item_id', $stocksellback->stocksellback_sys_id)->first();
+            if($this_transaction == null){
+                continue;
+            } 
+            $this_output = [
+                "transaction_type" => "SELLBACK",
+                "transaction_id" => $this_transaction->transaction_id,
+                "transaction_sys_id" => $this_transaction->transaction_sys_id,
+                "transaction_ref_id" => $stocksellback->stocksellback_sys_id,
+                "user_fullname" => $stocksellback->user_surname . " " . $stocksellback->user_firstname,
+                "user_phone" => $stocksellback->user_phone_number,
+                "user_email" => $stocksellback->user_email,
+                "stock_name" => $stocksellback->business_full_name,
+                "stock_price_usd_or_receiver_pottname" => $stocksellback->stocksellback_receiver_pottname,
+                "stocks_quantity" => $stocksellback->stocksellback_stocks_quantity,
+                "risk_insurance_or_buyback_offer" => "$" . $stocksellback->stocksellback_buyback_offer_per_stock_usd,
+                "risk_insurance_fee_or_account_name" => $stocksellback->stocksellback_receiving_bank_or_momo_account_name,
+                "total_fees_usd" => "$" . config('app.transfer_processing_fee_usd'),
+                "rate_usd_to_local" => $stocksellback->stocksellback_rate_dollar_to_local_with_no_signs,
+                "processing_status" => $stocksellback->stocksellback_processed,
+                "flagged_status" => $stocksellback->stocksellback_flagged,
+                "payment_status_or_networkname" => $stocksellback->stocksellback_receiving_bank_or_momo_name,
+                "payment_status_text_or_routing_no" => $stocksellback->stocksellback_receiving_bank_routing_number,
+                "account_no" => $stocksellback->stocksellback_receiving_bank_or_momo_account_number,
+                "total_fee_local_or_total_payout_local" => $stocksellback->currency_symbol . $stocksellback->stocksellback_payout_amt_local_currency_paid_in,
+                "created_at" => $stocksellback->created_at
+            ];
+            array_push($all_data, $this_output);
+        }
+
         return response([
             "status" => 1, 
             "message" => "success",
