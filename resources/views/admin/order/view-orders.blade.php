@@ -134,7 +134,9 @@ $page_title = "View orders and take simple actions on them";
                                             <th>Processing</th>
                                             <th>Ttl($ | Local )</th>
                                             <th>Rate</th>
-                                            <th>Payout Bank</th>
+                                            <th>Bank</th>
+                                            <th>Account</th>
+                                            <th>Date</th>
                                             <th>Payout Account</th>
                                             <th class="text-right">Payment</th>
                                             <th class="text-right">Processed</th>
@@ -186,70 +188,7 @@ $page_title = "View orders and take simple actions on them";
                                                 </td>
                                             </tr>
                                             -->
-                                        
-    "": "+233553663643",
-    "": "annodankyikwaku@gmail.com",
-    "": "Time Breakfast",
-    "": "20211125-072202",
-    "": "$9.00",
-    "": 100,
-    "": "100% Risk Insurance",
-    "": "$90.00",
-    "": "999.00",
-    "": "6.00",
-    "": 1,
-    "": 0,
-    "": 1,
-    "payment_status_text_or_routing_no": "paid",
-    "account_no": "NA",
-    "": "Gh¢5994.00",
-    "created_at": "2021-12-16 11:23:40"
 
-<tr data-tranid="' + value.transaction_sys_id + '" id="' + value.transaction_ref_id + '">
-    <td>' + value.transaction_type + '</td>
-    <td>
-        <div class="chk-option">
-            <div class="checkbox-fade fade-in-primary">
-                <i class="fa fa-external-link-square" aria-hidden="true"  style="cursor: pointer"></i>
-            </div>
-        </div>
-        <div class="d-inline-block align-middle">
-            <div class="d-inline-block">
-                <h6>' + value.user_fullname + '</h6>
-                <p class="text-muted m-b-0">' + value.user_phone + '|' + value.user_email + '</p>
-            </div>
-        </div>
-    </td>
-    <td>
-        <div class="d-inline-block align-middle">
-            <div class="d-inline-block">
-                <h6>' + value.stock_name + '</h6>
-                <p class="text-muted m-b-0">' + value.stock_business_fincode + '</p>
-            </div>
-        </div>
-        
-    </td>
-    <td>' + value.stock_price_usd_or_receiver_pottname_or_buyback_offer + '</td>
-    <td>' + value.stocks_quantity + '</td>
-    <td>' + value.risk_insurance + '</td>
-    <td>' + value.risk_insurance_fee_or_account_name + '</td>
-    <td>' + value.risk_insurance + '</td>
-    <td>' + value.total_fees_usd + '</td>
-    <td>
-        (' + value.rate_usd_to_local + ') 
-        <p class="text-muted m-b-0">' + value.total_fee_local_or_total_payout_local + '</p>
-    </td>
-    <td class="text-right">
-        <label class="label label-success">paid</label>
-    </td>
-    <td class="text-right">
-        <label class="label label-success">pending</label>
-    </td>
-    <td class="text-right">
-        <label class="label label-danger">Flagged</label>
-        <i class="fa fa-flag" aria-hidden="true" style="cursor: pointer"></i>
-    </td>
-</tr>
                                         </tbody>
                                     </table>
                                     <div class="text-right m-r-20">
