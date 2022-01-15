@@ -1017,6 +1017,15 @@ public function changePasswordWithResetCode(Request $request)
             $default_msg = "You already answered this drill.";
         }
 
+        // CALCULATING POTT-INTELLIGENCE/OR HOW WELL YOUR POTT KNOWS YOU
+        $six_months_ago = date('Y-m-d',strtotime("-180 days")); 
+        $answers_six_months_ago = DrillAnswer::where('drill_answer_user_investor_id', $user->investor_id)->whereDate('last_online', ">=" , $six_months_ago)->count(); 
+
+        echo "\n six_months_ago: " .  $six_months_ago;
+        echo "\n answers_six_months_ago: " .  $answers_six_months_ago;
+        exit;
+        
+
         // GETTING THE ANSWERS OF FRIENDS
         $answer_1_count = UtilController::getCountDrillAnswers(["drill_answer_drill_sys_id", "drill_answer_number"], [$drill->drill_sys_id, 1]);
         $answer_2_count = UtilController::getCountDrillAnswers(["drill_answer_drill_sys_id", "drill_answer_number"], [$drill->drill_sys_id, 2]);
