@@ -707,8 +707,8 @@ class AdministratorController extends Controller
         if(empty($request->keyword)){
             $data_stock_purchases = DB::table('stock_purchases')
             ->select(
-                'stock_purchases.stockpurchase_id', 'users.user_surname', 'users.user_firstname', 'users.user_phone_number', 'users.user_email',  
-                'businesses.business_full_name',  'businesses.business_find_code', 'countries.country_nice_name',
+                'stock_purchases.stockpurchase_id', 'stock_purchases.created_at', 'users.user_surname', 'users.user_firstname', 'users.user_phone_number', 'users.user_email',  
+                'businesses.business_full_name',  'businesses.business_find_code', 'countries.country_nice_name', 
                 'stock_purchases.stockpurchase_price_per_stock_usd',  'stock_purchases.stockpurchase_stocks_quantity', 'risk_insurance_types.risk_type_shortname',
                 'stock_purchases.stockpurchase_risk_insurance_fee_usd',  'stock_purchases.stockpurchase_processing_fee_usd', 'stock_purchases.stockpurchase_total_price_with_all_fees_usd',
                 'stock_purchases.stockpurchase_rate_of_dollar_to_currency_paid_in',  'stock_purchases.stockpurchase_processed', 'stock_purchases.stockpurchase_processed_reason', 'stock_purchases.stockpurchase_flagged',
@@ -723,7 +723,7 @@ class AdministratorController extends Controller
         } else {                
             $data_stock_purchases = DB::table('stock_purchases')
             ->select(
-                'stock_purchases.stockpurchase_id', 'users.user_surname', 'users.user_firstname', 'users.user_phone_number', 'users.user_email',  
+                'stock_purchases.stockpurchase_id', 'stock_purchases.created_at', 'users.user_surname', 'users.user_firstname', 'users.user_phone_number', 'users.user_email',  
                 'businesses.business_full_name',  'businesses.business_find_code', 'countries.country_nice_name',
                 'stock_purchases.stockpurchase_price_per_stock_usd',  'stock_purchases.stockpurchase_stocks_quantity', 'risk_insurance_types.risk_type_shortname',
                 'stock_purchases.stockpurchase_risk_insurance_fee_usd',  'stock_purchases.stockpurchase_processing_fee_usd', 'stock_purchases.stockpurchase_total_price_with_all_fees_usd',
@@ -744,7 +744,7 @@ class AdministratorController extends Controller
         if(empty($request->keyword)){
             $data_stocks_transfers = DB::table('stocks_transfers')
             ->select(
-                'stocks_transfers.stocktransfer_sys_id', 'users.user_surname', 'users.user_firstname', 'users.user_phone_number', 'users.user_email',  
+                'stocks_transfers.stocktransfer_sys_id', 'stocks_transfers.created_at', 'users.user_surname', 'users.user_firstname', 'users.user_phone_number', 'users.user_email',  
                 'businesses.business_full_name',  'businesses.business_find_code', 'countries.country_nice_name',
                 'stocks_transfers.stocktransfer_stocks_quantity',  'stocks_transfers.stocktransfer_receiver_pottname', 
                 //'stocks_transfers.stockstransfers_processing_fee_usd', 'stock_purchases.stockpurchase_rate_of_dollar_to_currency_paid_in',  
@@ -762,7 +762,7 @@ class AdministratorController extends Controller
 
             $data_stocks_transfers = DB::table('stocks_transfers')
             ->select(
-                'stocks_transfers.stocktransfer_sys_id', 'users.user_surname', 'users.user_firstname', 'users.user_phone_number', 'users.user_email',  
+                'stocks_transfers.stocktransfer_sys_id', 'stocks_transfers.created_at', 'users.user_surname', 'users.user_firstname', 'users.user_phone_number', 'users.user_email',  
                 'businesses.business_full_name',  'businesses.business_find_code', 'countries.country_nice_name',
                 'stocks_transfers.stocktransfer_stocks_quantity',  'stocks_transfers.stocktransfer_receiver_pottname', 
                 //'stocks_transfers.stockstransfers_processing_fee_usd', 'stock_purchases.stockpurchase_rate_of_dollar_to_currency_paid_in',  
@@ -783,7 +783,7 @@ class AdministratorController extends Controller
         if(empty($request->keyword)){
             $data_stock_sellbacks = DB::table('stock_sell_backs')
             ->select(
-                'stock_sell_backs.stocksellback_sys_id', 'users.user_surname', 'users.user_firstname', 'users.user_phone_number', 'users.user_email',  
+                'stock_sell_backs.stocksellback_sys_id', 'stock_sell_backs.created_at', 'users.user_surname', 'users.user_firstname', 'users.user_phone_number', 'users.user_email',  
                 'businesses.business_full_name',  'businesses.business_find_code', 'countries.country_nice_name',
                 'stock_sell_backs.stocksellback_stocks_quantity',  'stock_sell_backs.stocksellback_buyback_offer_per_stock_usd', 
                 'stock_sell_backs.stocksellback_buyback_offer_per_stock_usd',  'stock_sell_backs.stocksellback_payout_amt_local_currency_paid_in', 
@@ -801,7 +801,7 @@ class AdministratorController extends Controller
         } else {              
             $data_stock_sellbacks = DB::table('stock_sell_backs')
             ->select(
-                'stock_sell_backs.stocksellback_sys_id', 'users.user_surname', 'users.user_firstname', 'users.user_phone_number', 'users.user_email',  
+                'stock_sell_backs.stocksellback_sys_id', 'stock_sell_backs.created_at', 'users.user_surname', 'users.user_firstname', 'users.user_phone_number', 'users.user_email',  
                 'businesses.business_full_name',  'businesses.business_find_code', 'countries.country_nice_name',
                 'stock_sell_backs.stocksellback_stocks_quantity',  'stock_sell_backs.stocksellback_buyback_offer_per_stock_usd', 
                 'stock_sell_backs.stocksellback_buyback_offer_per_stock_usd',  'stock_sell_backs.stocksellback_payout_amt_local_currency_paid_in', 
@@ -822,26 +822,27 @@ class AdministratorController extends Controller
         $all_data = array();
 
 
-        /*
+        
         // FORMATTING TRANSACTION
         foreach($data_stock_purchases as $stockpurchase){
             $this_output = [
                 "transaction_type" => "BUY",
-                "user_fullname" => $stockpurchase->stockpurchase_sys_id,
-                "user_phone" => $stockpurchase->stockpurchase_sys_id,
-                "user_email" => $stockpurchase->stockpurchase_sys_id,
-                "stock_name" => $stockpurchase->stockpurchase_sys_id,
-                "stock_price_usd_or_receiver_pottname" => $stockpurchase->stockpurchase_sys_id,
-                "stocks_quantity" => $stockpurchase->stockpurchase_sys_id,
-                "risk_insurance" => $stockpurchase->stockpurchase_sys_id,
-                "risk_insurance_fee" => $stockpurchase->stockpurchase_sys_id,
-                "total_fees_usd" => $stockpurchase->stockpurchase_sys_id,
+                "user_fullname" => $stockpurchase->user_surname . " " . $stockpurchase->user_firstname,
+                "user_phone" => $stockpurchase->user_phone_number,
+                "user_email" => $stockpurchase->user_email,
+                "stock_name" => $stockpurchase->business_full_name,
+                "stock_price_usd_or_receiver_pottname" => "$" . $stockpurchase->stockpurchase_price_per_stock_usd,
+                "stocks_quantity" => $stockpurchase->stockpurchase_stocks_quantity,
+                "risk_insurance" => $stockpurchase->risk_type_shortname,
+                "risk_insurance_fee" => "$" . $stockpurchase->stockpurchase_risk_insurance_fee_usd,
+                "total_fees_usd" => $stockpurchase->stockpurchase_total_price_with_all_fees_usd,
                 "total_fees_local" => $stockpurchase->stockpurchase_sys_id,
-                "rate_usd_to_local" => $stockpurchase->stockpurchase_sys_id,
-                "processing_status" => $stockpurchase->stockpurchase_sys_id,
-                "flagged_status" => $stockpurchase->stockpurchase_sys_id,
-                "payment_status" => $stockpurchase->stockpurchase_sys_id,
-                "created_at" => $stockpurchase->stockpurchase_sys_id
+                "rate_usd_to_local" => $stockpurchase->stockpurchase_rate_of_dollar_to_currency_paid_in,
+                "processing_status" => $stockpurchase->stockpurchase_processed,
+                "flagged_status" => $stockpurchase->stockpurchase_flagged,
+                "payment_status" => $stockpurchase->stockpurchase_payment_gateway_status,
+                "payment_status_text" => $stockpurchase->stockpurchase_payment_gateway_info,
+                "created_at" => $stockpurchase->created_at
             ];
             array_push($all_data, $this_output);
         }
@@ -886,7 +887,7 @@ class AdministratorController extends Controller
             ];
             array_push($all_data, $this_output);
         }
-        */
+        
         
         
         return response([
