@@ -140,8 +140,8 @@ $page_title = "View orders and take simple actions on them";
                                         </tr>
                                         </thead>
                                         <tbody id="table_body">
-                                        <!--
                                             <tr>
+                                            <td>TRANSFER</td>
                                             <td>
                                                 <div class="chk-option">
                                                     <div class="checkbox-fade fade-in-primary">
@@ -180,7 +180,6 @@ $page_title = "View orders and take simple actions on them";
                                                 <i class="fa fa-flag" aria-hidden="true" style="cursor: pointer"></i>
                                             </td>
                                         </tr>
-                                        -->
                                         </tbody>
                                     </table>
                                     <div class="text-right m-r-20">
