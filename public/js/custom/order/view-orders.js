@@ -71,25 +71,27 @@ function getOrdersSuccessResponseFunction(response)
     $("#table_body").html('');
     $.each(response.data, function(key,value) {
         if(value.processing_status === 1){
-            payment_status_class = "success";
-            payment_status = "paid";
-        } else if(value.processing_status === 0){
-            payment_status_class = "danger";
-            payment_status = "unpaid";
-        } else {
-            payment_status_class = "warning";
-            payment_status = "unknown";
-        }
-        if(value.payment_status === 1){
             processing_status_class = "success";
             processing_status = "completed";
-        } else if(value.payment_status === 0){
+        } else if(value.processing_status === 0){
             processing_status_class = "warning";
             processing_status = "pending";
         } else {
             processing_status_class = "danger";
             processing_status = "unavailable";
         }
+
+        if(value.payment_status === 1){
+            payment_status_class = "success";
+            payment_status = "paid";
+        } else if(value.payment_status === 0){
+            payment_status_class = "danger";
+            payment_status = "unpaid";
+        } else {
+            payment_status_class = "warning";
+            payment_status = "unknown";
+        }
+        
         if(value.flagged_status === 1){
             flagged_status_class = "danger";
             flagged_status = "Flagged";
