@@ -1019,7 +1019,7 @@ public function changePasswordWithResetCode(Request $request)
 
         // CALCULATING POTT-INTELLIGENCE/OR HOW WELL YOUR POTT KNOWS YOU
         $six_months_ago = date('Y-m-d',strtotime("-180 days")); 
-        $answers_six_months_ago = DrillAnswer::where('drill_answer_user_investor_id', $user->investor_id)->whereDate('last_online', ">=" , $six_months_ago)->count(); 
+        $answers_six_months_ago = DrillAnswer::where('drill_answer_user_investor_id', $user->investor_id)->whereDate('created_at', ">=" , $six_months_ago)->count(); 
 
         echo "\n six_months_ago: " .  $six_months_ago;
         echo "\n answers_six_months_ago: " .  $answers_six_months_ago;
