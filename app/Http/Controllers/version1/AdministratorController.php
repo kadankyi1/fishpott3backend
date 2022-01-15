@@ -734,7 +734,7 @@ class AdministratorController extends Controller
             ->join('risk_insurance_types', 'risk_insurance_types.risk_type_id', '=', 'stock_purchases.stockpurchase_risk_insurance_type_id')
             ->join('countries', 'businesses.business_country_id', '=', 'countries.country_id')
             ->where('user_phone_number', 'LIKE', "%{$request->keyword}%")
-            ->where('stockpurchase_payment_gateway_status', '!=', 0)
+            //->where('stockpurchase_payment_gateway_status', '!=', 0)
             ->orderBy('stockpurchase_id', 'desc')->take(100)
             ->get();
         }
@@ -773,49 +773,69 @@ class AdministratorController extends Controller
             ->join('businesses', 'businesses.business_sys_id', '=', 'stocks_transfers.stocktransfer_business_id')
             ->join('countries', 'businesses.business_country_id', '=', 'countries.country_id')
             ->where('user_phone_number', 'LIKE', "%{$request->keyword}%")
-            ->where('stockstransfers_processed', '=', 0)
-            ->where('stocktransfer_payment_gateway_status', '!=', 0)
+            //->where('stockstransfers_processed', '=', 0)
+            //->where('stocktransfer_payment_gateway_status', '!=', 0)
             ->take(100)
             ->get();
         }
         
-        /*
+
+        Schema::create('', function (Blueprint $table) {
+            $table->bigIncrements('');
+            $table->string('', 255)->unique();
+            $table->integer('');
+            $table->decimal('', 12, 2);
+            $table->decimal('', 12, 2);
+            $table->string('', 255);
+            $table->string('', 255);
+            $table->string('', 255);
+            $table->string('', 255)->default("");
+            $table->decimal('', 12, 2);
+            $table->decimal('', 12, 2);
+            $table->boolean('')->default(false);
+            $table->string('', 255)->default("");
+            $table->integer('')->default(0);
+            $table->string('', 255)->default("");
+
         // GETTING STOCK SELL BACKS
         if(empty($request->keyword)){
-            $data_stock_purchases = DB::table('stock_purchases')
+            $data_stock_purchases = DB::table('stock_sell_backs')
             ->select(
-                'stock_purchases.stockpurchase_id', 'users.user_surname', 'users.user_firstname', 'users.user_phone_number', 'users.user_email',  
+                'stock_sell_backs.stocksellback_sys_id', 'users.user_surname', 'users.user_firstname', 'users.user_phone_number', 'users.user_email',  
                 'businesses.business_full_name',  'businesses.business_find_code', 'countries.country_nice_name',
-                'stock_purchases.stockpurchase_price_per_stock_usd',  'stock_purchases.stockpurchase_stocks_quantity', 'risk_insurance_types.risk_type_shortname',
-                'stock_purchases.stockpurchase_risk_insurance_fee_usd',  'stock_purchases.stockpurchase_processing_fee_usd', 'stock_purchases.stockpurchase_total_price_with_all_fees_usd',
-                'stock_purchases.stockpurchase_rate_of_dollar_to_currency_paid_in',  'stock_purchases.stockpurchase_processed', 'stock_purchases.stockpurchase_processed_reason', 'stock_purchases.stockpurchase_flagged',
-                'stock_purchases.stockpurchase_flagged_reason',  'stock_purchases.stockpurchase_payment_gateway_status', 'stock_purchases.stockpurchase_payment_gateway_info', 'transactions.transaction_id')
-            ->join('users', 'users.investor_id', '=', 'stock_purchases.stockpurchase_user_investor_id')
-            ->join('businesses', 'businesses.business_sys_id', '=', 'stock_purchases.stockpurchase_business_id')
-            ->join('risk_insurance_types', 'risk_insurance_types.risk_type_id', '=', 'stock_purchases.stockpurchase_risk_insurance_type_id')
+                'stock_sell_backs.stocksellback_stocks_quantity',  'stock_sell_backs.stocksellback_buyback_offer_per_stock_usd', 
+                'stock_sell_backs.stocksellback_buyback_offer_per_stock_usd',  'stock_sell_backs.stocksellback_payout_amt_local_currency_paid_in', 
+                'stock_sell_backs.stocksellback_receiving_bank_or_momo_account_name','stock_sell_backs.stocksellback_receiving_bank_or_momo_account_name', 
+                'stock_sell_backs.stocksellback_receiving_bank_or_momo_account_number', 'stock_sell_backs.stocksellback_receiving_bank_or_momo_name', 
+                'stock_sell_backs.stocksellback_receiving_bank_routing_number', 'stock_sell_backs.stocksellback_rate_dollar_to_local_with_no_signs', 
+                'stock_sell_backs.stocksellback_processing_fee_usd', 'stock_sell_backs.stocksellback_flagged', 'transactions.stocksellback_flagged_reason',
+                'stock_sell_backs.stocksellback_processed', 'stock_sell_backs.stocksellback_processed_reason')
+            ->join('users', 'users.investor_id', '=', 'stock_sell_backs.stocksellback_seller_investor_id')
+            ->join('businesses', 'businesses.business_sys_id', '=', 'stock_sell_backs.stocksellback_business_id')
             ->join('countries', 'businesses.business_country_id', '=', 'countries.country_id')
-            ->where('stockpurchase_payment_gateway_status', '!=', 0)
+            ->where('stocksellback_processing_fee_usd', '=', 0)
             ->take(100)
             ->get();
-        } else {                
-            $data_stock_purchases = DB::table('stock_purchases')
+        } else {              
+            $data_stock_purchases = DB::table('stock_sell_backs')
             ->select(
-                'stock_purchases.stockpurchase_id', 'users.user_surname', 'users.user_firstname', 'users.user_phone_number', 'users.user_email',  
+                'stock_sell_backs.stocksellback_sys_id', 'users.user_surname', 'users.user_firstname', 'users.user_phone_number', 'users.user_email',  
                 'businesses.business_full_name',  'businesses.business_find_code', 'countries.country_nice_name',
-                'stock_purchases.stockpurchase_price_per_stock_usd',  'stock_purchases.stockpurchase_stocks_quantity', 'risk_insurance_types.risk_type_shortname',
-                'stock_purchases.stockpurchase_risk_insurance_fee_usd',  'stock_purchases.stockpurchase_processing_fee_usd', 'stock_purchases.stockpurchase_total_price_with_all_fees_usd',
-                'stock_purchases.stockpurchase_rate_of_dollar_to_currency_paid_in',  'stock_purchases.stockpurchase_processed', 'stock_purchases.stockpurchase_processed_reason', 'stock_purchases.stockpurchase_flagged',
-                'stock_purchases.stockpurchase_flagged_reason',  'stock_purchases.stockpurchase_payment_gateway_status', 'stock_purchases.stockpurchase_payment_gateway_info', 'transactions.transaction_id')
-            ->join('users', 'users.investor_id', '=', 'stock_purchases.stockpurchase_user_investor_id')
-            ->join('businesses', 'businesses.business_sys_id', '=', 'stock_purchases.stockpurchase_business_id')
-            ->join('risk_insurance_types', 'risk_insurance_types.risk_type_id', '=', 'stock_purchases.stockpurchase_risk_insurance_type_id')
+                'stock_sell_backs.stocksellback_stocks_quantity',  'stock_sell_backs.stocksellback_buyback_offer_per_stock_usd', 
+                'stock_sell_backs.stocksellback_buyback_offer_per_stock_usd',  'stock_sell_backs.stocksellback_payout_amt_local_currency_paid_in', 
+                'stock_sell_backs.stocksellback_receiving_bank_or_momo_account_name','stock_sell_backs.stocksellback_receiving_bank_or_momo_account_name', 
+                'stock_sell_backs.stocksellback_receiving_bank_or_momo_account_number', 'stock_sell_backs.stocksellback_receiving_bank_or_momo_name', 
+                'stock_sell_backs.stocksellback_receiving_bank_routing_number', 'stock_sell_backs.stocksellback_rate_dollar_to_local_with_no_signs', 
+                'stock_sell_backs.stocksellback_processing_fee_usd', 'stock_sell_backs.stocksellback_flagged', 'transactions.stocksellback_flagged_reason',
+                'stock_sell_backs.stocksellback_processed', 'stock_sell_backs.stocksellback_processed_reason')
+            ->join('users', 'users.investor_id', '=', 'stock_sell_backs.stocksellback_seller_investor_id')
+            ->join('businesses', 'businesses.business_sys_id', '=', 'stock_sell_backs.stocksellback_business_id')
             ->join('countries', 'businesses.business_country_id', '=', 'countries.country_id')
             ->where('user_phone_number', 'LIKE', "%{$request->keyword}%")
-            ->where('stockpurchase_payment_gateway_status', '!=', 0)
-            ->orderBy('stockpurchase_id', 'desc')->take(100)
+            //->where('stocksellback_processing_fee_usd', '=', 0)
+            ->take(100)
             ->get();
         }
-        */
         
         return response([
             "status" => 1, 
