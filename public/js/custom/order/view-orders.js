@@ -70,11 +70,10 @@ function getOrdersSuccessResponseFunction(response)
     fade_out_loader_and_fade_in_form("loader", "form"); 
     $("#table_body").html('');
     $.each(response.data, function(key,value) {
-        console.log(value.stockpurchase_payment_gateway_info);
         if(value.processing_status === 1){
             payment_status_class = "success";
             payment_status = "paid";
-        } else if(value.stockpurchase_payment_gateway_status === 0){
+        } else if(value.processing_status === 0){
             payment_status_class = "danger";
             payment_status = "unpaid";
         } else {
@@ -89,7 +88,7 @@ function getOrdersSuccessResponseFunction(response)
             processing_status = "pending";
         } else {
             processing_status_class = "danger";
-            processing_status = "denied";
+            processing_status = "unavailable";
         }
         if(value.flagged_status === 1){
             flagged_status_class = "danger";
@@ -101,7 +100,7 @@ function getOrdersSuccessResponseFunction(response)
             flagged_status_class = "warning";
             flagged_status = "unknown";
         }
-        $('#table_body').append('<tr data-tranid="' + value.transaction_sys_id + '" id="' + value.transaction_ref_id + '"><td>' + value.transaction_type + '</td><td><div class="chk-option"><div class="checkbox-fade fade-in-primary"><i class="fa fa-external-link-square" aria-hidden="true"  style="cursor: pointer"></i></div></div><div class="d-inline-block align-middle"><div class="d-inline-block"><h6>' + value.user_fullname + '</h6><p class="text-muted m-b-0">' + value.user_phone + '|' + value.user_email + '</p></div></div></td><td><div class="d-inline-block align-middle"><div class="d-inline-block"><h6>' + value.stock_name + '</h6><p class="text-muted m-b-0">' + value.stock_business_fincode + '</p></div></div></td><td>' + value.stock_price_usd_or_receiver_pottname_or_buyback_offer + '</td><td>' + value.stocks_quantity + '</td><td>' + value.risk_insurance + '</td><td>' + value.risk_insurance_fee + '</td><td>' + value.ADD_PROCESSING_FEE + '</td><td>(' + value.total_fees_usd + ') <p class="text-muted m-b-0">' + value.total_fee_local_or_total_payout_local + '</p></td><td>' + value.rate_usd_to_local + '</td><td>(' + value.networkname + ') <p class="text-muted m-b-0">RN: ' + value.routing_no + '</p></td><td>(' + value.account_name + ') <p class="text-muted m-b-0">AN: ' + value.account_no + '</p></td><td>' + value.created_at + '</td><td class="text-right"><label class="label label-' + payment_status_class + '">' + payment_status + '</label></td><td class="text-right"><label class="label label-' + processing_status_class + '">' + processing_status + '</label></td><td class="text-right"><label class="label label-' + flagged_status_class + '">' + flagged_status_class + '</label><i class="fa fa-flag" aria-hidden="true" style="cursor: pointer"></i></td></tr>');
+        $('#table_body').append('<tr data-tranid="' + value.transaction_sys_id + '" id="' + value.transaction_ref_id + '"><td>' + value.transaction_type + '</td><td><div class="chk-option"><div class="checkbox-fade fade-in-primary"><i class="fa fa-external-link-square" aria-hidden="true"  style="cursor: pointer"></i></div></div><div class="d-inline-block align-middle"><div class="d-inline-block"><h6>' + value.user_fullname + '</h6><p class="text-muted m-b-0">' + value.user_phone + '|' + value.user_email + '</p></div></div></td><td><div class="d-inline-block align-middle"><div class="d-inline-block"><h6>' + value.stock_name + '</h6><p class="text-muted m-b-0">' + value.stock_business_fincode + '</p></div></div></td><td>' + value.stock_price_usd_or_receiver_pottname_or_buyback_offer + '</td><td>' + value.stocks_quantity + '</td><td>' + value.risk_insurance + '</td><td>' + value.risk_insurance_fee + '</td><td>' + value.ADD_PROCESSING_FEE + '</td><td>(' + value.total_fees_usd + ') <p class="text-muted m-b-0">' + value.total_fee_local_or_total_payout_local + '</p></td><td>' + value.rate_usd_to_local + '</td><td>(' + value.networkname + ') <p class="text-muted m-b-0">RN: ' + value.routing_no + '</p></td><td>(' + value.account_name + ') <p class="text-muted m-b-0">AN: ' + value.account_no + '</p></td><td>' + value.created_at + '</td><td class="text-right"><label class="label label-' + payment_status_class + '">' + payment_status + '</label></td><td class="text-right"><label class="label label-' + processing_status_class + '">' + processing_status + '</label></td><td class="text-right"><label class="label label-' + flagged_status_class + '">' + flagged_status + '</label><i class="fa fa-flag" aria-hidden="true" style="cursor: pointer"></i></td></tr>');
         //models.push(value.business_full_name);
     }); 
 
