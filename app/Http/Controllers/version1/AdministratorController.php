@@ -779,27 +779,9 @@ class AdministratorController extends Controller
             ->get();
         }
         
-
-        Schema::create('', function (Blueprint $table) {
-            $table->bigIncrements('');
-            $table->string('', 255)->unique();
-            $table->integer('');
-            $table->decimal('', 12, 2);
-            $table->decimal('', 12, 2);
-            $table->string('', 255);
-            $table->string('', 255);
-            $table->string('', 255);
-            $table->string('', 255)->default("");
-            $table->decimal('', 12, 2);
-            $table->decimal('', 12, 2);
-            $table->boolean('')->default(false);
-            $table->string('', 255)->default("");
-            $table->integer('')->default(0);
-            $table->string('', 255)->default("");
-
         // GETTING STOCK SELL BACKS
         if(empty($request->keyword)){
-            $data_stock_purchases = DB::table('stock_sell_backs')
+            $data_stock_sellbacks = DB::table('stock_sell_backs')
             ->select(
                 'stock_sell_backs.stocksellback_sys_id', 'users.user_surname', 'users.user_firstname', 'users.user_phone_number', 'users.user_email',  
                 'businesses.business_full_name',  'businesses.business_find_code', 'countries.country_nice_name',
@@ -817,7 +799,7 @@ class AdministratorController extends Controller
             ->take(100)
             ->get();
         } else {              
-            $data_stock_purchases = DB::table('stock_sell_backs')
+            $data_stock_sellbacks = DB::table('stock_sell_backs')
             ->select(
                 'stock_sell_backs.stocksellback_sys_id', 'users.user_surname', 'users.user_firstname', 'users.user_phone_number', 'users.user_email',  
                 'businesses.business_full_name',  'businesses.business_find_code', 'countries.country_nice_name',
@@ -840,7 +822,7 @@ class AdministratorController extends Controller
         return response([
             "status" => 1, 
             "message" => "success",
-            "data" => $data_stocks_transfers
+            "data" => $data_stock_sellbacks
         ]);
     }
 
