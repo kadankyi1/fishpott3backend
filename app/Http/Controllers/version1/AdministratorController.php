@@ -710,7 +710,7 @@ class AdministratorController extends Controller
         ->join('stock_purchases', 'transactions.transaction_referenced_item_id', '=', 'stock_purchases.stockpurchase_sys_id')
         ->join('stocks_transfers', 'transactions.transaction_referenced_item_id', '=', 'stocks_transfers.stocktransfer_sys_id')
         ->join('stock_sell_backs', 'transactions.transaction_referenced_item_id', '=', 'stock_sell_backs.stocksellback_sys_id')
-        ->where('stockpurchase_payment_gateway_status', '!=', 0)
+        //->where('stockpurchase_payment_gateway_status', '!=', 0)
         ->take(100)
         ->get();
 
