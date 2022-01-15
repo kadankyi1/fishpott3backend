@@ -703,17 +703,16 @@ class AdministratorController extends Controller
         |**************************************************************************
         */
         
-
+        // GETTING STOCK PURCHASES
         if(empty($request->keyword)){
-            $data = DB::table('stock_purchases')
+            $data_stock_purchases = DB::table('stock_purchases')
             ->select(
                 'stock_purchases.stockpurchase_id', 'users.user_surname', 'users.user_firstname', 'users.user_phone_number', 'users.user_email',  
                 'businesses.business_full_name',  'businesses.business_find_code', 'countries.country_nice_name',
                 'stock_purchases.stockpurchase_price_per_stock_usd',  'stock_purchases.stockpurchase_stocks_quantity', 'risk_insurance_types.risk_type_shortname',
                 'stock_purchases.stockpurchase_risk_insurance_fee_usd',  'stock_purchases.stockpurchase_processing_fee_usd', 'stock_purchases.stockpurchase_total_price_with_all_fees_usd',
                 'stock_purchases.stockpurchase_rate_of_dollar_to_currency_paid_in',  'stock_purchases.stockpurchase_processed', 'stock_purchases.stockpurchase_processed_reason', 'stock_purchases.stockpurchase_flagged',
-                'stock_purchases.stockpurchase_flagged_reason',  'stock_purchases.stockpurchase_payment_gateway_status', 'stock_purchases.stockpurchase_payment_gateway_info', 'transactions.transaction_id')
-            ->join('transactions', 'transactions.transaction_referenced_item_id', '=', 'stock_purchases.stockpurchase_id')
+                'stock_purchases.stockpurchase_flagged_reason',  'stock_purchases.stockpurchase_payment_gateway_status', 'stock_purchases.stockpurchase_payment_gateway_info')
             ->join('users', 'users.investor_id', '=', 'stock_purchases.stockpurchase_user_investor_id')
             ->join('businesses', 'businesses.business_sys_id', '=', 'stock_purchases.stockpurchase_business_id')
             ->join('risk_insurance_types', 'risk_insurance_types.risk_type_id', '=', 'stock_purchases.stockpurchase_risk_insurance_type_id')
@@ -722,15 +721,14 @@ class AdministratorController extends Controller
             ->take(100)
             ->get();
         } else {                
-            $data = DB::table('stock_purchases')
+            $data_stock_purchases = DB::table('stock_purchases')
             ->select(
                 'stock_purchases.stockpurchase_id', 'users.user_surname', 'users.user_firstname', 'users.user_phone_number', 'users.user_email',  
                 'businesses.business_full_name',  'businesses.business_find_code', 'countries.country_nice_name',
                 'stock_purchases.stockpurchase_price_per_stock_usd',  'stock_purchases.stockpurchase_stocks_quantity', 'risk_insurance_types.risk_type_shortname',
                 'stock_purchases.stockpurchase_risk_insurance_fee_usd',  'stock_purchases.stockpurchase_processing_fee_usd', 'stock_purchases.stockpurchase_total_price_with_all_fees_usd',
                 'stock_purchases.stockpurchase_rate_of_dollar_to_currency_paid_in',  'stock_purchases.stockpurchase_processed', 'stock_purchases.stockpurchase_processed_reason', 'stock_purchases.stockpurchase_flagged',
-                'stock_purchases.stockpurchase_flagged_reason',  'stock_purchases.stockpurchase_payment_gateway_status', 'stock_purchases.stockpurchase_payment_gateway_info', 'transactions.transaction_id')
-            ->join('transactions', 'transactions.transaction_referenced_item_id', '=', 'stock_purchases.stockpurchase_id')
+                'stock_purchases.stockpurchase_flagged_reason',  'stock_purchases.stockpurchase_payment_gateway_status', 'stock_purchases.stockpurchase_payment_gateway_info')
             ->join('users', 'users.investor_id', '=', 'stock_purchases.stockpurchase_user_investor_id')
             ->join('businesses', 'businesses.business_sys_id', '=', 'stock_purchases.stockpurchase_business_id')
             ->join('risk_insurance_types', 'risk_insurance_types.risk_type_id', '=', 'stock_purchases.stockpurchase_risk_insurance_type_id')
@@ -740,11 +738,89 @@ class AdministratorController extends Controller
             ->orderBy('stockpurchase_id', 'desc')->take(100)
             ->get();
         }
+        
 
+        // GETTING STOCK TRANSFERS
+        if(empty($request->keyword)){
+            $data_stocks_transfers = DB::table('stocks_transfers')
+            ->select(
+                'stocks_transfers.stocktransfer_sys_id', 'users.user_surname', 'users.user_firstname', 'users.user_phone_number', 'users.user_email',  
+                'businesses.business_full_name',  'businesses.business_find_code', 'countries.country_nice_name',
+                'stocks_transfers.stocktransfer_stocks_quantity',  'stocks_transfers.stocktransfer_receiver_pottname', 
+                //'stocks_transfers.stockstransfers_processing_fee_usd', 'stock_purchases.stockpurchase_rate_of_dollar_to_currency_paid_in',  
+                'stocks_transfers.stockstransfers_processed', 'stocks_transfers.stockstransfers_processed_reason', 'stocks_transfers.stocktransfer_flagged',
+                'stocks_transfers.stocktransfer_flagged_reason',  'stocks_transfers.stocktransfer_payment_gateway_status', 
+                'stocks_transfers.stocktransfer_payment_gateway_info')
+            ->join('users', 'users.investor_id', '=', 'stocks_transfers.stocktransfer_sender_investor_id')
+            ->join('businesses', 'businesses.business_sys_id', '=', 'stocks_transfers.stocktransfer_business_id')
+            ->join('countries', 'businesses.business_country_id', '=', 'countries.country_id')
+            ->where('stockstransfers_processed', '=', 0)
+            ->where('stocktransfer_payment_gateway_status', '!=', 0)
+            ->take(100)
+            ->get();
+        } else {                
+
+            $data_stocks_transfers = DB::table('stocks_transfers')
+            ->select(
+                'stocks_transfers.stocktransfer_sys_id', 'users.user_surname', 'users.user_firstname', 'users.user_phone_number', 'users.user_email',  
+                'businesses.business_full_name',  'businesses.business_find_code', 'countries.country_nice_name',
+                'stocks_transfers.stocktransfer_stocks_quantity',  'stocks_transfers.stocktransfer_receiver_pottname', 
+                //'stocks_transfers.stockstransfers_processing_fee_usd', 'stock_purchases.stockpurchase_rate_of_dollar_to_currency_paid_in',  
+                'stocks_transfers.stockstransfers_processed', 'stocks_transfers.stockstransfers_processed_reason', 'stocks_transfers.stocktransfer_flagged',
+                'stocks_transfers.stocktransfer_flagged_reason',  'stocks_transfers.stocktransfer_payment_gateway_status', 
+                'stocks_transfers.stocktransfer_payment_gateway_info')
+            ->join('users', 'users.investor_id', '=', 'stocks_transfers.stocktransfer_sender_investor_id')
+            ->join('businesses', 'businesses.business_sys_id', '=', 'stocks_transfers.stocktransfer_business_id')
+            ->join('countries', 'businesses.business_country_id', '=', 'countries.country_id')
+            ->where('user_phone_number', 'LIKE', "%{$request->keyword}%")
+            ->where('stockstransfers_processed', '=', 0)
+            ->where('stocktransfer_payment_gateway_status', '!=', 0)
+            ->take(100)
+            ->get();
+        }
+        
+        /*
+        // GETTING STOCK SELL BACKS
+        if(empty($request->keyword)){
+            $data_stock_purchases = DB::table('stock_purchases')
+            ->select(
+                'stock_purchases.stockpurchase_id', 'users.user_surname', 'users.user_firstname', 'users.user_phone_number', 'users.user_email',  
+                'businesses.business_full_name',  'businesses.business_find_code', 'countries.country_nice_name',
+                'stock_purchases.stockpurchase_price_per_stock_usd',  'stock_purchases.stockpurchase_stocks_quantity', 'risk_insurance_types.risk_type_shortname',
+                'stock_purchases.stockpurchase_risk_insurance_fee_usd',  'stock_purchases.stockpurchase_processing_fee_usd', 'stock_purchases.stockpurchase_total_price_with_all_fees_usd',
+                'stock_purchases.stockpurchase_rate_of_dollar_to_currency_paid_in',  'stock_purchases.stockpurchase_processed', 'stock_purchases.stockpurchase_processed_reason', 'stock_purchases.stockpurchase_flagged',
+                'stock_purchases.stockpurchase_flagged_reason',  'stock_purchases.stockpurchase_payment_gateway_status', 'stock_purchases.stockpurchase_payment_gateway_info', 'transactions.transaction_id')
+            ->join('users', 'users.investor_id', '=', 'stock_purchases.stockpurchase_user_investor_id')
+            ->join('businesses', 'businesses.business_sys_id', '=', 'stock_purchases.stockpurchase_business_id')
+            ->join('risk_insurance_types', 'risk_insurance_types.risk_type_id', '=', 'stock_purchases.stockpurchase_risk_insurance_type_id')
+            ->join('countries', 'businesses.business_country_id', '=', 'countries.country_id')
+            ->where('stockpurchase_payment_gateway_status', '!=', 0)
+            ->take(100)
+            ->get();
+        } else {                
+            $data_stock_purchases = DB::table('stock_purchases')
+            ->select(
+                'stock_purchases.stockpurchase_id', 'users.user_surname', 'users.user_firstname', 'users.user_phone_number', 'users.user_email',  
+                'businesses.business_full_name',  'businesses.business_find_code', 'countries.country_nice_name',
+                'stock_purchases.stockpurchase_price_per_stock_usd',  'stock_purchases.stockpurchase_stocks_quantity', 'risk_insurance_types.risk_type_shortname',
+                'stock_purchases.stockpurchase_risk_insurance_fee_usd',  'stock_purchases.stockpurchase_processing_fee_usd', 'stock_purchases.stockpurchase_total_price_with_all_fees_usd',
+                'stock_purchases.stockpurchase_rate_of_dollar_to_currency_paid_in',  'stock_purchases.stockpurchase_processed', 'stock_purchases.stockpurchase_processed_reason', 'stock_purchases.stockpurchase_flagged',
+                'stock_purchases.stockpurchase_flagged_reason',  'stock_purchases.stockpurchase_payment_gateway_status', 'stock_purchases.stockpurchase_payment_gateway_info', 'transactions.transaction_id')
+            ->join('users', 'users.investor_id', '=', 'stock_purchases.stockpurchase_user_investor_id')
+            ->join('businesses', 'businesses.business_sys_id', '=', 'stock_purchases.stockpurchase_business_id')
+            ->join('risk_insurance_types', 'risk_insurance_types.risk_type_id', '=', 'stock_purchases.stockpurchase_risk_insurance_type_id')
+            ->join('countries', 'businesses.business_country_id', '=', 'countries.country_id')
+            ->where('user_phone_number', 'LIKE', "%{$request->keyword}%")
+            ->where('stockpurchase_payment_gateway_status', '!=', 0)
+            ->orderBy('stockpurchase_id', 'desc')->take(100)
+            ->get();
+        }
+        */
+        
         return response([
             "status" => 1, 
             "message" => "success",
-            "data" => $data
+            "data" => $data_stocks_transfers
         ]);
     }
 
