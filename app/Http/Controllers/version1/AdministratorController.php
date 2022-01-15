@@ -799,7 +799,6 @@ class AdministratorController extends Controller
                 'stock_sell_backs.stocksellback_receiving_bank_or_momo_account_number', 'stock_sell_backs.stocksellback_receiving_bank_or_momo_name', 
                 'stock_sell_backs.stocksellback_receiving_bank_routing_number', 'stock_sell_backs.stocksellback_rate_dollar_to_local_with_no_signs', 
                 'stock_sell_backs.stocksellback_processing_fee_usd', 'stock_sell_backs.stocksellback_flagged', 'stock_sell_backs.stocksellback_flagged_reason',
-                'stock_sell_backs.stocksellback_receiver_pottname',
                 'stock_sell_backs.stocksellback_processed', 'stock_sell_backs.stocksellback_processed_reason', 'currencies.currency_symbol')
             ->join('users', 'users.investor_id', '=', 'stock_sell_backs.stocksellback_seller_investor_id')
             ->join('currencies', 'currencies.currency_id', '=', 'stock_sell_backs.stocksellback_local_currency_paid_in_id')
@@ -819,7 +818,6 @@ class AdministratorController extends Controller
                 'stock_sell_backs.stocksellback_receiving_bank_or_momo_account_number', 'stock_sell_backs.stocksellback_receiving_bank_or_momo_name', 
                 'stock_sell_backs.stocksellback_receiving_bank_routing_number', 'stock_sell_backs.stocksellback_rate_dollar_to_local_with_no_signs', 
                 'stock_sell_backs.stocksellback_processing_fee_usd', 'stock_sell_backs.stocksellback_flagged', 'stock_sell_backs.stocksellback_flagged_reason',
-                'stock_sell_backs.stocksellback_receiver_pottname',
                 'stock_sell_backs.stocksellback_processed', 'stock_sell_backs.stocksellback_processed_reason', 'currencies.currency_symbol')
             ->join('currencies', 'currencies.currency_id', '=', 'stock_sell_backs.stocksellback_local_currency_paid_in_id')
             ->join('users', 'users.investor_id', '=', 'stock_sell_backs.stocksellback_seller_investor_id')
@@ -850,10 +848,10 @@ class AdministratorController extends Controller
                 "user_phone" => $stockpurchase->user_phone_number,
                 "user_email" => $stockpurchase->user_email,
                 "stock_name" => $stockpurchase->business_full_name,
-                "stock_price_usd_or_receiver_pottname" => "$" . $stockpurchase->stockpurchase_price_per_stock_usd,
+                "stock_price_usd_or_receiver_pottname_or_buyback_offer" => "$" . $stockpurchase->stockpurchase_price_per_stock_usd,
                 "stocks_quantity" => $stockpurchase->stockpurchase_stocks_quantity,
                 "risk_insurance" => $stockpurchase->risk_type_shortname,
-                "risk_insurance_fee" => "$" . $stockpurchase->stockpurchase_risk_insurance_fee_usd,
+                "risk_insurance_fee_or_account_name" => "$" . $stockpurchase->stockpurchase_risk_insurance_fee_usd,
                 "total_fees_usd" => $stockpurchase->stockpurchase_total_price_with_all_fees_usd,
                 "rate_usd_to_local" => $stockpurchase->stockpurchase_rate_of_dollar_to_currency_paid_in,
                 "processing_status" => $stockpurchase->stockpurchase_processed,
@@ -881,10 +879,10 @@ class AdministratorController extends Controller
                 "user_phone" => $stocktransfer->user_phone_number,
                 "user_email" => $stocktransfer->user_email,
                 "stock_name" => $stocktransfer->business_full_name,
-                "stock_price_usd_or_receiver_pottname" => $stocktransfer->stocktransfer_receiver_pottname,
+                "stock_price_usd_or_receiver_pottname_or_buyback_offer" => $stocktransfer->stocktransfer_receiver_pottname,
                 "stocks_quantity" => $stocktransfer->stocktransfer_stocks_quantity,
                 "risk_insurance" => "NA",
-                "risk_insurance_fee" => "NA",
+                "risk_insurance_fee_or_account_name" => "NA",
                 "total_fees_usd" => "$" . config('app.transfer_processing_fee_usd'),
                 "rate_usd_to_local" => config('app.to_cedi'),
                 "processing_status" => $stocktransfer->stockstransfers_processed,
@@ -913,9 +911,9 @@ class AdministratorController extends Controller
                 "user_phone" => $stocksellback->user_phone_number,
                 "user_email" => $stocksellback->user_email,
                 "stock_name" => $stocksellback->business_full_name,
-                "stock_price_usd_or_receiver_pottname" => $stocksellback->stocksellback_receiver_pottname,
+                "stock_price_usd_or_receiver_pottname_or_buyback_offer" => "$" . $stocksellback->stocksellback_buyback_offer_per_stock_usd,
                 "stocks_quantity" => $stocksellback->stocksellback_stocks_quantity,
-                "risk_insurance_or_buyback_offer" => "$" . $stocksellback->stocksellback_buyback_offer_per_stock_usd,
+                "risk_insurance" => "$" . $stocksellback->stocksellback_buyback_offer_per_stock_usd,
                 "risk_insurance_fee_or_account_name" => $stocksellback->stocksellback_receiving_bank_or_momo_account_name,
                 "total_fees_usd" => "$" . config('app.transfer_processing_fee_usd'),
                 "rate_usd_to_local" => $stocksellback->stocksellback_rate_dollar_to_local_with_no_signs,
