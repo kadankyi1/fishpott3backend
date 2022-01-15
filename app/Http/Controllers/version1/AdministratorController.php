@@ -688,6 +688,7 @@ class AdministratorController extends Controller
             "frontend_key" => "bail|required",
             // ADD ANY OTHER REQUIRED INPUTS FROM HERE
             "keyword" => "nullable",
+            "type" => "nullable",
         ]);
 
         // MAKING SURE THE REQUEST AND USER IS VALIDATED
@@ -825,15 +826,13 @@ class AdministratorController extends Controller
         }
 
         $all_data = array();
-        
+
         // FORMATTING TRANSACTION
         foreach($data_stock_purchases as $stockpurchase){
-
             $this_transaction = Transaction::where('transaction_referenced_item_id', $stockpurchase->stockpurchase_sys_id)->first();
             if($this_transaction == null){
                 continue;
             } 
-
             $this_output = [
                 "transaction_type" => "BUY",
                 "transaction_id" => $this_transaction->transaction_id,
@@ -854,6 +853,35 @@ class AdministratorController extends Controller
                 "payment_status" => $stockpurchase->stockpurchase_payment_gateway_status,
                 "payment_status_text" => $stockpurchase->stockpurchase_payment_gateway_info,
                 "created_at" => $stockpurchase->created_at
+            ];
+            array_push($all_data, $this_output);
+        }
+
+        foreach($data_stocks_transfers as $stocktransfer){
+            $this_transaction = Transaction::where('transaction_referenced_item_id', $stocktransfer->stocktransfer_sys_id)->first();
+            if($this_transaction == null){
+                continue;
+            } 
+            $this_output = [
+                "transaction_type" => "TRANSFER",
+                "transaction_id" => $this_transaction->transaction_id,
+                "transaction_sys_id" => $this_transaction->transaction_sys_id,
+                "transaction_ref_id" => $stocktransfer->stocktransfer_sys_id,
+                "user_fullname" => $stocktransfer->user_surname . " " . $stocktransfer->user_firstname,
+                "user_phone" => $stocktransfer->user_phone_number,
+                "user_email" => $stocktransfer->user_email,
+                "stock_name" => $stocktransfer->business_full_name,
+                "stock_price_usd_or_receiver_pottname" => $stocktransfer->stocktransfer_receiver_pottname,
+                "stocks_quantity" => $stocktransfer->stocktransfer_stocks_quantity,
+                "risk_insurance" => "NA",
+                "risk_insurance_fee" => "NA",
+                "total_fees_usd" => "$" . config('app.transfer_processing_fee_usd'),
+                "rate_usd_to_local" => config('app.to_cedi'),
+                "processing_status" => $stocktransfer->stockstransfers_processed,
+                "flagged_status" => $stocktransfer->stocktransfer_flagged,
+                "payment_status" => $stocktransfer->stocktransfer_payment_gateway_status,
+                "payment_status_text" => $stocktransfer->stocktransfer_payment_gateway_info,
+                "created_at" => $stocktransfer->created_at
             ];
             array_push($all_data, $this_output);
         }
