@@ -23,6 +23,7 @@ use App\Models\version1\StockTrainData;
 use App\Models\version1\StockValue;
 use App\Models\version1\Suggestion;
 use App\Models\version1\Suggesto;
+use App\Models\version1\Transaction;
 use Illuminate\Support\Facades\File; 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -825,8 +826,17 @@ class AdministratorController extends Controller
         
         // FORMATTING TRANSACTION
         foreach($data_stock_purchases as $stockpurchase){
+
+            $this_transaction = Transaction::where('transaction_referenced_item_id', $stockpurchase->stockpurchase_sys_id)->first();
+            if($this_transaction == null){
+                continue;
+            } 
+
             $this_output = [
                 "transaction_type" => "BUY",
+                "transaction_id" => $this_transaction->transaction_id,
+                "transaction_sys_id" => $this_transaction->transaction_sys_id,
+                "transaction_ref_id" => $stockpurchase->stockpurchase_sys_id,
                 "user_fullname" => $stockpurchase->user_surname . " " . $stockpurchase->user_firstname,
                 "user_phone" => $stockpurchase->user_phone_number,
                 "user_email" => $stockpurchase->user_email,
@@ -836,7 +846,6 @@ class AdministratorController extends Controller
                 "risk_insurance" => $stockpurchase->risk_type_shortname,
                 "risk_insurance_fee" => "$" . $stockpurchase->stockpurchase_risk_insurance_fee_usd,
                 "total_fees_usd" => $stockpurchase->stockpurchase_total_price_with_all_fees_usd,
-                "total_fees_local" => $stockpurchase->stockpurchase_sys_id,
                 "rate_usd_to_local" => $stockpurchase->stockpurchase_rate_of_dollar_to_currency_paid_in,
                 "processing_status" => $stockpurchase->stockpurchase_processed,
                 "flagged_status" => $stockpurchase->stockpurchase_flagged,
@@ -846,54 +855,12 @@ class AdministratorController extends Controller
             ];
             array_push($all_data, $this_output);
         }
-
-        foreach($data_stock_sellbacks as $stocksellback){
-            echo "\n" . $stocksellback->stocksellback_sys_id;
-
-            $this_output = [
-                "transaction_type" => $ssssssss,
-                "stock_name" => $ssssssss,
-                "ssss" => $ssssssss,
-                "ssss" => $ssssssss,
-                "ssss" => $ssssssss,
-                "ssss" => $ssssssss,
-                "ssss" => $ssssssss,
-                "ssss" => $ssssssss,
-                "ssss" => $ssssssss,
-                "ssss" => $ssssssss
-            ];
-            array_push($all_data, $this_output);
-        }
-
-        
-        foreach($data_stock_sellbacks as $stocksellback){
-            $this_output = [
-                "transaction_type" => $stocksellback->stocksellback_sys_id,
-                "user_fullname" => $stocksellback->stocksellback_sys_id,
-                "user_phone" => $stocksellback->stocksellback_sys_id,
-                "user_email" => $stocksellback->stocksellback_sys_id,
-                "stock_name" => $stocksellback->stocksellback_sys_id,
-                "stock_price_usd_or_receiver_pottname" => $stocksellback->stocksellback_sys_id,
-                "stocks_quantity" => $stocksellback->stocksellback_sys_id,
-                "risk_insurance" => $stocksellback->stocksellback_sys_id,
-                "risk_insurance_fee" => $stocksellback->stocksellback_sys_id,
-                "total_fees_usd" => $stocksellback->stocksellback_sys_id,
-                "total_fees_local" => $stocksellback->stocksellback_sys_id,
-                "rate_usd_to_local" => $stocksellback->stocksellback_sys_id,
-                "processing_status" => $stocksellback->stocksellback_sys_id,
-                "flagged_status" => $stocksellback->stocksellback_sys_id,
-                "payment_status" => $stocksellback->stocksellback_sys_id,
-                "created_at" => $stocksellback->stocksellback_sys_id
-            ];
-            array_push($all_data, $this_output);
-        }
-        
         
         
         return response([
             "status" => 1, 
             "message" => "success",
-            "data" => $data_stock_purchases
+            "data" => $all_data
         ]);
     }
 
