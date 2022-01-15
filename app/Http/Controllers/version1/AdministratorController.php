@@ -857,7 +857,7 @@ class AdministratorController extends Controller
                 "payment_status_or_networkname" => $stockpurchase->stockpurchase_payment_gateway_status,
                 "payment_status_text_or_routing_no" => $stockpurchase->stockpurchase_payment_gateway_info,
                 "account_no" => "NA",
-                "total_fee_local_or_total_payout_local" => $stockpurchase->currency_symbol . $stocksellback->stocksellback_payout_amt_local_currency_paid_in,
+                "total_fee_local_or_total_payout_local" => $stockpurchase->currency_symbol . $stockpurchase->stockpurchase_total_all_fees_in_currency_paid_in,
                 "created_at" => $stockpurchase->created_at
             ];
             array_push($all_data, $this_output);
