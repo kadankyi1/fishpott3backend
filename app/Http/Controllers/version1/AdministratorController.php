@@ -1518,8 +1518,8 @@ class AdministratorController extends Controller
 
         } else if($this_transaction->transaction_transaction_type_id == 5){ // STOCK TRANSFER
             // GETTING THE ORDER
-            echo "\n request->order_id: " . $request->order_id;
-            $stocktransfer = StockTransfer::where('stocktransfer_sys_id', $request->order_id)->first();
+            echo "\n this_transaction->transaction_referenced_item_id: " . $this_transaction->transaction_referenced_item_id;
+            $stocktransfer = StockTransfer::where('stocktransfer_sys_id', $this_transaction->transaction_referenced_item_id)->first();
             echo "\n stocktransfer->stocktransfer_sys_id: " . $stocktransfer->stocktransfer_sys_id;
             var_dump($stocktransfer);
             if($stocktransfer == null || empty($stocktransfer->stocktransfer_sys_id)){
