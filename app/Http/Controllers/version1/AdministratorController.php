@@ -1484,7 +1484,7 @@ class AdministratorController extends Controller
             ]);
         }
 
-        if($this_transaction->transaction_type_id == 4){ // STOCK PURCHASE
+        if($this_transaction->transaction_transaction_type_id == 4){ // STOCK PURCHASE
             // GETTING THE ORDER
             $stockpurchase = StockPurchase::where('stockpurchase_id', $request->order_id)->first();
             if($stockpurchase == null || empty($stockpurchase->stockpurchase_sys_id)){
@@ -1516,7 +1516,7 @@ class AdministratorController extends Controller
             // SAVING UPDATE
             $stockpurchase->save();
 
-        } else if($this_transaction->transaction_type_id == 5){ // STOCK TRANSFER
+        } else if($this_transaction->transaction_transaction_type_id == 5){ // STOCK TRANSFER
             // GETTING THE ORDER
             $stocktransfer = StockTransfer::where('stocktransfer_sys_id', $request->order_id)->first();
             if($stocktransfer == null || empty($stocktransfer->stocktransfer_sys_id)){
@@ -1547,7 +1547,7 @@ class AdministratorController extends Controller
             }
             // SAVING UPDATE
             $stocktransfer->save();
-        } else if($this_transaction->transaction_type_id == 6){ // STOCK SELLBACK
+        } else if($this_transaction->transaction_transaction_type_id == 6){ // STOCK SELLBACK
 
             // GETTING THE ORDER
             $stocksellback = StockSellBack::where('stocksellback_sys_id', $request->order_id)->first();
