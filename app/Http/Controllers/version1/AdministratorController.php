@@ -1520,6 +1520,7 @@ class AdministratorController extends Controller
             // GETTING THE ORDER
             echo "request->order_id: " . $request->order_id;
             $stocktransfer = StockTransfer::where('stocktransfer_sys_id', $request->order_id)->first();
+            var_dump($stocktransfer);
             if($stocktransfer == null || empty($stocktransfer->stocktransfer_sys_id)){
                 return response([
                     "status" => 0, 
