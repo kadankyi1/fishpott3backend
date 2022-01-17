@@ -29,6 +29,8 @@ class StockTransfer extends Model
         'stocktransfer_receiver_pottname',
         'stocktransfer_sender_investor_id',
         'stocktransfer_business_id',
+        'stockstransfers_processed',
+        'stockstransfers_processed_reason',
         'stocktransfer_flagged',
         'stocktransfer_flagged_reason',
         'stocktransfer_payment_gateway_status',
