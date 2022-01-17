@@ -1458,7 +1458,7 @@ class AdministratorController extends Controller
             "frontend_key" => "bail|required",
             // ADD ANY OTHER REQUIRED INPUTS FROM HERE
             "action_type" => "bail|required|integer",
-            "order_id" => "bail|required|integer",
+            "order_id" => "bail|required|string",
             "action_info" => "nullable",
         ]);
 
