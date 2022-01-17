@@ -146,7 +146,7 @@ function copyTransactionId(x)
     console.log("COPY sys_id: " + sys_id);
     console.log("COPY autoid: " + autoid);
 
-    show_notification("msg_holder", "success", "Transaction ID:", "copied");
+    show_notification("msg_holder", "success", "Success:", "Transaction ID Copied");
 
 }
 
