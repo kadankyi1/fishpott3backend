@@ -1547,7 +1547,7 @@ class AdministratorController extends Controller
             }
             // SAVING UPDATE
             $stocktransfer->save();
-        } else if($this_transaction->transaction_type_id == 4){ // STOCK SELLBACK
+        } else if($this_transaction->transaction_type_id == 6){ // STOCK SELLBACK
 
             // GETTING THE ORDER
             $stocksellback = StockSellBack::where('stocksellback_sys_id', $request->order_id)->first();
