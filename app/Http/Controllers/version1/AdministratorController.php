@@ -19,7 +19,9 @@ use App\Models\version1\Business;
 use App\Models\version1\Drill;
 use App\Models\version1\DrillAnswer;
 use App\Models\version1\StockPurchase;
+use App\Models\version1\StockSellBack;
 use App\Models\version1\StockTrainData;
+use App\Models\version1\StockTransfer;
 use App\Models\version1\StockValue;
 use App\Models\version1\Suggestion;
 use App\Models\version1\Suggesto;
@@ -1473,36 +1475,112 @@ class AdministratorController extends Controller
         |**************************************************************************
         */
 
-        // GETTING THE ORDER
-        $stockpurchase = StockPurchase::where('stockpurchase_id', $request->order_id)->first();
-        if($stockpurchase == null || empty($stockpurchase->stockpurchase_sys_id)){
+        // GETTING THE TRANSACTION
+        $this_transaction = Transaction::where('transaction_referenced_item_id', $request->order_id)->first();
+        if($this_transaction == null || empty($this_transaction->transaction_referenced_item_id)){
             return response([
                 "status" => 0, 
-                "message" => "Order not found"
+                "message" => "Transaction not found"
             ]);
         }
 
-        if($request->action_type == "1"){
-            if($stockpurchase->stockpurchase_payment_gateway_status != 1){
+        if($this_transaction->transaction_type_id == 4){ // STOCK PURCHASE
+            // GETTING THE ORDER
+            $stockpurchase = StockPurchase::where('stockpurchase_id', $request->order_id)->first();
+            if($stockpurchase == null || empty($stockpurchase->stockpurchase_sys_id)){
                 return response([
                     "status" => 0, 
-                    "message" => "You cannot process an unpaid order"
+                    "message" => "Stock purchase not found"
                 ]);
             }
-            if($stockpurchase->stockpurchase_flagged == 1){
+
+            if($request->action_type == "1"){ // PROCESSING
+                if($stockpurchase->stockpurchase_payment_gateway_status != 1){
+                    return response([
+                        "status" => 0, 
+                        "message" => "You cannot process an unpaid order"
+                    ]);
+                }
+                if($stockpurchase->stockpurchase_flagged == 1){
+                    return response([
+                        "status" => 0, 
+                        "message" => "You cannot process a flagged order"
+                    ]);
+                }
+                $stockpurchase->stockpurchase_processed = 1;
+                $stockpurchase->stockpurchase_processed_reason = $request->action_info;
+            } else if($request->action_type == "2"){
+                $stockpurchase->stockpurchase_flagged = 1;
+                $stockpurchase->stockpurchase_flagged_reason = $request->action_info;
+            }
+            // SAVING UPDATE
+            $stockpurchase->save();
+
+        } else if($this_transaction->transaction_type_id == 5){ // STOCK TRANSFER
+            // GETTING THE ORDER
+            $stocktransfer = StockTransfer::where('stocktransfer_sys_id', $request->order_id)->first();
+            if($stocktransfer == null || empty($stocktransfer->stocktransfer_sys_id)){
                 return response([
                     "status" => 0, 
-                    "message" => "You cannot process a flagged order"
+                    "message" => "Stock transfer not found"
                 ]);
             }
-            $stockpurchase->stockpurchase_processed = 1;
-            $stockpurchase->stockpurchase_processed_reason = $request->action_info;
-        } else if($request->action_type == "2"){
-            $stockpurchase->stockpurchase_flagged = 1;
-            $stockpurchase->stockpurchase_flagged_reason = $request->action_info;
+
+            if($request->action_type == "1"){ // PROCESSING
+                if($stocktransfer->stocktransfer_payment_gateway_status != 1){
+                    return response([
+                        "status" => 0, 
+                        "message" => "You cannot process an unpaid order"
+                    ]);
+                }
+                if($stocktransfer->stocktransfer_flagged == 1){
+                    return response([
+                        "status" => 0, 
+                        "message" => "You cannot process a flagged order"
+                    ]);
+                }
+                $stocktransfer->stockstransfers_processed = 1;
+                $stocktransfer->stockstransfers_processed_reason = $request->action_info;
+            } else if($request->action_type == "2"){
+                $stocktransfer->stocktransfer_flagged = 1;
+                $stocktransfer->stocktransfer_flagged_reason = $request->action_info;
+            }
+            // SAVING UPDATE
+            $stocktransfer->save();
+        } else if($this_transaction->transaction_type_id == 4){ // STOCK SELLBACK
+
+            // GETTING THE ORDER
+            $stocksellback = StockSellBack::where('stocksellback_sys_id', $request->order_id)->first();
+            if($stocksellback == null || empty($stocksellback->stocksellback_sys_id)){
+                return response([
+                    "status" => 0, 
+                    "message" => "Stock sell back not found"
+                ]);
+            }
+
+            if($request->action_type == "1"){ // PROCESSING
+                if($stocksellback->stocksellback_flagged == 1){
+                    return response([
+                        "status" => 0, 
+                        "message" => "You cannot process a flagged order"
+                    ]);
+                }
+                $stocksellback->stocksellback_processed = 1;
+                $stocksellback->stocksellback_processed_reason = $request->action_info;
+            } else if($request->action_type == "2"){
+                $stocksellback->stocksellback_flagged = 1;
+                $stocksellback->stocksellback_flagged_reason = $request->action_info;
+            }
+            // SAVING UPDATE
+            $stocksellback->save();
+        } else {
+            return response([
+                "status" => 0, 
+                "message" => "Transaction type not found"
+            ]);
         }
-        // SAVING UPDATE
-        $stockpurchase->save();
+
+
 
         return response([
             "status" => 1, 
