@@ -102,7 +102,7 @@ function getOrdersSuccessResponseFunction(response)
             flagged_status_class = "warning";
             flagged_status = "unknown";
         }
-        $('#table_body').append('<tr><td>' + value.transaction_type + '</td><td><div class="chk-option"><div class="checkbox-fade fade-in-primary"><i class="fa fa-external-link-square" aria-hidden="true"  style="cursor: pointer"></i></div></div><div class="d-inline-block align-middle"><div class="d-inline-block"><h6>' + value.user_fullname + '</h6><p class="text-muted m-b-0">' + value.user_phone + ' | ' + value.user_email + '</p></div></div></td><td><div class="d-inline-block align-middle"><div class="d-inline-block"><h6>' + value.stock_name + '</h6><p class="text-muted m-b-0">' + value.stock_business_fincode + '</p></div></div></td><td>' + value.stock_price_usd_or_receiver_pottname_or_buyback_offer + '</td><td>' + value.stocks_quantity + '</td><td>' + value.risk_insurance + '</td><td>' + value.risk_insurance_fee + '</td><td>' + value.ADD_PROCESSING_FEE + '</td><td>(' + value.total_fees_usd + ') <p class="text-muted m-b-0">' + value.total_fee_local_or_total_payout_local + '</p></td><td>' + value.rate_usd_to_local + '</td><td>(' + value.networkname + ') <p class="text-muted m-b-0">RN: ' + value.routing_no + '</p></td><td>(' + value.account_name + ') <p class="text-muted m-b-0">AN: ' + value.account_no + '</p></td><td>' + value.created_at + '</td><td class="text-right"><label class="label label-' + payment_status_class + '">' + payment_status + '</label></td><td class="text-right"><label class="label label-' + processing_status_class + '">' + processing_status + '</label><i class="fa fa-arrow-circle-right" aria-hidden="true" style="cursor: pointer" onclick="toggleTransactionProcessedStatus(this)" data-tranid="' + value.transaction_sys_id + '" id="' + value.transaction_ref_id + '"  data-autoid="' + value.transaction_id + '"></i><p class="text-muted m-b-0"  style="display:none;" id="processloader' + value.transaction_id + '">Working..</p></td><td class="text-right"><label class="label label-' + flagged_status_class + '">' + flagged_status + '</label><i class="fa fa-flag" aria-hidden="true" style="cursor: pointer" onclick="toggleTransactionFlaggedStatus(this)" data-tranid="' + value.transaction_sys_id + '" id="' + value.transaction_ref_id + '" data-autoid="' + value.transaction_id + '"></i><p class="text-muted m-b-0" style="display:none;" id="flagloader' + value.transaction_id + '">Working..</p></td></tr>');
+        $('#table_body').append('<tr><td>' + value.transaction_type + '</td><td><div class="chk-option"><div class="checkbox-fade fade-in-primary"><i class="fa fa-external-link-square" aria-hidden="true"  style="cursor: pointer"></i></div></div><div class="d-inline-block align-middle"><div class="d-inline-block"><h6>' + value.user_fullname + '</h6><p class="text-muted m-b-0">' + value.user_phone + ' | ' + value.user_email + '</p></div></div></td><td><div class="d-inline-block align-middle"><div class="d-inline-block"><h6>' + value.stock_name + '</h6><p class="text-muted m-b-0">' + value.stock_business_fincode + '</p></div></div></td><td>' + value.stock_price_usd_or_receiver_pottname_or_buyback_offer + '</td><td>' + value.stocks_quantity + '</td><td>' + value.risk_insurance + '</td><td>' + value.risk_insurance_fee + '</td><td>' + value.ADD_PROCESSING_FEE + '</td><td>(' + value.total_fees_usd + ') <p class="text-muted m-b-0">' + value.total_fee_local_or_total_payout_local + '</p></td><td>' + value.rate_usd_to_local + '</td><td>(' + value.networkname + ') <p class="text-muted m-b-0">RN: ' + value.routing_no + '</p></td><td>(' + value.account_name + ') <p class="text-muted m-b-0">AN: ' + value.account_no + '</p></td><td>' + value.created_at + '</td><td class="text-right"><label class="label label-' + payment_status_class + '">' + payment_status + '</label></td><td class="text-right"><label class="label label-' + processing_status_class + '">' + processing_status + '</label><i class="fa fa-arrow-circle-right" aria-hidden="true" style="cursor: pointer" onclick="toggleTransactionProcessedStatus(this)" id="processform' + value.transaction_id + '" data-tranid="' + value.transaction_sys_id + '" data-refid="' + value.transaction_ref_id + '"  data-autoid="' + value.transaction_id + '"></i><p class="text-muted m-b-0"  style="display:none;" id="processloader' + value.transaction_id + '">Working..</p></td><td class="text-right"><label class="label label-' + flagged_status_class + '">' + flagged_status + '</label><i class="fa fa-flag" aria-hidden="true" style="cursor: pointer" onclick="toggleTransactionFlaggedStatus(this)" id="flagform' + value.transaction_id + '" data-tranid="' + value.transaction_sys_id + '" data-refid="' + value.transaction_ref_id + '" data-autoid="' + value.transaction_id + '"></i><p class="text-muted m-b-0" style="display:none;" id="flagloader' + value.transaction_id + '">Working..</p></td></tr>');
         //models.push(value.business_full_name);
     }); 
 
@@ -138,19 +138,19 @@ function errorResponseFunction2(errorThrown)
 
 function toggleTransactionProcessedStatus(x)
 {
-    let sys_id = x.id;
+    let sys_id = x.getAttribute("data-refid");
     let trans_sys_id = x.getAttribute("data-tranid");
     let autoid = x.getAttribute("data-autoid");
     
     console.log("trans_sys_id: " + trans_sys_id);
     console.log("sys_id: " + sys_id);
     console.log("autoid: " + autoid);
-    fade_in_loader_and_fade_out_form("processloader"+autoid, "form"); 
+    fade_in_loader_and_fade_out_form("processloader"+autoid, "processform"+autoid); 
 }
 
 function toggleTransactionFlaggedStatus(x)
 {
-    let sys_id = x.id;
+    let sys_id = x.getAttribute("data-refid");
     let trans_sys_id = x.getAttribute("data-tranid");
     let autoid = x.getAttribute("data-autoid");
     
@@ -158,7 +158,7 @@ function toggleTransactionFlaggedStatus(x)
     console.log("FL sys_id: " + sys_id);
     console.log("FL autoid: " + autoid);
 
-    fade_in_loader_and_fade_out_form("flagloader"+autoid, "form"); 
+    fade_in_loader_and_fade_out_form("flagloader"+autoid, "flagform"+autoid); 
 
 
     
