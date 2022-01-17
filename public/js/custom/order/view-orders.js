@@ -146,13 +146,10 @@ function copyTransactionId(x)
     console.log("COPY sys_id: " + sys_id);
     console.log("COPY autoid: " + autoid);
 
-
+    
     var copyText = document.getElementById(x.id);
     copyText.select();
-    copyText.setSelectionRange(0, 99999);
-    navigator.clipboard.writeText(copyText.value);
-
-    
+    document.execCommand("Copy");
     show_notification("msg_holder", "success", "Success:", "Transaction ID Copied");
 
 }
