@@ -138,9 +138,9 @@ function errorResponseFunction2(errorThrown)
 
 function toggleTransactionProcessedStatus(x)
 {
-    let trans_sys_id = x.data("tranid");
     let sys_id = x.id;
-    let autoid = x.data("autoid");
+    let trans_sys_id = x.getAttribute("data-tranid");
+    let autoid = x.getAttribute("data-autoid");
     
     console.log("trans_sys_id: " + trans_sys_id);
     console.log("sys_id: " + sys_id);
@@ -150,9 +150,9 @@ function toggleTransactionProcessedStatus(x)
 
 function toggleTransactionFlaggedStatus(x)
 {
-    let trans_sys_id = x.data("tranid");
     let sys_id = x.id;
-    let autoid = x.data("autoid");
+    let trans_sys_id = x.getAttribute("data-tranid");
+    let autoid = x.getAttribute("data-autoid");
     
     console.log("FL trans_sys_id: " + trans_sys_id);
     console.log("FL sys_id: " + sys_id);
