@@ -138,27 +138,27 @@ function errorResponseFunction2(errorThrown)
 
 function toggleTransactionProcessedStatus(x)
 {
-    let trans_sys_id = x.getAttribute("data-tranid");
-    let sys_id = x.getAttribute("data-id");
-    let autoid = x.getAttribute("data-autoid");
+    let trans_sys_id = x.attr("data-tranid");
+    let sys_id = x.attr('id');
+    let autoid = x.attr("data-autoid");
     
     console.log("trans_sys_id: " + trans_sys_id);
     console.log("sys_id: " + sys_id);
     console.log("autoid: " + autoid);
-    fade_out_loader_and_fade_in_form("processloader"+autoid, "form"); 
+    fade_in_loader_and_fade_out_form("processloader"+autoid, "form"); 
 }
 
 function toggleTransactionFlaggedStatus(x)
 {
-    let trans_sys_id = x.getAttribute("data-tranid");
-    let sys_id = x.getAttribute("data-id");
-    let autoid = x.getAttribute("data-autoid");
+    let trans_sys_id = x.attr("data-tranid");
+    let sys_id = x.attr('id');
+    let autoid = x.attr("data-autoid");
     
     console.log("FL trans_sys_id: " + trans_sys_id);
     console.log("FL sys_id: " + sys_id);
     console.log("FL autoid: " + autoid);
 
-    fade_out_loader_and_fade_in_form("flagloader"+autoid, "form"); 
+    fade_in_loader_and_fade_out_form("flagloader"+autoid, "form"); 
 
 
     
