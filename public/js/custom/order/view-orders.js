@@ -142,10 +142,11 @@ function copyTransactionId(x)
     let trans_sys_id = x.getAttribute("data-tranid");
     let autoid = x.getAttribute("data-autoid");
     
-    console.log("trans_sys_id: " + trans_sys_id);
-    console.log("sys_id: " + sys_id);
-    console.log("autoid: " + autoid);
+    console.log("COPY trans_sys_id: " + trans_sys_id);
+    console.log("COPY sys_id: " + sys_id);
+    console.log("COPY autoid: " + autoid);
 
+    show_notification("msg_holder", "success", "Transaction ID:", "copied");
 
 }
 
