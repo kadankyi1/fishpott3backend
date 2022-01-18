@@ -139,7 +139,7 @@ function errorResponseFunction2(errorThrown)
 
 function copyTransactionId(id) {
     /* Get the text field */
-    var copyText = document.getElementById("myInput");
+    var copyText = document.getElementById(id);
   
     /* Select the text field */
     copyText.select();
