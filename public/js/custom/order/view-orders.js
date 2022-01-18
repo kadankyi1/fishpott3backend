@@ -142,15 +142,10 @@ function copyTransactionId(x) {
     copyText.style = "position: absolute; left: -1000px; top: -1000px";
     copyText.value = value;
     document.body.appendChild(copyText);
-    /* Select the text field */
     copyText.select();
-    copyText.setSelectionRange(0, 99999); /* For mobile devices */
-  
-    /* Copy the text inside the text field */
+    copyText.setSelectionRange(0, 99999);
     navigator.clipboard.writeText(copyText.value);
-    
-    /* Alert the copied text */
-    alert("Copied the text: " + copyText.value);
+    show_notification("msg_holder", "success", "Success:", "Order Id copied");
     document.body.removeChild(copyText);
 }
 /*
