@@ -1486,7 +1486,7 @@ class AdministratorController extends Controller
 
         if($this_transaction->transaction_transaction_type_id == 4){ // STOCK PURCHASE
             // GETTING THE ORDER
-            $stockpurchase = StockPurchase::where('stockpurchase_id', $request->order_id)->first();
+            $stockpurchase = StockPurchase::where('stockpurchase_sys_id', $request->order_id)->first();
             if($stockpurchase == null || empty($stockpurchase->stockpurchase_sys_id)){
                 return response([
                     "status" => 0, 

@@ -72,7 +72,7 @@ $page_title = "View orders and take simple actions on them";
                                             </select>
                                         </div>
                                         <div class="col-sm-2">
-                                            <input id="order_id" name="order_id" autocomplete="off" type="text"  required class="form-control" placeholder="Order No.">
+                                            <input id="order_id" name="order_id" autocomplete="off" type="text"  required class="form-control" placeholder="Order ID">
                                         </div>
                                         <div class="col-sm-3">
                                             <input id="action_info" name="action_info" type="text" class="form-control" placeholder="Action Info">

@@ -145,7 +145,7 @@ function copyTransactionId(x) {
     copyText.select();
     copyText.setSelectionRange(0, 99999);
     navigator.clipboard.writeText(copyText.value);
-    show_notification("msg_holder", "success", "Success:", "Order Id copied");
+    show_notification("msg_holder", "success", "Success:", "Order ID copied");
     document.body.removeChild(copyText);
 }
 /*
