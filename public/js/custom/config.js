@@ -4,7 +4,7 @@
 |--------------------------------------------------------------------------
 |*/
 
-var host = "https://app.fishpott.com/";
+var host = "https://app.fishpott.com";
 //var host = "http://fishpott.local";
 
 // LOGIN PAGE URLS
