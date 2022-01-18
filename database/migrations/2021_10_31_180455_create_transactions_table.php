@@ -16,7 +16,7 @@ class CreateTransactionsTable extends Migration
         Schema::create('transactions', function (Blueprint $table) {
             $table->bigIncrements('transaction_id');
             $table->string('transaction_sys_id', 255)->unique();
-            $table->string('transaction_referenced_item_id', 255);
+            $table->string('transaction_referenced_item_id', 255)->unique();
             $table->timestamps();
         });
 
