@@ -1507,6 +1507,12 @@ class AdministratorController extends Controller
                         "message" => "You cannot process a flagged order"
                     ]);
                 }
+                if($stockpurchase->stockpurchase_processed != 0){
+                    return response([
+                        "status" => 0, 
+                        "message" => "You cannot re-process an order"
+                    ]);
+                }
                 $stockpurchase->stockpurchase_processed = 1;
                 $stockpurchase->stockpurchase_processed_reason = $request->action_info;
             } else if($request->action_type == "2"){
@@ -1523,6 +1529,12 @@ class AdministratorController extends Controller
                     return response([
                         "status" => 0, 
                         "message" => "You cannot process a flagged order"
+                    ]);
+                }
+                if($stockpurchase->stockpurchase_processed != 0){
+                    return response([
+                        "status" => 0, 
+                        "message" => "You cannot re-process an order"
                     ]);
                 }
                 $stockpurchase->stockpurchase_processed = 2;
@@ -1559,6 +1571,12 @@ class AdministratorController extends Controller
                         "message" => "You cannot process a flagged order"
                     ]);
                 }
+                if($stocktransfer->stockstransfers_processed != 0){
+                    return response([
+                        "status" => 0, 
+                        "message" => "You cannot re-process an order"
+                    ]);
+                }
                 $stocktransfer->stockstransfers_processed = 1;
                 $stocktransfer->stockstransfers_processed_reason = $request->action_info;
             } else if($request->action_type == "2"){
@@ -1575,6 +1593,12 @@ class AdministratorController extends Controller
                     return response([
                         "status" => 0, 
                         "message" => "You cannot process a flagged order"
+                    ]);
+                }
+                if($stocktransfer->stockstransfers_processed != 0){
+                    return response([
+                        "status" => 0, 
+                        "message" => "You cannot re-process an order"
                     ]);
                 }
                 $stocktransfer->stockstransfers_processed = 2;
@@ -1600,6 +1624,12 @@ class AdministratorController extends Controller
                         "message" => "You cannot process a flagged order"
                     ]);
                 }
+                if($stocksellback->stocksellback_processed != 0){
+                    return response([
+                        "status" => 0, 
+                        "message" => "You cannot re-process an order"
+                    ]);
+                }
                 $stocksellback->stocksellback_processed = 1;
                 $stocksellback->stocksellback_processed_reason = $request->action_info;
             } else if($request->action_type == "2"){
@@ -1612,8 +1642,14 @@ class AdministratorController extends Controller
                         "message" => "You cannot process a flagged order"
                     ]);
                 }
-                $stocksellback->stocksellback_flagged = 2;
-                $stocksellback->stocksellback_flagged_reason = $request->action_info;
+                if($stocksellback->stocksellback_processed != 0){
+                    return response([
+                        "status" => 0, 
+                        "message" => "You cannot re-process an order"
+                    ]);
+                }
+                $stocksellback->stocksellback_processed = 2;
+                $stocksellback->stocksellback_processed_reason = $request->action_info;
             }
             // SAVING UPDATE
             $stocksellback->save();
