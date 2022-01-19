@@ -340,6 +340,18 @@ $page_title = "Add a new business to be used as a suggestion";
                                                 </div>
                                             </div> 
                                             <div class="form-group row">
+                                                <label class="col-sm-3 col-form-label">Business Phone</label>
+                                                <div class="col-sm-9">
+                                                    <input id="business_phone1"  name="business_phone1" maxlength="15" type="text" class="form-control" placeholder="Business Phone">
+                                                </div>
+                                            </div> 
+                                            <div class="form-group row">
+                                                <label class="col-sm-3 col-form-label">Business Email</label>
+                                                <div class="col-sm-9">
+                                                    <input id="business_email1"  name="business_email1"maxlength="100" type="email" class="form-control" placeholder="Business Email">
+                                                </div>
+                                            </div> 
+                                            <div class="form-group row">
                                                 <label class="col-sm-3 col-form-label">Pitch Text</label>
                                                 <div class="col-sm-9">
                                                     <input id="business_pitch_text"  name="business_pitch_text" minlength="1" maxlength="100" required type="text" class="form-control" placeholder="Pitch Text">

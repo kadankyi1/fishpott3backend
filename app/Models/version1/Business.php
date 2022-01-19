@@ -43,6 +43,10 @@ class Business extends Model
         'business_country_id', //
         'business_start_date', //
         'business_website', //
+        'business_phone1',
+        'business_phone2',
+        'business_email1',
+        'business_email2',
         // PITCH
         'business_pitch_text', //
         'business_pitch_video', //
@@ -64,6 +68,8 @@ class Business extends Model
         // TEAM
         'business_executive1_firstname', //
         'business_executive1_lastname', //
+        'business_executive1_phone',
+        'business_executive1_email',
         'business_executive1_profile_picture',
         'business_executive1_position', //
         'business_executive1_description',
@@ -71,6 +77,8 @@ class Business extends Model
         'business_executive1_linkedin_url',
         'business_executive2_firstname', //
         'business_executive2_lastname', //
+        'business_executive2_phone',
+        'business_executive2_email',
         'business_executive2_profile_picture',
         'business_executive2_position', //
         'business_executive2_description',
@@ -78,6 +86,8 @@ class Business extends Model
         'business_executive2_linkedin_url',
         'business_executive3_firstname',
         'business_executive3_lastname',
+        'business_executive3_phone',
+        'business_executive3_email',
         'business_executive3_profile_picture',
         'business_executive3_position', //
         'business_executive3_description',
@@ -85,6 +95,8 @@ class Business extends Model
         'business_executive3_linkedin_url',
         'business_executive4_firstname',
         'business_executive4_lastname',
+        'business_executive4_phone',
+        'business_executive4_email',
         'business_executive4_profile_picture',
         'business_executive4_position',//
         'business_executive4_description',
