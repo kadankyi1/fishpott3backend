@@ -400,6 +400,7 @@ class AdministratorController extends Controller
             "business_cash_on_hand_usd" => "bail|required|integer",
             "business_net_worth_usd" => "bail|required|integer",
             "business_price_per_stock_usd" => "bail|required|numeric",
+            "buyback_offer_usd" => "bail|required|numeric",
             "business_investments_amount_needed_usd" => "bail|required|integer",
             "business_maximum_number_of_investors_allowed" => "bail|required|integer",
             "business_current_shareholders" => "bail|required|integer",
