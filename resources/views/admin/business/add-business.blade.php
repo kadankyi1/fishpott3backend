@@ -358,16 +358,6 @@ $page_title = "Add a new business to be used as a suggestion";
                                                 </div>
                                             </div> 
                                             <div class="form-group row">
-                                                <label class="col-sm-3 col-form-label">PIN</label>
-                                                <div class="col-sm-9">
-                                                    <input id="administrator_pin" name="administrator_pin" type="password" class="form-control" placeholder="PIN">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- END OF FIRST COLUMN -->
-                                        <!-- START OF SECOND COLUMN -->
-                                        <div class="col-md-6">
-                                            <div class="form-group row">
                                                 <label class="col-sm-3 col-form-label">Last Year Profit (USD - $)</label>
                                                 <div class="col-sm-9">
                                                     <input id="business_lastyr_profit_or_loss_usd"  name="business_lastyr_profit_or_loss_usd" min="0" required type="number" class="form-control" placeholder="Last Year Profit (USD - $)">
@@ -391,6 +381,16 @@ $page_title = "Add a new business to be used as a suggestion";
                                                     <input id="business_net_worth_usd"  name="business_net_worth_usd" min="0" required type="number" class="form-control" placeholder="Net Worth (USD - $)">
                                                 </div>
                                             </div> 
+                                            <div class="form-group row">
+                                                <label class="col-sm-3 col-form-label">PIN</label>
+                                                <div class="col-sm-9">
+                                                    <input id="administrator_pin" name="administrator_pin" type="password" class="form-control" placeholder="PIN">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- END OF FIRST COLUMN -->
+                                        <!-- START OF SECOND COLUMN -->
+                                        <div class="col-md-6">
                                             <div class="form-group row">
                                                 <label class="col-sm-3 col-form-label">Price Per Stock (USD - $)</label>
                                                 <div class="col-sm-9">
@@ -441,6 +441,18 @@ $page_title = "Add a new business to be used as a suggestion";
                                                 </div>
                                             </div> 
                                             <div class="form-group row">
+                                                <label class="col-sm-3 col-form-label">CEO Phone</label>
+                                                <div class="col-sm-9">
+                                                    <input id="business_executive1_phone"  name="business_executive1_phone" minlength="1" maxlength="100" required type="text" class="form-control" placeholder="CEO Phone">
+                                                </div>
+                                            </div> 
+                                            <div class="form-group row">
+                                                <label class="col-sm-3 col-form-label">CEO Email</label>
+                                                <div class="col-sm-9">
+                                                    <input id="business_executive1_email"  name="business_executive1_email" minlength="1" maxlength="100" required type="email" class="form-control" placeholder="CEO Email">
+                                                </div>
+                                            </div> 
+                                            <div class="form-group row">
                                                 <label class="col-sm-3 col-form-label">CFO First Name</label>
                                                 <div class="col-sm-9">
                                                     <input id="business_executive2_position"  name="business_executive2_position" value="CFO" required type="hidden" class="form-control" placeholder="ceo_position">
@@ -448,9 +460,21 @@ $page_title = "Add a new business to be used as a suggestion";
                                                 </div>
                                             </div> 
                                             <div class="form-group row">
-                                                <label class="col-sm-3 col-form-label">CEO Last Name</label>
+                                                <label class="col-sm-3 col-form-label">CFO Last Name</label>
                                                 <div class="col-sm-9">
                                                     <input id="business_executive2_lastname"  name="business_executive2_lastname" minlength="1" maxlength="100" required type="text" class="form-control" placeholder="CFO Last Name">
+                                                </div>
+                                            </div> 
+                                            <div class="form-group row">
+                                                <label class="col-sm-3 col-form-label">CFO Phone</label>
+                                                <div class="col-sm-9">
+                                                    <input id="business_executive2_phone"  name="business_executive2_phone" minlength="1" maxlength="15" required type="text" class="form-control" placeholder="CFO Phone">
+                                                </div>
+                                            </div> 
+                                            <div class="form-group row">
+                                                <label class="col-sm-3 col-form-label">CFO Email</label>
+                                                <div class="col-sm-9">
+                                                    <input id="business_executive2_email"  name="business_executive2_email" minlength="1" maxlength="100" required type="email" class="form-control" placeholder="CFO Email">
                                                 </div>
                                             </div> 
 
