@@ -1513,6 +1513,18 @@ class AdministratorController extends Controller
                 $stockpurchase->stockpurchase_flagged = 1;
                 $stockpurchase->stockpurchase_flagged_reason = $request->action_info;
             } else if($request->action_type == "3"){
+                if($stockpurchase->stockpurchase_payment_gateway_status != 1){
+                    return response([
+                        "status" => 0, 
+                        "message" => "You cannot process an unpaid order"
+                    ]);
+                }
+                if($stockpurchase->stockpurchase_flagged == 1){
+                    return response([
+                        "status" => 0, 
+                        "message" => "You cannot process a flagged order"
+                    ]);
+                }
                 $stockpurchase->stockpurchase_processed = 2;
                 $stockpurchase->stockpurchase_processed_reason = $request->action_info;
             }
@@ -1553,6 +1565,18 @@ class AdministratorController extends Controller
                 $stocktransfer->stocktransfer_flagged = 1;
                 $stocktransfer->stocktransfer_flagged_reason = $request->action_info;
             } else if($request->action_type == "3"){ 
+                if($stocktransfer->stocktransfer_payment_gateway_status != 1){
+                    return response([
+                        "status" => 0, 
+                        "message" => "You cannot process an unpaid order"
+                    ]);
+                }
+                if($stocktransfer->stocktransfer_flagged == 1){
+                    return response([
+                        "status" => 0, 
+                        "message" => "You cannot process a flagged order"
+                    ]);
+                }
                 $stocktransfer->stockstransfers_processed = 2;
                 $stocktransfer->stockstransfers_processed_reason = $request->action_info;
             }
@@ -1582,6 +1606,12 @@ class AdministratorController extends Controller
                 $stocksellback->stocksellback_flagged = 1;
                 $stocksellback->stocksellback_flagged_reason = $request->action_info;
             } else if($request->action_type == "3"){
+                if($stocksellback->stocksellback_flagged == 1){
+                    return response([
+                        "status" => 0, 
+                        "message" => "You cannot process a flagged order"
+                    ]);
+                }
                 $stocksellback->stocksellback_flagged = 2;
                 $stocksellback->stocksellback_flagged_reason = $request->action_info;
             }
