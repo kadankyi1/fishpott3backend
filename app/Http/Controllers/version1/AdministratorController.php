@@ -1512,6 +1512,9 @@ class AdministratorController extends Controller
             } else if($request->action_type == "2"){
                 $stockpurchase->stockpurchase_flagged = 1;
                 $stockpurchase->stockpurchase_flagged_reason = $request->action_info;
+            } else if($request->action_type == "3"){
+                $stockpurchase->stockpurchase_processed = 2;
+                $stockpurchase->stockpurchase_processed_reason = $request->action_info;
             }
             // SAVING UPDATE
             $stockpurchase->save();
@@ -1549,6 +1552,9 @@ class AdministratorController extends Controller
             } else if($request->action_type == "2"){
                 $stocktransfer->stocktransfer_flagged = 1;
                 $stocktransfer->stocktransfer_flagged_reason = $request->action_info;
+            } else if($request->action_type == "3"){ 
+                $stocktransfer->stockstransfers_processed = 2;
+                $stocktransfer->stockstransfers_processed_reason = $request->action_info;
             }
             // SAVING UPDATE
             $stocktransfer->save();
@@ -1574,6 +1580,9 @@ class AdministratorController extends Controller
                 $stocksellback->stocksellback_processed_reason = $request->action_info;
             } else if($request->action_type == "2"){
                 $stocksellback->stocksellback_flagged = 1;
+                $stocksellback->stocksellback_flagged_reason = $request->action_info;
+            } else if($request->action_type == "3"){
+                $stocksellback->stocksellback_flagged = 2;
                 $stocksellback->stocksellback_flagged_reason = $request->action_info;
             }
             // SAVING UPDATE

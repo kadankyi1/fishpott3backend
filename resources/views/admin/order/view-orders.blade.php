@@ -67,7 +67,8 @@ $page_title = "View orders and take simple actions on them";
                                         <div class="col-sm-3">
                                             <select id="action_type" name="action_type" required class="form-control">
                                                 <option value="">Choose Action</option>
-                                                <option value="1">Processing Complete</option>
+                                                <option value="1">Complete</option>
+                                                <option value="3">Cancel</option>
                                                 <option value="2">Flag</option>
                                             </select>
                                         </div>
