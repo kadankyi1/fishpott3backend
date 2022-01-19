@@ -370,6 +370,16 @@ $page_title = "Add a new business to be used as a suggestion";
                                                 </div>
                                             </div> 
                                             <div class="form-group row">
+                                                <label class="col-sm-3 col-form-label">PIN</label>
+                                                <div class="col-sm-9">
+                                                    <input id="administrator_pin" name="administrator_pin" type="password" class="form-control" placeholder="PIN">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- END OF FIRST COLUMN -->
+                                        <!-- START OF SECOND COLUMN -->
+                                        <div class="col-md-6">
+                                            <div class="form-group row">
                                                 <label class="col-sm-3 col-form-label">Cash-On-Hand (USD - $)</label>
                                                 <div class="col-sm-9">
                                                     <input id="business_cash_on_hand_usd"  name="business_cash_on_hand_usd" min="0" required type="number" class="form-control" placeholder="Cash-On-Hand (USD - $)">
@@ -381,16 +391,6 @@ $page_title = "Add a new business to be used as a suggestion";
                                                     <input id="business_net_worth_usd"  name="business_net_worth_usd" min="0" required type="number" class="form-control" placeholder="Net Worth (USD - $)">
                                                 </div>
                                             </div> 
-                                            <div class="form-group row">
-                                                <label class="col-sm-3 col-form-label">PIN</label>
-                                                <div class="col-sm-9">
-                                                    <input id="administrator_pin" name="administrator_pin" type="password" class="form-control" placeholder="PIN">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- END OF FIRST COLUMN -->
-                                        <!-- START OF SECOND COLUMN -->
-                                        <div class="col-md-6">
                                             <div class="form-group row">
                                                 <label class="col-sm-3 col-form-label">Price Per Stock (USD - $)</label>
                                                 <div class="col-sm-9">
