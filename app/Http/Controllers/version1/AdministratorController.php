@@ -1521,7 +1521,7 @@ class AdministratorController extends Controller
             //echo "\n this_transaction->transaction_referenced_item_id: " . $this_transaction->transaction_referenced_item_id;
             //$stockpurchase = StockPurchase::where('stockpurchase_sys_id', $request->order_id)->first();
 
-            $stocktransfer = StockTransfer::where('stocktransfer_sys_id', $request->order_id)->first();
+            $stocktransfer = StockTransfer::where('stocktransfer_sys_id', $request->order_id)->get();
             //echo "\n stocktransfer->stocktransfer_sys_id: " . $stocktransfer->stocktransfer_sys_id;
             var_dump($stocktransfer[0]);
             if($stocktransfer == null || empty($stocktransfer->stocktransfer_sys_id)){
