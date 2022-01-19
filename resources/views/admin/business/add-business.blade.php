@@ -398,6 +398,12 @@ $page_title = "Add a new business to be used as a suggestion";
                                                 </div>
                                             </div> 
                                             <div class="form-group row">
+                                                <label class="col-sm-3 col-form-label">Buy Back Offer (USD - $)</label>
+                                                <div class="col-sm-9">
+                                                    <input id="buyback_offer_usd"  name="buyback_offer_usd" min="0" required type="number" class="form-control" placeholder="Buy Back Offer (USD - $)">
+                                                </div>
+                                            </div> 
+                                            <div class="form-group row">
                                                 <label class="col-sm-3 col-form-label">Investment Amt Needed (USD - $)</label>
                                                 <div class="col-sm-9">
                                                     <input id="business_investments_amount_needed_usd"  name="business_investments_amount_needed_usd" min="1" required type="number" class="form-control" placeholder="Investment Amount Needed">
