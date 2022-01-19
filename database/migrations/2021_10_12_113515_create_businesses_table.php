@@ -30,6 +30,10 @@ class CreateBusinessesTable extends Migration
             $table->string('business_address', 255);
             $table->date('business_start_date');
             $table->string('business_website', 255);
+            $table->string('business_phone1', 255);
+            $table->string('business_phone2', 255)->default("");
+            $table->string('business_email1', 255);
+            $table->string('business_email2', 255)->default("");
             $table->string('business_pitch_text', 255);
             $table->string('business_pitch_video', 255);
             $table->bigInteger('business_lastyr_revenue_usd');
@@ -47,6 +51,8 @@ class CreateBusinessesTable extends Migration
             $table->text('business_descriptive_financial_bio');
             $table->string('business_executive1_firstname', 255);
             $table->string('business_executive1_lastname', 255);
+            $table->string('business_executive1_phone', 255);
+            $table->string('business_executive1_email', 255);
             $table->string('business_executive1_profile_picture', 255)->default("");
             $table->string('business_executive1_position', 255);
             $table->text('business_executive1_description');
@@ -54,6 +60,8 @@ class CreateBusinessesTable extends Migration
             $table->string('business_executive1_linkedin_url', 255)->default("");
             $table->string('business_executive2_firstname', 255);
             $table->string('business_executive2_lastname', 255);
+            $table->string('business_executive2_phone', 255);
+            $table->string('business_executive2_email', 255);
             $table->string('business_executive2_profile_picture', 255)->default("");
             $table->string('business_executive2_position', 255);
             $table->text('business_executive2_description');
@@ -61,6 +69,8 @@ class CreateBusinessesTable extends Migration
             $table->string('business_executive2_linkedin_url', 255)->default("");
             $table->string('business_executive3_firstname', 255)->default("");
             $table->string('business_executive3_lastname', 255)->default("");
+            $table->string('business_executive3_phone', 255)->default("");
+            $table->string('business_executive3_email', 255)->default("");
             $table->string('business_executive3_profile_picture', 255)->default("");
             $table->string('business_executive3_position', 255)->default("");
             $table->text('business_executive3_description');
@@ -68,6 +78,8 @@ class CreateBusinessesTable extends Migration
             $table->string('business_executive3_linkedin_url', 255)->default("");
             $table->string('business_executive4_firstname', 255)->default("");
             $table->string('business_executive4_lastname', 255)->default("");
+            $table->string('business_executive4_phone', 255)->default("");
+            $table->string('business_executive4_email', 255)->default("");
             $table->string('business_executive4_profile_picture', 255)->default("");
             $table->string('business_executive4_position', 255)->default("");
             $table->text('business_executive4_description');
