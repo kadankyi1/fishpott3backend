@@ -408,6 +408,8 @@ class AdministratorController extends Controller
 
             "business_executive1_firstname" => "bail|required|min:2|max:100",
             "business_executive1_lastname" => "bail|required|min:2|max:100",
+            "business_executive1_phone" => "bail|required|min:10|max:15",
+            "business_executive1_email" => "bail|required|min:2|max:100",
             "business_executive1_profile_picture" => "nullable",
             "business_executive1_position" => "bail|required|max:100",
             "business_executive1_description" => "nullable|max:150",
@@ -416,6 +418,8 @@ class AdministratorController extends Controller
 
             "business_executive2_firstname" => "bail|required|min:2|max:100",
             "business_executive2_lastname" => "bail|required|min:2|max:100",
+            "business_executive2_phone" => "bail|required|min:10|max:15",
+            "business_executive2_email" => "bail|required|min:2|max:100",
             "business_executive2_profile_picture" => "nullable",
             "business_executive2_position" => "bail|required|max:100",
             "business_executive2_description" => "nullable|max:150",
@@ -424,6 +428,8 @@ class AdministratorController extends Controller
 
             "business_executive3_firstname" => "nullable|min:2|max:100",
             "business_executive3_lastname" => "nullable|min:2|max:100",
+            "business_executive3_phone" => "nullable|max:15",
+            "business_executive3_email" => "nullable|max:100",
             "business_executive3_profile_picture" => "nullable",
             "business_executive3_position" => "nullable|max:100",
             "business_executive3_description" => "nullable|max:150",
@@ -432,6 +438,8 @@ class AdministratorController extends Controller
 
             "business_executive4_firstname" => "nullable|min:2|max:100",
             "business_executive4_lastname" => "nullable|min:2|max:100",
+            "business_executive4_phone" => "nullable|max:15",
+            "business_executive4_email" => "nullable|max:100",
             "business_executive4_profile_picture" => "nullable",
             "business_executive4_position" => "nullable|max:100",
             "business_executive4_description" => "nullable|max:150",
