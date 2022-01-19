@@ -14,8 +14,8 @@ class StockTransfer extends Model
      * @var string
      */
     protected $table = 'stocks_transfers';
-    
-    protected $primaryKey = 'stocktransfer_sys_id';
+
+    protected $primaryKey = 'stocktransfer_id';
 
 
     /**
