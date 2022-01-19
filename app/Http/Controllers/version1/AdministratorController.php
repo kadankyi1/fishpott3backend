@@ -390,6 +390,8 @@ class AdministratorController extends Controller
             "business_country" => "bail|required|integer",
             "business_start_date" => "bail|required|date|before:-1 years",
             "business_website" => "nullable|max:150",
+            "business_phone1" => "bail|required|min:10|max:15",
+            "business_email1" => "bail|required|min:2|max:100",
 
             "business_pitch_text" => "bail|required|min:10|max:100",
             "business_pitch_video" => "bail|required|mimes:mp4",
