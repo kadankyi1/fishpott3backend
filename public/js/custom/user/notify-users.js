@@ -6,6 +6,17 @@ if(!user_has_api_token()){
 
 $(document).ready(function () 
 {
+    $(".theme-loader").animate({
+        opacity: "0"
+    },1000);
+    setTimeout(function() {
+        $(".theme-loader").remove();
+    }, 800);
+
+    $("#administrator_phone_number").val(localStorage.getItem("administrator_phone_number"));
+    $("#administrator_sys_id").val(localStorage.getItem("administrator_sys_id"));
+    $("#frontend_key").val(localStorage.getItem("frontend_key"));
+
     // SUBMITTING THE FORM TO GET API RESPONSE
     $("#form").submit(function (e) 
     { 
