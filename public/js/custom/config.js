@@ -38,6 +38,9 @@ var admin_api_update_order_url = `${host}/api/v1/admin/update-order`;
 // SEARCH USERS
 var admin_api_search_users_url = `${host}/api/v1/admin/search-users`;
 
+// NOTIFY USERS
+var admin_api_notify_users_url = `${host}/api/v1/admin/send-notification`;
+
 // UPDATE USER
 var admin_api_update_user_url = `${host}/api/v1/admin/update-user`;
 

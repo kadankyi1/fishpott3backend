@@ -1889,7 +1889,7 @@ class AdministratorController extends Controller
             "notification_type" => "bail|required|integer",
             "title" => "bail|required|string",
             "full_message" => "bail|required|string",
-            "user_pottname" => "",
+            "user_pottname" => "nullable|string",
         ]);
 
         // MAKING SURE THE REQUEST AND USER IS VALIDATED
