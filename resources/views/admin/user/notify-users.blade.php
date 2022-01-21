@@ -34,7 +34,7 @@ $page_title = "Send notifications to apps of user(s)";
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">Broadcast Type</label>
                                         <div class="col-sm-10">
-                                            <select id="notification_type" name="notification_type" class="form-control">
+                                            <select id="notification_type" name="notification_type" required class="form-control">
                                                 <option value="1">All Users </option>
                                                 <option value="2">Single User</option>
                                             </select>
@@ -43,13 +43,13 @@ $page_title = "Send notifications to apps of user(s)";
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">Short Intro</label>
                                         <div class="col-sm-10">
-                                            <input id="title" minlength="2" maxlength="70" name="title" type="text" class="form-control" placeholder="Short Intro">
+                                            <input id="title" minlength="2" maxlength="70" name="title" type="text" required class="form-control" placeholder="Short Intro">
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">Full Long Message</label>
                                         <div class="col-sm-10">
-                                            <textarea id="full_message" minlength="1" maxlength="2000" name="full_message" type="text" class="form-control" placeholder="Type full message"></textarea>
+                                            <textarea id="full_message" minlength="1" maxlength="2000" name="full_message" required type="text" class="form-control" placeholder="Type full message"></textarea>
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -61,7 +61,7 @@ $page_title = "Send notifications to apps of user(s)";
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">PIN</label>
                                         <div class="col-sm-10">
-                                            <input id="administrator_pin" name="administrator_pin" type="password" class="form-control" placeholder="PIN">
+                                            <input id="administrator_pin" name="administrator_pin" required type="password" class="form-control" placeholder="PIN">
                                         </div>
                                     </div>
                                     <div class="row m-t-30">
