@@ -69,3 +69,8 @@ Route::get('/admin/orders/view-orders', function () {
 Route::get('/admin/users/view-users', function () {
     return view('admin/user/view-users');
 });
+
+// VIEW USERS
+Route::get('/admin/users/notify-users', function () {
+    return view('admin/user/notify-users');
+});
