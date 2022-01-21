@@ -53,6 +53,12 @@ $page_title = "Send notifications to apps of user(s)";
                                         </div>
                                     </div>
                                     <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label">Receiver Pottname (If sending to single user)</label>
+                                        <div class="col-sm-10">
+                                            <input id="user_pottname" name="user_pottname" type="text" class="form-control" placeholder="Receiver Pottname">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">PIN</label>
                                         <div class="col-sm-10">
                                             <input id="administrator_pin" name="administrator_pin" type="password" class="form-control" placeholder="PIN">
