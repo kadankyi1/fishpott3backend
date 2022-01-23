@@ -189,7 +189,7 @@ class UserController extends Controller
         
         $title = "Welcome " . $validatedData["user_firstname"];
         $message =    "You have joined the FishPott - Private Investing Network and we are happy to have you. "
-                    . "\nTo enjoy using our service, train your FishPott by answering the Drill questions so that you can be suggested business you like." 
+                    . "\nTo enjoy using our service, train your FishPott by answering the Drill questions so that you can be suggested business you'd like to invest in." 
                     . "\nYou can also signup a monthly subscription to have our team and Ai work together to send you monthly business suggestions"
                     . "\nIf you need any assistance, please do not hesitate to contact us via " . config('app.fishpott_email_two') . " or "  . config('app.fishpott_phone');
         $email_data = array(

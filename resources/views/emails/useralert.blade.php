@@ -2,9 +2,7 @@
 # {{ $data['title'] }} 
 
 
-
-<br><p style="color: black;">{{ $data['message'] }}</p>
-
+<p style="color: black;">{{ $data['message'] }}</p>
 
 
 Thank you,<br>
