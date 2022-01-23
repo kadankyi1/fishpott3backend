@@ -12,6 +12,7 @@ use App\Models\version1\Country;
 use App\Models\version1\Language;
 use App\Models\version1\ResetCode;
 use App\Mail\version1\ResetCodeMail;
+use App\Mail\version1\UserAlertMail;
 use App\Mail\version1\WithdrawalMail;
 use App\Models\version1\Business;
 use App\Models\version1\Currency;
@@ -185,6 +186,18 @@ class UserController extends Controller
         // GENERATING THE ACCESS TOKEN FOR THE REGISTERED USER
         $accessToken = $user1->createToken("authToken", ["get-info-on-apps get-info-in-background get-business-suggestions answer-drills buy-business-stocks transfer-business-stocks withdraw-funds"])->accessToken;
 
+        
+        $title = "Welcome " . $validatedData["user_firstname"];
+        $message =    "You have joined the FishPott - Private Investing Network and we are happy to have you. "
+                    . "<br>To enjoy using our service, train your FishPott by answering the Drill questions so that you can be suggested business you like." 
+                    . "<br>You can also signup a monthly subscription to have our team and Ai work together to send you monthly business suggestions"
+                    . "<br>If you need any assistance, please do not hesitate to contact us via " . config('app.fishpott_email_two') . " or "  . config('app.fishpott_phone');
+        $email_data = array(
+            'title' => $title,
+            'message' => $message,
+            'time' => date("F j, Y, g:i a")
+        );
+        Mail::to($validatedData["user_email"])->send(new UserAlertMail($email_data));
 
         return response([
             "status" => "yes", 

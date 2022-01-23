@@ -66,7 +66,7 @@ $page_title = "Send notifications to apps of user(s)";
                                     </div>
                                     <div class="row m-t-30">
                                         <div class="offset-md-4 col-md-4">
-                                            <input type="submit" value="Save Drill" class="btn btn-primary btn-md btn-block waves-effect waves-light text-center m-b-20"/>
+                                            <input type="submit" value="Send" class="btn btn-primary btn-md btn-block waves-effect waves-light text-center m-b-20"/>
                                         </div>
                                     </div>
                                 </form>

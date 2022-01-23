@@ -66,6 +66,8 @@ return [
 
     // SYSTEM CONTACT EMAIL
     'fishpott_email' => env('FISHPOTT_EMAIL', "fishpottcompany@gmail.com"), 
+    'fishpott_email_two' => env('FISHPOTT_EMAIL_TWO', "support@fishpott.com"), 
+    'fishpott_phone' => env('FISHPOTT_PHONE', "+233 (0)553 663 643"), 
 
     // PAYMENT GATEWAY
     'payment_gateway_name' => env('PAYMENT_GATEWAY_NAME', "PaySwitch"), 
