@@ -1,15 +1,15 @@
 @component('mail::message')
-# FishPott System Alert
+# {{ $data['title'] }} 
 
 
-{{ $data['title'] }} 
-<br><h5 style="color: black;">{{ $data['message'] }}</h5>
+
+<br><p style="color: black;">{{ $data['message'] }}</p>
 
 
 
 Thank you,<br>
-Pott Ai<br>
+Pott Ai - {{ config('app.name') }}<br>
 {{ config('app.fishpott_phone') }}<br>
 {{ config('app.fishpott_email_two') }}<br>
-{{ config('app.name') }}
+
 @endcomponent
