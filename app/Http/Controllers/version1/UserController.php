@@ -72,11 +72,21 @@ class UserController extends Controller
 
         // MAKING SURE VERSION CODE IS ALLOWED
         if($request->app_type == "ANDROID" && 
-            ($request->app_version_code < intval(config('app.androidminvc')) || $request->app_version_code > intval(config('app.androidmaxvc')))
+        ($request->app_version_code < intval(config('app.androidminvc')) || $request->app_version_code > intval(config('app.androidmaxvc')))
         ){
             return response([
                 "status" => "error", 
                 "message" => "Please update your app from the Google Play Store."
+            ]);
+        }
+
+
+        if($request->app_type == "IOS" && 
+        ($request->app_version_code < intval(config('app.iosminvc')) || $request->app_version_code > intval(config('app.iosmaxvc')))
+        ){
+            return response([
+            "status" => "error", 
+            "message" => "Please update your app from the Apple App Store."
             ]);
         }
 
