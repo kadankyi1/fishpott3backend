@@ -13,6 +13,7 @@ use App\Models\version1\ResetCode;
 use App\Mail\version1\ResetCodeMail;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\version1\LogController;
+use App\Mail\version1\UserAlertMail;
 use App\Models\version1\Administrator;
 use App\Models\version1\AiStockPersona;
 use App\Models\version1\Business;
@@ -1921,6 +1922,7 @@ class AdministratorController extends Controller
                 "",
                 date("F j, Y")
             );
+
         } else if($request->notification_type == "2"){ // SINGLE USER
             $user = User::where('user_pottname', $request->user_pottname)->first();
             if($user == null || empty($user->investor_id)){
@@ -1944,6 +1946,15 @@ class AdministratorController extends Controller
                 "",
                 date("F j, Y")
             );
+
+            $title = $request->title;
+            $message =  $request->full_message;
+            $email_data = array(
+                'title' => $title,
+                'message' => $message,
+                'time' => date("F j, Y, g:i a")
+            );
+            Mail::to($validatedData["user_email"])->send(new UserAlertMail($email_data));
         }
 
         return response([
