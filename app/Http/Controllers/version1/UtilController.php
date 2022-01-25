@@ -287,7 +287,8 @@ class UtilController extends Controller
 			  'priority' => $priority,
 			  'notification' => array(
 			    'body' => $message,
-			    'not_title' => $title
+			    'not_title' => $title,
+			    'not_type' => $type
 			    //'icon' => $message
               ),
 			  'data' => array(
