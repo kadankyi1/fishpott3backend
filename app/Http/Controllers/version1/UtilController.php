@@ -244,7 +244,7 @@ class UtilController extends Controller
 			    'not_time' => $date  
 			    )
 			  );
-            var_dump($fields);
+            //var_dump($fields);
 			$payload = json_encode($fields);
 			$curl_session = curl_init();
 			curl_setopt($curl_session, CURLOPT_URL, $path_fcm);
