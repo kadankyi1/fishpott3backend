@@ -221,7 +221,7 @@ class UtilController extends Controller
         // REMOVING EMPTY KEYS
         $receiver_keys_array = array_filter($receiver_keys_array, fn($value) => !is_null($value) && $value !== '');
         $receiver_keys_array = array_values($receiver_keys_array);
-        var_dump($receiver_keys_array);
+        //var_dump($receiver_keys_array);
         if(count($receiver_keys_array) > 0){
 			$headers = array('Authorization:key=' . $server_key, 'Content-Type:application/json');
 			$fields = array(
