@@ -285,6 +285,11 @@ class UtilController extends Controller
 			$fields = array(
                 "to" => '/topics/'. $topic,
 			  'priority' => $priority,
+			  'notification' => array(
+			    'body' => $message,
+			    'not_title' => $title
+			    //'icon' => $message
+              ),
 			  'data' => array(
 			    'not_type' => $type,
 			    'not_title' => $title,
