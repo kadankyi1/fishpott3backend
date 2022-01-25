@@ -227,7 +227,7 @@ class UtilController extends Controller
                 $headers = array('Authorization:key=' . $server_key, 'Content-Type:application/json');
                 if(!empty($receiver_keys_array[$i]) && ($i == 0 || $i == 1)){
                     $fields = array(
-                      'registration_ids' => $receiver_keys_array[$i],
+                      'registration_ids' => [$receiver_keys_array[$i]],
                       'priority' => $priority,
                       'data' => array(
                         'not_type' => $type,
@@ -243,7 +243,7 @@ class UtilController extends Controller
                       );
                 } else if(!empty($receiver_keys_array[$i]) && ($i == 2)){
                     $fields = array(
-                      'registration_ids' => $receiver_keys_array[$i],
+                      'registration_ids' => [$receiver_keys_array[$i]],
                       'priority' => $priority,
                       'notification' => array(
                         'body' => $message,
