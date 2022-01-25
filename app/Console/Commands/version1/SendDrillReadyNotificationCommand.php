@@ -55,7 +55,22 @@ class SendDrillReadyNotificationCommand extends Command
                 UtilController::sendNotificationToTopic(
                     config('app.firebase_notification_server_address_link'), 
                     config('app.firebase_notification_account_key'), 
-                    "FISHPOT_TIPS",
+                    "FISHPOT_ANDROID",
+                    "normal",
+                    "drill-suggestion",
+                    "New Drill - FishPott",
+                    "Train your FishPott and increase its intelligence with a new drill",
+                    "", 
+                    "", 
+                    "", 
+                    "", 
+                    "",
+                    date("F j, Y")
+                );
+                UtilController::sendNotificationToTopic(
+                    config('app.firebase_notification_server_address_link'), 
+                    config('app.firebase_notification_account_key'), 
+                    "FISHPOT_IOS",
                     "normal",
                     "drill-suggestion",
                     "New Drill - FishPott",
@@ -96,7 +111,22 @@ class SendDrillReadyNotificationCommand extends Command
                 UtilController::sendNotificationToTopic(
                     config('app.firebase_notification_server_address_link'), 
                     config('app.firebase_notification_account_key'), 
-                    "FISHPOT_TIPS",
+                    "FISHPOT_ANDROID",
+                    "normal",
+                    "drill-suggestion",
+                    "New Drill - FishPott",
+                    "Train your FishPott and increase its intelligence with a new drill",
+                    "", 
+                    "", 
+                    "", 
+                    "", 
+                    "",
+                    date("F j, Y")
+                );
+                UtilController::sendNotificationToTopic(
+                    config('app.firebase_notification_server_address_link'), 
+                    config('app.firebase_notification_account_key'), 
+                    "FISHPOT_IOS",
                     "normal",
                     "drill-suggestion",
                     "New Drill - FishPott",

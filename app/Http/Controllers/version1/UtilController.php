@@ -220,7 +220,7 @@ class UtilController extends Controller
 	public static function sendNotificationToUser($path_fcm, $server_key, $receiver_keys_array, $priority, $type, $title, $message, $text, $info1, $info2, $image, $video, $date){
         // REMOVING EMPTY KEYS
         $receiver_keys_array = array_filter($receiver_keys_array, fn($value) => !is_null($value) && $value !== '');
-        $receiver_keys_array = array_values($receiver_keys_array);
+        //$receiver_keys_array = array_values($receiver_keys_array);
         //var_dump($receiver_keys_array);
         if(count($receiver_keys_array) > 0){
 			$headers = array('Authorization:key=' . $server_key, 'Content-Type:application/json');
@@ -288,7 +288,7 @@ class UtilController extends Controller
                   'priority' => $priority,
                   'notification' => array(
                     'body' => $message,
-                    'not_title' => $title,
+                    'not_title' => $message,
                     'not_type' => $type
                     //'icon' => $message
                   ),
