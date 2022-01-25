@@ -219,42 +219,64 @@ class UtilController extends Controller
     */
 	public static function sendNotificationToUser($path_fcm, $server_key, $receiver_keys_array, $priority, $type, $title, $message, $text, $info1, $info2, $image, $video, $date){
         // REMOVING EMPTY KEYS
-        $receiver_keys_array = array_filter($receiver_keys_array, fn($value) => !is_null($value) && $value !== '');
+        //$receiver_keys_array = array_filter($receiver_keys_array, fn($value) => !is_null($value) && $value !== '');
         //$receiver_keys_array = array_values($receiver_keys_array);
         //var_dump($receiver_keys_array);
         if(count($receiver_keys_array) > 0){
-			$headers = array('Authorization:key=' . $server_key, 'Content-Type:application/json');
-			$fields = array(
-			  'registration_ids' => $receiver_keys_array,
-			  'priority' => $priority,
-			  'notification' => array(
-			    'body' => $message,
-			    'not_title' => $title
-			    //'icon' => $message
-              ),
-			  'data' => array(
-			    'not_type' => $type,
-			    'not_title' => $title,
-			    'not_message' => $message,
-			    'not_message_text' => $text, 
-			    'not_message_info1' => $info1, 
-			    'not_message_info2' => $info2, 
-			    'not_message_image' => $image, 
-			    'not_message_video' => $video,
-			    'not_time' => $date  
-			    )
-			  );
-            //var_dump($fields);
-			$payload = json_encode($fields);
-			$curl_session = curl_init();
-			curl_setopt($curl_session, CURLOPT_URL, $path_fcm);
-			curl_setopt($curl_session, CURLOPT_POST, true);
-			curl_setopt($curl_session, CURLOPT_HTTPHEADER, $headers);
-			curl_setopt($curl_session, CURLOPT_RETURNTRANSFER, true);
-			curl_setopt($curl_session, CURLOPT_SSL_VERIFYPEER, false);
-			curl_setopt($curl_session, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4);
-			curl_setopt($curl_session, CURLOPT_POSTFIELDS, $payload);
-			$curl_result = curl_exec($curl_session);
+            for ($i=0; $i < count($receiver_keys_array); $i++) { 
+                $headers = array('Authorization:key=' . $server_key, 'Content-Type:application/json');
+                if(!empty($receiver_keys_array[$i]) && ($i == 0 || $i == 1)){
+                    $fields = array(
+                      'registration_ids' => $receiver_keys_array[$i],
+                      'priority' => $priority,
+                      'data' => array(
+                        'not_type' => $type,
+                        'not_title' => $title,
+                        'not_message' => $message,
+                        'not_message_text' => $text, 
+                        'not_message_info1' => $info1, 
+                        'not_message_info2' => $info2, 
+                        'not_message_image' => $image, 
+                        'not_message_video' => $video,
+                        'not_time' => $date  
+                        )
+                      );
+                } else if(!empty($receiver_keys_array[$i]) && ($i == 2)){
+                    $fields = array(
+                      'registration_ids' => $receiver_keys_array[$i],
+                      'priority' => $priority,
+                      'notification' => array(
+                        'body' => $message,
+                        'not_title' => $message
+                        //'icon' => $message
+                      ),
+                      'data' => array(
+                        'not_type' => $type,
+                        'not_title' => $title,
+                        'not_message' => $message,
+                        'not_message_text' => $text, 
+                        'not_message_info1' => $info1, 
+                        'not_message_info2' => $info2, 
+                        'not_message_image' => $image, 
+                        'not_message_video' => $video,
+                        'not_time' => $date  
+                        )
+                      );
+                } else {
+                    continue;
+                }
+                //var_dump($fields);
+                $payload = json_encode($fields);
+                $curl_session = curl_init();
+                curl_setopt($curl_session, CURLOPT_URL, $path_fcm);
+                curl_setopt($curl_session, CURLOPT_POST, true);
+                curl_setopt($curl_session, CURLOPT_HTTPHEADER, $headers);
+                curl_setopt($curl_session, CURLOPT_RETURNTRANSFER, true);
+                curl_setopt($curl_session, CURLOPT_SSL_VERIFYPEER, false);
+                curl_setopt($curl_session, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4);
+                curl_setopt($curl_session, CURLOPT_POSTFIELDS, $payload);
+                $curl_result = curl_exec($curl_session);
+            }
 			
 			/*
             echo "\n\n\n";
