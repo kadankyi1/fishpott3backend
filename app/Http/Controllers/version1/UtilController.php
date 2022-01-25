@@ -227,6 +227,11 @@ class UtilController extends Controller
 			$fields = array(
 			  'registration_ids' => $receiver_keys_array,
 			  'priority' => $priority,
+			  'notification' => array(
+			    'body' => $message,
+			    'not_title' => $title
+			    //'icon' => $message
+              ),
 			  'data' => array(
 			    'not_type' => $type,
 			    'not_title' => $title,
