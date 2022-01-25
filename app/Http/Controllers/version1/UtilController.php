@@ -282,27 +282,45 @@ class UtilController extends Controller
 
         if(!empty($topic)){
 			$headers = array('Authorization:key=' . $server_key, 'Content-Type:application/json');
-			$fields = array(
-                "to" => '/topics/'. $topic,
-			  'priority' => $priority,
-			  'notification' => array(
-			    'body' => $message,
-			    'not_title' => $title,
-			    'not_type' => $type
-			    //'icon' => $message
-              ),
-			  'data' => array(
-			    'not_type' => $type,
-			    'not_title' => $title,
-			    'not_message' => $message,
-			    'not_message_text' => $text, 
-			    'not_message_info1' => $info1, 
-			    'not_message_info2' => $info2, 
-			    'not_message_image' => $image, 
-			    'not_message_video' => $video,
-			    'not_time' => $date  
-			    )
-			  );
+            if($topic == "FISHPOT_IOS"){
+                $fields = array(
+                  'to' => '/topics/'. $topic,
+                  'priority' => $priority,
+                  'notification' => array(
+                    'body' => $message,
+                    'not_title' => $title,
+                    'not_type' => $type
+                    //'icon' => $message
+                  ),
+                  'data' => array(
+                    'not_type' => $type,
+                    'not_title' => $title,
+                    'not_message' => $message,
+                    'not_message_text' => $text, 
+                    'not_message_info1' => $info1, 
+                    'not_message_info2' => $info2, 
+                    'not_message_image' => $image, 
+                    'not_message_video' => $video,
+                    'not_time' => $date  
+                    )
+                  );
+            } else {
+                $fields = array(
+                  'to' => '/topics/'. $topic,
+                  'priority' => $priority,
+                  'data' => array(
+                    'not_type' => $type,
+                    'not_title' => $title,
+                    'not_message' => $message,
+                    'not_message_text' => $text, 
+                    'not_message_info1' => $info1, 
+                    'not_message_info2' => $info2, 
+                    'not_message_image' => $image, 
+                    'not_message_video' => $video,
+                    'not_time' => $date  
+                    )
+                  );
+            }
 			$payload = json_encode($fields);
 			$curl_session = curl_init();
 			curl_setopt($curl_session, CURLOPT_URL, $path_fcm);
