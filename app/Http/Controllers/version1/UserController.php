@@ -1172,7 +1172,7 @@ public function changePasswordWithResetCode(Request $request)
         if(floatval($request->investment_amt_in_dollars) < floatval($business->business_price_per_stock_usd)){
             return response([
                 "status" => 3, 
-                "message" => "The least amount you can invest is " . $business->business_price_per_stock_usd,
+                "message" => "The least amount you can invest is $" . $business->business_price_per_stock_usd,
                 "government_verification_is_on" => false,
                 "media_allowed" => intval(config('app.canpostpicsandvids')),
                 "user_android_app_max_vc" => intval(config('app.androidmaxvc')),
@@ -1183,6 +1183,18 @@ public function changePasswordWithResetCode(Request $request)
 
         // GETTING THE QUANTITY OF SHARES
         $item_quantity = floor($request->investment_amt_in_dollars / $business->business_price_per_stock_usd);
+
+        if($item_quantity < 1){
+            return response([
+                "status" => 3, 
+                "message" => "Invalid stock quantity. Try investing $" . $business->business_price_per_stock_usd,
+                "government_verification_is_on" => false,
+                "media_allowed" => intval(config('app.canpostpicsandvids')),
+                "user_android_app_max_vc" => intval(config('app.androidmaxvc')),
+                "user_android_app_force_update" => boolval(config('app.androidforceupdatetomaxvc')),
+                "phone_verification_is_on" => boolval(config('app.phoneverificationrequiredstatus'))
+            ]);
+        }
 
         $total_item_quantity_cost = $item_quantity * $business->business_price_per_stock_usd;
 
