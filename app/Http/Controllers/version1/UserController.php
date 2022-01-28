@@ -2201,7 +2201,7 @@ public function changePasswordWithResetCode(Request $request)
         $suggestion->business_investments_amount_needed_usd = "$" . UtilController::formatNumberShort($suggestion->business_investments_amount_needed_usd);
 
         // CHECKING IF USER CAN BUY SHARES OR NOT FROM BUSINESS
-        $suggestion2 =  Suggestion::where('suggestion_directed_at_user_investor_id', '=', $user->investor_id)->where('suggestion_item_reference_id', $suggestion->business_sys_id)->where('suggestion_flagged', false)->first();
+        $suggestion2 =  Suggestion::where('suggestion_directed_at_user_investor_id', '=', $user->investor_id)->where('suggestion_item_reference_id', $suggestion->business_sys_id)->where('suggestion_flagged', false)->latest();
 
         if ($suggestion2 != null && UtilController::getDateDiff($suggestion2->created_at, date('Y-m-d H:i:s'), "hours") < intval(config('app.timedurationinhoursforbusinesssuggestionstobeavailable'))) {
             $can_buy = "yes";
