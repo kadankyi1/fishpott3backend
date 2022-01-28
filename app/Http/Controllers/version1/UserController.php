@@ -1169,7 +1169,7 @@ public function changePasswordWithResetCode(Request $request)
             }
         }
 
-        if($request->investment_amt_in_dollars < $business->business_price_per_stock_usd){
+        if(floatval($request->investment_amt_in_dollars) < floatval($business->business_price_per_stock_usd)){
             return response([
                 "status" => 3, 
                 "message" => "The least amount you can invest is " . $business->business_price_per_stock_usd,
