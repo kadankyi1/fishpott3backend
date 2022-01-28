@@ -1259,10 +1259,11 @@ public function changePasswordWithResetCode(Request $request)
         $stockPurchaseData["stockpurchase_flagged_reason"] = "";
         $stockPurchaseData["stockpurchase_payment_gateway_status"] = 0;
         $stockPurchaseData["stockpurchase_payment_gateway_info"] = "";
-        StockPurchase::create($stockPurchaseData);
+        $new_stockpurchase = StockPurchase::create($stockPurchaseData);
 
 
         $data = array(
+            "order_id" => $new_stockpurchase->stockpurchase_sys_id, 
             "item" => $business->business_full_name, 
             "price_per_item" => "$" . strval($business->business_price_per_stock_usd), 
             "quantity" => $item_quantity, 
