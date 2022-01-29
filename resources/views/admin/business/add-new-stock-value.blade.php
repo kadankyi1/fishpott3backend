@@ -43,6 +43,10 @@ $page_title = "Based on factual information, add a business' new stock value";
                                             <input id="item_id" name="item_id" type="text" readonly required class="form-control" placeholder="Business ID">
                                         </div>
                                     </div>
+                                    <!-- 
+                                        https://dev.kwayisi.org/apis/gse/live
+                                        https://dev.kwayisi.org/apis/gse/
+                                    -->
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">New Value (USD - $)</label>
                                         <div class="col-sm-10">
@@ -50,9 +54,9 @@ $page_title = "Based on factual information, add a business' new stock value";
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label">New Change (NewValue/OldValue)</label>
+                                        <label class="col-sm-2 col-form-label">New Change ([NewValue/OldValue] - 1)</label>
                                         <div class="col-sm-10">
-                                            <input id="new_change" name="new_change" type="number" step="any" required class="form-control" placeholder="New Change (NewValue/OldValue)">
+                                            <input id="new_change" name="new_change" type="number" step="any" required class="form-control" placeholder="New Change ([NewValue/OldValue]- 1)">
                                         </div>
                                     </div>
                                     <div class="form-group row">
