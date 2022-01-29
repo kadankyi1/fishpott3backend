@@ -1967,9 +1967,9 @@ public function changePasswordWithResetCode(Request $request)
                     $this_item = array(
                         'type' => "SHARES PURCHASE",
                         'info_1' => $the_status,
-                        'info_2' => $currency->currency_symbol . $stockpurchase->stockpurchase_total_all_fees_in_currency_paid_in,
+                        'info_2' => $currency->currency_symbol . number_format($stockpurchase->stockpurchase_total_all_fees_in_currency_paid_in),
                         'info_3' => $business->business_full_name,
-                        'info_4' => strval($stockpurchase->stockpurchase_stocks_quantity),
+                        'info_4' => strval(number_format($stockpurchase->stockpurchase_stocks_quantity)),
                         'info_5' => date("n M y", strtotime($stockpurchase->created_at)),
                         'info_6' => $stockpurchase->stockpurchase_sys_id
                     );
