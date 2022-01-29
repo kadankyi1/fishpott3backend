@@ -1954,7 +1954,7 @@ public function changePasswordWithResetCode(Request $request)
                     if($stockpurchase->stockpurchase_processed == 0){
                         $the_status = "Pending";
                     } else if($stockpurchase->stockpurchase_processed == 1){
-                        $the_status = "Paid";
+                        $the_status = "Completed";
                     } else if($stockpurchase->stockpurchase_processed == 2){
                         $the_status = "Cancelled";
                     } else {
