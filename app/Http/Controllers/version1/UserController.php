@@ -2061,10 +2061,10 @@ public function changePasswordWithResetCode(Request $request)
             
             $stockvalue = StockValue::where('stockvalue_business_id', $stockownership->stockownership_business_id)->first();
             if($stockvalue == null){
-                $the_stockvalue = "$" . $business->business_price_per_stock_usd;
+                $the_stockvalue = "$" . number_format($business->business_price_per_stock_usd);
                 $the_stockvalue_numeric = floatval($business->business_price_per_stock_usd);
             } else {
-                $the_stockvalue = "$" . $stockvalue->stockvalue_value_per_stock_usd;
+                $the_stockvalue = "$" . number_format($stockvalue->stockvalue_value_per_stock_usd);
                 $the_stockvalue_numeric = floatval($stockvalue->stockvalue_value_per_stock_usd);
             }
 
@@ -2088,11 +2088,11 @@ public function changePasswordWithResetCode(Request $request)
                 'stock_id' => $stockownership->stockownership_sys_id,
                 'business_id' => $business->business_sys_id,
                 'business_name' => $business->business_full_name . " Stock",
-                'buyback_usd' => $business->buyback_offer_usd,
+                'buyback_usd' => number_format($business->buyback_offer_usd),
                 'buyback_local' => $business->buyback_offer_usd * $rate_no_sign,
-                'cost_per_share_usd' => "$" . $this_cost_per_share_usd,
+                'cost_per_share_usd' => "$" . number_format($this_cost_per_share_usd),
                 'value_per_share_usd' => $the_stockvalue,
-                'quantity_of_stocks' => $stockownership->stockownership_stocks_quantity,
+                'quantity_of_stocks' => number_format($stockownership->stockownership_stocks_quantity),
                 'value_phrase' => $value_phrase,
                 'ai_info' => "Pott Intelligence feedback not available"
             );
