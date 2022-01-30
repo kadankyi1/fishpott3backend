@@ -1726,7 +1726,7 @@ public function changePasswordWithResetCode(Request $request)
 
         return response([
             "status" => 1, 
-            "message" => "success",
+            "message" => "Sellback order placed and under review. Order ID: " .  $stockSellbackData['stocksellback_sys_id'],
             "transaction_id" => $stockSellbackData['stocksellback_sys_id'],
             "government_verification_is_on" => false,
             "media_allowed" => intval(config('app.canpostpicsandvids')),
