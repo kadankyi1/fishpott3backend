@@ -737,6 +737,7 @@ class AdministratorController extends Controller
             ->join('risk_insurance_types', 'risk_insurance_types.risk_type_id', '=', 'stock_purchases.stockpurchase_risk_insurance_type_id')
             ->join('countries', 'businesses.business_country_id', '=', 'countries.country_id')
             ->where('stockpurchase_payment_gateway_status', '!=', 0)
+            ->where('stockpurchase_processed', '=', 0)
             ->take(100)
             ->get();
         } else {                
