@@ -2043,7 +2043,7 @@ public function changePasswordWithResetCode(Request $request)
                 }
 
             }
-
+        }
         return response([
             "status" => 1, 
             "message" => "success",
