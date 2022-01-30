@@ -1913,6 +1913,7 @@ public function changePasswordWithResetCode(Request $request)
         $result = Transaction::where("transaction_user_investor_id", $user->investor_id)->get();
 
         foreach($result as $transaction){
+
             // WITHDRAWAL
             if($transaction->transaction_transaction_type_id == 1){
                 $withdrawal = Withdrawal::where('withdrawal_sys_id', $transaction->transaction_referenced_item_id)->first();
@@ -1939,14 +1940,17 @@ public function changePasswordWithResetCode(Request $request)
                     array_push($data, $this_item);
                 }
             } 
+
             // CREDIT
             if($transaction->transaction_transaction_type_id == 2){
 
             }
+
             // DIVIDEND
             if($transaction->transaction_transaction_type_id == 3){
 
             }
+
             // STOCK PURCHASE
             if($transaction->transaction_transaction_type_id == 4){
                 $stockpurchase = StockPurchase::where('stockpurchase_sys_id', $transaction->transaction_referenced_item_id)->first();
@@ -1975,10 +1979,71 @@ public function changePasswordWithResetCode(Request $request)
                     );
                     array_push($data, $this_item);
                 }
+            }
+
+            // STOCK TRANSFER
+            if($transaction->transaction_transaction_type_id == 5){
+                $stocksellBack = StockSellBack::where('stocksellback_sys_id', $transaction->transaction_referenced_item_id)->first();
+                if($stocksellBack != null){
+                    if($stocksellBack->stocksellback_processed == 0){
+                        $the_status = "Pending";
+                    } else if($stocksellBack->stocksellback_processed == 1){
+                        $the_status = "Completed";
+                    } else if($stocksellBack->stocksellback_processed == 2){
+                        $the_status = "Cancelled";
+                    } else {
+                        $the_status = "Error";
+                    }
+
+                    $currency = Currency::where('currency_id', $stocksellBack->stocksellback_local_currency_paid_in_id)->first();
+                    $business = Business::where('business_sys_id', $stocksellBack->stocksellback_business_id)->first();
+
+                    $this_item = array(
+                        'type' => "SHARES PURCHASE",
+                        'info_1' => $the_status,
+                        'info_2' => $currency->currency_symbol . number_format($stocksellBack->stocksellback_payout_amt_local_currency_paid_in),
+                        'info_3' => $business->business_full_name,
+                        'info_4' => strval(number_format($stocksellBack->stocksellback_stocks_quantity)),
+                        'info_5' => date("n M y", strtotime($stocksellBack->created_at)),
+                        'info_6' => $stocksellBack->stocksellback_sys_id
+                    );
+                    array_push($data, $this_item);
+                }
 
             }
-        }
         
+
+            // STOCK SELLBACK
+            if($transaction->transaction_transaction_type_id == 6){
+                $stocksellBack = StockSellBack::where('stocksellback_sys_id', $transaction->transaction_referenced_item_id)->first();
+                if($stocksellBack != null){
+                    if($stocksellBack->stocksellback_processed == 0){
+                        $the_status = "Pending";
+                    } else if($stocksellBack->stocksellback_processed == 1){
+                        $the_status = "Completed";
+                    } else if($stocksellBack->stocksellback_processed == 2){
+                        $the_status = "Cancelled";
+                    } else {
+                        $the_status = "Error";
+                    }
+
+                    $currency = Currency::where('currency_id', $stocksellBack->stocksellback_local_currency_paid_in_id)->first();
+                    $business = Business::where('business_sys_id', $stocksellBack->stocksellback_business_id)->first();
+
+                    $this_item = array(
+                        'type' => "SHARES PURCHASE",
+                        'info_1' => $the_status,
+                        'info_2' => $currency->currency_symbol . number_format($stocksellBack->stocksellback_payout_amt_local_currency_paid_in),
+                        'info_3' => $business->business_full_name,
+                        'info_4' => strval(number_format($stocksellBack->stocksellback_stocks_quantity)),
+                        'info_5' => date("n M y", strtotime($stocksellBack->created_at)),
+                        'info_6' => $stocksellBack->stocksellback_sys_id
+                    );
+                    array_push($data, $this_item);
+                }
+
+            }
+
         return response([
             "status" => 1, 
             "message" => "success",
