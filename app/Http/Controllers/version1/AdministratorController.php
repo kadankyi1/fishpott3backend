@@ -1478,6 +1478,7 @@ class AdministratorController extends Controller
     {
 
         UtilController::notifyOneUserAndEmail($request->order_id, "Order Processed", "Your stock transfer order with ID TEST92111. processed successfully");
+        return;
         /*
         |**************************************************************************
         | VALIDATION STARTS 
