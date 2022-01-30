@@ -2053,7 +2053,7 @@ public function changePasswordWithResetCode(Request $request)
 
         foreach($result as $stockownership){
             // STOCK PURCHASE
-            if($stockownership->flagged != 0){
+            if($stockownership->stockownership_flagged != 0){
                 continue;
             }
             //echo "here 1 \n stockownership->stockownership_business_id: " . $stockownership->stockownership_business_id;
