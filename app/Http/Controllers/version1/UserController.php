@@ -1999,7 +1999,7 @@ public function changePasswordWithResetCode(Request $request)
                     $business = Business::where('business_sys_id', $stocksellBack->stocksellback_business_id)->first();
 
                     $this_item = array(
-                        'type' => "SHARES PURCHASE",
+                        'type' => "SHARES TRANSFER",
                         'info_1' => $the_status,
                         'info_2' => $currency->currency_symbol . number_format($stocksellBack->stocksellback_payout_amt_local_currency_paid_in),
                         'info_3' => $business->business_full_name,
@@ -2031,7 +2031,7 @@ public function changePasswordWithResetCode(Request $request)
                     $business = Business::where('business_sys_id', $stocksellBack->stocksellback_business_id)->first();
 
                     $this_item = array(
-                        'type' => "SHARES PURCHASE",
+                        'type' => "SHARES SELLBACK",
                         'info_1' => $the_status,
                         'info_2' => $currency->currency_symbol . number_format($stocksellBack->stocksellback_payout_amt_local_currency_paid_in),
                         'info_3' => $business->business_full_name,
