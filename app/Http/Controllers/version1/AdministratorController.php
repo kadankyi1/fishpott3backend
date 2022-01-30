@@ -19,6 +19,7 @@ use App\Models\version1\AiStockPersona;
 use App\Models\version1\Business;
 use App\Models\version1\Drill;
 use App\Models\version1\DrillAnswer;
+use App\Models\version1\StockOwnership;
 use App\Models\version1\StockPurchase;
 use App\Models\version1\StockSellBack;
 use App\Models\version1\StockTrainData;
@@ -1566,6 +1567,7 @@ class AdministratorController extends Controller
                 }
                 $stockpurchase->stockpurchase_processed = 2;
                 $stockpurchase->stockpurchase_processed_reason = $request->action_info;
+                
             }
             // SAVING UPDATE
             $stockpurchase->save();
@@ -1677,6 +1679,20 @@ class AdministratorController extends Controller
                 }
                 $stocksellback->stocksellback_processed = 2;
                 $stocksellback->stocksellback_processed_reason = $request->action_info;
+
+
+                // RETURNING SHARES
+                $stockownership = StockOwnership::where('stockownership_business_id', $stocksellback->stocksellback_business_id)->where('stockownership_user_investor_id', $stocksellback->stocksellback_seller_investor_id)->first();
+                if($stockownership == null || empty($stockownership->stockownership_business_id)){
+                    return response([
+                        "status" => 0, 
+                        "message" => "Stock ownership not found. Review the user with ID: " . $stocksellback->stocksellback_seller_investor_id
+                    ]);
+                }
+
+                $stockownership->stockownership_stocks_quantity = $stockownership->stockownership_stocks_quantity + $stocksellback->stocksellback_stocks_quantity;
+                $stockownership->stockownership_total_cost_usd = $stockownership->stockownership_total_cost_usd + $stocksellback->stocksellback_buyback_offer_per_stock_usd;
+                $stockownership->save();
             }
             // SAVING UPDATE
             $stocksellback->save();
