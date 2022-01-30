@@ -2044,6 +2044,9 @@ public function changePasswordWithResetCode(Request $request)
 
             }
         }
+
+        $data = array_reverse($data);
+
         return response([
             "status" => 1, 
             "message" => "success",
@@ -2167,6 +2170,7 @@ public function changePasswordWithResetCode(Request $request)
             array_push($data, $this_item);
         }
         
+        $data = array_reverse($data);
 
         return response([
             "status" => 1, 
