@@ -1275,7 +1275,7 @@ class UtilController extends Controller
 
     public static function notifyOneUserAndEmail($user_sys_id, $title, $full_message){
 
-        $user = User::where('user_pottname', $user_sys_id)->first();
+        $user = User::where('investor_id', $user_sys_id)->first();
         if($user == null || empty($user->investor_id)){
             return response([
                 "status" => 0, 
