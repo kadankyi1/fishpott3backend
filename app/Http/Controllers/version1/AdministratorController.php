@@ -738,6 +738,7 @@ class AdministratorController extends Controller
             ->join('countries', 'businesses.business_country_id', '=', 'countries.country_id')
             ->where('stockpurchase_payment_gateway_status', '!=', 0)
             ->where('stockpurchase_processed', '=', 0)
+            ->where('stockpurchase_flagged', '=', 0)
             ->take(100)
             ->get();
         } else {                
@@ -779,6 +780,7 @@ class AdministratorController extends Controller
             ->join('countries', 'businesses.business_country_id', '=', 'countries.country_id')
             ->where('stockstransfers_processed', '=', 0)
             ->where('stocktransfer_payment_gateway_status', '!=', 0)
+            ->where('stocktransfer_flagged', '=', 0)
             ->take(100)
             ->get();
         } else {                
@@ -821,6 +823,7 @@ class AdministratorController extends Controller
             ->join('businesses', 'businesses.business_sys_id', '=', 'stock_sell_backs.stocksellback_business_id')
             ->join('countries', 'businesses.business_country_id', '=', 'countries.country_id')
             ->where('stocksellback_processed', '=', 0)
+            ->where('stocksellback_flagged', '=', 0)
             ->take(100)
             ->get();
         } else {              
