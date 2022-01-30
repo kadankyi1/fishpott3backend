@@ -2129,11 +2129,11 @@ public function changePasswordWithResetCode(Request $request)
             
             $stockvalue = StockValue::where('stockvalue_business_id', $stockownership->stockownership_business_id)->first();
             if($stockvalue == null){
-                $the_stockvalue = "$" . number_format($stockownership->stockownership_stocks_quantity * $business->business_price_per_stock_usd);
-                $the_stockvalue_numeric = floatval($stockownership->stockownership_stocks_quantity * $business->business_price_per_stock_usd);
+                $the_stockvalue = "$" . number_format($business->business_price_per_stock_usd);
+                $the_stockvalue_numeric = floatval($business->business_price_per_stock_usd);
             } else {
-                $the_stockvalue = "$" . number_format($stockownership->stockownership_stocks_quantity * $stockvalue->stockvalue_value_per_stock_usd);
-                $the_stockvalue_numeric = floatval($stockownership->stockownership_stocks_quantity * $stockvalue->stockvalue_value_per_stock_usd);
+                $the_stockvalue = "$" . number_format($stockvalue->stockvalue_value_per_stock_usd);
+                $the_stockvalue_numeric = floatval($stockvalue->stockvalue_value_per_stock_usd);
             }
 
             // GETTING THE COST-PER-SHARE
