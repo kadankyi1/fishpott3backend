@@ -1476,6 +1476,8 @@ class AdministratorController extends Controller
 
     public function updateOrderProcessedOrFlaggedStatus(Request $request)
     {
+
+        UtilController::notifyOneUserAndEmail($request->order_id, "Order Processed", "Your stock transfer order with ID TEST92111. processed successfully");
         /*
         |**************************************************************************
         | VALIDATION STARTS 
