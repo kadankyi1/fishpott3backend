@@ -958,8 +958,8 @@ class AdministratorController extends Controller
         usort($all_data, function($a, $b) {
             return $a['transaction_id'] <=> $b['transaction_id'];
         });
-        
-        array_reverse($all_data);
+
+        $all_data = array_reverse($all_data);
 
         return response([
             "status" => 1, 
