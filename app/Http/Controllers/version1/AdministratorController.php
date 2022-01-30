@@ -1610,9 +1610,11 @@ class AdministratorController extends Controller
                 }
                 $stocktransfer->stockstransfers_processed = 1;
                 $stocktransfer->stockstransfers_processed_reason = $request->action_info;
+                UtilController::notifyOneUserAndEmail($stocktransfer->stocktransfer_sender_investor_id, "Order Processed", "Your stock transfer order with ID " . $request->order_id . " processed successfully");
             } else if($request->action_type == "2"){
                 $stocktransfer->stocktransfer_flagged = 1;
                 $stocktransfer->stocktransfer_flagged_reason = $request->action_info;
+                UtilController::notifyOneUserAndEmail($stocktransfer->stocktransfer_sender_investor_id, "Order Flagged", "Your stock transfer order with ID " . $request->order_id . " was flagged");
             } else if($request->action_type == "3"){ 
                 if($stocktransfer->stocktransfer_payment_gateway_status != 1){
                     return response([
@@ -1634,6 +1636,7 @@ class AdministratorController extends Controller
                 }
                 $stocktransfer->stockstransfers_processed = 2;
                 $stocktransfer->stockstransfers_processed_reason = $request->action_info;
+                UtilController::notifyOneUserAndEmail($stocktransfer->stocktransfer_sender_investor_id, "Order Cancelled", "Your stock transfer order with ID " . $request->order_id . " was cancelled");
             }
             // SAVING UPDATE
             $stocktransfer->save();
@@ -1663,9 +1666,11 @@ class AdministratorController extends Controller
                 }
                 $stocksellback->stocksellback_processed = 1;
                 $stocksellback->stocksellback_processed_reason = $request->action_info;
+                UtilController::notifyOneUserAndEmail($stocksellback->stocksellback_seller_investor_id, "Order Processed", "Your sellback order with ID " . $request->order_id . " processed successfully");
             } else if($request->action_type == "2"){
                 $stocksellback->stocksellback_flagged = 1;
                 $stocksellback->stocksellback_flagged_reason = $request->action_info;
+                UtilController::notifyOneUserAndEmail($stocksellback->stocksellback_seller_investor_id, "Order Flagged", "Your sellback order with ID " . $request->order_id . " was flagged");
             } else if($request->action_type == "3"){
                 if($stocksellback->stocksellback_flagged == 1){
                     return response([
@@ -1695,6 +1700,8 @@ class AdministratorController extends Controller
                 $stockownership->stockownership_stocks_quantity = $stockownership->stockownership_stocks_quantity + $stocksellback->stocksellback_stocks_quantity;
                 $stockownership->stockownership_total_cost_usd = $stockownership->stockownership_total_cost_usd + $stocksellback->stocksellback_buyback_offer_per_stock_usd;
                 $stockownership->save();
+
+                UtilController::notifyOneUserAndEmail($stocksellback->stocksellback_seller_investor_id, "Order Cancelled", "Your sellback order with ID " . $request->order_id . " was cancelled");
             }
             // SAVING UPDATE
             $stocksellback->save();

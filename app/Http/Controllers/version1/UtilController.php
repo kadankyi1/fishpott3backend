@@ -1273,4 +1273,37 @@ class UtilController extends Controller
         }
     }
 
+    public static function notifyOneUserAndEmail($user_sys_id, $title, $full_message){
+
+        $user = User::where('user_pottname', $user_sys_id)->first();
+        if($user == null || empty($user->investor_id)){
+            return response([
+                "status" => 0, 
+                "message" => "User not found"
+            ]);
+        }
+        UtilController::sendNotificationToUser(
+            config('app.firebase_notification_server_address_link'), 
+            config('app.firebase_notification_account_key'), 
+            array($user->user_fcm_token_android, $user->user_fcm_token_web, $user->user_fcm_token_ios),
+            "normal",
+            "information",
+            "FishPott - Info",
+            $title,
+            $full_message,
+            "", 
+            "", 
+            "", 
+            "",
+            date("F j, Y")
+        );
+        
+        $email_data = array(
+            'title' => $title,
+            'message' => $full_message,
+            'time' => date("F j, Y, g:i a")
+        );
+        //Mail::to($user->user_email)->send(new UserAlertMail($email_data));
+    }
+
 }
