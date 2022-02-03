@@ -1266,6 +1266,28 @@ public function changePasswordWithResetCode(Request $request)
         $new_stockpurchase = StockPurchase::create($stockPurchaseData);
 
 
+        // TESTING
+
+        $data = array(
+            "order_id" => $new_stockpurchase->stockpurchase_sys_id, 
+            "item" => $business->business_full_name, 
+            "price_per_item" => "$0.1", 
+            "quantity" => 1, 
+            "rate" => $rate, 
+            "risk" => $request->investment_risk_protection,  
+            "risk_statement" => $risk_statement,   
+            "risk_insurance_fee" => "$0.03", 
+            "processing_fee" => "$0.03", 
+            "overall_total_usd" => "$0.16", 
+            "overall_total_local_currency" => "GHS 1",
+            "overall_total_local_currency_floatval" => 100,
+            "payment_gateway_amount_in_pesewas_or_cents_intval" => 100,
+            "payment_gateway_currency" => "GHS",
+            "financial_yield_info" => "This is a test"
+        );
+
+        // LIVE
+        /*
         $data = array(
             "order_id" => $new_stockpurchase->stockpurchase_sys_id, 
             "item" => $business->business_full_name, 
@@ -1283,6 +1305,7 @@ public function changePasswordWithResetCode(Request $request)
             "payment_gateway_currency" => $currency_local->currency_short_name,
             "financial_yield_info" => $yield_info
         );
+        */
 
 
         return response([
