@@ -213,6 +213,7 @@ class UserController extends Controller
             "status" => "yes", 
             "message" => "",
             "user_phone" => $user1->user_phone_number,
+            "user_email" => $user1->user_email,
             "user_id" => $user1->investor_id,
             "access_token" => $accessToken,
             "user_pott_name" => $user1->user_pottname,
@@ -384,6 +385,7 @@ class UserController extends Controller
             "status" => "yes", 
             "message" => "",
             "user_phone" => $user1->user_phone_number,
+            "user_email" => $user1->user_email,
             "user_id" => $user1->investor_id,
             "access_token" => $accessToken,
             "user_pott_name" => $user1->user_pottname,
@@ -531,6 +533,7 @@ class UserController extends Controller
             "status" => "yes", 
             "message" => "",
             "user_phone" => $user->user_phone_number,
+            "user_email" => $user->user_email,
             "user_id" => $user->investor_id,
             "access_token" => $accessToken,
             "user_pott_name" => $user->user_pottname,
@@ -1227,16 +1230,17 @@ public function changePasswordWithResetCode(Request $request)
         $currency_local = Currency::where("currency_country_id", '=', $user->user_country_id)->first();
 
         if($user->user_country_id == 81){ // GHANA
-            
             $overall_total_local_currency_no_currency_sign = ($overall_total_usd * floatval(config('app.to_cedi')));
             $overall_total_local_currency = "Gh¢" . ($overall_total_usd * floatval(config('app.to_cedi')));
             $rate = "$1 = " . "Gh¢" . floatval(config('app.to_cedi'));
             $rate_no_sign = floatval(config('app.to_cedi'));
+            $payment_gateway_amount_cents_or_pesewas = $overall_total_local_currency_no_currency_sign * 100;
         } else {
             $overall_total_local_currency_no_currency_sign = $overall_total_usd;
             $overall_total_local_currency = "$" . $overall_total_usd;
             $rate = "$1 = " . "$1";
             $rate_no_sign = 1;
+            $payment_gateway_amount_cents_or_pesewas = $overall_total_local_currency_no_currency_sign * 100;
         }
 
         // RECORDING THE POSSIBLE ORDER
@@ -1275,6 +1279,8 @@ public function changePasswordWithResetCode(Request $request)
             "overall_total_usd" => "$" . strval($overall_total_usd), 
             "overall_total_local_currency" => $overall_total_local_currency,
             "overall_total_local_currency_floatval" => $overall_total_local_currency_no_currency_sign,
+            "payment_gateway_amount_in_pesewas_or_cents_intval" => $payment_gateway_amount_cents_or_pesewas,
+            "payment_gateway_currency" => $currency_local->currency_short_name,
             "financial_yield_info" => $yield_info
         );
 
