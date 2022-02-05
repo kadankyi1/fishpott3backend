@@ -1410,6 +1410,15 @@ public function changePasswordWithResetCode(Request $request)
             $stockpurchase->stockpurchase_payment_gateway_status = $request->payment_gateway_status;
             $stockpurchase->stockpurchase_payment_gateway_info = $request->payment_gateway_info;
             $stockpurchase->save();
+            // SAVING IT AS A TRANSACTION
+            $transaction = Transaction::where('transaction_referenced_item_id', $request->item_id)->first();
+            if($transaction == null){
+                $transactionData["transaction_sys_id"] =  "SP-" . $user->user_pottname . "-" . date("YmdHis") . UtilController::getRandomString(4);
+                $transactionData["transaction_transaction_type_id"] = 4;
+                $transactionData["transaction_referenced_item_id"] = $request->item_id;
+                $transactionData["transaction_user_investor_id"] = $user->investor_id;
+                $transaction = Transaction::create($transactionData);
+            } 
         } else {
             //else if($request->update_type) {
             //echo "item_id: " . $request->item_id;
@@ -1435,15 +1444,6 @@ public function changePasswordWithResetCode(Request $request)
             $stocktransfer->save();
         }
 
-        // SAVING IT AS A TRANSACTION
-        $transaction = Transaction::where('transaction_referenced_item_id', $request->item_id)->first();
-        if($transaction == null){
-            $transactionData["transaction_sys_id"] =  "SP-" . $user->user_pottname . "-" . date("YmdHis") . UtilController::getRandomString(4);
-            $transactionData["transaction_transaction_type_id"] = 5;
-            $transactionData["transaction_referenced_item_id"] = $request->item_id;
-            $transactionData["transaction_user_investor_id"] = $user->investor_id;
-            $transaction = Transaction::create($transactionData);
-        } 
 
         $data = array(
             "order_id" => $transaction->transaction_sys_id
