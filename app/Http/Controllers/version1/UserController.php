@@ -4,6 +4,7 @@ namespace App\Http\Controllers\version1;
 
 use DB;
 use DateTime;
+use Yabacon\Paystack;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\version1\User;
@@ -32,9 +33,6 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
-
-
-
 
 ini_set('memory_limit','1024M');
 ini_set("upload_max_filesize","100M");
@@ -1364,14 +1362,14 @@ public function changePasswordWithResetCode(Request $request)
         }
     
         // initiate the Library's Paystack Object
-        $paystack = new Yabacon\Paystack(config('app.payment_gateway_secret_key'));
+        $paystack = new Paystack(config('app.payment_gateway_secret_key'));
         try
         {
           // verify using the library
           $tranx = $paystack->transaction->verify([
             'reference'=>$reference, // unique to transactions
           ]);
-        } catch(\Yabacon\Paystack\Exception\ApiException $e){
+        } catch(Paystack\Exception\ApiException $e){
           print_r($e->getResponseObject());
           die($e->getMessage());
         }
