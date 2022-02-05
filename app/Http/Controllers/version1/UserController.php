@@ -1372,9 +1372,10 @@ public function changePasswordWithResetCode(Request $request)
         } catch(Paystack\Exception\ApiException $e){
           //print_r($e->getResponseObject());
           //die($e->getMessage());
+          $this_msg = $e->getMessage() . ". If think this is an error, email us the issue with your order ID: " . $request->item_id;
           return response([
               "status" => 3, 
-              "message" => $e->getMessage(),
+              "message" => $this_msg,
               "government_verification_is_on" => false,
               "media_allowed" => intval(config('app.canpostpicsandvids')),
               "user_android_app_max_vc" => intval(config('app.androidmaxvc')),
