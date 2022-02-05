@@ -1554,9 +1554,11 @@ class AdministratorController extends Controller
                 }
                 $stockpurchase->stockpurchase_processed = 1;
                 $stockpurchase->stockpurchase_processed_reason = $request->action_info;
+                UtilController::notifyOneUserAndEmail($stockpurchase->stockpurchase_user_investor_id, "Order Processed", "Your stock purcase order with ID " . $request->order_id . " processed successfully");
             } else if($request->action_type == "2"){
                 $stockpurchase->stockpurchase_flagged = 1;
                 $stockpurchase->stockpurchase_flagged_reason = $request->action_info;
+                UtilController::notifyOneUserAndEmail($stockpurchase->stockpurchase_user_investor_id, "Order Flagged", "Your stock purchase order with ID " . $request->order_id . " was flagged");
             } else if($request->action_type == "3"){
                 if($stockpurchase->stockpurchase_payment_gateway_status != 1){
                     return response([
@@ -1578,6 +1580,7 @@ class AdministratorController extends Controller
                 }
                 $stockpurchase->stockpurchase_processed = 2;
                 $stockpurchase->stockpurchase_processed_reason = $request->action_info;
+                UtilController::notifyOneUserAndEmail($stockpurchase->stockpurchase_user_investor_id, "Order Cancelled", "Your stock purchase order with ID " . $request->order_id . " was cancelled");
                 
             }
             // SAVING UPDATE

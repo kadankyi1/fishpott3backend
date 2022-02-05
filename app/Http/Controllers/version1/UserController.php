@@ -1447,30 +1447,16 @@ public function changePasswordWithResetCode(Request $request)
                 $transaction = Transaction::create($transactionData);
             } 
         } else {
-            //else if($request->update_type) {
-            //echo "item_id: " . $request->item_id;
-            $stocktransfer = StockTransfer::where('stocktransfer_sys_id', $request->item_id)->first();
-            echo "stocktransfer: " . $stocktransfer->stocktransfer_receiver_pottname;
-            //var_dump($stocktransfer);
-            
-            if($stocktransfer == null || empty($stocktransfer->stocktransfer_receiver_pottname)){
-                return response([
-                    "status" => 3, 
-                    "message" => "Order not found.",
-                    "government_verification_is_on" => false,
-                    "media_allowed" => intval(config('app.canpostpicsandvids')),
-                    "user_android_app_max_vc" => intval(config('app.androidmaxvc')),
-                    "user_android_app_force_update" => boolval(config('app.androidforceupdatetomaxvc')),
-                    "phone_verification_is_on" => boolval(config('app.phoneverificationrequiredstatus'))
-                ]);
-            }
-    
-            // UPDATING THE ORDER
-            $stocktransfer->stocktransfer_payment_gateway_status = $request->payment_gateway_status;
-            $stocktransfer->stocktransfer_payment_gateway_info = $request->payment_gateway_info;
-            $stocktransfer->save();
+            return response([
+                "status" => 3, 
+                "message" => "Order type not found",
+                "government_verification_is_on" => false,
+                "media_allowed" => intval(config('app.canpostpicsandvids')),
+                "user_android_app_max_vc" => intval(config('app.androidmaxvc')),
+                "user_android_app_force_update" => boolval(config('app.androidforceupdatetomaxvc')),
+                "phone_verification_is_on" => boolval(config('app.phoneverificationrequiredstatus'))
+            ]);
         }
-
 
         $data = array(
             "order_id" => $transaction->transaction_sys_id
@@ -1619,26 +1605,35 @@ public function changePasswordWithResetCode(Request $request)
         $processing_fee_usd = floatval(config('app.transfer_processing_fee_usd'));
         $currency_local = Currency::where("currency_country_id", '=', $user->user_country_id)->first();
 
-        //if($user->user_country_id == 81){ // GHANA
+        if($user->user_country_id == 81){ // GHANA
             $processing_fee_local = ($processing_fee_usd * floatval(config('app.to_cedi')));
             $processing_fee_local_with_currency_sign = "Gh¢" . ($processing_fee_usd * floatval(config('app.to_cedi')));
             $rate = "$1 = " . "Gh¢" . floatval(config('app.to_cedi'));
             $rate_no_sign = floatval(config('app.to_cedi'));
-        //} else {
-            //$processing_fee_local = $processing_fee_usd;
-            //$processing_fee_local_with_currency_sign = "$" . $processing_fee_usd;
-            //$rate = "$1 = " . "$1";
-            //$rate_no_sign = 1;
-        //}
+            $payment_gateway_amount_cents_or_pesewas = $processing_fee_local * 100;
+        } else {
+            $processing_fee_local = $processing_fee_usd;
+            $processing_fee_local_with_currency_sign = "$" . $processing_fee_usd;
+            $rate = "$1 = " . "$1";
+            $rate_no_sign = 1.00;
+            $payment_gateway_amount_cents_or_pesewas = $processing_fee_local * 100;
+        }
 
 
         $data = array(
             "info_1" => $info_1,
             "transanction_id" => $stockTransferData['stocktransfer_sys_id'],
+            "share_name" => $business->business_full_name,
+            "share_quantity" => $request->transfer_quantity,
             "transfer_fee_cedis_no_sign" => $processing_fee_local,
             "transfer_fee_cedis_with_sign" => $processing_fee_local_with_currency_sign,
             "rate" => $rate,
-            "rate_no_sign" => $rate
+            "rate_no_sign" => $rate,
+            "overall_total_usd" => $processing_fee_usd,
+            "overall_total_local_currency" => $processing_fee_local_with_currency_sign,
+            "overall_total_local_currency_floatval" => $processing_fee_local,
+            "payment_gateway_amount_in_pesewas_or_cents_intval" => $payment_gateway_amount_cents_or_pesewas,
+            "payment_gateway_currency" => $currency_local->currency_short_name
         );
 
 
