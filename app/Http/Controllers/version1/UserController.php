@@ -1370,10 +1370,19 @@ public function changePasswordWithResetCode(Request $request)
             'reference'=>$reference, // unique to transactions
           ]);
         } catch(Paystack\Exception\ApiException $e){
-          print_r($e->getResponseObject());
-          die($e->getMessage());
+          //print_r($e->getResponseObject());
+          //die($e->getMessage());
+          return response([
+              "status" => 3, 
+              "message" => $e->getMessage(),
+              "government_verification_is_on" => false,
+              "media_allowed" => intval(config('app.canpostpicsandvids')),
+              "user_android_app_max_vc" => intval(config('app.androidmaxvc')),
+              "user_android_app_force_update" => boolval(config('app.androidforceupdatetomaxvc')),
+              "phone_verification_is_on" => boolval(config('app.phoneverificationrequiredstatus'))
+          ]);
         }
-        exit;
+        //exit;
     
         if ('success' === $tranx->data->status) {
           // transaction was successful...
