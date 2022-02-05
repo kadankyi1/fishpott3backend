@@ -1357,6 +1357,33 @@ public function changePasswordWithResetCode(Request $request)
         |**************************************************************************
         */
 
+        // VERIFYING THE TRANSACTION
+        $reference = $request->item_id;
+        if(!$reference){
+          die('No order reference supplied');
+        }
+    
+        // initiate the Library's Paystack Object
+        $paystack = new Yabacon\Paystack(config('app.payment_gateway_secret_key'));
+        try
+        {
+          // verify using the library
+          $tranx = $paystack->transaction->verify([
+            'reference'=>$reference, // unique to transactions
+          ]);
+        } catch(\Yabacon\Paystack\Exception\ApiException $e){
+          print_r($e->getResponseObject());
+          die($e->getMessage());
+        }
+        exit;
+    
+        if ('success' === $tranx->data->status) {
+          // transaction was successful...
+          // please check other things like whether you already gave value for this ref
+          // if the email matches the customer who owns the product etc
+          // Give value
+        }
+
         // GETTING THE ORDER
         if($request->item_type == "stockpurchase"){
             $stockpurchase = StockPurchase::where('stockpurchase_sys_id', $request->item_id)->first();

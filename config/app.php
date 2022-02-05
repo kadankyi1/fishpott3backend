@@ -70,8 +70,9 @@ return [
     'fishpott_phone' => env('FISHPOTT_PHONE', "+233 (0)553 663 643"), 
 
     // PAYMENT GATEWAY
-    'payment_gateway_name' => env('PAYMENT_GATEWAY_NAME', "PaySwitch"), 
-    'payment_gateway_login_url' => env('PAYMENT_GATEWAY_NAME', "https://dashboard.theteller.net/login"), 
+    'payment_gateway_name' => env('PAYMENT_GATEWAY_NAME', "PayStack"), 
+    'payment_gateway_login_url' => env('PAYMENT_GATEWAY_URL', "https://dashboard.paystack.com/"), 
+    'payment_gateway_secret_key' => env('PAYMENT_GATEWAY_SECRET_KEY', "sk_live_6fdfd9626e7f29080bdc0e24ee7b166eca3bbcb0"), 
 
     // FIREBASE 
     'firebase_notification_server_address_link' => env('FIREBASE_NOTIFICATION_SERVER_ADDRESS_LINK', "https://fcm.googleapis.com/fcm/send"), 
