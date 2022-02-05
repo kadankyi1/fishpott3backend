@@ -1419,6 +1419,33 @@ public function changePasswordWithResetCode(Request $request)
                 $transactionData["transaction_user_investor_id"] = $user->investor_id;
                 $transaction = Transaction::create($transactionData);
             } 
+        } else if($request->item_type == "stocktransfer"){
+            $stocktransfer = StockTransfer::where('stocktransfer_sys_id', $request->item_id)->first();
+            if($stocktransfer == null || empty($stocktransfer->stockpurchase_sys_id)){
+                return response([
+                    "status" => 3, 
+                    "message" => "Order not found",
+                    "government_verification_is_on" => false,
+                    "media_allowed" => intval(config('app.canpostpicsandvids')),
+                    "user_android_app_max_vc" => intval(config('app.androidmaxvc')),
+                    "user_android_app_force_update" => boolval(config('app.androidforceupdatetomaxvc')),
+                    "phone_verification_is_on" => boolval(config('app.phoneverificationrequiredstatus'))
+                ]);
+            }
+            // UPDATING THE ORDER
+            $stocktransfer->stocktransfer_payment_gateway_status = $request->payment_gateway_status;
+            $stocktransfer->stocktransfer_payment_gateway_info = $request->payment_gateway_info;
+            $stocktransfer->save();
+
+            // SAVING IT AS A TRANSACTION
+            $transaction = Transaction::where('transaction_referenced_item_id', $request->item_id)->first();
+            if($transaction == null){
+                $transactionData["transaction_sys_id"] =  "ST-" . $user->user_pottname . "-" . date("YmdHis") . UtilController::getRandomString(4);
+                $transactionData["transaction_transaction_type_id"] = 5;
+                $transactionData["transaction_referenced_item_id"] = $request->item_id;
+                $transactionData["transaction_user_investor_id"] = $user->investor_id;
+                $transaction = Transaction::create($transactionData);
+            } 
         } else {
             //else if($request->update_type) {
             //echo "item_id: " . $request->item_id;
@@ -1585,13 +1612,6 @@ public function changePasswordWithResetCode(Request $request)
         $stockTransferData["stocktransfer_payment_gateway_info"] = "unpaid";
         StockTransfer::create($stockTransferData);
         
-        // SAVING IT AS A TRANSACTION
-        $transactionData["transaction_sys_id"] =  "ST-" . $stockTransferData["stocktransfer_sys_id"];
-        $transactionData["transaction_transaction_type_id"] = 5;
-        $transactionData["transaction_referenced_item_id"] = $stockTransferData["stocktransfer_sys_id"];
-        $transactionData["transaction_user_investor_id"] = $user->investor_id;
-        Transaction::create($transactionData);
-
 
         $info_1 = "You are transfering " . $request->transfer_quantity . " stocks of " . $business->business_full_name;
         
