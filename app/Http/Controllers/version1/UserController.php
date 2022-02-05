@@ -1596,6 +1596,7 @@ public function changePasswordWithResetCode(Request $request)
         $stockTransferData["stocktransfer_flagged_reason"] = "unpaid";
         $stockTransferData["stocktransfer_payment_gateway_status"] = false;
         $stockTransferData["stocktransfer_payment_gateway_info"] = "unpaid";
+        $stockTransferData["stockstransfers_processed_reason"] = "";
         StockTransfer::create($stockTransferData);
         
 
