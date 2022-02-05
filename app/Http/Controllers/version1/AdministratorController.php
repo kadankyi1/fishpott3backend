@@ -1554,6 +1554,26 @@ class AdministratorController extends Controller
                 }
                 $stockpurchase->stockpurchase_processed = 1;
                 $stockpurchase->stockpurchase_processed_reason = $request->action_info;
+
+                // ADDING THE STOCKS TO USER
+                $stockownership = StockOwnership::where('stockownership_business_id', $stockpurchase->stockpurchase_business_id)->where('stockownership_user_investor_id', $stockpurchase->stockpurchase_user_investor_id)->first();
+                if($stockownership == null || empty($stockownership->stockownership_sys_id)){
+                    
+                    $stockOwnershipData["stockownership_sys_id"] =  "SO-" . $stockpurchase->stockpurchase_user_investor_id . "-" . date("YmdHis") . UtilController::getRandomString(15);
+                    $stockOwnershipData["stockownership_stocks_quantity"] = $stockpurchase->stockpurchase_stocks_quantity;
+                    $stockOwnershipData["stockownership_total_cost_usd"] = $stockpurchase->stockpurchase_total_price_no_fees_usd;
+                    $stockOwnershipData["stockownership_flagged"] = false;
+                    $stockOwnershipData["stockownership_flagged_reason"] = "";
+                    $stockOwnershipData["stockownership_business_id"] = $stockpurchase->stockpurchase_business_id;
+                    $stockOwnershipData["stockownership_user_investor_id"] = $stockpurchase->stockpurchase_user_investor_id;
+                    StockOwnership::create($stockOwnershipData);
+                    
+                } else {
+                    $stockownership->stockownership_stocks_quantity = $stockownership->stockownership_stocks_quantity + $stockpurchase->stockpurchase_stocks_quantity;
+                    $stockownership->stockownership_total_cost_usd = $stockownership->stockownership_total_cost_usd + $stockpurchase->stockpurchase_total_price_no_fees_usd;
+                    $stockownership->save();
+                }
+
                 UtilController::notifyOneUserAndEmail($stockpurchase->stockpurchase_user_investor_id, "Order Processed", "Your stock purcase order with ID " . $request->order_id . " processed successfully");
             } else if($request->action_type == "2"){
                 $stockpurchase->stockpurchase_flagged = 1;
