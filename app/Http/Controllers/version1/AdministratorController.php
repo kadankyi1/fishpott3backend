@@ -1686,7 +1686,7 @@ class AdministratorController extends Controller
                     ]);
                 }
                 
-                UtilController::notifyOneUserAndEmail($stocktransfer->stocktransfer_sender_investor_id, "New " . $the_business->business_full_name . " Stocks Received", "You have received " . $stocktransfer->stocktransfer_stocks_quantity . " " . $the_business->business_full_name . " from " . $sender_pottname );
+                UtilController::notifyOneUserAndEmail($user_receiver->investor_id, "New " . $the_business->business_full_name . " Stocks Received", "You have received " . $stocktransfer->stocktransfer_stocks_quantity . " " . $the_business->business_full_name . " from " . $sender_pottname );
             } else if($request->action_type == "2"){
                 $stocktransfer->stocktransfer_flagged = 1;
                 $stocktransfer->stocktransfer_flagged_reason = $request->action_info;
