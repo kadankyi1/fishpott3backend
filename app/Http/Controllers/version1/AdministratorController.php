@@ -1656,16 +1656,16 @@ class AdministratorController extends Controller
                 if($stockownership == null || empty($stockownership->stockownership_sys_id)){
                     $stockOwnershipData["stockownership_sys_id"] =  "SO-" . $user_receiver->investor_id . "-" . date("YmdHis") . UtilController::getRandomString(15);
                     $stockOwnershipData["stockownership_stocks_quantity"] = $stocktransfer->stocktransfer_stocks_quantity;
-                    $stockOwnershipData["stockownership_total_cost_usd"] = $stocktransfer->stockpurchase_total_price_no_fees_usd;
+                    $stockOwnershipData["stockownership_total_cost_usd"] = $stocktransfer->stocktransfer_total_cost_usd_value_of_shares_transfer;
                     $stockOwnershipData["stockownership_flagged"] = false;
                     $stockOwnershipData["stockownership_flagged_reason"] = "";
-                    $stockOwnershipData["stockownership_business_id"] = $stockpurchase->stockpurchase_business_id;
-                    $stockOwnershipData["stockownership_user_investor_id"] = $stockpurchase->stockpurchase_user_investor_id;
+                    $stockOwnershipData["stockownership_business_id"] = $stocktransfer->stocktransfer_business_id;
+                    $stockOwnershipData["stockownership_user_investor_id"] = $user_receiver->investor_id;
                     StockOwnership::create($stockOwnershipData);
                     
                 } else {
-                    $stockownership->stockownership_stocks_quantity = $stockownership->stockownership_stocks_quantity + $stockpurchase->stockpurchase_stocks_quantity;
-                    $stockownership->stockownership_total_cost_usd = $stockownership->stockownership_total_cost_usd + $stockpurchase->stockpurchase_total_price_no_fees_usd;
+                    $stockownership->stockownership_stocks_quantity = $stockownership->stockownership_stocks_quantity + $stocktransfer->stocktransfer_stocks_quantity;
+                    $stockownership->stockownership_total_cost_usd = $stockownership->stockownership_total_cost_usd + $stocktransfer->stocktransfer_total_cost_usd_value_of_shares_transfer;
                     $stockownership->save();
                 }
 
