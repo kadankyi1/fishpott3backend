@@ -2103,9 +2103,9 @@ public function changePasswordWithResetCode(Request $request)
                     $this_item = array(
                         'type' => "SHARES TRANSFER",
                         'info_1' => $the_status,
-                        'info_2' => $currency->currency_symbol . number_format($stocktransfer->stocktransfer_processing_local_currency_paid_in_amt),
+                        'info_2' => strval(number_format($stocktransfer->stocktransfer_stocks_quantity)),
                         'info_3' => $business->business_full_name,
-                        'info_4' => strval(number_format($stocktransfer->stocktransfer_stocks_quantity)),
+                        'info_4' => $stocktransfer->stocktransfer_receiver_pottname,
                         'info_5' => date("j M y", strtotime($stocktransfer->created_at)),
                         'info_6' => $stocktransfer->stocktransfer_sys_id
                     );
