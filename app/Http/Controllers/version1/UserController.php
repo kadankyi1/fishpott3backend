@@ -1384,14 +1384,13 @@ public function changePasswordWithResetCode(Request $request)
               "phone_verification_is_on" => boolval(config('app.phoneverificationrequiredstatus'))
           ]);
         }
-        */
-    
         if ('success' === $tranx->data->status) {
           // transaction was successful...
           // please check other things like whether you already gave value for this ref
           // if the email matches the customer who owns the product etc
           // Give value
         }
+        */
 
         // GETTING THE ORDER
         if($request->item_type == "stockpurchase"){
