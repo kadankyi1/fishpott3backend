@@ -1584,21 +1584,6 @@ public function changePasswordWithResetCode(Request $request)
                 "phone_verification_is_on" => boolval(config('app.phoneverificationrequiredstatus'))
             ]);
         }
-
-
-
-        // RECORDING THE TRANSFER
-        $stockTransferData["stocktransfer_sys_id"] = "stS" . $user->user_pottname . "R" . $request->receiver_pottname . date("YmdHis");
-        $stockTransferData["stocktransfer_stocks_quantity"] = intval($request->transfer_quantity);
-        $stockTransferData["stocktransfer_receiver_pottname"] = $request->receiver_pottname;
-        $stockTransferData["stocktransfer_sender_investor_id"] = $user->investor_id;
-        $stockTransferData["stocktransfer_business_id"] = $stockownership->stockownership_business_id;
-        $stockTransferData["stocktransfer_flagged"] = true;
-        $stockTransferData["stocktransfer_flagged_reason"] = "unpaid";
-        $stockTransferData["stocktransfer_payment_gateway_status"] = false;
-        $stockTransferData["stocktransfer_payment_gateway_info"] = "unpaid";
-        $stockTransferData["stockstransfers_processed_reason"] = "";
-        StockTransfer::create($stockTransferData);
         
 
         $info_1 = "You are transfering " . $request->transfer_quantity . " stocks of " . $business->business_full_name;
@@ -1620,6 +1605,24 @@ public function changePasswordWithResetCode(Request $request)
             $rate_no_sign = 1.00;
             $payment_gateway_amount_cents_or_pesewas = $processing_fee_local * 100;
         }
+
+
+        // RECORDING THE TRANSFER
+        $stockTransferData["stocktransfer_sys_id"] = "stS" . $user->user_pottname . "R" . $request->receiver_pottname . date("YmdHis");
+        $stockTransferData["stocktransfer_stocks_quantity"] = intval($request->transfer_quantity);
+        $stockTransferData["stocktransfer_receiver_pottname"] = $request->receiver_pottname;
+        $stockTransferData["stocktransfer_sender_investor_id"] = $user->investor_id;
+        $stockTransferData["stocktransfer_business_id"] = $stockownership->stockownership_business_id;
+        $stockTransferData["stocktransfer_rate_cedi_to_usd"] = $rate;
+        $stockTransferData["stocktransfer_processing_fee_usd"] = $processing_fee_usd;
+        $stockTransferData["stocktransfer_processing_local_currency_paid_in_amt"] = $processing_fee_local;
+        $stockTransferData["stocktransfer_processing_fee_currency_paid_in_id"] = $currency_local->currency_id;
+        $stockTransferData["stocktransfer_flagged"] = true;
+        $stockTransferData["stocktransfer_flagged_reason"] = "unpaid";
+        $stockTransferData["stocktransfer_payment_gateway_status"] = false;
+        $stockTransferData["stocktransfer_payment_gateway_info"] = "unpaid";
+        $stockTransferData["stockstransfers_processed_reason"] = "";
+        StockTransfer::create($stockTransferData);
 
         // TESTING
         $data = array(
@@ -2082,29 +2085,29 @@ public function changePasswordWithResetCode(Request $request)
 
             // STOCK TRANSFER
             if($transaction->transaction_transaction_type_id == 5){
-                $stocksellBack = StockSellBack::where('stocksellback_sys_id', $transaction->transaction_referenced_item_id)->first();
-                if($stocksellBack != null){
-                    if($stocksellBack->stocksellback_processed == 0){
+                $stocktransfer = StockTransfer::where('stocktransfer_sys_id', $transaction->transaction_referenced_item_id)->first();
+                if($stocktransfer != null){
+                    if($stocktransfer->stockstransfers_processed == 0){
                         $the_status = "Pending";
-                    } else if($stocksellBack->stocksellback_processed == 1){
+                    } else if($stocktransfer->stockstransfers_processed == 1){
                         $the_status = "Completed";
-                    } else if($stocksellBack->stocksellback_processed == 2){
+                    } else if($stocktransfer->stockstransfers_processed == 2){
                         $the_status = "Cancelled";
                     } else {
                         $the_status = "Error";
                     }
 
-                    $currency = Currency::where('currency_id', $stocksellBack->stocksellback_local_currency_paid_in_id)->first();
-                    $business = Business::where('business_sys_id', $stocksellBack->stocksellback_business_id)->first();
+                    $currency = Currency::where('currency_id', $stocktransfer->stocktransfer_processing_fee_currency_paid_in_id)->first();
+                    $business = Business::where('business_sys_id', $stocktransfer->stocktransfer_business_id)->first();
 
                     $this_item = array(
                         'type' => "SHARES TRANSFER",
                         'info_1' => $the_status,
-                        'info_2' => $currency->currency_symbol . number_format($stocksellBack->stocksellback_payout_amt_local_currency_paid_in),
+                        'info_2' => $currency->currency_symbol . number_format($stocktransfer->stocktransfer_processing_local_currency_paid_in_amt),
                         'info_3' => $business->business_full_name,
-                        'info_4' => strval(number_format($stocksellBack->stocksellback_stocks_quantity)),
-                        'info_5' => date("j M y", strtotime($stocksellBack->created_at)),
-                        'info_6' => $stocksellBack->stocksellback_sys_id
+                        'info_4' => strval(number_format($stocktransfer->stocktransfer_stocks_quantity)),
+                        'info_5' => date("j M y", strtotime($stocktransfer->created_at)),
+                        'info_6' => $stocktransfer->stocktransfer_sys_id
                     );
                     array_push($data, $this_item);
                 }

@@ -22,6 +22,9 @@ class CreateStocksTransfersTable extends Migration
             $table->string('stocktransfer_flagged_reason', 255)->default("");
             $table->integer('stockstransfers_processed')->default(0);
             $table->string('stockstransfers_processed_reason', 255);
+            $table->decimal('stocktransfer_rate_cedi_to_usd', 12, 2);
+            $table->decimal('stocktransfer_processing_fee_usd', 12, 2);
+            $table->decimal('stocktransfer_processing_local_currency_paid_in_amt', 12, 2);
             $table->integer('stocktransfer_payment_gateway_status')->default(0);
             $table->string('stocktransfer_payment_gateway_info', 255)->default("");
             $table->timestamps();
@@ -30,6 +33,9 @@ class CreateStocksTransfersTable extends Migration
         Schema::table('stocks_transfers', function (Blueprint $table) {
             $table->string('stocktransfer_business_id', 255);
             $table->foreign('stocktransfer_business_id')->references('business_sys_id')->on('businesses');
+
+            $table->unsignedBigInteger('stocktransfer_processing_fee_currency_paid_in_id');
+            $table->foreign('stocktransfer_processing_fee_currency_paid_in_id')->references('currency_id')->on('currencies');
 
             $table->string('stocktransfer_sender_investor_id', 255);
             $table->foreign('stocktransfer_sender_investor_id')->references('investor_id')->on('users');
