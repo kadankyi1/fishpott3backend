@@ -1606,6 +1606,9 @@ public function changePasswordWithResetCode(Request $request)
             $payment_gateway_amount_cents_or_pesewas = $processing_fee_local * 100;
         }
 
+        // TAKING AWAY STOCK
+        $stockownership->stockownership_stocks_quantity = $stockownership->stockownership_stocks_quantity - intval($request->transfer_quantity);
+        $stockownership->save();
 
         // RECORDING THE TRANSFER
         $stockTransferData["stocktransfer_sys_id"] = "stS" . $user->user_pottname . "R" . $request->receiver_pottname . date("YmdHis");
@@ -1613,7 +1616,7 @@ public function changePasswordWithResetCode(Request $request)
         $stockTransferData["stocktransfer_receiver_pottname"] = $request->receiver_pottname;
         $stockTransferData["stocktransfer_sender_investor_id"] = $user->investor_id;
         $stockTransferData["stocktransfer_business_id"] = $stockownership->stockownership_business_id;
-        $stockTransferData["stocktransfer_rate_cedi_to_usd"] = $rate;
+        $stockTransferData["stocktransfer_rate_cedi_to_usd"] = $rate_no_sign;
         $stockTransferData["stocktransfer_processing_fee_usd"] = $processing_fee_usd;
         $stockTransferData["stocktransfer_processing_local_currency_paid_in_amt"] = $processing_fee_local;
         $stockTransferData["stocktransfer_processing_fee_currency_paid_in_id"] = $currency_local->currency_id;
