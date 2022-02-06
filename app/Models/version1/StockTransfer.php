@@ -30,6 +30,7 @@ class StockTransfer extends Model
         'stocktransfer_receiver_pottname',
         'stocktransfer_sender_investor_id',
         'stocktransfer_business_id',
+        'stocktransfer_total_cost_value_of_shares_transfer',
         'stockstransfers_processed',
         'stockstransfers_processed_reason',
         'stocktransfer_rate_cedi_to_usd',

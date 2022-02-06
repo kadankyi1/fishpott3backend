@@ -1642,6 +1642,33 @@ class AdministratorController extends Controller
                 }
                 $stocktransfer->stockstransfers_processed = 1;
                 $stocktransfer->stockstransfers_processed_reason = $request->action_info;
+
+                
+                $user_receiver = User::where("user_pottname", $stocktransfer->stocktransfer_receiver_pottname)->first();
+                if($user_receiver == null || empty($user_receiver->user_pottname)){
+                    return response([
+                        "status" => 0, 
+                        "message" => "Receiver not found"
+                    ]);
+                }
+
+                $stockownership = StockOwnership::where("stockownership_user_investor_id", $user_receiver->investor_id)->where('stockownership_business_id', $stocktransfer->stocktransfer_business_id)->first();
+                if($stockownership == null || empty($stockownership->stockownership_sys_id)){
+                    $stockOwnershipData["stockownership_sys_id"] =  "SO-" . $user_receiver->investor_id . "-" . date("YmdHis") . UtilController::getRandomString(15);
+                    $stockOwnershipData["stockownership_stocks_quantity"] = $stocktransfer->stocktransfer_stocks_quantity;
+                    $stockOwnershipData["stockownership_total_cost_usd"] = $stocktransfer->stockpurchase_total_price_no_fees_usd;
+                    $stockOwnershipData["stockownership_flagged"] = false;
+                    $stockOwnershipData["stockownership_flagged_reason"] = "";
+                    $stockOwnershipData["stockownership_business_id"] = $stockpurchase->stockpurchase_business_id;
+                    $stockOwnershipData["stockownership_user_investor_id"] = $stockpurchase->stockpurchase_user_investor_id;
+                    StockOwnership::create($stockOwnershipData);
+                    
+                } else {
+                    $stockownership->stockownership_stocks_quantity = $stockownership->stockownership_stocks_quantity + $stockpurchase->stockpurchase_stocks_quantity;
+                    $stockownership->stockownership_total_cost_usd = $stockownership->stockownership_total_cost_usd + $stockpurchase->stockpurchase_total_price_no_fees_usd;
+                    $stockownership->save();
+                }
+
                 UtilController::notifyOneUserAndEmail($stocktransfer->stocktransfer_sender_investor_id, "Order Processed", "Your stock transfer order with ID " . $request->order_id . " processed successfully");
             } else if($request->action_type == "2"){
                 $stocktransfer->stocktransfer_flagged = 1;

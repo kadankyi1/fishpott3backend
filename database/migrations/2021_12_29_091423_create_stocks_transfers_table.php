@@ -18,6 +18,7 @@ class CreateStocksTransfersTable extends Migration
             $table->string('stocktransfer_sys_id', 255)->unique();
             $table->integer('stocktransfer_stocks_quantity');
             $table->string('stocktransfer_receiver_pottname', 255);
+            $table->decimal('stocktransfer_total_cost_value_of_shares_transfer', 12, 2);
             $table->boolean('stocktransfer_flagged')->default(false);
             $table->string('stocktransfer_flagged_reason', 255)->default("");
             $table->integer('stockstransfers_processed')->default(0);

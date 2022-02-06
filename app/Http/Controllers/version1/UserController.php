@@ -1627,6 +1627,7 @@ public function changePasswordWithResetCode(Request $request)
         $stockTransferData["stocktransfer_sys_id"] = "stS" . $user->user_pottname . "R" . $request->receiver_pottname . date("YmdHis");
         $stockTransferData["stocktransfer_stocks_quantity"] = intval($request->transfer_quantity);
         $stockTransferData["stocktransfer_receiver_pottname"] = $request->receiver_pottname;
+        $stockTransferData["stocktransfer_total_cost_value_of_shares_transfer"] = ($stockownership->stockownership_total_cost_usd/$stockownership->stockownership_stocks_quantity) * intval($request->transfer_quantity);
         $stockTransferData["stocktransfer_sender_investor_id"] = $user->investor_id;
         $stockTransferData["stocktransfer_business_id"] = $stockownership->stockownership_business_id;
         $stockTransferData["stocktransfer_rate_cedi_to_usd"] = $rate_no_sign;
