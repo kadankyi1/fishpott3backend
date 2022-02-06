@@ -1670,6 +1670,23 @@ class AdministratorController extends Controller
                 }
 
                 UtilController::notifyOneUserAndEmail($stocktransfer->stocktransfer_sender_investor_id, "Order Processed", "Your stock transfer order with ID " . $request->order_id . " processed successfully");
+
+                // NOTIFYING RECEIVER
+                $user_sender = User::where("investor_id", $stocktransfer->stocktransfer_sender_investor_id)->first();
+                if($user_sender == null || empty($user_sender->user_pottname)){
+                    $sender_pottname = "Unknown sender";
+                } else {
+                    $sender_pottname = $user_sender->user_pottname;
+                }
+                $the_business = Business::where("business_sys_id", $stocktransfer->stocktransfer_business_id)->first();
+                if($the_business == null || empty($the_business->business_sys_id)){
+                    return response([
+                        "status" => 0, 
+                        "message" => "Business not found. Look into this. Failed to notify receiver"
+                    ]);
+                }
+                
+                UtilController::notifyOneUserAndEmail($stocktransfer->stocktransfer_sender_investor_id, "New " . $the_business->business_full_name . " Stocks Received", "You have received " . $stocktransfer->stocktransfer_stocks_quantity . " " . $the_business->business_full_name . " from " . $sender_pottname );
             } else if($request->action_type == "2"){
                 $stocktransfer->stocktransfer_flagged = 1;
                 $stocktransfer->stocktransfer_flagged_reason = $request->action_info;
