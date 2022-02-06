@@ -1435,6 +1435,7 @@ public function changePasswordWithResetCode(Request $request)
             // UPDATING THE ORDER
             $stocktransfer->stocktransfer_payment_gateway_status = $request->payment_gateway_status;
             $stocktransfer->stocktransfer_payment_gateway_info = $request->payment_gateway_info;
+            $stocktransfer->stocktransfer_flagged = false;
             $stocktransfer->save();
 
             // SAVING IT AS A TRANSACTION
