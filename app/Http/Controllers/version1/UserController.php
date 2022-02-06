@@ -1361,6 +1361,7 @@ public function changePasswordWithResetCode(Request $request)
           die('No order reference supplied');
         }
     
+        /*
         // initiate the Library's Paystack Object
         $paystack = new Paystack(config('app.payment_gateway_secret_key'));
         try
@@ -1383,7 +1384,7 @@ public function changePasswordWithResetCode(Request $request)
               "phone_verification_is_on" => boolval(config('app.phoneverificationrequiredstatus'))
           ]);
         }
-        //exit;
+        */
     
         if ('success' === $tranx->data->status) {
           // transaction was successful...
