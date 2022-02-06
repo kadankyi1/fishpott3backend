@@ -1452,6 +1452,7 @@ public function changePasswordWithResetCode(Request $request)
                 ]);
             }
     
+            $stockownership->stockownership_total_cost_usd = ($stockownership->stockownership_total_cost_usd/$stockownership->stockownership_stocks_quantity) * ($stockownership->stockownership_stocks_quantity - intval($stocktransfer->stocktransfer_stocks_quantity));
             $stockownership->stockownership_stocks_quantity = $stockownership->stockownership_stocks_quantity - intval($stocktransfer->stocktransfer_stocks_quantity);
             $stockownership->save();
 
