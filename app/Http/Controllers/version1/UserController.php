@@ -1421,7 +1421,7 @@ public function changePasswordWithResetCode(Request $request)
             } 
         } else if($request->item_type == "stocktransfer"){
             $stocktransfer = StockTransfer::where('stocktransfer_sys_id', $request->item_id)->first();
-            if($stocktransfer == null || empty($stocktransfer->stockpurchase_sys_id)){
+            if($stocktransfer == null || empty($stocktransfer->stocktransfer_sys_id)){
                 return response([
                     "status" => 3, 
                     "message" => "Order not found",
