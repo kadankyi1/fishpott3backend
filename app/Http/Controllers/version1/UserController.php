@@ -1361,7 +1361,7 @@ public function changePasswordWithResetCode(Request $request)
           die('No order reference supplied');
         }
     
-        /*
+        
         // initiate the Library's Paystack Object
         $paystack = new Paystack(config('app.payment_gateway_secret_key'));
         try
@@ -1390,7 +1390,7 @@ public function changePasswordWithResetCode(Request $request)
           // if the email matches the customer who owns the product etc
           // Give value
         }
-        */
+        
 
         // GETTING THE ORDER
         if($request->item_type == "stockpurchase"){
