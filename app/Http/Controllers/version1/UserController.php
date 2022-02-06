@@ -1438,6 +1438,23 @@ public function changePasswordWithResetCode(Request $request)
             $stocktransfer->stocktransfer_flagged = false;
             $stocktransfer->save();
 
+            // TAKING AWAY STOCK
+            $stockownership = StockOwnership::where("stockownership_user_investor_id", $user->investor_id)->where('stockownership_business_id', $stocktransfer->stocktransfer_business_id)->first();
+            if($stockownership == null || empty($stockownership->stockownership_business_id)){
+                return response([
+                    "status" => 3, 
+                    "message" => "Stock ownership not verified",
+                    "government_verification_is_on" => false,
+                    "media_allowed" => intval(config('app.canpostpicsandvids')),
+                    "user_android_app_max_vc" => intval(config('app.androidmaxvc')),
+                    "user_android_app_force_update" => boolval(config('app.androidforceupdatetomaxvc')),
+                    "phone_verification_is_on" => boolval(config('app.phoneverificationrequiredstatus'))
+                ]);
+            }
+    
+            $stockownership->stockownership_stocks_quantity = $stockownership->stockownership_stocks_quantity - intval($request->transfer_quantity);
+            $stockownership->save();
+
             // SAVING IT AS A TRANSACTION
             $transaction = Transaction::where('transaction_referenced_item_id', $request->item_id)->first();
             if($transaction == null){
@@ -1605,10 +1622,6 @@ public function changePasswordWithResetCode(Request $request)
             $rate_no_sign = 1.00;
             $payment_gateway_amount_cents_or_pesewas = $processing_fee_local * 100;
         }
-
-        // TAKING AWAY STOCK
-        $stockownership->stockownership_stocks_quantity = $stockownership->stockownership_stocks_quantity - intval($request->transfer_quantity);
-        $stockownership->save();
 
         // RECORDING THE TRANSFER
         $stockTransferData["stocktransfer_sys_id"] = "stS" . $user->user_pottname . "R" . $request->receiver_pottname . date("YmdHis");
