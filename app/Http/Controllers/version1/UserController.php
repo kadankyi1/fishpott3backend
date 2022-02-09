@@ -1784,22 +1784,6 @@ public function changePasswordWithResetCode(Request $request)
         StockTransfer::create($stockTransferData);
 
         // TESTING
-        $data = array(
-            "info_1" => $info_1,
-            "transanction_id" => $stockTransferData['stocktransfer_sys_id'],
-            "share_name" => $business->business_full_name,
-            "share_quantity" => $request->transfer_quantity,
-            "transfer_fee_cedis_no_sign" => $processing_fee_local,
-            "transfer_fee_cedis_with_sign" => $processing_fee_local_with_currency_sign,
-            "rate" => $rate,
-            "rate_no_sign" => $rate,
-            "overall_total_usd" => $processing_fee_usd,
-            "overall_total_local_currency" => $processing_fee_local_with_currency_sign,
-            "overall_total_local_currency_floatval" => $processing_fee_local,
-            "payment_gateway_amount_in_pesewas_or_cents_intval" => 100,
-            "payment_gateway_currency" => "GHS"
-        );
-        
         /*
         $data = array(
             "info_1" => $info_1,
@@ -1813,10 +1797,30 @@ public function changePasswordWithResetCode(Request $request)
             "overall_total_usd" => $processing_fee_usd,
             "overall_total_local_currency" => $processing_fee_local_with_currency_sign,
             "overall_total_local_currency_floatval" => $processing_fee_local,
-            "payment_gateway_amount_in_pesewas_or_cents_intval" => $payment_gateway_amount_cents_or_pesewas,
-            "payment_gateway_currency" => $currency_local->currency_short_name
+            "payment_gateway_amount_in_pesewas_or_cents_intval" => 100,
+            "payment_gateway_currency" => "GHS",
+            "mobile_money_number" => config('app.mtnghanamomonum'),
+            "mobile_money_name" => config('app.mtnghanamomoaccname')
         );
         */
+        
+        $data = array(
+            "info_1" => $info_1,
+            "transanction_id" => $stockTransferData['stocktransfer_sys_id'],
+            "share_name" => $business->business_full_name,
+            "share_quantity" => $request->transfer_quantity,
+            "transfer_fee_cedis_no_sign" => $processing_fee_local,
+            "transfer_fee_cedis_with_sign" => $processing_fee_local_with_currency_sign,
+            "rate" => $rate,
+            "rate_no_sign" => $rate,
+            "overall_total_usd" => $processing_fee_usd,
+            "overall_total_local_currency" => $processing_fee_local_with_currency_sign,
+            "overall_total_local_currency_floatval" => $processing_fee_local,
+            "payment_gateway_amount_in_pesewas_or_cents_intval" => $payment_gateway_amount_cents_or_pesewas,
+            "payment_gateway_currency" => $currency_local->currency_short_name,
+            "mobile_money_number" => config('app.mtnghanamomonum'),
+            "mobile_money_name" => config('app.mtnghanamomoaccname')
+        );
 
 
         return response([
