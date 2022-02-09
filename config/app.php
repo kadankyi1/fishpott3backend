@@ -34,7 +34,7 @@ return [
 
     // MTN GHANA MOBILE MONEY ACCOUNT
     'mtnghanamomonum' => env('MTN_GHANA_MOMO_NUM', '0553663643'),
-    'mtnghanamomoaccname' => env('MTN_GHANA_MOMO_NUM', '0553663643'),
+    'mtnghanamomoaccname' => env('MTN_GHANA_MOMO_ACC_NAME', 'Dankyi Anno Kwaku'),
     
     // VODAFONE GHANA MOBILE MONEY ACCOUNT
     'vodafoneghanamomonum' => env('VODAFONE_GHANA_MOMO_NUM', ''),

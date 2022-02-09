@@ -1265,7 +1265,7 @@ public function changePasswordWithResetCode(Request $request)
 
 
         // TESTING
-
+        /*
         $data = array(
             "order_id" => $new_stockpurchase->stockpurchase_sys_id, 
             "item" => $business->business_full_name, 
@@ -1281,11 +1281,13 @@ public function changePasswordWithResetCode(Request $request)
             "overall_total_local_currency_floatval" => 100,
             "payment_gateway_amount_in_pesewas_or_cents_intval" => 100,
             "payment_gateway_currency" => "GHS",
-            "financial_yield_info" => "This is a test"
+            "financial_yield_info" => "This is a test",
+            "mobile_money_number" => config('app.mtnghanamomonum'),
+            "mobile_money_name" => config('app.mtnghanamomoaccname')
         );
+        */
 
         // LIVE
-        /*
         $data = array(
             "order_id" => $new_stockpurchase->stockpurchase_sys_id, 
             "item" => $business->business_full_name, 
@@ -1301,9 +1303,11 @@ public function changePasswordWithResetCode(Request $request)
             "overall_total_local_currency_floatval" => $overall_total_local_currency_no_currency_sign,
             "payment_gateway_amount_in_pesewas_or_cents_intval" => $payment_gateway_amount_cents_or_pesewas,
             "payment_gateway_currency" => $currency_local->currency_short_name,
-            "financial_yield_info" => $yield_info
+            "financial_yield_info" => $yield_info,
+            "mobile_money_number" => config('app.mtnghanamomonum'),
+            "mobile_money_name" => config('app.mtnghanamomoaccname')
         );
-        */
+        
 
 
         return response([
@@ -1320,6 +1324,143 @@ public function changePasswordWithResetCode(Request $request)
 
 
     public function updateBuyOrderPaymentInfo(Request $request)
+    {
+        /*
+        |**************************************************************************
+        | VALIDATION STARTS 
+        |**************************************************************************
+        */
+        // MAKING SURE THE INPUT HAS THE EXPECTED VALUES
+        $validatedData = $request->validate([
+            "user_phone_number" => "bail|required|regex:/^\+\d{10,15}$/|min:10|max:15",
+            "user_pottname" => "bail|required|string|regex:/^[A-Za-z0-9_.]+$/|max:15",
+            "investor_id" => "bail|required",
+            "user_language" => "bail|required|max:3",
+            "app_type" => "bail|required|max:8",
+            "app_version_code" => "bail|required|integer",
+            // ADD ANY OTHER REQUIRED INPUTS FROM HERE
+            "item_type" => "bail|required|string",
+            "item_id" => "bail|required|string",
+            "payment_gateway_status" => "bail|required|string",
+            "payment_gateway_info" => "bail|required|string",
+        ]);
+
+        // MAKING SURE THE REQUEST AND USER IS VALIDATED
+        $validation_response = UtilController::validateUserWithAuthToken($request, auth()->user(), "get-info-on-apps");
+        if(!empty($validation_response["status"])){
+            return response($validation_response);
+        } else {
+            $user = $validation_response;
+        }
+
+        /*
+        |**************************************************************************
+        | VALIDATION ENDED 
+        |**************************************************************************
+        */
+        
+        // GETTING THE ORDER
+        if($request->item_type == "stockpurchase"){
+            $stockpurchase = StockPurchase::where('stockpurchase_sys_id', $request->item_id)->first();
+            if($stockpurchase == null || empty($stockpurchase->stockpurchase_sys_id)){
+                return response([
+                    "status" => 3, 
+                    "message" => "Order not found",
+                    "government_verification_is_on" => false,
+                    "media_allowed" => intval(config('app.canpostpicsandvids')),
+                    "user_android_app_max_vc" => intval(config('app.androidmaxvc')),
+                    "user_android_app_force_update" => boolval(config('app.androidforceupdatetomaxvc')),
+                    "phone_verification_is_on" => boolval(config('app.phoneverificationrequiredstatus'))
+                ]);
+            }
+            // UPDATING THE ORDER
+            $stockpurchase->stockpurchase_payment_gateway_status = $request->payment_gateway_status;
+            $stockpurchase->stockpurchase_payment_gateway_info = $request->payment_gateway_info;
+            $stockpurchase->save();
+            // SAVING IT AS A TRANSACTION
+            $transaction = Transaction::where('transaction_referenced_item_id', $request->item_id)->first();
+            if($transaction == null){
+                $transactionData["transaction_sys_id"] =  "SP-" . $user->user_pottname . "-" . date("YmdHis") . UtilController::getRandomString(4);
+                $transactionData["transaction_transaction_type_id"] = 4;
+                $transactionData["transaction_referenced_item_id"] = $request->item_id;
+                $transactionData["transaction_user_investor_id"] = $user->investor_id;
+                $transaction = Transaction::create($transactionData);
+            } 
+        } else if($request->item_type == "stocktransfer"){
+            $stocktransfer = StockTransfer::where('stocktransfer_sys_id', $request->item_id)->first();
+            if($stocktransfer == null || empty($stocktransfer->stocktransfer_sys_id)){
+                return response([
+                    "status" => 3, 
+                    "message" => "Order not found",
+                    "government_verification_is_on" => false,
+                    "media_allowed" => intval(config('app.canpostpicsandvids')),
+                    "user_android_app_max_vc" => intval(config('app.androidmaxvc')),
+                    "user_android_app_force_update" => boolval(config('app.androidforceupdatetomaxvc')),
+                    "phone_verification_is_on" => boolval(config('app.phoneverificationrequiredstatus'))
+                ]);
+            }
+            // UPDATING THE ORDER
+            $stocktransfer->stocktransfer_payment_gateway_status = $request->payment_gateway_status;
+            $stocktransfer->stocktransfer_payment_gateway_info = $request->payment_gateway_info;
+            $stocktransfer->stocktransfer_flagged = false;
+            $stocktransfer->save();
+
+            // TAKING AWAY STOCK
+            $stockownership = StockOwnership::where("stockownership_user_investor_id", $user->investor_id)->where('stockownership_business_id', $stocktransfer->stocktransfer_business_id)->first();
+            if($stockownership == null || empty($stockownership->stockownership_business_id)){
+                return response([
+                    "status" => 3, 
+                    "message" => "Stock ownership not verified",
+                    "government_verification_is_on" => false,
+                    "media_allowed" => intval(config('app.canpostpicsandvids')),
+                    "user_android_app_max_vc" => intval(config('app.androidmaxvc')),
+                    "user_android_app_force_update" => boolval(config('app.androidforceupdatetomaxvc')),
+                    "phone_verification_is_on" => boolval(config('app.phoneverificationrequiredstatus'))
+                ]);
+            }
+    
+            $stockownership->stockownership_total_cost_usd = ($stockownership->stockownership_total_cost_usd/$stockownership->stockownership_stocks_quantity) * ($stockownership->stockownership_stocks_quantity - intval($stocktransfer->stocktransfer_stocks_quantity));
+            $stockownership->stockownership_stocks_quantity = $stockownership->stockownership_stocks_quantity - intval($stocktransfer->stocktransfer_stocks_quantity);
+            $stockownership->save();
+
+            // SAVING IT AS A TRANSACTION
+            $transaction = Transaction::where('transaction_referenced_item_id', $request->item_id)->first();
+            if($transaction == null){
+                $transactionData["transaction_sys_id"] =  "ST-" . $user->user_pottname . "-" . date("YmdHis") . UtilController::getRandomString(4);
+                $transactionData["transaction_transaction_type_id"] = 5;
+                $transactionData["transaction_referenced_item_id"] = $request->item_id;
+                $transactionData["transaction_user_investor_id"] = $user->investor_id;
+                $transaction = Transaction::create($transactionData);
+            } 
+        } else {
+            return response([
+                "status" => 3, 
+                "message" => "Order type not found",
+                "government_verification_is_on" => false,
+                "media_allowed" => intval(config('app.canpostpicsandvids')),
+                "user_android_app_max_vc" => intval(config('app.androidmaxvc')),
+                "user_android_app_force_update" => boolval(config('app.androidforceupdatetomaxvc')),
+                "phone_verification_is_on" => boolval(config('app.phoneverificationrequiredstatus'))
+            ]);
+        }
+
+        $data = array(
+            "order_id" => $transaction->transaction_sys_id
+        );
+
+        return response([
+            "status" => 1, 
+            "message" => "success",
+            "data" => $data,
+            "government_verification_is_on" => false,
+            "media_allowed" => intval(config('app.canpostpicsandvids')),
+            "user_android_app_max_vc" => intval(config('app.androidmaxvc')),
+            "user_android_app_force_update" => boolval(config('app.androidforceupdatetomaxvc')),
+            "phone_verification_is_on" => boolval(config('app.phoneverificationrequiredstatus'))
+        ]);
+    }
+
+    public function updateBuyOrderPaymentInfoForPaymentGateWay(Request $request)
     {
         /*
         |**************************************************************************
