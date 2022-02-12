@@ -49,7 +49,7 @@ $page_title = "Send notifications to apps of user(s)";
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">Full Long Message</label>
                                         <div class="col-sm-10">
-                                            <textarea id="full_message" minlength="1" maxlength="2000" name="full_message" required type="text" class="form-control" placeholder="Type full message"></textarea>
+                                            <textarea id="full_message" minlength="1" maxlength="1000" name="full_message" required type="text" class="form-control" placeholder="Type full message"></textarea>
                                         </div>
                                     </div>
                                     <div class="form-group row">
