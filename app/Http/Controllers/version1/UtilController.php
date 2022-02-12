@@ -246,14 +246,17 @@ class UtilController extends Controller
                       'registration_ids' => [$receiver_keys_array[$i]],
                       'priority' => $priority,
                       'notification' => array(
-                        'body' => $message,
-                        'not_title' => $message
+                        //'body' => $message,
+                        //'not_title' => $message
+                        'body' => $text,
+                        'not_title' => $text,
                         //'icon' => $message
                       ),
                       'data' => array(
                         'not_type' => $type,
                         'not_title' => $title,
-                        'not_message' => $message,
+                        'not_message' => $text,
+                        //'not_message' => $message,
                         'not_message_text' => $text, 
                         'not_message_info1' => $info1, 
                         'not_message_info2' => $info2, 
@@ -309,8 +312,8 @@ class UtilController extends Controller
                   'to' => '/topics/'. $topic,
                   'priority' => $priority,
                   'notification' => array(
-                    'body' => $message,
-                    'not_title' => $message,
+                    'body' => $text,
+                    'not_title' => $text,
                     'not_type' => $type
                     //'icon' => $message
                   ),
