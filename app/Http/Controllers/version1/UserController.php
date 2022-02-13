@@ -2601,6 +2601,11 @@ public function changePasswordWithResetCode(Request $request)
             $user->user_fcm_token_android = $request->fcm_token;
             $user->save();
         }
+
+        if($request->app_type == "ios" && !empty($request->fcm_token)){
+            $user->user_fcm_token_ios = $request->fcm_token;
+            $user->save();
+        }
         /*
         |**************************************************************************
         | VALIDATION ENDED 
