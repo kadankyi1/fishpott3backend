@@ -1058,9 +1058,25 @@ class AdministratorController extends Controller
                 "FISHPOT_IOS",
                 "normal",
                 "drill-suggestion",
-                "New Drill - FishPott",
+                "FishPott - New Drill",
+                "Train your FishPott and increase its intelligence with a new drill",
                 "Train your FishPott and increase its intelligence with a new drill",
                 "", 
+                "", 
+                "", 
+                "",
+                date("F j, Y")
+            );
+
+            UtilController::sendNotificationToTopic(
+                config('app.firebase_notification_server_address_link'), 
+                config('app.firebase_notification_account_key'), 
+                "FISHPOT_IOS",
+                "normal",
+                "information",
+                "FishPott - Info",
+                $request->title,
+                $request->full_message,
                 "", 
                 "", 
                 "", 
