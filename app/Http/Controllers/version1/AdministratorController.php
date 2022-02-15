@@ -1059,7 +1059,7 @@ class AdministratorController extends Controller
                 "normal",
                 "drill-suggestion",
                 "FishPott - New Drill",
-                "Train your FishPott and increase its intelligence with a new drill",
+                "FishPott - New Drill",
                 "Train your FishPott and increase its intelligence with a new drill",
                 "", 
                 "", 
@@ -1068,6 +1068,7 @@ class AdministratorController extends Controller
                 date("F j, Y")
             );
 
+            
             UtilController::sendNotificationToTopic(
                 config('app.firebase_notification_server_address_link'), 
                 config('app.firebase_notification_account_key'), 
@@ -1083,6 +1084,7 @@ class AdministratorController extends Controller
                 "",
                 date("F j, Y")
             );
+            
         } else if($request->item_type == 2){
             // CHECKING IF THE BUSINESS EXISTS
             $business = Business::where('business_sys_id', $request->item_id)->first();
