@@ -1069,22 +1069,6 @@ class AdministratorController extends Controller
             );
 
             
-            UtilController::sendNotificationToTopic(
-                config('app.firebase_notification_server_address_link'), 
-                config('app.firebase_notification_account_key'), 
-                "FISHPOT_IOS",
-                "normal",
-                "information",
-                "FishPott - Info",
-                $request->title,
-                $request->full_message,
-                "", 
-                "", 
-                "", 
-                "",
-                date("F j, Y")
-            );
-            
         } else if($request->item_type == 2){
             // CHECKING IF THE BUSINESS EXISTS
             $business = Business::where('business_sys_id', $request->item_id)->first();
@@ -1120,15 +1104,16 @@ class AdministratorController extends Controller
                 array($pott_user->user_fcm_token_android, $pott_user->user_fcm_token_web, $pott_user->user_fcm_token_ios),
                 "normal",
                 "business-suggestion",
-                "Stock Suggestion - FishPott",
+                "Business Suggestion - FishPott",
+                "Business Suggestion - FishPott",
                 "You have a new business you can invest in",
-                "", 
                 "", 
                 "", 
                 "", 
                 "",
                 date("F j, Y")
             );
+
         } else {
             return response([
                 "status" => 0, 
