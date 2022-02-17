@@ -103,36 +103,19 @@
                                 <div class="card-block">
                                     <div class="row m-b-20">
                                         <div class="col-md-12">
-                                            <h3 class="text-center">Sign In</h3>
+                                            <h3 class="text-center">Email Alert Settings</h3>
 
                                             <div class="loader-holder offset-md-5" id="loader"><br><br><br><br><br><br><div class="myloader"></div></div>
                                         </div>
                                     </div>
                                     <form id="lform">
                                         <div class="form-group form-primary">
-                                            <input type="text" id="administrator_phone_number" name="administrator_phone_number" class="form-control" required="">
+                                            <select id="subscribe_or_not" name="subscribe_or_not" class="form-control" required="">
+                                                <option>Do Not Send Me FishPott Emails </option>
+                                                <option>Send Me FishPott Emails </option>
+                                            </select>
                                             <span class="form-bar"></span>
                                             <label class="float-label">Phone</label>
-                                        </div>
-                                        <div class="form-group form-primary">
-                                            <input type="password" id="password" name="password" class="form-control" required="">
-                                            <span class="form-bar"></span>
-                                            <label class="float-label">Password</label>
-                                        </div>
-                                        <div class="form-group form-primary">
-                                            <input type="text" id="administrator_user_pottname" name="administrator_user_pottname" class="form-control" required="">
-                                            <span class="form-bar"></span>
-                                            <label class="float-label">Pott Name</label>
-                                        </div>
-                                        <div class="form-group form-primary">
-                                            <input type="password" id="administrator_pott_password" name="administrator_pott_password" class="form-control" required="">
-                                            <span class="form-bar"></span>
-                                            <label class="float-label">Pott Password</label>
-                                        </div>
-                                        <div class="form-group form-primary">
-                                            <input type="password" id="frontend_key" name="frontend_key" class="form-control" required="">
-                                            <span class="form-bar"></span>
-                                            <label class="float-label">Client Key</label>
                                         </div>
                                         <div class="row m-t-30">
                                             <div class="col-md-12">
