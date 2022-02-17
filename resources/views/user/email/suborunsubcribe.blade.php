@@ -217,7 +217,7 @@
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.4.0/animate.min.css">
 
 <script type="text/javascript" src="/js/custom/config.js"></script>
-<script type="text/javascript" src="/js/custom/email.js"></script>
+<script type="text/javascript" src="/js/custom/userside/email.js"></script>
 </body>
 
 </html>
