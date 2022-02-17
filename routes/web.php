@@ -74,3 +74,11 @@ Route::get('/admin/users/view-users', function () {
 Route::get('/admin/users/notify-users', function () {
     return view('admin/user/notify-users');
 });
+
+
+/********************************* */
+
+// VIEW USERS
+Route::get('/user/email/sub-or-unsub', function () {
+    return view('user/email/suborunsubcribe');
+});
