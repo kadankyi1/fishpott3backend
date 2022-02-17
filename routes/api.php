@@ -73,6 +73,9 @@ Route::middleware('auth:api')->post('/v1/user/send-stock-transfer', [App\Http\Co
 // SELL BACK STOCK 
 Route::middleware('auth:api')->post('/v1/user/sellback-stock', [App\Http\Controllers\version1\UserController::class, 'sellBackStocks']);
 
+// PERSONAL ACCOUNT REGISTRATION ROUTE
+Route::post('/v1/user/email-alerts',[App\Http\Controllers\version1\UserController::class, 'updateEmailAlertSettings']);
+
 // DEFAULT FALLBACK ROUTE
 Route::fallback(function(){
     return response()->json([

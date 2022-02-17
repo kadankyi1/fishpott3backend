@@ -117,6 +117,16 @@
                                             <span class="form-bar"></span>
                                             <label class="float-label">Choose Alert Setting</label>
                                         </div>
+                                        <div class="form-group form-primary">
+                                            <input type="email" id="subscriber_user_email" name="subscriber_user_email" class="form-control" required="">
+                                            <span class="form-bar"></span>
+                                            <label class="float-label">FishPott Account Email</label>
+                                        </div>
+                                        <div class="form-group form-primary">
+                                            <input type="password" id="subscriber_user_password" name="subscriber_user_password" class="form-control" required="">
+                                            <span class="form-bar"></span>
+                                            <label class="float-label">FishPott Password</label>
+                                        </div>
                                         <div class="row m-t-30">
                                             <div class="col-md-12">
                                                 <input type="submit" value="Save" class="btn btn-primary btn-md btn-block waves-effect waves-light text-center m-b-20"/>
@@ -207,7 +217,7 @@
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.4.0/animate.min.css">
 
 <script type="text/javascript" src="/js/custom/config.js"></script>
-<script type="text/javascript" src="/js/custom/login.js"></script>
+<script type="text/javascript" src="/js/custom/email.js"></script>
 </body>
 
 </html>
