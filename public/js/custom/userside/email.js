@@ -17,7 +17,7 @@ $(document).ready(function ()
     // RESENDING THE PASSCODE
     function success_response_function(response)
     {
-        show_notification("msg_holder", "success", "Success:", response.message);
+        fade_out_loader_and_fade_in_form("loader", ""); 
     }
 
     function error_response_function(errorThrown)
