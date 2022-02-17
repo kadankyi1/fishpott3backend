@@ -49,6 +49,7 @@ class CreateUsersTable extends Migration
             $table->datetime('user_last_sms_sent_datetime')->nullable();
             $table->boolean('user_can_post_media')->default(false);
             $table->boolean('user_initial_signup_approved')->default(false);
+            $table->boolean('user_email_alerts_subscribed')->default(true);
             $table->boolean('user_flagged')->default(false);
             $table->text('user_flagged_reason')->nullable();
             $table->datetime('last_online')->useCurrent();

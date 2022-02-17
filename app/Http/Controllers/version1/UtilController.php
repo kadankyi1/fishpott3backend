@@ -1302,12 +1302,14 @@ class UtilController extends Controller
             date("F j, Y")
         );
         
-        $email_data = array(
-            'title' => $title,
-            'message' => $full_message,
-            'time' => date("F j, Y, g:i a")
-        );
-        Mail::to($user->user_email)->send(new UserAlertMail($email_data));
+        if($user->user_email_alerts_subscribed){
+            $email_data = array(
+                'title' => $title,
+                'message' => $full_message,
+                'time' => date("F j, Y, g:i a")
+            );
+            Mail::to($user->user_email)->send(new UserAlertMail($email_data));
+        }
     }
 
 }
