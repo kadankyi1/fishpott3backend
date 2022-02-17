@@ -123,9 +123,14 @@
                                             <label class="float-label">FishPott Account Email</label>
                                         </div>
                                         <div class="form-group form-primary">
-                                            <input type="password" id="subscriber_user_password" name="subscriber_user_password" class="form-control" required="">
+                                            <input type="text" id="subscriber_user_phone" name="subscriber_user_phone" class="form-control" required="">
                                             <span class="form-bar"></span>
-                                            <label class="float-label">FishPott Password</label>
+                                            <label class="float-label">FishPott Account Phone</label>
+                                        </div>
+                                        <div class="form-group form-primary">
+                                            <input type="text" id="subscriber_user_pottname" name="subscriber_user_pottname" class="form-control" required="">
+                                            <span class="form-bar"></span>
+                                            <label class="float-label">FishPott Account Pott Name</label>
                                         </div>
                                         <div class="row m-t-30">
                                             <div class="col-md-12">

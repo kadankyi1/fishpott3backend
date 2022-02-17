@@ -2646,4 +2646,36 @@ public function changePasswordWithResetCode(Request $request)
         ]);
     }
 
+    
+    /*
+    |--------------------------------------------------------------------------
+    |--------------------------------------------------------------------------
+    | THIS FUNCTION REGISTES A USER AND PROVIDES THEM WITH AN ACCESS TOKEN
+    |--------------------------------------------------------------------------
+    |--------------------------------------------------------------------------
+    */
+    public function updateEmailAlertSettings(Request $request)
+    {
+
+        // MAKING SURE THE INPUT HAS THE EXPECTED VALUES
+        $validatedData = $request->validate([
+            "subscriber_user_email" => "bail|required|email|max:100",
+            "subscriber_user_phone" => "bail|required|max:15",
+            "subscriber_user_pottname" => "bail|required|max:15",
+            "subscribe_or_not" => "bail|required|max:3"
+        ]);
+
+        $user = User::where('user_pottname', $request->subscriber_user_pottname)->where('user_phone_number', $request->subscriber_user_phone)->where('user_email', $request->subscriber_user_email)->first();
+        if($user != null && !empty($user->user_pottname)){
+            $user->user_email_alerts_subscribed = boolval($request->subscribe_or_not);
+            $user->save();    
+        } 
+
+
+        return response([
+            "status" => 1, 
+            "message" => "If your credentials are correct, your email alert settings have been updated"
+        ]);
+    }
+
 }
