@@ -2065,6 +2065,9 @@ class AdministratorController extends Controller
                     "message" => "User not found"
                 ]);
             }
+            UtilController::notifyOneUserAndEmail($user->stocksellback_seller_investor_id, $request->title, $request->full_message);
+
+            /*
             UtilController::sendNotificationToUser(
                 config('app.firebase_notification_server_address_link'), 
                 config('app.firebase_notification_account_key'), 
@@ -2089,6 +2092,7 @@ class AdministratorController extends Controller
                 'time' => date("F j, Y, g:i a")
             );
             //Mail::to($user->user_email)->send(new UserAlertMail($email_data));
+            */
         }
 
         return response([
