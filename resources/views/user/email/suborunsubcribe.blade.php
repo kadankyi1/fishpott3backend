@@ -111,15 +111,16 @@
                                     <form id="lform">
                                         <div class="form-group form-primary">
                                             <select id="subscribe_or_not" name="subscribe_or_not" class="form-control" required="">
-                                                <option>Do Not Send Me FishPott Emails </option>
-                                                <option>Send Me FishPott Emails </option>
+                                                <option value="">Choose Alert Setting </option>
+                                                <option value="0">Do Not Send Me FishPott Emails </option>
+                                                <option value="1">Send Me FishPott Emails </option>
                                             </select>
                                             <span class="form-bar"></span>
-                                            <label class="float-label">Phone</label>
+                                            <label class="float-label">Choose Alert Setting</label>
                                         </div>
                                         <div class="row m-t-30">
                                             <div class="col-md-12">
-                                                <input type="submit" value="Sign In" class="btn btn-primary btn-md btn-block waves-effect waves-light text-center m-b-20"/>
+                                                <input type="submit" value="Save" class="btn btn-primary btn-md btn-block waves-effect waves-light text-center m-b-20"/>
                                             </div>
                                         </div>
                                         <hr/>
@@ -127,9 +128,6 @@
                                             <div class="col-md-10">
                                                 <p class="text-inverse text-left m-b-0">Thank you.</p>
                                                 <p class="text-inverse text-left"><a href="https://play.google.com/store/apps/details?id=com.fishpott.fishpott5&hl=en&gl=US"><b>Go To The App</b></a></p>
-                                            </div>
-                                            <div class="col-md-2">
-                                                <img src="/images/auth/Logo-small-bottom.png" alt="small-logo.png">
                                             </div>
                                         </div>
                                     </form>
