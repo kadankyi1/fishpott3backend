@@ -22,6 +22,7 @@
 @slot('footer')
 @component('mail::footer')
 © {{ date('Y') }} {{ config('app.name') }}. @lang('All rights reserved.')
+<a href= "{{unsubscribe_url}}" >Unsubscribe</a>
 @endcomponent
 @endslot
 @endcomponent
