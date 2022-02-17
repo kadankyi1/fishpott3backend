@@ -17,7 +17,7 @@ $(document).ready(function ()
     // RESENDING THE PASSCODE
     function success_response_function(response)
     {
-        show_notification("msg_holder", "success", "Success:", "Login successful");
+        show_notification("msg_holder", "success", "Success:", response.message);
     }
 
     function error_response_function(errorThrown)
