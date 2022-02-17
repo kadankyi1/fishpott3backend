@@ -111,7 +111,6 @@
                                     <form id="lform">
                                         <div class="form-group form-primary">
                                             <select id="subscribe_or_not" name="subscribe_or_not" class="form-control" required="">
-                                                <option value="">Choose Alert Setting </option>
                                                 <option value="0">Do Not Send Me FishPott Emails </option>
                                                 <option value="1">Send Me FishPott Emails </option>
                                             </select>
