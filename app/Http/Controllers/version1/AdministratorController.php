@@ -2065,7 +2065,7 @@ class AdministratorController extends Controller
                     "message" => "User not found"
                 ]);
             }
-            UtilController::notifyOneUserAndEmail($user->stocksellback_seller_investor_id, $request->title, $request->full_message);
+            UtilController::notifyOneUserAndEmail($user->investor_id, $request->title, $request->full_message);
 
             /*
             UtilController::sendNotificationToUser(
