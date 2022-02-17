@@ -28,6 +28,7 @@ use App\Models\version1\Suggestion;
 use App\Models\version1\DrillAnswer;
 use App\Http\Controllers\ai\NeuralNetworkController;
 use App\Http\Controllers\version1\LogController;
+use App\Mail\version1\UserAlertMail;
 use App\Models\version1\AiStockPersona;
 
 class UtilController extends Controller
@@ -1306,7 +1307,7 @@ class UtilController extends Controller
             'message' => $full_message,
             'time' => date("F j, Y, g:i a")
         );
-        //Mail::to($user->user_email)->send(new UserAlertMail($email_data));
+        Mail::to($user->user_email)->send(new UserAlertMail($email_data));
     }
 
 }
