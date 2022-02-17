@@ -79,7 +79,7 @@ return [
     'firebase_notification_account_key' => env('FIREBASE_NOTIFICATION_ACCOUNT_SERVER_KEY', "AAAAyNozJtc:APA91bHf8IpIE_vM52ZhLTP7Vi1QDS-EK3urQwX_-0cj5aSlT7TaYU3eKftPv5-d4K3aOqFKqiFN6pTWGB7nhzqV5eF6sFqOmXX9rj5qCPdYp-I-IpbcybJuE5w4S4Zp4tVIuHb4qwDf"), 
 
     // SMTP
-    //'unsubscribe_url' => env('UNSUBSCRIBE_URL', "https://dashboard.paystack.com/"), 
+    'unsubscribe_url' => env('UNSUBSCRIBE_URL', "https://app.fishpott.com/user/email/sub-or-unsub"), 
 
     /*
     |-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|
