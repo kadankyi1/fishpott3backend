@@ -58,7 +58,7 @@ class UserController extends Controller
             "user_surname" => "bail|required|string|regex:/^[A-Za-z0-9_.]+$/|max:15",
             "user_email" => "bail|required|email|min:4|max:50",
             "user_pottname" => "bail|required|string|regex:/^[A-Za-z0-9_.]+$/|max:15",
-            "user_gender" => "bail|required|max:6",
+            "user_gender" => "bail|required|max:10",
             "user_language" => "bail|required|max:3",
             "user_country" => "bail|required|max:55",
             "user_dob" => "bail|required|date|before:-13 years",
