@@ -175,6 +175,7 @@ class UserController extends Controller
         $userData["user_added_to_sitemap"] = false;
         $userData["user_reviewed_by_admin"] = false;
         $userData["user_initial_signup_approved"] = true;
+        $userData["user_email_alerts_subscribed"] = true;
         $userData["user_flagged"] = false;
         // SAVING APP TYPE VERSION CODE
         if($request->app_type == "ANDROID"){
