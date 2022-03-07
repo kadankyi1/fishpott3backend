@@ -2627,12 +2627,24 @@ public function changePasswordWithResetCode(Request $request)
             $user_pott_intelligence = $user->user_pott_intelligence . "% -- Pott Intelligence";
             $user_pott_position = UtilController::formatNumberWithPositionAffix($user->user_pott_position) . " - Your FishPott ranks at this position currently out of " . strval($all_users) . " FishPotts";
         }
+
+        if($user->user_pott_intelligence < 20){
+            $ai_info = "Your Pott-Intelligence is currently too low to show an accurate view of your personality. Keep answering drills to train your FishPott.";
+        } else {
+            $ai_info = "This is your personality based on your drill answers. People who are in tune with wealth generation have a personality of at least 70% openness, 70% conscientiousness, 70% Extraversion, 70% Agreeableness, 70% Neuroticism.";
+        }
         
         $data = array(
             "pott_networth" => $user_net_worth_usd, 
             "pott_intelligence" => $user_pott_intelligence, 
             "pott_position" => $user_pott_position, 
-            "all_potts" => strval($all_users)
+            "all_potts" => strval($all_users),
+            "ai_info" => $ai_info, 
+            "o" => $user->ocean_openness_to_experience, 
+            "c" => $user->ocean_conscientiousness, 
+            "e" => $user->ocean_extraversion, 
+            "a" => $user->ocean_agreeableness, 
+            "n" => $user->ocean_neuroticism
         );
 
         return response([
