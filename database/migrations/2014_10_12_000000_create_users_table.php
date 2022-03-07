@@ -37,6 +37,11 @@ class CreateUsersTable extends Migration
             $table->string('user_fcm_token_ios', 255)->default("");
             $table->boolean('user_added_to_sitemap')->default(false);
             $table->boolean('user_reviewed_by_admin')->default(false);
+            $table->decimal('ocean_openness_to_experience', 12, 2)->default(0.00);
+            $table->decimal('ocean_conscientiousness', 12, 2)->default(0.00);
+            $table->decimal('ocean_extraversion', 12, 2)->default(0.00);
+            $table->decimal('ocean_agreeableness', 12, 2)->default(0.00);
+            $table->decimal('ocean_neuroticism', 12, 2)->default(0.00);
             $table->text('user_scope');
             $table->string('user_android_app_version_code', 255)->default("");
             $table->string('user_ios_app_version_code', 255)->default("");
