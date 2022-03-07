@@ -2640,11 +2640,11 @@ public function changePasswordWithResetCode(Request $request)
             "pott_position" => $user_pott_position, 
             "all_potts" => strval($all_users),
             "ai_info" => $ai_info, 
-            "o" => $user->ocean_openness_to_experience, 
-            "c" => $user->ocean_conscientiousness, 
-            "e" => $user->ocean_extraversion, 
-            "a" => $user->ocean_agreeableness, 
-            "n" => $user->ocean_neuroticism
+            "o" => $user->ocean_openness_to_experience . "%", 
+            "c" => $user->ocean_conscientiousness . "%", 
+            "e" => $user->ocean_extraversion . "%", 
+            "a" => $user->ocean_agreeableness . "%", 
+            "n" => $user->ocean_neuroticism . "%"
         );
 
         return response([
