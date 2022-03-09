@@ -1053,7 +1053,67 @@ public function changePasswordWithResetCode(Request $request)
         echo "\n answers_six_months_ago: " .  $answers_six_months_ago;
         exit;
         */
+
+        // CALCULATING OCEAN VALUES FOR USER
+
+        // GETTING DRILL ANSWERS
+        $answers = DrillAnswer::select('drill_answer_drill_sys_id', 'drill_answer_number')
+        ->where('drill_answer_user_investor_id', '=', $user->investor_id)
+        ->orderBy('drill_answer_id', 'desc')->take(30)->get();
+
+        if(count($answers) < 7){
+            return 1;
+        }
+
+        // INITIALIZING ARRAY
+        $output_data_array = array('o' => 0,'c' => 0,'e' => 0,'a' => 0,'n' => 0);
+
+        $count_answers = 0;
+        foreach($answers as $answer){
+            $this_drill = Drill::where('drill_sys_id', '=', $answer->drill_answer_drill_sys_id)->first();
+            if($answer->drill_answer_number == 1){
+                //echo "\n\ndrill answer 1: " . $this_drill->drill_answer_1_ocean;
+                $this_raw_ocean_array = explode("#", $this_drill->drill_answer_1_ocean);
+            } else if($answer->drill_answer_number == 2){
+                //echo "\n\ndrill answer 2: " . $this_drill->drill_answer_2_ocean;
+                $this_raw_ocean_array = explode("#", $this_drill->drill_answer_2_ocean);
+            } else if($answer->drill_answer_number == 3){
+                //echo "\n\ndrill answer 3: " . $this_drill->drill_answer_3_ocean;
+                $this_raw_ocean_array = explode("#", $this_drill->drill_answer_3_ocean);
+            } else if($answer->drill_answer_number == 4){
+                //echo "\n\ndrill answer 4: " . $this_drill->drill_answer_4_ocean;
+                $this_raw_ocean_array = explode("#", $this_drill->drill_answer_4_ocean);
+            } else {
+                continue;
+            }
+
+            if(count($this_raw_ocean_array) != 5){
+                continue;
+            }
+            
+            $output_data_array["o"] = $output_data_array["o"] + $this_raw_ocean_array[0];
+            $output_data_array["c"] = $output_data_array["c"] + $this_raw_ocean_array[1];
+            $output_data_array["e"] = $output_data_array["e"] + $this_raw_ocean_array[2];
+            $output_data_array["a"] = $output_data_array["a"] + $this_raw_ocean_array[3];
+            $output_data_array["n"] = $output_data_array["n"] + $this_raw_ocean_array[4];
+            $count_answers++;
+        }
         
+
+        $o = $output_data_array["o"]/$count_answers;
+        $c = $output_data_array["c"]/$count_answers;
+        $e = $output_data_array["e"]/$count_answers;
+        $a = $output_data_array["a"]/$count_answers;
+        $n = $output_data_array["n"]/$count_answers;
+
+        ///*
+        echo "\n\n o : " . $o . "%\n\n"; 
+        echo "\n\n c : " . $c . "%\n\n"; 
+        echo "\n\n e : " . $e . "%\n\n"; 
+        echo "\n\n a : " . $a . "%\n\n"; 
+        echo "\n\n n : " . $n . "%\n\n";
+        exit;
+        //*/
 
         // GETTING THE ANSWERS OF FRIENDS
         $answer_1_count = UtilController::getCountDrillAnswers(["drill_answer_drill_sys_id", "drill_answer_number"], [$drill->drill_sys_id, 1]);
