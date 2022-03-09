@@ -1106,14 +1106,22 @@ public function changePasswordWithResetCode(Request $request)
         $a = $output_data_array["a"]/$count_answers;
         $n = $output_data_array["n"]/$count_answers;
 
-        ///*
+        /*
         echo "\n\n o : " . $o . "%\n\n"; 
         echo "\n\n c : " . $c . "%\n\n"; 
         echo "\n\n e : " . $e . "%\n\n"; 
         echo "\n\n a : " . $a . "%\n\n"; 
         echo "\n\n n : " . $n . "%\n\n";
-        exit;
-        //*/
+        //exit;
+        */
+
+        $user->ocean_openness_to_experience = $o;
+        $user->ocean_conscientiousness = $c;
+        $user->ocean_extraversion = $e;
+        $user->ocean_agreeableness = $a;
+        $user->ocean_neuroticism = $n;
+
+        $user->save();
 
         // GETTING THE ANSWERS OF FRIENDS
         $answer_1_count = UtilController::getCountDrillAnswers(["drill_answer_drill_sys_id", "drill_answer_number"], [$drill->drill_sys_id, 1]);
