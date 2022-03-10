@@ -2696,7 +2696,7 @@ public function changePasswordWithResetCode(Request $request)
             $user_pott_position = UtilController::formatNumberWithPositionAffix($user->user_pott_position) . " - Your FishPott ranks at this position currently out of " . strval($all_users) . " FishPotts";
         }
 
-        if($user->user_pott_intelligence < 20){
+        if($user->user_pott_intelligence < 5){
             $ai_info = "Your Pott-Intelligence is currently too low to show an accurate view of your personality. Keep answering drills to train your FishPott.";
         } else {
             $ai_info = "This is your personality based on your drill answers. People who are in tune with wealth generation have a personality of at least 70% openness, 70% conscientiousness, 70% Extraversion, 70% Agreeableness, 70% Neuroticism.";
