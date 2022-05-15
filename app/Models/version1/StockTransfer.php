@@ -36,7 +36,7 @@ class StockTransfer extends Model
         'stocktransfer_rate_cedi_to_usd',
         'stocktransfer_processing_fee_usd',
         'stocktransfer_processing_local_currency_paid_in_amt',
-        'stocktransfer_processing_fee_currency_paid_in_id',
+        'stocktransfer_processingfee_curr_paid_in_id',
         'stocktransfer_flagged',
         'stocktransfer_flagged_reason',
         'stocktransfer_payment_gateway_status',

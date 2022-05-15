@@ -35,8 +35,8 @@ class CreateStocksTransfersTable extends Migration
             $table->string('stocktransfer_business_id', 255);
             $table->foreign('stocktransfer_business_id')->references('business_sys_id')->on('businesses');
 
-            $table->unsignedBigInteger('stocktransfer_processing_fee_currency_paid_in_id');
-            $table->foreign('stocktransfer_processing_fee_currency_paid_in_id')->references('currency_id')->on('currencies');
+            $table->unsignedBigInteger('stocktransfer_processingfee_curr_paid_in_id');
+            $table->foreign('stocktransfer_processingfee_curr_paid_in_id')->references('currency_id')->on('currencies');
 
             $table->string('stocktransfer_sender_investor_id', 255);
             $table->foreign('stocktransfer_sender_investor_id')->references('investor_id')->on('users');
