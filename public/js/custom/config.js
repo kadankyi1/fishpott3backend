@@ -11,6 +11,7 @@ var host = "https://app.fishpott.com";
 var admin_web_login_page_url = `${host}/admin/login`;
 var admin_api_login_url = `${host}/api/v1/admin/login`;
 
+
 // LOGOUT URL
 var admin_api_logout_url = `${host}/api/v1/admin/logout`;
 
