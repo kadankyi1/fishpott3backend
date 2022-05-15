@@ -1844,7 +1844,7 @@ public function changePasswordWithResetCode(Request $request)
         $stockTransferData["stocktransfer_rate_cedi_to_usd"] = $rate_no_sign;
         $stockTransferData["stocktransfer_processing_fee_usd"] = $processing_fee_usd;
         $stockTransferData["stocktransfer_processing_local_currency_paid_in_amt"] = $processing_fee_local;
-        $stockTransferData["stocktransfer_processingfee_curr_paid_in_id"] = $currency_local->currency_id;
+        $stockTransferData["st_processingfee_curr_paid_in_id"] = $currency_local->currency_id;
         $stockTransferData["stocktransfer_flagged"] = true;
         $stockTransferData["stocktransfer_flagged_reason"] = "unpaid";
         $stockTransferData["stocktransfer_payment_gateway_status"] = false;
@@ -2329,7 +2329,7 @@ public function changePasswordWithResetCode(Request $request)
                         $the_status = "Error";
                     }
 
-                    $currency = Currency::where('currency_id', $stocktransfer->stocktransfer_processingfee_curr_paid_in_id)->first();
+                    $currency = Currency::where('currency_id', $stocktransfer->st_processingfee_curr_paid_in_id)->first();
                     $business = Business::where('business_sys_id', $stocktransfer->stocktransfer_business_id)->first();
 
                     $this_item = array(
