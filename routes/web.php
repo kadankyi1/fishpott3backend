@@ -11,12 +11,26 @@ use Illuminate\Support\Facades\Route;
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
 |
-
-Route::get('/', function () {
-    return view('welcome');
-});
 */
 
+
+/*
+|--------------------------------------------------------------------------
+| LANDING ROUTES
+|--------------------------------------------------------------------------
+*/
+
+
+Route::get('/business-membership-policies', function () {
+    return view('landing/business-membership-policies');
+});
+
+
+/*
+|--------------------------------------------------------------------------
+| ADMIN ROUTES
+|--------------------------------------------------------------------------
+*/
 // ADMINER DATABASE MANAGEMENT TOOL
 Route::any('adminer', '\Aranyasen\LaravelAdminer\AdminerController@index');
 

@@ -1,0 +1,1 @@
+# UPDATE stocktransfer_processing_fee_currency_paid_in_id' in all DB appearances to 'st_processingfee_curr_paid_in_id'exit
