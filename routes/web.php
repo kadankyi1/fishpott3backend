@@ -21,14 +21,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::get('/business-membership-policy', function () {
-    return view('landing/business-membership-policy');
+Route::get('/terms', function () {
+    return view('landing/terms');
 });
 
-
-Route::get('/investor-agreement-terms', function () {
-    return view('landing/investor-agreement-terms');
-});
 
 
 /*
