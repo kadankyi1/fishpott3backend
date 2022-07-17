@@ -4,7 +4,13 @@
 |--------------------------------------------------------------------------
 |*/
 
-var host = "https://app.fishpott.com";
+// LIVE
+//var host = "https://app.fishpott.com";
+
+// TEST ONLINE
+var host = "https://test.fishpott.com";
+
+// TEST LOCAL
 //var host = "http://fishpott.local";
 
 // LOGIN PAGE URLS
