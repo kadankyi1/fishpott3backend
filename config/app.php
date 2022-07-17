@@ -2,6 +2,14 @@
 
 return [
 
+    /*
+    |--------------------------------------------------------------------------
+    | My Var Environment
+    |--------------------------------------------------------------------------
+    */
+    'myenv' => env('MY_APP_ENV', 'debug'),
+
+
     // ANDROID APP MINIMUM VERSION ALLOWED
     'timedurationinhoursforsuggestions' => env('TIME_DURATION_IN_HOURS_FOR_SUGGESTIONS', 4),
 
