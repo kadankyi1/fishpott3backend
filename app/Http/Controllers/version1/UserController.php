@@ -65,7 +65,8 @@ class UserController extends Controller
             "user_phone_number" => "bail|required|regex:/^\+\d{10,15}$/|min:10|max:15",
             "password" => "bail|required|max:20",
             "app_type" => "bail|required|max:8",
-            "app_version_code" => "bail|required|integer"
+            "app_version_code" => "bail|required|integer",
+            "is_not_live" => "nullable|string"
         ]);
 
         // MAKING SURE VERSION CODE IS ALLOWED
@@ -206,7 +207,10 @@ class UserController extends Controller
             'message' => $message,
             'time' => date("F j, Y, g:i a")
         );
-        Mail::to($validatedData["user_email"])->send(new UserAlertMail($email_data));
+        
+        if(empty($validatedData["is_not_live"])){
+            Mail::to($validatedData["user_email"])->send(new UserAlertMail($email_data));
+        }
 
         return response([
             "status" => "yes", 
