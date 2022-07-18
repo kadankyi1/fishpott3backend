@@ -1064,9 +1064,11 @@ public function changePasswordWithResetCode(Request $request)
         ->where('drill_answer_user_investor_id', '=', $user->investor_id)
         ->orderBy('drill_answer_id', 'desc')->take(30)->get();
 
+        /*
         if(count($answers) < 7){
             return 1;
         }
+        */
 
         // INITIALIZING ARRAY
         $output_data_array = array('o' => 0,'c' => 0,'e' => 0,'a' => 0,'n' => 0);
