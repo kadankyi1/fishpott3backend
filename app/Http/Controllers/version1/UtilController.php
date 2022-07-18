@@ -271,7 +271,7 @@ class UtilController extends Controller
                 }
                 //var_dump($fields);
                 $payload = json_encode($fields);
-                $curl_session = curl_init();
+                $curl_session = \curl_init();
                 curl_setopt($curl_session, CURLOPT_URL, $path_fcm);
                 curl_setopt($curl_session, CURLOPT_POST, true);
                 curl_setopt($curl_session, CURLOPT_HTTPHEADER, $headers);
@@ -348,7 +348,7 @@ class UtilController extends Controller
                   );
             }
 			$payload = json_encode($fields);
-			$curl_session = curl_init();
+			$curl_session = \curl_init();
 			curl_setopt($curl_session, CURLOPT_URL, $path_fcm);
 			curl_setopt($curl_session, CURLOPT_POST, true);
 			curl_setopt($curl_session, CURLOPT_HTTPHEADER, $headers);
