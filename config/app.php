@@ -171,7 +171,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://fishpott.local'),
+    'url' => env('APP_URL', 'https://test.fishpott.com'),
 
     'asset_url' => env('ASSET_URL', null),
 
