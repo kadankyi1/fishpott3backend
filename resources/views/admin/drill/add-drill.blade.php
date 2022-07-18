@@ -19,7 +19,7 @@ $page_title = "Add a new question to be used as a drill";
                         <div class="card">
                             <div class="card-header">
                                 <h5>Note</h5>
-                                <span>Make sure questions are <code>interesting, controversial and relevant </code> to FishPott Drills' <code>mission of getting to know</code> the user </span>
+                                <span>Make sure questions are <code>interesting, controversial and relevant </code> to FishPott Drills' <code>mission of getting to know</code> the user. <code>OCEAN means openness, conscientiousness, extraversion, agreeableness, and neuroticism</code></span>
                             </div>
                             <div class="loader-holder offset-md-5" id="loader" style="display: none"><br><br><br><br><br><br><div class="myloader"></div></div>
 
