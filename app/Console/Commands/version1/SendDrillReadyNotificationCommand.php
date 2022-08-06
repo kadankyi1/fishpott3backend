@@ -49,6 +49,7 @@ class SendDrillReadyNotificationCommand extends Command
         // CHECKING IF A SUGGESTION EXISTS AND IS AVAILABLE TO BE NOTIFIED TO USERS
         if($suggestion !=  null && $suggestion != false && $suggestion->suggestion_suggestion_type_id == UtilController::getSuggestionType("suggestion_type_name", "Drill", 1)){
             // SENDING NOTIFICATION TO USERS
+                //echo "here 1\n"; 
             if($suggestion->suggestion_notification_sent == false){
                 $suggestion->suggestion_notification_sent = true;
                 $suggestion->save();
@@ -84,23 +85,19 @@ class SendDrillReadyNotificationCommand extends Command
                 );
             }
         } else {
+            //echo "here 2\n";     
             $drill = Drill::where('drill_passed_as_suggestion', false)->orderBy('created_at', 'desc')->first();
             if($drill == null){
-                // NOTIFYING FISHPOTT ADMIN THAT NO DRILLS EXIST        
+                //echo "here 3\n";     
+                // NOTIFYING FISHPOTT ADMIN THAT NO DRILLS EXIST   
+                //echo "here 1"; exit;     
                 $email_data = array(
                     'event' => 'There is no new drill for users to answer. Set a new exciting drill and suggest it',
                     'time' => date("F j, Y, g:i a")
                 );
                 Mail::to(config('app.fishpott_email'))->send(new AlertMail($email_data));
             } else {
-                //////
-                $email_data = array(
-                    'event' => 'Creating Drill Suggestion',
-                    'time' => date("F j, Y, g:i a")
-                );
-                /////
-
-                Mail::to(config('app.fishpott_email'))->send(new AlertMail($email_data));
+                //echo "here 4\n";     
                 $suggestionData["suggestion_sys_id"] = "sug-" . $drill->drill_sys_id . date('YmdHis');
                 $suggestionData["suggestion_item_reference_id"] = $drill->drill_sys_id;
                 $suggestionData["suggestion_directed_at_user_investor_id"] = "";
@@ -146,15 +143,8 @@ class SendDrillReadyNotificationCommand extends Command
                     "",
                     date("F j, Y")
                 );
-
-
-                //////
-                $email_data = array(
-                    'event' => 'Success in creating Drill Suggestion',
-                    'time' => date("F j, Y, g:i a")
-                );
-                /////
             }
         }
+
     }
 }
