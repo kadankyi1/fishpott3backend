@@ -93,6 +93,14 @@ class SendDrillReadyNotificationCommand extends Command
                 );
                 Mail::to(config('app.fishpott_email'))->send(new AlertMail($email_data));
             } else {
+                //////
+                $email_data = array(
+                    'event' => 'Creating Drill Suggestion',
+                    'time' => date("F j, Y, g:i a")
+                );
+                /////
+
+                Mail::to(config('app.fishpott_email'))->send(new AlertMail($email_data));
                 $suggestionData["suggestion_sys_id"] = "sug-" . $drill->drill_sys_id . date('YmdHis');
                 $suggestionData["suggestion_item_reference_id"] = $drill->drill_sys_id;
                 $suggestionData["suggestion_directed_at_user_investor_id"] = "";
@@ -138,6 +146,14 @@ class SendDrillReadyNotificationCommand extends Command
                     "",
                     date("F j, Y")
                 );
+
+
+                //////
+                $email_data = array(
+                    'event' => 'Success in creating Drill Suggestion',
+                    'time' => date("F j, Y, g:i a")
+                );
+                /////
             }
         }
     }
