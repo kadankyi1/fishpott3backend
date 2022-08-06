@@ -33,6 +33,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use App\Mail\version1\AlertMail;
 
 ini_set('memory_limit','1024M');
 ini_set("upload_max_filesize","100M");
