@@ -76,6 +76,9 @@ Route::middleware('auth:api')->post('/v1/user/sellback-stock', [App\Http\Control
 // PERSONAL ACCOUNT REGISTRATION ROUTE
 Route::post('/v1/user/email-alerts',[App\Http\Controllers\version1\UserController::class, 'updateEmailAlertSettings']);
 
+// TEST FUNCTION ROUTE
+Route::post('/v1/test/func',[App\Http\Controllers\version1\UserController::class, 'testFunc']);
+
 // DEFAULT FALLBACK ROUTE
 Route::fallback(function(){
     return response()->json([
