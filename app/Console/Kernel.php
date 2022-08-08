@@ -26,8 +26,8 @@ class Kernel extends ConsoleKernel
     {
         // ADDING SCHDULE
         $schedule->command('drill:sendreadynotification')->dailyAt('13:00'); //->everyFiveMinutes();
-        $schedule->command('networthandposition:sendnetworthandpositionnotification')->daily(); //->daily();
-        $schedule->command('business:sendreadynotification')->weekly(); //->weekly();
+        $schedule->command('networthandposition:sendnetworthandpositionnotification')->everyFiveMinutes(); //->everyFiveMinutes();
+        $schedule->command('business:sendreadynotification')->sundays(); //->weekly();
     }
 
     /**
