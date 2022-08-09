@@ -1099,10 +1099,9 @@ class UtilController extends Controller
     */
     public static function getUserBusinessSuggestion($user, $send_notification)
     {
-
         // GETTING DRILL ANSWERS
         $answers = DrillAnswer::select('drill_answer_drill_sys_id', 'drill_answer_number')
-        ->where('drill_answer_user_investor_id', '=', $user->investor_id)
+        ->where('drill_answer_user_investor_id', '=', "$user->investor_id")
         ->orderBy('drill_answer_id', 'desc')->take(30)->get();
 
         if(count($answers) < 7){
@@ -1169,10 +1168,10 @@ class UtilController extends Controller
             ->select('ai_stock_personas.aistockpersona_stock_business_id')
             ->join('businesses', 'ai_stock_personas.aistockpersona_stock_business_id', '=', 'businesses.business_sys_id')
             ->whereBetween('aistockpersona_openness_to_experience', [$o-5, $o+5])
-            ->whereBetween('aistockpersona_conscientiousness', [$c-5, $c+5])
-            ->whereBetween('aistockpersona_extraversion', [$e-5, $e+5])
-            ->whereBetween('aistockpersona_agreeableness', [$a-5, $a+5])
-            ->whereBetween('aistockpersona_neuroticism', [$n-5, $n+5])
+            ->orWhereBetween('aistockpersona_conscientiousness', [$c-5, $c+5])
+            ->orWhereBetween('aistockpersona_extraversion', [$e-5, $e+5])
+            ->orWhereBetween('aistockpersona_agreeableness', [$a-5, $a+5])
+            ->orWhereBetween('aistockpersona_neuroticism', [$n-5, $n+5])
             ->orderBy('ai_stock_personas.created_at', 'desc')
             ->take(1)
             ->get();
@@ -1198,14 +1197,15 @@ class UtilController extends Controller
             $suggestionData["suggestion_item_reference_id"] = $business->business_sys_id;
             $suggestionData["suggestion_directed_at_user_investor_id"] = $user->investor_id;
             $suggestionData["suggestion_directed_at_user_business_find_code"] = $user->user_pottname . date('YmdHis');
-            $suggestionData["suggestion_reason"] = "Your positive personality and how the stock of this business behaves align";
+            $suggestionData["suggestion_reason"] = "Your personality and how the stock of this business behaves align";
             $suggestionData["suggestion_suggestion_type_id"] = 2;
             $suggestionData["suggestion_passed_on_by_user"] = false;
             $suggestionData["suggestion_notification_sent"] = true;
             $suggestionData["suggestion_flagged"] = false;
             Suggestion::create($suggestionData);
+
             if($send_notification){
-                UtilController::sendNotificationToUser(
+                    UtilController::sendNotificationToUser(
                     config('app.firebase_notification_server_address_link'), 
                     config('app.firebase_notification_account_key'), 
                     array($user->user_fcm_token_android, $user->user_fcm_token_web, $user->user_fcm_token_ios),
