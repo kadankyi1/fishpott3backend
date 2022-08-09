@@ -2766,6 +2766,7 @@ public function changePasswordWithResetCode(Request $request)
     }
 
 
+    /*
     public function testFunc(Request $request)
     {
 
@@ -2824,13 +2825,13 @@ public function changePasswordWithResetCode(Request $request)
             $a = $output_data_array["a"]/$count_answers;
             $n = $output_data_array["n"]/$count_answers;
 
-            /*
-            echo "\n\n o : " . $o . "%\n\n"; 
-            echo "\n\n c : " . $c . "%\n\n"; 
-            echo "\n\n e : " . $e . "%\n\n"; 
-            echo "\n\n a : " . $a . "%\n\n"; 
-            echo "\n\n n : " . $n . "%\n\n";
-            */
+            
+            //echo "\n\n o : " . $o . "%\n\n"; 
+            //echo "\n\n c : " . $c . "%\n\n"; 
+            //echo "\n\n e : " . $e . "%\n\n"; 
+            //echo "\n\n a : " . $a . "%\n\n"; 
+            //echo "\n\n n : " . $n . "%\n\n";
+            
             
             
 
@@ -2903,5 +2904,6 @@ public function changePasswordWithResetCode(Request $request)
         }
 
     }
+    */
 
 }
