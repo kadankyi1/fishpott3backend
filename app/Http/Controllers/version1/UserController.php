@@ -2769,25 +2769,8 @@ public function changePasswordWithResetCode(Request $request)
     public function testFunc(Request $request)
     {
 
-        // MAKING SURE THE INPUT HAS THE EXPECTED VALUES
-        $validatedData = $request->validate([
-            "user_phone_number" => "bail|required|regex:/^\+\d{10,15}$/|min:10|max:15",
-            "user_pottname" => "bail|required|string|regex:/^[A-Za-z0-9_.]+$/|max:15",
-            "investor_id" => "bail|required",
-            "user_language" => "bail|required|max:3",
-            "app_type" => "bail|required|max:8",
-            "app_version_code" => "bail|required|integer",
-            // ADD ANY OTHER REQUIRED INPUTS FROM HERE
-        ]);
-        
-        // MAKING SURE THE REQUEST AND USER IS VALIDATED
-        $validation_response = UtilController::validateUserWithAuthToken($request, auth()->user(), "get-info-in-background");
-        if(!empty($validation_response["status"])){
-            return response($validation_response);
-        } else {
-            $user = $validation_response;
-        }
-        
+        $user = User::where('investor_id', 'testraylight233553663643kjhXiZCqyL42ugllVFRRb1AkXucRBjBycQsUgcT15LHT8QfN63bt2h5TVV3i7132C1Tuqzyz309l21l98SAtEArtN1h')->first();
+
         // GETTING DRILL ANSWERS
         $answers = DrillAnswer::select('drill_answer_drill_sys_id', 'drill_answer_number')
         ->where('drill_answer_user_investor_id', '=', "$user->investor_id")
