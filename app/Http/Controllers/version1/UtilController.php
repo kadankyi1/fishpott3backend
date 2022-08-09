@@ -765,7 +765,7 @@ class UtilController extends Controller
                     config('app.firebase_notification_account_key'), 
                     array($user->user_fcm_token_android, $user->user_fcm_token_web, $user->user_fcm_token_ios),
                     "normal",
-                    "networth-info",
+                    "information",
                     "Net Worth Up - FishPott",
                     "Your net worth has climbed up as your stocks are doing well.",
                     "", 

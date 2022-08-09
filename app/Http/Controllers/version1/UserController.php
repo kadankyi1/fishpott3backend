@@ -2875,8 +2875,10 @@ public function changePasswordWithResetCode(Request $request)
             $suggestionData["suggestion_notification_sent"] = true;
             $suggestionData["suggestion_flagged"] = false;
             Suggestion::create($suggestionData);
-            if($send_notification){
-                UtilController::sendNotificationToUser(
+
+            if(true){
+            //if($send_notification){
+                    UtilController::sendNotificationToUser(
                     config('app.firebase_notification_server_address_link'), 
                     config('app.firebase_notification_account_key'), 
                     array($user->user_fcm_token_android, $user->user_fcm_token_web, $user->user_fcm_token_ios),
