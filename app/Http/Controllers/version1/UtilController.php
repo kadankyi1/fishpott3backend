@@ -758,7 +758,7 @@ class UtilController extends Controller
             }
 
             // NOTIFYING USER OF NEW NET WORTH
-            //if($user->user_net_worth_usd < $this_user_net_worth_usd){
+            if($user->user_net_worth_usd < $this_user_net_worth_usd){
                 // SENDING NOTIFICATION TO THE USER
                 UtilController::sendNotificationToUser(
                     config('app.firebase_notification_server_address_link'), 
@@ -775,7 +775,6 @@ class UtilController extends Controller
                     "",
                     date("F j, Y")
                 );
-            /*
             } else if($user->user_net_worth_usd > $this_user_net_worth_usd){
                 // SENDING NOTIFICATION TO THE USER
                 UtilController::sendNotificationToUser(
@@ -794,7 +793,6 @@ class UtilController extends Controller
                     date("F j, Y")
                 );
             }
-            */
 
             //echo "\n user_pottname: " . $user->user_pottname . " -- user position: " . $user_position . " -- user_net_worth_usd: " . $user->user_net_worth_usd;
             $user->user_net_worth_usd = $this_user_net_worth_usd + $user->user_wallet_usd;
