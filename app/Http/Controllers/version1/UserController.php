@@ -2766,101 +2766,141 @@ public function changePasswordWithResetCode(Request $request)
     }
 
 
-    public function testFunc()
+    public function testFunc(Request $request)
     {
-        //Log::info("Cron is working fine!");
-        $suggestion = UtilController::getLatestSuggestion();
 
-        // CHECKING IF A SUGGESTION EXISTS AND IS AVAILABLE TO BE NOTIFIED TO USERS
-        if($suggestion !=  null && $suggestion != false && $suggestion->suggestion_suggestion_type_id == UtilController::getSuggestionType("suggestion_type_name", "Drill", 1)){
-            // SENDING NOTIFICATION TO USERS
-                echo "here 1\n"; 
-            if($suggestion->suggestion_notification_sent == false){
-                $suggestion->suggestion_notification_sent = true;
-                $suggestion->save();
-                UtilController::sendNotificationToTopic(
-                    config('app.firebase_notification_server_address_link'), 
-                    config('app.firebase_notification_account_key'), 
-                    "FISHPOT_ANDROID",
-                    "normal",
-                    "drill-suggestion",
-                    "New Drill - FishPott",
-                    "Train your FishPott and increase its intelligence with a new drill",
-                    "", 
-                    "", 
-                    "", 
-                    "", 
-                    "",
-                    date("F j, Y")
-                );
-                UtilController::sendNotificationToTopic(
-                    config('app.firebase_notification_server_address_link'), 
-                    config('app.firebase_notification_account_key'), 
-                    "FISHPOT_IOS",
-                    "normal",
-                    "drill-suggestion",
-                    "New Drill - FishPott",
-                    "Train your FishPott and increase its intelligence with a new drill",
-                    "", 
-                    "", 
-                    "", 
-                    "", 
-                    "",
-                    date("F j, Y")
-                );
-            }
-        } else {
-            echo "here 2\n";     
-            $drill = Drill::where('drill_passed_as_suggestion', false)->orderBy('created_at', 'desc')->first();
-            if($drill == null){
-                echo "here 3\n";     
-                // NOTIFYING FISHPOTT ADMIN THAT NO DRILLS EXIST   
-                echo "here 1"; exit;     
-                $email_data = array(
-                    'event' => 'There is no new drill for users to answer. Set a new exciting drill and suggest it',
-                    'time' => date("F j, Y, g:i a")
-                );
-                Mail::to(config('app.fishpott_email'))->send(new AlertMail($email_data));
-            } else {
-                echo "here 4\n";     
-                $suggestionData["suggestion_sys_id"] = "sug-" . $drill->drill_sys_id . date('YmdHis');
-                $suggestionData["suggestion_item_reference_id"] = $drill->drill_sys_id;
-                $suggestionData["suggestion_directed_at_user_investor_id"] = "";
-                $suggestionData["suggestion_directed_at_user_business_find_code"] = "";
-                $suggestionData["suggestion_suggestion_type_id"] = 1;            
-                $suggestionData["suggestion_passed_on_by_user"] = false;
-                $suggestionData["suggestion_notification_sent"] = true;
-                $suggestionData["suggestion_flagged"] = false;
-                Suggestion::create($suggestionData);
+        // MAKING SURE THE INPUT HAS THE EXPECTED VALUES
+        $validatedData = $request->validate([
+            "user_phone_number" => "bail|required|regex:/^\+\d{10,15}$/|min:10|max:15",
+            "user_pottname" => "bail|required|string|regex:/^[A-Za-z0-9_.]+$/|max:15",
+            "investor_id" => "bail|required",
+            "user_language" => "bail|required|max:3",
+            "app_type" => "bail|required|max:8",
+            "app_version_code" => "bail|required|integer",
+            // ADD ANY OTHER REQUIRED INPUTS FROM HERE
+        ]);
         
-                // UPDATING THE DRILL AS SUGGESTED
-                $drill->drill_passed_as_suggestion = true;
-                $drill->save();
+        // MAKING SURE THE REQUEST AND USER IS VALIDATED
+        $validation_response = UtilController::validateUserWithAuthToken($request, auth()->user(), "get-info-in-background");
+        if(!empty($validation_response["status"])){
+            return response($validation_response);
+        } else {
+            $user = $validation_response;
+        }
+        
+        // GETTING DRILL ANSWERS
+        $answers = DrillAnswer::select('drill_answer_drill_sys_id', 'drill_answer_number')
+        ->where('drill_answer_user_investor_id', '=', "$user->investor_id")
+        ->orderBy('drill_answer_id', 'desc')->take(30)->get();
 
-                // SENDING NOTIFICATION TO USERS
-                UtilController::sendNotificationToTopic(
+        if(count($answers) < 7){
+            return 1;
+        }
+
+        // INITIALIZING ARRAY
+        $output_data_array = array('o' => 0,'c' => 0,'e' => 0,'a' => 0,'n' => 0);
+
+        $count_answers = 0;
+        foreach($answers as $answer){
+            $this_drill = Drill::where('drill_sys_id', '=', $answer->drill_answer_drill_sys_id)->first();
+            if($answer->drill_answer_number == 1){
+                //echo "\n\ndrill answer 1: " . $this_drill->drill_answer_1_ocean;
+                $this_raw_ocean_array = explode("#", $this_drill->drill_answer_1_ocean);
+            } else if($answer->drill_answer_number == 2){
+                //echo "\n\ndrill answer 2: " . $this_drill->drill_answer_2_ocean;
+                $this_raw_ocean_array = explode("#", $this_drill->drill_answer_2_ocean);
+            } else if($answer->drill_answer_number == 3){
+                //echo "\n\ndrill answer 3: " . $this_drill->drill_answer_3_ocean;
+                $this_raw_ocean_array = explode("#", $this_drill->drill_answer_3_ocean);
+            } else if($answer->drill_answer_number == 4){
+                //echo "\n\ndrill answer 4: " . $this_drill->drill_answer_4_ocean;
+                $this_raw_ocean_array = explode("#", $this_drill->drill_answer_4_ocean);
+            } else {
+                continue;
+            }
+
+            if(count($this_raw_ocean_array) != 5){
+                continue;
+            }
+            
+            $output_data_array["o"] = $output_data_array["o"] + $this_raw_ocean_array[0];
+            $output_data_array["c"] = $output_data_array["c"] + $this_raw_ocean_array[1];
+            $output_data_array["e"] = $output_data_array["e"] + $this_raw_ocean_array[2];
+            $output_data_array["a"] = $output_data_array["a"] + $this_raw_ocean_array[3];
+            $output_data_array["n"] = $output_data_array["n"] + $this_raw_ocean_array[4];
+            $count_answers++;
+        }
+
+        //echo "\n\n count_answers : " . $count_answers . "\n\n"; 
+        //var_dump($output_data_array);
+
+        if($count_answers >= 7){
+            $o = $output_data_array["o"]/$count_answers;
+            $c = $output_data_array["c"]/$count_answers;
+            $e = $output_data_array["e"]/$count_answers;
+            $a = $output_data_array["a"]/$count_answers;
+            $n = $output_data_array["n"]/$count_answers;
+
+            /*
+            echo "\n\n o : " . $o . "%\n\n"; 
+            echo "\n\n c : " . $c . "%\n\n"; 
+            echo "\n\n e : " . $e . "%\n\n"; 
+            echo "\n\n a : " . $a . "%\n\n"; 
+            echo "\n\n n : " . $n . "%\n\n";
+            */
+            
+            
+
+            // FINDING A BUSINESS THAT IS 5% CLOSER IN PERSONALITY
+
+            $business_id = DB::table('ai_stock_personas')
+            ->select('ai_stock_personas.aistockpersona_stock_business_id')
+            ->join('businesses', 'ai_stock_personas.aistockpersona_stock_business_id', '=', 'businesses.business_sys_id')
+            ->whereBetween('aistockpersona_openness_to_experience', [$o-5, $o+5])
+            ->whereBetween('aistockpersona_conscientiousness', [$c-5, $c+5])
+            ->whereBetween('aistockpersona_extraversion', [$e-5, $e+5])
+            ->whereBetween('aistockpersona_agreeableness', [$a-5, $a+5])
+            ->whereBetween('aistockpersona_neuroticism', [$n-5, $n+5])
+            ->orderBy('ai_stock_personas.created_at', 'desc')
+            ->take(1)
+            ->get();
+            //echo "\n\n business_id : " . $business_id[0]->aistockpersona_stock_business_id . "\n\n"; 
+
+            // CHECKING IF THE BUSINESS EXISTS
+            if(empty($business_id[0])){
+                return 1;
+            }
+            $business = Business::where('business_sys_id', $business_id[0]->aistockpersona_stock_business_id)->first();
+            if($business == null){
+                return 1;
+            }
+
+            // CHECKING IF USER EXISTS
+            $pott_user = User::where('user_pottname', $user->user_pottname)->first();
+            if($pott_user == null){
+                return 1;
+            }
+
+            // CREATING THE SUGGESTION VALUE DATA FOR BUSINESS
+            $suggestionData["suggestion_sys_id"] = "sug-" . $business->business_sys_id . date('YmdHis');
+            $suggestionData["suggestion_item_reference_id"] = $business->business_sys_id;
+            $suggestionData["suggestion_directed_at_user_investor_id"] = $user->investor_id;
+            $suggestionData["suggestion_directed_at_user_business_find_code"] = $user->user_pottname . date('YmdHis');
+            $suggestionData["suggestion_reason"] = "Your positive personality and how the stock of this business behaves align";
+            $suggestionData["suggestion_suggestion_type_id"] = 2;
+            $suggestionData["suggestion_passed_on_by_user"] = false;
+            $suggestionData["suggestion_notification_sent"] = true;
+            $suggestionData["suggestion_flagged"] = false;
+            Suggestion::create($suggestionData);
+            if($send_notification){
+                UtilController::sendNotificationToUser(
                     config('app.firebase_notification_server_address_link'), 
                     config('app.firebase_notification_account_key'), 
-                    "FISHPOT_ANDROID",
+                    array($user->user_fcm_token_android, $user->user_fcm_token_web, $user->user_fcm_token_ios),
                     "normal",
-                    "drill-suggestion",
-                    "New Drill - FishPott",
-                    "Train your FishPott and increase its intelligence with a new drill",
-                    "", 
-                    "", 
-                    "", 
-                    "", 
-                    "",
-                    date("F j, Y")
-                );
-                UtilController::sendNotificationToTopic(
-                    config('app.firebase_notification_server_address_link'), 
-                    config('app.firebase_notification_account_key'), 
-                    "FISHPOT_IOS",
-                    "normal",
-                    "drill-suggestion",
-                    "New Drill - FishPott",
-                    "Train your FishPott and increase its intelligence with a new drill",
+                    "business-suggestion",
+                    "Stock Suggestion - FishPott",
+                    "You have a new business you can invest in",
                     "", 
                     "", 
                     "", 
@@ -2869,7 +2909,14 @@ public function changePasswordWithResetCode(Request $request)
                     date("F j, Y")
                 );
             }
+            
+            //echo "\n\n business_id : " . $business_id[0]->aistockpersona_stock_business_id . "\n\n"; 
+
+            return $suggestionData;
+        } else {
+            return 1;
         }
+
     }
 
 }
