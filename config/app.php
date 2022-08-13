@@ -83,7 +83,7 @@ return [
     'transfer_processing_fee_usd' => env('TRANSFER_PROCESSING_FEE', 10), 
 
     // CONVERSION RATES
-    'to_cedi' => env('USD_TO_CEDI', 6), 
+    'to_cedi' => env('USD_TO_CEDI', 10), 
 
     // SYSTEM CONTACT EMAIL
     'fishpott_email' => env('FISHPOTT_EMAIL', "fishpottcompany@gmail.com"), 
