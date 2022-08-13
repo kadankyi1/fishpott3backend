@@ -9,7 +9,6 @@ return [
     */
     'myenv' => env('MY_APP_ENV', 'debug'),
 
-
     // ANDROID APP MINIMUM VERSION ALLOWED
     'timedurationinhoursforsuggestions' => env('TIME_DURATION_IN_HOURS_FOR_SUGGESTIONS', 24),
 
@@ -39,6 +38,10 @@ return [
 
     // USER CAN POST PICTURES AND VIDEOS
     'canpostpicsandvids' => env('CAN_POST_PICS_AND_VIDS', 0),
+
+
+    // PAYMENT CHANNEL
+    'payment_channel' => env('PAYMENT_CHANNEL', 'Bank'),
 
     // MTN GHANA MOBILE MONEY ACCOUNT
     'mtnghanamomonum' => env('MTN_GHANA_MOMO_NUM', '0553663643'),
