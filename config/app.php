@@ -52,6 +52,16 @@ return [
     'airteltigoghanamomonum' => env('AIRTELTIGO_GHANA_MOMO_NUM', ''),
     'airteltigoghanamomoaccname' => env('AIRTELTIGO_GHANA_MOMO_NUM', ''),
 
+
+    // BANK ACCOUNT FOR RECEIVING WIRE TRANSFER
+    'bankname' => env('BANK_NAME', 'Access Bank Ghana'),
+    'bankaddress' => env('BANK_ADDRESS', 'Starlets 91 Road, Opposite Accra Sports Stadium, Osu. P. O. Box GP 353, Accra, Ghana'),
+    'bankswiftiban' => env('BANK_SWIFT_OR_IBAN', 'ABNGGHAC'),
+    'bankbranch' => env('BANK_BRANCH', 'Madina'),
+    'bankaccountname' => env('BANK_ACCOUNT_NAME', 'FishPot Company Limited'),
+    'bankaccountnumber' => env('BANK_ACCOUNT_NUMBER', '1010000002406'),
+
+
     // DEFINING VARIOUS SIZES
     'kb' => env('KILO_BYTE', 1024),
     'mb' => env('MEGA_BYTE', 1048576),
