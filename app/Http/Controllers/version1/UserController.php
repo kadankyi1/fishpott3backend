@@ -1920,7 +1920,7 @@ public function changePasswordWithResetCode(Request $request)
             "transfer_fee_cedis_with_sign" => $processing_fee_local_with_currency_sign,
             "rate" => $rate,
             "rate_no_sign" => $rate,
-            "overall_total_usd" => $processing_fee_usd,
+            "overall_total_usd" => "$" . strval($processing_fee_usd),
             "overall_total_local_currency" => $processing_fee_local_with_currency_sign,
             "overall_total_local_currency_floatval" => $processing_fee_local,
             "payment_gateway_amount_in_pesewas_or_cents_intval" => $payment_gateway_amount_cents_or_pesewas,
