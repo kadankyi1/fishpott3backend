@@ -1895,6 +1895,22 @@ public function changePasswordWithResetCode(Request $request)
         );
         */
         
+        if(strval(config('app.payment_channel')) == "Momo"){
+            $payment_details = array(
+                'mobile_money_number' => strval(config('app.mtnghanamomonum')), 
+                'mobile_money_name' => strval(config('app.mtnghanamomoaccname')), 
+            );
+        } else {
+            $payment_details = array(
+                'bankname' => strval(config('app.bankname')), 
+                'bankaddress' => strval(config('app.bankaddress')), 
+                'bankswiftiban' => strval(config('app.bankswiftiban')), 
+                'bankbranch' => strval(config('app.bankbranch')), 
+                'bankaccountname' => strval(config('app.bankaccountname')), 
+                'bankaccountnumber' => strval(config('app.bankaccountnumber')), 
+            );
+        }
+        
         $data = array(
             "info_1" => $info_1,
             "transanction_id" => $stockTransferData['stocktransfer_sys_id'],
@@ -1909,8 +1925,8 @@ public function changePasswordWithResetCode(Request $request)
             "overall_total_local_currency_floatval" => $processing_fee_local,
             "payment_gateway_amount_in_pesewas_or_cents_intval" => $payment_gateway_amount_cents_or_pesewas,
             "payment_gateway_currency" => $currency_local->currency_short_name,
-            "mobile_money_number" => config('app.mtnghanamomonum'),
-            "mobile_money_name" => config('app.mtnghanamomoaccname')
+            "payment_channel" => strval(config('app.payment_channel')),
+            "payment_details" => $payment_details
         );
 
 
