@@ -1309,7 +1309,7 @@ class UtilController extends Controller
                 'message' => $full_message,
                 'time' => date("F j, Y, g:i a")
             );
-            Mail::to($user->user_email)->send(new UserAlertMail($email_data));
+            //Mail::to($user->user_email)->send(new UserAlertMail($email_data));
         }
     }
 
