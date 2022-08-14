@@ -1557,6 +1557,7 @@ class AdministratorController extends Controller
                 }
                 $stockpurchase->stockpurchase_processed = 1;
                 $stockpurchase->stockpurchase_processed_reason = $request->action_info;
+                $stockpurchase->save();
 
                 // ADDING THE STOCKS TO USER
                 $stockownership = StockOwnership::where('stockownership_business_id', $stockpurchase->stockpurchase_business_id)->where('stockownership_user_investor_id', $stockpurchase->stockpurchase_user_investor_id)->first();
@@ -1581,6 +1582,7 @@ class AdministratorController extends Controller
             } else if($request->action_type == "2"){
                 $stockpurchase->stockpurchase_flagged = 1;
                 $stockpurchase->stockpurchase_flagged_reason = $request->action_info;
+                $stockpurchase->save();
                 UtilController::notifyOneUserAndEmail($stockpurchase->stockpurchase_user_investor_id, "Order Flagged", "Your stock purchase order with ID " . $request->order_id . " was flagged");
             } else if($request->action_type == "3"){
                 if($stockpurchase->stockpurchase_payment_gateway_status != 1){
@@ -1603,6 +1605,7 @@ class AdministratorController extends Controller
                 }
                 $stockpurchase->stockpurchase_processed = 2;
                 $stockpurchase->stockpurchase_processed_reason = $request->action_info;
+                $stockpurchase->save();
                 UtilController::notifyOneUserAndEmail($stockpurchase->stockpurchase_user_investor_id, "Order Cancelled", "Your stock purchase order with ID " . $request->order_id . " was cancelled");
                 
             }
@@ -1645,6 +1648,7 @@ class AdministratorController extends Controller
                 }
                 $stocktransfer->stockstransfers_processed = 1;
                 $stocktransfer->stockstransfers_processed_reason = $request->action_info;
+                $stocktransfer->save();
 
                 
                 $user_receiver = User::where("user_pottname", $stocktransfer->stocktransfer_receiver_pottname)->first();
@@ -1693,6 +1697,7 @@ class AdministratorController extends Controller
             } else if($request->action_type == "2"){
                 $stocktransfer->stocktransfer_flagged = 1;
                 $stocktransfer->stocktransfer_flagged_reason = $request->action_info;
+                $stocktransfer->save();
                 UtilController::notifyOneUserAndEmail($stocktransfer->stocktransfer_sender_investor_id, "Order Flagged", "Your stock transfer order with ID " . $request->order_id . " was flagged");
             } else if($request->action_type == "3"){ 
                 if($stocktransfer->stocktransfer_payment_gateway_status != 1){
@@ -1715,6 +1720,7 @@ class AdministratorController extends Controller
                 }
                 $stocktransfer->stockstransfers_processed = 2;
                 $stocktransfer->stockstransfers_processed_reason = $request->action_info;
+                $stocktransfer->save();
                 UtilController::notifyOneUserAndEmail($stocktransfer->stocktransfer_sender_investor_id, "Order Cancelled", "Your stock transfer order with ID " . $request->order_id . " was cancelled");
             }
             // SAVING UPDATE
