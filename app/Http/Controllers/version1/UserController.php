@@ -2473,7 +2473,7 @@ public function changePasswordWithResetCode(Request $request)
         }
 
         $data = array();
-        $result = StockOwnership::where("stockownership_user_investor_id", $user->investor_id)->get();
+        $result = StockOwnership::where("stockownership_user_investor_id", $user->investor_id)->Where('stockownership_stocks_quantity', '>', 0)->get();
 
         foreach($result as $stockownership){
             // STOCK PURCHASE
