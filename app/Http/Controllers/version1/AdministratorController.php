@@ -1751,10 +1751,12 @@ class AdministratorController extends Controller
                 }
                 $stocksellback->stocksellback_processed = 1;
                 $stocksellback->stocksellback_processed_reason = $request->action_info;
+                $stocksellback->save();
                 UtilController::notifyOneUserAndEmail($stocksellback->stocksellback_seller_investor_id, "Order Processed", "Your sellback order with ID " . $request->order_id . " processed successfully");
             } else if($request->action_type == "2"){
                 $stocksellback->stocksellback_flagged = 1;
                 $stocksellback->stocksellback_flagged_reason = $request->action_info;
+                $stocksellback->save();
                 UtilController::notifyOneUserAndEmail($stocksellback->stocksellback_seller_investor_id, "Order Flagged", "Your sellback order with ID " . $request->order_id . " was flagged");
             } else if($request->action_type == "3"){
                 if($stocksellback->stocksellback_flagged == 1){
@@ -1771,6 +1773,7 @@ class AdministratorController extends Controller
                 }
                 $stocksellback->stocksellback_processed = 2;
                 $stocksellback->stocksellback_processed_reason = $request->action_info;
+                $stocksellback->save();
 
 
                 // RETURNING SHARES
