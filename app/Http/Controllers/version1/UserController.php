@@ -1368,14 +1368,26 @@ public function changePasswordWithResetCode(Request $request)
                 'mobile_money_name' => strval(config('app.mtnghanamomoaccname')), 
             );
         } else {
-            $payment_details = array(
-                'bankname' => strval(config('app.bankname')), 
-                'bankaddress' => strval(config('app.bankaddress')), 
-                'bankswiftiban' => strval(config('app.bankswiftiban')), 
-                'bankbranch' => strval(config('app.bankbranch')), 
-                'bankaccountname' => strval(config('app.bankaccountname')), 
-                'bankaccountnumber' => strval(config('app.bankaccountnumber')), 
-            );
+            
+            if(strtoupper($request->app_type) == "IOS"){
+                $payment_details = array(
+                    'bankname' => strval(config('app.bankname')), 
+                    'bankaddress' => strval(config('app.bankaddressmultilines')), 
+                    'bankswiftiban' => strval(config('app.bankswiftiban')), 
+                    'bankbranch' => strval(config('app.bankbranch')), 
+                    'bankaccountname' => strval(config('app.bankaccountname')), 
+                    'bankaccountnumber' => strval(config('app.bankaccountnumber')), 
+                );
+            } else {
+                $payment_details = array(
+                    'bankname' => strval(config('app.bankname')), 
+                    'bankaddress' => strval(config('app.bankaddress')), 
+                    'bankswiftiban' => strval(config('app.bankswiftiban')), 
+                    'bankbranch' => strval(config('app.bankbranch')), 
+                    'bankaccountname' => strval(config('app.bankaccountname')), 
+                    'bankaccountnumber' => strval(config('app.bankaccountnumber')), 
+                );
+            }
         }
 
         // LIVE
