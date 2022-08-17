@@ -59,7 +59,7 @@ return [
     // BANK ACCOUNT FOR RECEIVING WIRE TRANSFER
     'bankname' => env('BANK_NAME', 'Access Bank Ghana'),
     'bankaddress' => env('BANK_ADDRESS', 'Starlets 91 Road, Opposite Accra Sports Stadium, Osu. P. O. Box GP 353, Accra, Ghana'),
-    'bankaddressmultilines' => env('BANK_ADDRESS_MULTILINES', 'Starlets 91 Road, \n Opposite Accra Sports Stadium, Osu. \n P. O. Box GP 353, Accra, Ghana'),
+    'bankaddressmultilines' => env('BANK_ADDRESS_MULTILINES', 'Starlets 91 Road, <br> Opposite Accra Sports Stadium, Osu. <br> P. O. Box GP 353, Accra, Ghana'),
     'bankswiftiban' => env('BANK_SWIFT_OR_IBAN', 'ABNGGHAC'),
     'bankbranch' => env('BANK_BRANCH', 'Madina'),
     'bankaccountname' => env('BANK_ACCOUNT_NAME', 'FishPot Company Limited'),
