@@ -1369,16 +1369,6 @@ public function changePasswordWithResetCode(Request $request)
             );
         } else {
             
-            if(strtoupper($request->app_type) == "IOS"){
-                $payment_details = array(
-                    'bankname' => strval(config('app.bankname')), 
-                    'bankaddress' => strval(config('app.bankaddressmultilines')), 
-                    'bankswiftiban' => strval(config('app.bankswiftiban')), 
-                    'bankbranch' => strval(config('app.bankbranch')), 
-                    'bankaccountname' => strval(config('app.bankaccountname')), 
-                    'bankaccountnumber' => strval(config('app.bankaccountnumber')), 
-                );
-            } else {
                 $payment_details = array(
                     'bankname' => strval(config('app.bankname')), 
                     'bankaddress' => strval(config('app.bankaddress')), 
@@ -1387,7 +1377,6 @@ public function changePasswordWithResetCode(Request $request)
                     'bankaccountname' => strval(config('app.bankaccountname')), 
                     'bankaccountnumber' => strval(config('app.bankaccountnumber')), 
                 );
-            }
         }
 
         // LIVE
