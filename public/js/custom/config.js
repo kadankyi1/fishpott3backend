@@ -5,10 +5,10 @@
 |*/
 
 // LIVE
-//var host = "https://app.fishpott.com";
+var host = "https://app.fishpott.com";
 
 // TEST ONLINE
-var host = "https://test.fishpott.com";
+//var host = "https://test.fishpott.com";
 
 // TEST LOCAL
 //var host = "http://fishpott.local";
