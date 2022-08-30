@@ -2536,6 +2536,7 @@ public function changePasswordWithResetCode(Request $request)
                 'buyback_local' => $business->buyback_offer_usd * $rate_no_sign,
                 'cost_per_share_usd' => "$" . number_format($this_cost_per_share_usd),
                 'value_per_share_usd' => $the_stockvalue,
+                'total_value_usd' => "$" . number_format($this_cost_per_share_usd * $stockownership->stockownership_stocks_quantity),
                 'quantity_of_stocks' => number_format($stockownership->stockownership_stocks_quantity),
                 'value_phrase' => $value_phrase,
                 'ai_info' => "Pott Intelligence feedback not available"
